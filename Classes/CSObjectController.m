@@ -274,6 +274,33 @@
 	return [NSArray arrayWithObjects:@"png", @"gif", @"jpg", @"jpeg", @"tif", @"tiff", @"bmp", @"ccz", @"pvr", nil];
 }
 
+- (NSArray *) allowedFilesWithFiles: (NSArray *) files
+{
+	if (!files)
+		return nil;
+	
+	NSMutableArray *allowedFiles = [NSMutableArray arrayWithCapacity:[files count]];
+	
+	for (NSString *file in files)
+	{
+		if ( ![file isKindOfClass:[NSString class]] )
+			continue;
+		
+		NSString *curFileExtension = [file pathExtension];
+		
+		for (NSString *fileType in [self allowedFileTypes] )
+		{
+			if ([fileType isEqualToString: curFileExtension])
+			{
+				[allowedFiles addObject: file];
+				break;
+			}
+		}
+	}
+	
+	return allowedFiles;
+}
+
 - (void) addSpritesWithFiles: (NSArray *) files
 {
 	for(NSString *filename in files)

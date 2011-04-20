@@ -58,6 +58,14 @@
 @property(assign) IBOutlet CSModel *modelObject;
 @property(nonatomic, retain) HelloWorldLayer *cocosView;
 
+// filters array of filenames, leaving only allowed
+- (NSArray *) allowedFilesWithFiles: (NSArray *) files;
+
+// adds sprites will filenames taken from array, doesn't do any filtering
+- (void) addSpritesWithFiles: (NSArray *) files;
+
+#pragma mark IBActions
+
 - (IBAction)addSprite:(id)sender;
 - (IBAction)openInfoPanel:(id)sender;
 
