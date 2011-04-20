@@ -24,18 +24,19 @@
  */
 
 #import "cocos2d.h"
+#import "CSMacGLView.h"
 
 @class CSObjectController;
 
 @interface cocoshopAppDelegate : NSObject <NSApplicationDelegate>
 {
 	NSWindow	*window_;
-	MacGLView	*glView_;
+	CSMacGLView	*glView_;
 	CSObjectController *controller_;
 }
 
 @property (assign) IBOutlet NSWindow	*window;
-@property (assign) IBOutlet MacGLView	*glView;
+@property (assign) IBOutlet CSMacGLView	*glView;
 @property (assign) IBOutlet CSObjectController *controller;
 
 - (IBAction)toggleFullScreen:(id)sender;

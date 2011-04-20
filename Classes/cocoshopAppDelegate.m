@@ -36,6 +36,9 @@
 	
 	[director setDisplayFPS:NO];
 	
+	
+	// register for receiving filenames
+	[glView_ registerForDraggedTypes:[NSArray arrayWithObjects:  NSFilenamesPboardType, nil]];
 	[director setOpenGLView:glView_];
 
 	// EXPERIMENTAL stuff.

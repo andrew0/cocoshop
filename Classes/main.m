@@ -26,9 +26,10 @@
 #import <Cocoa/Cocoa.h>
 
 #import "cocos2d.h"
+#import "CSMacGLView.h"
 
 int main(int argc, char *argv[])
 {
-	[MacGLView load_];
+	[CSMacGLView load_];
     return NSApplicationMain(argc,  (const char **) argv);
 }
