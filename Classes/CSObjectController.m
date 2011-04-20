@@ -309,7 +309,7 @@
 		NSString *originalKey = [filename lastPathComponent];
 		NSString *key = [NSString stringWithString:originalKey];
 		NSUInteger i = 0;
-		while([[modelObject_ spriteDictionary] valueForKey:originalKey] != nil)
+		while([[modelObject_ spriteDictionary] valueForKey:key] != nil)
 		{
 			NSAssert(i <= NSUIntegerMax, @"Added too many of the same sprite");
 			key = [originalKey stringByAppendingFormat:@"_%u", i++];
