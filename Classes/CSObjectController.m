@@ -271,7 +271,7 @@
 
 - (NSArray *) allowedFileTypes
 {
-	return [NSArray arrayWithObjects:@"png", @"gif", @"jpg", @"jpeg", @"tif", @"tiff", @"bmp", nil];
+	return [NSArray arrayWithObjects:@"png", @"gif", @"jpg", @"jpeg", @"tif", @"tiff", @"bmp", @"ccz", @"pvr", nil];
 }
 
 - (void) addSpritesWithFiles: (NSArray *) files
