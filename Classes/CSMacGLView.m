@@ -7,9 +7,15 @@
 //
 
 #import "CSMacGLView.h"
-
+#import "cocoshopAppDelegate.h"
+#import "CSObjectController.h"
 
 @implementation CSMacGLView
+
+- (cocoshopAppDelegate *) CSAppDelegate
+{
+	return (cocoshopAppDelegate *)[[NSApplication sharedApplication ] delegate];
+}
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender 
 {	
@@ -41,8 +47,13 @@
         NSArray *files = [pboard propertyListForType:NSFilenamesPboardType];
 		
         if (sourceDragMask & NSDragOperationLink) 
-		{
-			NSLog(@"%@", files);
+		{			
+			CSObjectController *controller = [self CSAppDelegate].controller;
+			
+			NSArray *allowedFiles = [controller allowedFilesWithFiles: files];
+			
+			[controller addSpritesWithFiles: allowedFiles];
+			
         }
     }
     return YES;
