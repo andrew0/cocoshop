@@ -269,12 +269,42 @@
 	[super dealloc];
 }
 
+- (NSArray *) allowedFileTypes
+{
+	return [NSArray arrayWithObjects:@"png", @"gif", @"jpg", @"jpeg", @"tif", @"tiff", @"bmp", nil];
+}
+
+- (void) addSpritesWithFiles: (NSArray *) files
+{
+	for(NSString *filename in files)
+	{		
+		// create key for the sprite
+		NSString *originalKey = [filename lastPathComponent];
+		NSString *key = [NSString stringWithString:originalKey];
+		NSUInteger i = 0;
+		while([[modelObject_ spriteDictionary] valueForKey:originalKey] != nil)
+		{
+			NSAssert(i <= NSUIntegerMax, @"Added too many of the same sprite");
+			key = [originalKey stringByAppendingFormat:@"_%u", i++];
+		}
+		
+		CSSprite *sprite = [CSSprite spriteWithFile:filename];
+		[sprite setKey:key];
+		[sprite setName:key];
+		[sprite setFilename:[filename lastPathComponent]];
+		[[modelObject_ spriteDictionary] setValue:sprite forKey:key];
+		
+		// notify view that we added the sprite
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"addedSprite" object:nil];
+	}
+}
+
 #pragma mark IBActions
 
 - (IBAction)addSprite:(id)sender
 {
 	// allowed file types
-	NSArray *allowedTypes = [NSArray arrayWithObjects:@"png", @"gif", @"jpg", @"jpeg", @"tif", @"tiff", @"bmp", nil];
+	NSArray *allowedTypes = [self allowedFileTypes];
 	
 	// initialize panel + set flags
 	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
@@ -288,27 +318,7 @@
 	if([openPanel runModalForDirectory:nil file:nil types:allowedTypes] == NSOKButton)
 	{
 		NSArray *files = [openPanel filenames];
-		for(NSString *filename in files)
-		{
-			// create key for the sprite
-			NSString *originalKey = [filename lastPathComponent];
-			NSString *key = [NSString stringWithString:originalKey];
-			NSUInteger i = 0;
-			while([[modelObject_ spriteDictionary] valueForKey:originalKey] != nil)
-			{
-				NSAssert(i <= NSUIntegerMax, @"Added too many of the same sprite");
-				key = [originalKey stringByAppendingFormat:@"_%u", i++];
-			}
-			
-			CSSprite *sprite = [CSSprite spriteWithFile:filename];
-			[sprite setKey:key];
-			[sprite setName:key];
-			[sprite setFilename:[filename lastPathComponent]];
-			[[modelObject_ spriteDictionary] setValue:sprite forKey:key];
-			
-			// notify view that we added the sprite
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"addedSprite" object:nil];
-		}
+		[self addSpritesWithFiles: files];
 	}	
 }
 
