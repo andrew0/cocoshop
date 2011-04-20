@@ -31,30 +31,19 @@
 
 @interface CSSprite : CCSprite
 {
-	CCSprite *sprite_;
+	BOOL isSelected_;
+	
 	CCLayerColor *fill_;
-	CCNode *border_;
 	CCSprite *anchor_;
 	CCLabelBMFont *positionLabel_;
 	
-	/**
-	 * The key that is used for the dictionary
-	 */
 	NSString *key_;
-	
-	/**
-	 * The filename
-	 */
 	NSString *filename_;
-	
-	/**
-	 * The name to use for the variable when the code is generated
-	 */
 	NSString *name_;
 	BOOL locked_;
 }
 
-@property(nonatomic, readonly) CCNode *border;
+@property(nonatomic, assign) BOOL isSelected;
 @property(nonatomic, copy) NSString *key;
 @property(nonatomic, copy) NSString *filename;
 @property(nonatomic, copy) NSString *name;

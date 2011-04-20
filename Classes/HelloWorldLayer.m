@@ -46,6 +46,7 @@
 	if((self=[super init]))
 	{
 		[self setIsMouseEnabled:YES];
+		[self setIsKeyboardEnabled:YES];
 		[self setController:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addedSprite:) name:@"addedSprite" object:nil];
 	}
@@ -84,6 +85,8 @@
 		}
 	}
 }
+
+#pragma mark Mouse Events
 
 - (BOOL)ccMouseDown:(NSEvent *)event
 {
@@ -139,6 +142,9 @@
 		CSSprite *sprite = [model selectedSprite];
 		if(sprite)
 		{
+			// note that we don't change the position value directly
+			// the control will observe the change in posX and do it
+			// for us
 			CGPoint diff = ccpSub(location, prevLocation_);
 			CGPoint currentPos = [sprite position];
 			CGPoint newPos = ccpAdd(currentPos, diff);
@@ -164,6 +170,22 @@
 	prevLocation_ = [[CCDirector sharedDirector] convertEventToGL:event];
 	
 	return YES;
+}
+
+#pragma mark Keyboard Events
+
+- (BOOL)ccKeyDown:(NSEvent *)event
+{
+	unsigned short keyCode = [event keyCode];
+	
+	// we delete the sprite if the user hits delete (0x33) or forward delete (0x75)
+	if(keyCode == 0x33 || keyCode == 0x75)
+	{
+		[controller_ deleteSpriteWithKey:[[controller_ modelObject] selectedSpriteKey]];
+		return YES;
+	}
+	
+	return NO;
 }
 
 - (void)dealloc
