@@ -52,7 +52,7 @@
 			
 			NSArray *allowedFiles = [controller allowedFilesWithFiles: files];
 			
-			[controller addSpritesWithFiles: allowedFiles];
+			[controller addSpritesSafelyWithFiles: allowedFiles];
 			
         }
     }

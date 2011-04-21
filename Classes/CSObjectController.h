@@ -68,7 +68,8 @@
 - (NSArray *) allowedFilesWithFiles: (NSArray *) files;
 
 // adds sprites will filenames taken from array, doesn't do any filtering
-- (void) addSpritesWithFiles: (NSArray *) files;
+// executes safely on cocos2d thread
+- (void) addSpritesSafelyWithFiles: (NSArray *) files;
 
 #pragma mark IBActions
 - (void)deleteSpriteWithKey:(NSString *)key;

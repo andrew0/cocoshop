@@ -279,6 +279,18 @@
 	return allowedFiles;
 }
 
+// adds sprites on cocos thread
+// executes immediatly if curThread == cocosThread
+- (void) addSpritesSafelyWithFiles: (NSArray *) files
+{
+	NSThread *cocosThread = [[CCDirector sharedDirector] runningThread] ;
+	
+	[self performSelector: @selector(addSpritesWithFiles:)
+				 onThread: cocosThread
+			   withObject: files 
+			waitUntilDone: ([[NSThread currentThread] isEqualTo:cocosThread]) ];
+}
+
 // designated sprites adding method
 - (void) addSpritesWithFiles: (NSArray *) files
 {
@@ -427,7 +439,7 @@
 	{
 		NSArray *files = [openPanel filenames];
 		
-		[self addSpritesWithFiles: files];
+		[self addSpritesSafelyWithFiles: files];
 	}	
 }
 
