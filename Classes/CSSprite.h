@@ -35,7 +35,7 @@
 	
 	CCLayerColor *fill_;
 	CCSprite *anchor_;
-	CCLabelBMFont *positionLabel_;
+	//CCLabelBMFont *positionLabel_;
 	
 	NSString *key_;
 	NSString *filename_;
