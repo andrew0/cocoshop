@@ -21,6 +21,8 @@
 		49A14394135BF374000C3BD8 /* CCNode+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1427A135BE453000C3BD8 /* CCNode+Additions.m */; };
 		6D4702CE135F52BC00FDEADD /* CSMacGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4702CD135F52BC00FDEADD /* CSMacGLView.m */; };
 		6DFAD27313609A4B00006D0B /* CSTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DFAD27213609A4B00006D0B /* CSTableViewDataSource.m */; };
+		6DFAD3201360BB5A00006D0B /* PRFilledPolygon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6DFAD31D1360BB5A00006D0B /* PRFilledPolygon.mm */; };
+		6DFAD3211360BB5A00006D0B /* triangulate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DFAD31E1360BB5A00006D0B /* triangulate.cpp */; };
 		E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -240,6 +242,10 @@
 		6D4702CD135F52BC00FDEADD /* CSMacGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSMacGLView.m; sourceTree = "<group>"; };
 		6DFAD27113609A4B00006D0B /* CSTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTableViewDataSource.h; sourceTree = "<group>"; };
 		6DFAD27213609A4B00006D0B /* CSTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSTableViewDataSource.m; sourceTree = "<group>"; };
+		6DFAD31C1360BB5A00006D0B /* PRFilledPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRFilledPolygon.h; sourceTree = "<group>"; };
+		6DFAD31D1360BB5A00006D0B /* PRFilledPolygon.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PRFilledPolygon.mm; sourceTree = "<group>"; };
+		6DFAD31E1360BB5A00006D0B /* triangulate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = triangulate.cpp; sourceTree = "<group>"; };
+		6DFAD31F1360BB5A00006D0B /* triangulate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = triangulate.h; sourceTree = "<group>"; };
 		E01E663D121CA00A001A484F /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		E02A83D2129F000100341C97 /* cocoshopAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocoshopAppDelegate.h; sourceTree = "<group>"; };
@@ -546,9 +552,21 @@
 			name = cocos2d;
 			sourceTree = "<group>";
 		};
+		6DFAD31B1360BB5A00006D0B /* PRKit */ = {
+			isa = PBXGroup;
+			children = (
+				6DFAD31C1360BB5A00006D0B /* PRFilledPolygon.h */,
+				6DFAD31D1360BB5A00006D0B /* PRFilledPolygon.mm */,
+				6DFAD31E1360BB5A00006D0B /* triangulate.cpp */,
+				6DFAD31F1360BB5A00006D0B /* triangulate.h */,
+			);
+			path = PRKit;
+			sourceTree = "<group>";
+		};
 		E02A83D1129F000100341C97 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				6DFAD31B1360BB5A00006D0B /* PRKit */,
 				49A1405B135BC9EC000C3BD8 /* cocos2d */,
 				496706FC135B9E1B0074D05A /* CSModel.h */,
 				496706FB135B9E1B0074D05A /* CSModel.m */,
@@ -1081,6 +1099,8 @@
 				49A14394135BF374000C3BD8 /* CCNode+Additions.m in Sources */,
 				6D4702CE135F52BC00FDEADD /* CSMacGLView.m in Sources */,
 				6DFAD27313609A4B00006D0B /* CSTableViewDataSource.m in Sources */,
+				6DFAD3201360BB5A00006D0B /* PRFilledPolygon.mm in Sources */,
+				6DFAD3211360BB5A00006D0B /* triangulate.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
