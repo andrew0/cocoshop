@@ -69,7 +69,10 @@
 	return nil;
 }
 
-- (void)addedSprite:(NSNotification *)aNotification
+#pragma mark Sprites Added Notification
+
+// adds new sprites as children if needed - should be called on Cocos2D Thread
+- (void) updateSpritesFromModel
 {
 	CSModel *model = [controller_ modelObject];
 	NSMutableDictionary *spriteDictionary = [model spriteDictionary];
@@ -84,6 +87,21 @@
 			[model setSelectedSpriteKey:key];
 		}
 	}
+}
+
+- (void) visit
+{
+	if (spriteWasAdded_)
+		[self updateSpritesFromModel];
+	spriteWasAdded_ = NO;
+	
+	[super visit];
+}
+
+- (void)addedSprite:(NSNotification *)aNotification
+{
+	// queue sprites update on next visit (in Cocos2D Thread)
+	spriteWasAdded_ = YES;
 }
 
 #pragma mark Mouse Events

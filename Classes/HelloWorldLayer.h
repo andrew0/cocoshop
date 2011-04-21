@@ -35,6 +35,8 @@
 	BOOL shouldToggleVisibility_;
 	BOOL shouldDragSprite_;
 	CGPoint prevLocation_;
+	
+	BOOL spriteWasAdded_;
 }
 
 @property(nonatomic, retain) CSObjectController *controller;
