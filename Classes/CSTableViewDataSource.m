@@ -23,46 +23,49 @@
  *
  */
 
-#import <Cocoa/Cocoa.h>
+#import "CSTableViewDataSource.h"
 
-@class CSSprite;
+@implementation CSTableViewDataSource
 
-@interface CSModel : NSObject
+@synthesize dictionary=dictionary_;
+
++ (id)dataSourceWithDictionary:(NSMutableDictionary *)dict
 {
-	NSMutableDictionary *spriteDictionary_;
-	NSString *selectedSpriteKey_;
-	
-	NSString *name_;
-	float posX_;
-	float posY_;
-	float posZ_;
-	float anchorX_;
-	float anchorY_;
-	float scale_;
-	NSInteger flipX_;
-	NSInteger flipY_;
-	float opacity_;
-	NSColor *color_;
-	NSInteger relativeAnchor_;
-	float rotation_;
+	return [[[self alloc] initWithDictionary:dict] autorelease];
 }
 
-@property(nonatomic, retain) NSMutableDictionary *spriteDictionary;
-@property(nonatomic, copy) NSString *selectedSpriteKey;
-@property(nonatomic, assign) NSString *name;
-@property(nonatomic, assign) float posX;
-@property(nonatomic, assign) float posY;
-@property(nonatomic, assign) float posZ;
-@property(nonatomic, assign) float anchorX;
-@property(nonatomic, assign) float anchorY;
-@property(nonatomic, assign) float scale;
-@property(nonatomic, assign) NSInteger flipX;
-@property(nonatomic, assign) NSInteger flipY;
-@property(nonatomic, assign) float opacity;
-@property(nonatomic, copy) NSColor *color;
-@property(nonatomic, assign) NSInteger relativeAnchor;
-@property(nonatomic, assign) float rotation;
+- (id)initWithDictionary:(NSMutableDictionary *)dict
+{
+	if((self=[super init]))
+	{
+		[self setDictionary:dict];
+	}
+	
+	return self;
+}
 
-- (CSSprite *)selectedSprite;
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+	if(dictionary_)
+	{
+		NSArray *values = [dictionary_ allValues];
+		return [[values objectAtIndex:rowIndex] name];
+	}
+	
+	return nil;
+}
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
+{
+	NSArray *values = [dictionary_ allValues];
+	return [values count];
+	return 1;
+}
+
+- (void)dealloc
+{
+	[self setDictionary:nil];
+	[super dealloc];
+}
 
 @end

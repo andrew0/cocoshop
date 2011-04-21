@@ -25,44 +25,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class CSSprite;
-
-@interface CSModel : NSObject
+@interface CSTableViewDataSource : NSObject <NSTableViewDataSource>
 {
-	NSMutableDictionary *spriteDictionary_;
-	NSString *selectedSpriteKey_;
-	
-	NSString *name_;
-	float posX_;
-	float posY_;
-	float posZ_;
-	float anchorX_;
-	float anchorY_;
-	float scale_;
-	NSInteger flipX_;
-	NSInteger flipY_;
-	float opacity_;
-	NSColor *color_;
-	NSInteger relativeAnchor_;
-	float rotation_;
+	NSMutableDictionary *dictionary_;
 }
 
-@property(nonatomic, retain) NSMutableDictionary *spriteDictionary;
-@property(nonatomic, copy) NSString *selectedSpriteKey;
-@property(nonatomic, assign) NSString *name;
-@property(nonatomic, assign) float posX;
-@property(nonatomic, assign) float posY;
-@property(nonatomic, assign) float posZ;
-@property(nonatomic, assign) float anchorX;
-@property(nonatomic, assign) float anchorY;
-@property(nonatomic, assign) float scale;
-@property(nonatomic, assign) NSInteger flipX;
-@property(nonatomic, assign) NSInteger flipY;
-@property(nonatomic, assign) float opacity;
-@property(nonatomic, copy) NSColor *color;
-@property(nonatomic, assign) NSInteger relativeAnchor;
-@property(nonatomic, assign) float rotation;
+@property(nonatomic, retain) NSMutableDictionary *dictionary;
 
-- (CSSprite *)selectedSprite;
++ (id)dataSourceWithDictionary:(NSMutableDictionary *)dict;
+- (id)initWithDictionary:(NSMutableDictionary *)dict;
 
 @end

@@ -20,6 +20,7 @@
 		49A1427C135BE453000C3BD8 /* CCNode+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1427A135BE453000C3BD8 /* CCNode+Additions.m */; };
 		49A14394135BF374000C3BD8 /* CCNode+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1427A135BE453000C3BD8 /* CCNode+Additions.m */; };
 		6D4702CE135F52BC00FDEADD /* CSMacGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4702CD135F52BC00FDEADD /* CSMacGLView.m */; };
+		6DFAD27313609A4B00006D0B /* CSTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DFAD27213609A4B00006D0B /* CSTableViewDataSource.m */; };
 		E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -237,6 +238,8 @@
 		49A1427A135BE453000C3BD8 /* CCNode+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+Additions.m"; sourceTree = "<group>"; };
 		6D4702CC135F52BC00FDEADD /* CSMacGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSMacGLView.h; sourceTree = "<group>"; };
 		6D4702CD135F52BC00FDEADD /* CSMacGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSMacGLView.m; sourceTree = "<group>"; };
+		6DFAD27113609A4B00006D0B /* CSTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTableViewDataSource.h; sourceTree = "<group>"; };
+		6DFAD27213609A4B00006D0B /* CSTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSTableViewDataSource.m; sourceTree = "<group>"; };
 		E01E663D121CA00A001A484F /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		E02A83D2129F000100341C97 /* cocoshopAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocoshopAppDelegate.h; sourceTree = "<group>"; };
@@ -551,6 +554,8 @@
 				496706FB135B9E1B0074D05A /* CSModel.m */,
 				496706F8135B9DDE0074D05A /* CSObjectController.h */,
 				496706F9135B9DDE0074D05A /* CSObjectController.m */,
+				6DFAD27113609A4B00006D0B /* CSTableViewDataSource.h */,
+				6DFAD27213609A4B00006D0B /* CSTableViewDataSource.m */,
 				E02A83FB129F023B00341C97 /* main.m */,
 				E02A83D2129F000100341C97 /* cocoshopAppDelegate.h */,
 				E02A83D3129F000100341C97 /* cocoshopAppDelegate.m */,
@@ -1075,6 +1080,7 @@
 				496706FD135B9E1B0074D05A /* CSModel.m in Sources */,
 				49A14394135BF374000C3BD8 /* CCNode+Additions.m in Sources */,
 				6D4702CE135F52BC00FDEADD /* CSMacGLView.m in Sources */,
+				6DFAD27313609A4B00006D0B /* CSTableViewDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
