@@ -42,11 +42,20 @@
 @synthesize opacity=opacity_;
 @synthesize color=color_;
 @synthesize relativeAnchor=relativeAnchor_;
+@synthesize rotation=rotation_;
+
+- (id)init
+{
+	if((self=[super init]))
+	{
+		[self setSpriteDictionary:[NSMutableDictionary dictionary]];
+		[self setSelectedSpriteKey:nil];
+	}
+	return self;
+}
 
 - (void)awakeFromNib
 {
-	[self setSpriteDictionary:[NSMutableDictionary dictionary]];
-	[self setSelectedSpriteKey:nil];
 }
 
 - (CSSprite *)selectedSprite
@@ -58,13 +67,13 @@
 
 - (void)setSelectedSpriteKey:(NSString *)aKey
 {
-	if(selectedSpriteKey_ != aKey)
+	if( ![selectedSpriteKey_ isEqualToString:aKey] )
 	{
 		// deselect old sprite
 		CSSprite *old = [self selectedSprite];
 		if(old)
 		{
-			[[old border] setVisible:NO];
+			[old setIsSelected:NO];
 		}
 		
 		[selectedSpriteKey_ release];
@@ -74,27 +83,27 @@
 		CSSprite *new = [self selectedSprite];
 		if(new)
 		{
-			NSString *name = [new name];
 			CGPoint pos = [new position];
 			CGPoint anchor = [new anchorPoint];
-			float opacity = [new opacity];
-			NSInteger relAnchor = ( [new isRelativeAnchorPoint] ) ? NSOnState : NSOffState;
+			NSColor *col = [NSColor colorWithDeviceRed:[new color].r green:[new color].g blue:[new color].b alpha:255];
 			
-			[[new border] setVisible:YES];
-			[self setName:name];
+			[new setIsSelected:YES];
+			[self setName:[new name]];
 			[self setPosX:pos.x];
 			[self setPosY:pos.y];
 			[self setAnchorX:anchor.x];
 			[self setAnchorY:anchor.y];
-			[self setOpacity:opacity];
-			[self setRelativeAnchor:relAnchor];
+			[self setFlipX:([new flipX]) ? NSOnState : NSOffState];
+			[self setFlipY:([new flipY]) ? NSOnState : NSOffState];
+			[self setScale:[new scale]];
+			[self setOpacity:[new opacity]];
+			[self setColor:col];
+			[self setRelativeAnchor:([new isRelativeAnchorPoint]) ? NSOnState : NSOffState];
 		}
+		
+		// tell controller we changed the selected sprite
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"didChangeSelectedSprite" object:nil];
 	}
-}
-
-- (void)setOpacity:(float)anOpacity
-{
-	opacity_ = floorf(anOpacity);
 }
 
 - (void)dealloc

@@ -28,11 +28,13 @@
 
 @class CSModel;
 @class HelloWorldLayer;
+@class CSTableViewDataSource;
 
 @interface CSObjectController : NSObjectController
 {
     CSModel *modelObject_;
 	HelloWorldLayer *cocosView_;
+	CSTableViewDataSource *dataSource_;
 	
 	IBOutlet NSPanel *infoPanel_;
 	IBOutlet NSTextField *nameField_;
@@ -52,13 +54,23 @@
 	IBOutlet NSButton *flipYButton_;
 	IBOutlet NSTextField *opacityField_;
 	IBOutlet NSSlider *opacitySlider_;
+	IBOutlet NSColorWell *colorWell_;
 	IBOutlet NSButton *relativeAnchorButton_;
+	IBOutlet NSTextField *rotationField_;
+	IBOutlet NSSlider *rotationSlider_;
+	IBOutlet NSTableView *spriteTableView_;
 }
 
 @property(assign) IBOutlet CSModel *modelObject;
 @property(nonatomic, retain) HelloWorldLayer *cocosView;
 
+- (void)deleteSpriteWithKey:(NSString *)key;
+- (void)spriteTableSelectionDidChange:(NSNotification *)aNotification;
+- (void)didChangeSelectedSprite:(NSNotification *)aNotification;
+
 - (IBAction)addSprite:(id)sender;
 - (IBAction)openInfoPanel:(id)sender;
+- (IBAction)spriteAddButtonClicked:(id)sender;
+- (IBAction)spriteDeleteButtonClicked:(id)sender;
 
 @end

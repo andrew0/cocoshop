@@ -27,6 +27,8 @@
 #import "CSModel.h"
 #import "CSSprite.h"
 #import "HelloWorldLayer.h"
+#import "cocoshopAppDelegate.h"
+#import "CSTableViewDataSource.h"
 
 @implementation CSObjectController
 
@@ -35,6 +37,16 @@
 
 - (void)awakeFromNib
 {
+	// add a data source to the table view
+	NSMutableDictionary *dict = [modelObject_ spriteDictionary];
+	dataSource_ = [[CSTableViewDataSource dataSourceWithDictionary:dict] retain];
+	[spriteTableView_ setDataSource:dataSource_];
+	
+	// listen to change in table view
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(spriteTableSelectionDidChange:) name:NSTableViewSelectionDidChangeNotification object:nil];
+	
+	// listen to notification when we deselect the sprite
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeSelectedSprite:) name:@"didChangeSelectedSprite" object:nil];
 }
 
 - (void)setCocosView:(HelloWorldLayer *)view
@@ -52,7 +64,6 @@
 
 - (void)registerAsObserver
 {
-	[modelObject_ addObserver:self forKeyPath:@"selectedSpriteKey" options:NSKeyValueObservingOptionNew context:NULL];
 	[modelObject_ addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:NULL];
 	[modelObject_ addObserver:self forKeyPath:@"posX" options:NSKeyValueObservingOptionNew context:NULL];
 	[modelObject_ addObserver:self forKeyPath:@"posY" options:NSKeyValueObservingOptionNew context:NULL];
@@ -65,6 +76,7 @@
 	[modelObject_ addObserver:self forKeyPath:@"opacity" options:NSKeyValueObservingOptionNew context:NULL];
 	[modelObject_ addObserver:self forKeyPath:@"color" options:NSKeyValueObservingOptionNew context:NULL];
 	[modelObject_ addObserver:self forKeyPath:@"relativeAnchor" options:NSKeyValueObservingOptionNew context:NULL];
+	[modelObject_ addObserver:self forKeyPath:@"rotation" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)unregisterForChangeNotification
@@ -74,54 +86,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	// handle changes in the panel
-	if( [keyPath isEqualToString:@"selectedSpriteKey"] )
-	{
-		NSLog(@"hiya");
-		// if there is no selected sprite...
-		if( ![modelObject_ selectedSpriteKey] )
-		{
-			[nameField_ setEnabled:NO];
-			[posXField_ setEnabled:NO];
-			[posXStepper_ setEnabled:NO];
-			[posYField_ setEnabled:NO];
-			[posYStepper_ setEnabled:NO];
-			[posZField_ setEnabled:NO];
-			[posZStepper_ setEnabled:NO];
-			[anchorXField_ setEnabled:NO];
-			[anchorXStepper_ setEnabled:NO];
-			[anchorYField_ setEnabled:NO];
-			[anchorYStepper_ setEnabled:NO];
-			[scaleField_ setEnabled:NO];
-			[flipXButton_ setEnabled:NO];
-			[flipYButton_ setEnabled:NO];
-			[opacityField_ setEnabled:NO];
-			[opacitySlider_ setEnabled:NO];
-			[relativeAnchorButton_ setEnabled:NO];
-		}
-		else
-		{
-			[nameField_ setEnabled:YES];
-			[posXField_ setEnabled:YES];
-			[posXStepper_ setEnabled:YES];
-			[posYField_ setEnabled:YES];
-			[posYStepper_ setEnabled:YES];
-			[posZField_ setEnabled:YES];
-			[posZStepper_ setEnabled:YES];
-			[anchorXField_ setEnabled:YES];
-			[anchorXStepper_ setEnabled:YES];
-			[anchorYField_ setEnabled:YES];
-			[anchorYStepper_ setEnabled:YES];
-			[scaleField_ setEnabled:YES];
-			[flipXButton_ setEnabled:YES];
-			[flipYButton_ setEnabled:YES];
-			[opacityField_ setEnabled:YES];
-			[opacitySlider_ setEnabled:YES];
-			[relativeAnchorButton_ setEnabled:YES];			
-		}
-
-	}
-	else if([keyPath isEqualToString:@"name"])
+	if( [keyPath isEqualToString:@"name"] )
 	{
 		CSSprite *sprite = [modelObject_ selectedSprite];
 		if(sprite)
@@ -135,7 +100,7 @@
 			}
 		}
 	}
-	else if([keyPath isEqualToString:@"posX"])
+	else if( [keyPath isEqualToString:@"posX"] )
 	{
 		CSSprite *sprite = [modelObject_ selectedSprite];
 		if(sprite)
@@ -145,7 +110,7 @@
 			[sprite setPosition:currentPos];
 		}
 	}
-	else if([keyPath isEqualToString:@"posY"])
+	else if( [keyPath isEqualToString:@"posY"] )
 	{
 		CSSprite *sprite = [modelObject_ selectedSprite];
 		if(sprite)
@@ -155,11 +120,11 @@
 			[sprite setPosition:currentPos];
 		}
 	}
-	else if([keyPath isEqualToString:@"posZ"])
+	else if( [keyPath isEqualToString:@"posZ"] )
 	{
 		
 	}
-	else if([keyPath isEqualToString:@"anchorX"])
+	else if( [keyPath isEqualToString:@"anchorX"] )
 	{
 		CSSprite *sprite = [modelObject_ selectedSprite];
 		if(sprite)
@@ -169,7 +134,7 @@
 			[sprite setAnchorPoint:currentAnchor];
 		}
 	}
-	else if([keyPath isEqualToString:@"anchorY"])
+	else if( [keyPath isEqualToString:@"anchorY"] )
 	{
 		CSSprite *sprite = [modelObject_ selectedSprite];
 		if(sprite)
@@ -179,7 +144,7 @@
 			[sprite setAnchorPoint:currentAnchor];
 		}
 	}
-	else if([keyPath isEqualToString:@"scale"])
+	else if( [keyPath isEqualToString:@"scale"] )
 	{
 		CSSprite *sprite = [modelObject_ selectedSprite];
 		if(sprite)
@@ -187,7 +152,7 @@
 			[sprite setScale:[modelObject_ scale]];
 		}
 	}
-	else if([keyPath isEqualToString:@"flipX"])
+	else if( [keyPath isEqualToString:@"flipX"] )
 	{
 		CSSprite *sprite = [modelObject_ selectedSprite];
 		if(sprite)
@@ -203,7 +168,7 @@
 			}
 		}
 	}
-	else if([keyPath isEqualToString:@"flipY"])
+	else if( [keyPath isEqualToString:@"flipY"] )
 	{
 		CSSprite *sprite = [modelObject_ selectedSprite];
 		if(sprite)
@@ -219,7 +184,7 @@
 			}
 		}
 	}
-	else if([keyPath isEqualToString:@"opacity"])
+	else if( [keyPath isEqualToString:@"opacity"] )
 	{
 		CSSprite *sprite = [modelObject_ selectedSprite];
 		if(sprite)
@@ -237,13 +202,13 @@
 			
 			CGFloat r, g, b, a;			
 			a = [color alphaComponent];
-			r = [color redComponent] * a *255;
+			r = [color redComponent] * a * 255;
 			g = [color greenComponent] * a * 255;
 			b = [color blueComponent] * a * 255;						
 			[sprite setColor:ccc3(r, g, b)];
 		}
 	}
-	else if([keyPath isEqualToString:@"relativeAnchor"])
+	else if( [keyPath isEqualToString:@"relativeAnchor"] )
 	{
 		CSSprite *sprite = [modelObject_ selectedSprite];
 		if(sprite)
@@ -259,6 +224,14 @@
 			}
 		}
 	}
+	else if( [keyPath isEqualToString:@"rotation"] )
+	{
+		CSSprite *sprite = [modelObject_ selectedSprite];
+		if(sprite)
+		{
+			[sprite setRotation:[modelObject_ rotation]];
+		}
+	}
 	
 	[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
@@ -266,7 +239,97 @@
 - (void)dealloc
 {
 	[self setCocosView:nil];
+	[dataSource_ release];
 	[super dealloc];
+}
+
+- (void)deleteSpriteWithKey:(NSString *)key
+{
+	// delete sprite
+	CSSprite *sprite = [[modelObject_ spriteDictionary] objectForKey:key];
+	if(sprite)
+	{
+		// deselect sprite if necessary
+		if( [key isEqualToString:[modelObject_ selectedSpriteKey]] )
+			[modelObject_ setSelectedSpriteKey:nil];
+		
+		// only remove child if we're the parent
+		if( [sprite parent] == cocosView_ )
+			[cocosView_ removeChild:sprite cleanup:YES];
+		
+		// remove the sprite from the dictionary
+		[[modelObject_ spriteDictionary] removeObjectForKey:[sprite key]];
+		
+		// update the table
+		[spriteTableView_ reloadData];
+	}	
+}
+
+- (void)spriteTableSelectionDidChange:(NSNotification *)aNotification
+{
+	NSInteger index = [spriteTableView_ selectedRow];
+	if(index >= 0)
+	{
+		NSArray *values = [[modelObject_ spriteDictionary] allValues];
+		CSSprite *sprite = [values objectAtIndex:index];
+		[modelObject_ setSelectedSpriteKey:[sprite key]];
+	}
+	else
+	{
+		[modelObject_ setSelectedSpriteKey:nil];
+	}
+
+}
+
+- (void)didChangeSelectedSprite:(NSNotification *)aNotification
+{
+	// if there is no selected sprite...
+	if( ![modelObject_ selectedSpriteKey] )
+	{
+		[nameField_ setEnabled:NO];
+		[posXField_ setEnabled:NO];
+		[posXStepper_ setEnabled:NO];
+		[posYField_ setEnabled:NO];
+		[posYStepper_ setEnabled:NO];
+		[posZField_ setEnabled:NO];
+		[posZStepper_ setEnabled:NO];
+		[anchorXField_ setEnabled:NO];
+		[anchorXStepper_ setEnabled:NO];
+		[anchorYField_ setEnabled:NO];
+		[anchorYStepper_ setEnabled:NO];
+		[scaleField_ setEnabled:NO];
+		[flipXButton_ setEnabled:NO];
+		[flipYButton_ setEnabled:NO];
+		[opacityField_ setEnabled:NO];
+		[opacitySlider_ setEnabled:NO];
+		[colorWell_ setEnabled:NO];
+		[relativeAnchorButton_ setEnabled:NO];
+		[rotationField_ setEnabled:NO];
+		[rotationSlider_ setEnabled:NO];
+	}
+	else
+	{
+		[nameField_ setEnabled:YES];
+		[posXField_ setEnabled:YES];
+		[posXStepper_ setEnabled:YES];
+		[posYField_ setEnabled:YES];
+		[posYStepper_ setEnabled:YES];
+		[posZField_ setEnabled:YES];
+		[posZStepper_ setEnabled:YES];
+		[anchorXField_ setEnabled:YES];
+		[anchorXStepper_ setEnabled:YES];
+		[anchorYField_ setEnabled:YES];
+		[anchorYStepper_ setEnabled:YES];
+		[scaleField_ setEnabled:YES];
+		[flipXButton_ setEnabled:YES];
+		[flipYButton_ setEnabled:YES];
+		[opacityField_ setEnabled:YES];
+		[opacitySlider_ setEnabled:YES];
+		[colorWell_ setEnabled:YES];
+		[relativeAnchorButton_ setEnabled:YES];
+		[rotationField_ setEnabled:YES];
+		[rotationSlider_ setEnabled:YES];
+	}
 }
 
 #pragma mark IBActions
@@ -283,18 +346,21 @@
 	[openPanel setCanChooseDirectories:NO];
 	[openPanel setAllowedFileTypes:allowedTypes];
 	[openPanel setAllowsOtherFileTypes:NO];
-		
+	
 	// run the panel
-	if([openPanel runModalForDirectory:nil file:nil types:allowedTypes] == NSOKButton)
+	if( [[NSDocumentController sharedDocumentController] runModalOpenPanel:openPanel forTypes:allowedTypes] == NSOKButton )
 	{
 		NSArray *files = [openPanel filenames];
 		for(NSString *filename in files)
-		{
+		{			
 			// create key for the sprite
 			NSString *originalKey = [filename lastPathComponent];
 			NSString *key = [NSString stringWithString:originalKey];
+			
+			// keep adding a number to the end of the key so we can track multiple
+			// instances of the same sprite
 			NSUInteger i = 0;
-			while([[modelObject_ spriteDictionary] valueForKey:originalKey] != nil)
+			while([[modelObject_ spriteDictionary] objectForKey:key] != nil)
 			{
 				NSAssert(i <= NSUIntegerMax, @"Added too many of the same sprite");
 				key = [originalKey stringByAppendingFormat:@"_%u", i++];
@@ -308,13 +374,29 @@
 			
 			// notify view that we added the sprite
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"addedSprite" object:nil];
-		}
+			
+			// reload the table
+			[spriteTableView_ reloadData];
+		}			
 	}	
 }
 
 - (IBAction)openInfoPanel:(id)sender
 {
 	[infoPanel_ makeKeyAndOrderFront:nil];
+}
+
+- (IBAction)spriteAddButtonClicked:(id)sender
+{
+	[self addSprite:sender];
+}
+
+- (IBAction)spriteDeleteButtonClicked:(id)sender
+{
+	NSInteger index =  [spriteTableView_ selectedRow];
+	NSArray *values = [[modelObject_ spriteDictionary] allValues];
+	CSSprite *sprite = [values objectAtIndex:index];
+	[self deleteSpriteWithKey:[sprite key]];
 }
 
 @end

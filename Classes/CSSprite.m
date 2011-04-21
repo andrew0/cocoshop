@@ -30,7 +30,7 @@
 
 @implementation CSSprite
 
-@synthesize border=border_;
+@synthesize isSelected=isSelected_;
 @synthesize key=key_;
 @synthesize filename=filename_;
 @synthesize name=name_;
@@ -44,6 +44,17 @@
 		[self setFilename:nil];
 		[self setName:nil];
 		locked_ = NO;
+		
+		fill_ = [[CCLayerColor layerWithColor:ccc4(30,144,255,25.5f)] retain];
+		[self addChild:fill_];
+		
+		anchor_ = [[CCSprite spriteWithFile:@"anchor.png"] retain];
+		[anchor_ setOpacity:200];
+		[self addChild:anchor_];
+		
+		NSString *posText = [NSString stringWithFormat:@"%f, %f", [self position].x, [self position].y];
+		positionLabel_ = [[CCLabelBMFont labelWithString:posText fntFile:@"arial.fnt"] retain];
+		[anchor_ addChild:positionLabel_];
 	}
 	
 	return self;
@@ -53,55 +64,12 @@
 {
 	[super onEnter];
 	
-	CGSize size = [self contentSize];
-	CGSize fixedSize = CGSizeMake(size.width + kCSSpriteStrokeSize * 2, size.height + kCSSpriteStrokeSize * 2);
+	CGSize size = contentSize_;
+	[fill_ changeWidth:size.width height:size.height];
+	[anchor_ setPosition:ccp(size.width*anchorPoint_.x, size.height*anchorPoint_.y)];
 	
-	if(!border_)
-	{
-		border_ = [[CCNode node] retain];
-		
-		fill_ = [[CCLayerColor layerWithColor:ccc4(30,144,255,25.5f)] retain];
-		[fill_ changeWidth:size.width height:size.height];
-		[border_ addChild:fill_];
-		
-		CCLayerColor *left = [CCLayerColor layerWithColor:ccc4(255,255,255,255)];
-		[left setPosition:ccp(-kCSSpriteStrokeSize,-kCSSpriteStrokeSize)];
-		[left changeWidth:kCSSpriteStrokeSize height:fixedSize.height];
-		[border_ addChild:left];
-		
-		CCLayerColor *right = [CCLayerColor layerWithColor:ccc4(255,255,255,255)];
-		[right setPosition:ccp(size.width,-kCSSpriteStrokeSize)];
-		[right changeWidth:kCSSpriteStrokeSize height:fixedSize.height];
-		[border_ addChild:right];
-		
-		CCLayerColor *top = [CCLayerColor layerWithColor:ccc4(255,255,255,255)];
-		[top setPosition:ccp(-kCSSpriteStrokeSize,size.height)];
-		[top changeWidth:fixedSize.width height:kCSSpriteStrokeSize];
-		[border_ addChild:top];
-		
-		CCLayerColor *bottom = [CCLayerColor layerWithColor:ccc4(255,255,255,255)];
-		[bottom setPosition:ccp(-kCSSpriteStrokeSize,-kCSSpriteStrokeSize)];
-		[bottom changeWidth:fixedSize.width height:kCSSpriteStrokeSize];
-		[border_ addChild:bottom];
-		
-		anchor_ = [[CCSprite spriteWithFile:@"anchor.png"] retain];
-		[anchor_ setOpacity:200];
-		[anchor_ setPosition:ccp(size.width*anchorPoint_.x, size.height*anchorPoint_.y)];
-		[border_ addChild:anchor_];
-		
-		CGSize s = [anchor_ contentSize];
-		positionLabel_ = [[CCLabelBMFont labelWithString:[NSString stringWithFormat:@"%d, %d", (NSInteger)position_.x, (NSInteger)position_.y] fntFile:@"arial.fnt"] retain];
-		[positionLabel_ setPosition:ccp(s.width/2, -10)];
-		[anchor_ addChild:positionLabel_ z:2];		
-	}
-	
-	[self addChild:border_];
-}
-
-- (void)onExit
-{
-	[self removeChild:border_ cleanup:YES];
-	[super onExit];
+	CGSize s = [anchor_ contentSize];
+	[positionLabel_ setPosition:ccp(s.width/2, -10)];	
 }
 
 - (void)setName:(NSString *)aName
@@ -124,7 +92,8 @@
 		[super setAnchorPoint:anchor];
 		
 		// update position of anchor point
-		CGSize size = [self contentSize];
+		CGSize size = [self boundingBox].size;
+		
 		if( ![self isRelativeAnchorPoint] )
 			[anchor_ setPosition:CGPointZero];
 		else
@@ -139,8 +108,9 @@
 		[super setPosition:pos];
 		
 		// update the position label
-		[positionLabel_ setString:[NSString stringWithFormat:@"%d, %d", (NSInteger)position_.x, (NSInteger)position_.y]];
 		CGSize s = [anchor_ contentSize];
+		NSString *posText = [NSString stringWithFormat:@"%g, %g", floorf( [self position].x ), floorf( [self position].y )];
+		[positionLabel_ setString:posText];
 		[positionLabel_ setPosition:ccp(s.width/2, -10)];		
 	}
 }
@@ -186,12 +156,43 @@
 	}
 }
 
+- (void)setIsSelected:(BOOL)selected
+{
+	if(isSelected_ != selected)
+	{
+		isSelected_ = selected;
+		[fill_ setVisible:selected];
+		[anchor_ setVisible:selected];
+	}
+}
+
+- (void)draw
+{
+	[super draw];
+	
+	// draw the outline when its selected
+	if(isSelected_)
+	{
+		CGSize s = contentSize_;	
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		glLineWidth(1.0f);
+		
+		CGPoint vertices[] = {
+			ccp(0, s.height),
+			ccp(s.width, s.height),
+			ccp(s.width, 0),
+			ccp(0, 0)
+		};
+		
+		ccDrawPoly(vertices, 4, YES);
+	}
+}
+
 - (void)dealloc
 {
+	[fill_ release];
 	[anchor_ release];
 	[positionLabel_ release];
-	[border_ release];
-	[fill_ release];
 	[self setKey:nil];
 	[self setFilename:nil];
 	[self setName:nil];
