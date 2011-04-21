@@ -275,6 +275,7 @@
 	return allowedFiles;
 }
 
+// designated sprites adding method
 - (void) addSpritesWithFiles: (NSArray *) files
 {
 	for(NSString *filename in files)
@@ -298,6 +299,9 @@
 		// notify view that we added the sprite
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"addedSprite" object:nil];
 	}
+	
+	// reload the table
+	[spriteTableView_ reloadData];
 }
 
 - (void)deleteSpriteWithKey:(NSString *)key
