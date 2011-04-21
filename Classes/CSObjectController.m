@@ -39,7 +39,11 @@
 {
 	// add a data source to the table view
 	NSMutableDictionary *dict = [modelObject_ spriteDictionary];
-	dataSource_ = [[CSTableViewDataSource dataSourceWithDictionary:dict] retain];
+	
+	@synchronized (dict)
+	{
+		dataSource_ = [[CSTableViewDataSource dataSourceWithDictionary:dict] retain];
+	}
 	[spriteTableView_ setDataSource:dataSource_];
 	
 	// listen to change in table view
@@ -294,7 +298,10 @@
 		[sprite setKey:key];
 		[sprite setName:key];
 		[sprite setFilename:[filename lastPathComponent]];
-		[[modelObject_ spriteDictionary] setValue:sprite forKey:key];
+		@synchronized ([modelObject_ spriteDictionary])
+		{
+			[[modelObject_ spriteDictionary] setValue:sprite forKey:key];
+		}
 		
 		// notify view that we added the sprite
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"addedSprite" object:nil];
@@ -319,7 +326,10 @@
 			[cocosView_ removeChild:sprite cleanup:YES];
 		
 		// remove the sprite from the dictionary
-		[[modelObject_ spriteDictionary] removeObjectForKey:[sprite key]];
+		@synchronized( [modelObject_ spriteDictionary])
+		{
+			[[modelObject_ spriteDictionary] removeObjectForKey:[sprite key]];
+		}
 		
 		// update the table
 		[spriteTableView_ reloadData];
@@ -331,7 +341,11 @@
 	NSInteger index = [spriteTableView_ selectedRow];
 	if(index >= 0)
 	{
-		NSArray *values = [[modelObject_ spriteDictionary] allValues];
+		NSArray *values = nil;
+		@synchronized ([modelObject_ spriteDictionary])
+		{
+			values = [[modelObject_ spriteDictionary] allValues];
+		}
 		CSSprite *sprite = [values objectAtIndex:index];
 		[modelObject_ setSelectedSpriteKey:[sprite key]];
 	}
@@ -430,7 +444,12 @@
 - (IBAction)spriteDeleteButtonClicked:(id)sender
 {
 	NSInteger index =  [spriteTableView_ selectedRow];
-	NSArray *values = [[modelObject_ spriteDictionary] allValues];
+	NSArray *values = nil;
+	
+	@synchronized ( [modelObject_ spriteDictionary])
+	{
+		values = [[modelObject_ spriteDictionary] allValues];
+	}
 	CSSprite *sprite = [values objectAtIndex:index];
 	[self deleteSpriteWithKey:[sprite key]];
 }

@@ -60,7 +60,14 @@
 
 - (CSSprite *)selectedSprite
 {
-	return [spriteDictionary_ objectForKey:selectedSpriteKey_];
+	CSSprite *sprite = nil;
+	
+	@synchronized ( spriteDictionary_ )
+	{
+		sprite = [spriteDictionary_ objectForKey:selectedSpriteKey_];
+	}
+	
+	return sprite;
 }
 
 #pragma mark Custom Accessors

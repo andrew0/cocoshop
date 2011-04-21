@@ -77,14 +77,17 @@
 	CSModel *model = [controller_ modelObject];
 	NSMutableDictionary *spriteDictionary = [model spriteDictionary];
 	
-	for(NSString *key in spriteDictionary)
+	@synchronized (spriteDictionary)
 	{
-		// check each sprite's parent. if there is none, add it
-		CSSprite *sprite = [spriteDictionary objectForKey:key];
-		if(![sprite parent])
+		for(NSString *key in spriteDictionary)
 		{
-			[self addChild:sprite];
-			[model setSelectedSpriteKey:key];
+			// check each sprite's parent. if there is none, add it
+			CSSprite *sprite = [spriteDictionary objectForKey:key];
+			if(![sprite parent])
+			{
+				[self addChild:sprite];
+				[model setSelectedSpriteKey:key];
+			}
 		}
 	}
 }
