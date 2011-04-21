@@ -107,11 +107,8 @@
 	{
 		[super setPosition:pos];
 		
-		// update the position label
-		CGSize s = [anchor_ contentSize];
-		NSString *posText = [NSString stringWithFormat:@"%g, %g", floorf( [self position].x ), floorf( [self position].y )];
-		[positionLabel_ setString:posText];
-		[positionLabel_ setPosition:ccp(s.width/2, -10)];		
+		// update the position label on next visit
+		mustUpdatePositionLabel_ = YES;
 	}
 }
 
@@ -164,6 +161,26 @@
 		[fill_ setVisible:selected];
 		[anchor_ setVisible:selected];
 	}
+}
+
+// changes position and text of positionLabel
+// must be called on Cocos2D thread
+- (void) updatePositionLabel
+{
+	CGSize s = [anchor_ contentSize];
+	NSString *posText = [NSString stringWithFormat:@"%g, %g", floorf( [self position].x ), floorf( [self position].y )];
+	[positionLabel_ setString:posText];
+	[positionLabel_ setPosition:ccp(s.width/2, -10)];
+	
+	mustUpdatePositionLabel_ = NO;
+}
+
+- (void) visit
+{
+	if (mustUpdatePositionLabel_)
+		[self updatePositionLabel];
+	
+	[super visit];
 }
 
 - (void)draw

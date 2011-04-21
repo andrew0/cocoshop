@@ -41,6 +41,8 @@
 	NSString *filename_;
 	NSString *name_;
 	BOOL locked_;
+	
+	BOOL mustUpdatePositionLabel_;
 }
 
 @property(nonatomic, assign) BOOL isSelected;
