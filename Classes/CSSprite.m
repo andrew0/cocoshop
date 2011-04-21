@@ -52,9 +52,9 @@
 		[anchor_ setOpacity:200];
 		[self addChild:anchor_];
 		
-		//NSString *posText = [NSString stringWithFormat:@"%f, %f", [self position].x, [self position].y];
-		//positionLabel_ = [[CCLabelBMFont labelWithString:posText fntFile:@"arial.fnt"] retain];
-		//[anchor_ addChild:positionLabel_];
+		NSString *posText = [NSString stringWithFormat:@"%f, %f", [self position].x, [self position].y];
+		positionLabel_ = [[CCLabelBMFont labelWithString:posText fntFile:@"arial.fnt"] retain];
+		[anchor_ addChild:positionLabel_];
 	}
 	
 	return self;
@@ -68,8 +68,8 @@
 	[fill_ changeWidth:size.width height:size.height];
 	[anchor_ setPosition:ccp(size.width*anchorPoint_.x, size.height*anchorPoint_.y)];
 	
-	//CGSize s = [anchor_ contentSize];
-	//[positionLabel_ setPosition:ccp(s.width/2, -10)];	
+	CGSize s = [anchor_ contentSize];
+	[positionLabel_ setPosition:ccp(s.width/2, -10)];	
 }
 
 - (void)setName:(NSString *)aName
@@ -108,10 +108,10 @@
 		[super setPosition:pos];
 		
 		// update the position label
-		//CGSize s = [anchor_ contentSize];
-		//NSString *posText = [NSString stringWithFormat:@"%g, %g", floorf( [self position].x ), floorf( [self position].y )];
-		//[positionLabel_ setString:posText];
-		//[positionLabel_ setPosition:ccp(s.width/2, -10)];		
+		CGSize s = [anchor_ contentSize];
+		NSString *posText = [NSString stringWithFormat:@"%g, %g", floorf( [self position].x ), floorf( [self position].y )];
+		[positionLabel_ setString:posText];
+		[positionLabel_ setPosition:ccp(s.width/2, -10)];		
 	}
 }
 
@@ -192,7 +192,7 @@
 {
 	[fill_ release];
 	[anchor_ release];
-	//[positionLabel_ release];
+	[positionLabel_ release];
 	[self setKey:nil];
 	[self setFilename:nil];
 	[self setName:nil];
