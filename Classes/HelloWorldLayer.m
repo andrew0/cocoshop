@@ -31,6 +31,11 @@
 
 @implementation HelloWorldLayer
 
+enum 
+{
+	kTagBackgroundCheckerboard,
+};
+
 @synthesize controller=controller_;
 
 + (CCScene *)scene
@@ -49,8 +54,26 @@
 		[self setIsKeyboardEnabled:YES];
 		[self setController:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addedSprite:) name:@"addedSprite" object:nil];
+		
+		CCSprite *sprite = [CCSprite spriteWithFile:@"checkerboard.png"];
+		[self addChild:sprite z:NSIntegerMin tag: kTagBackgroundCheckerboard ];
+		sprite.position = sprite.anchorPoint = ccp(0,0);
+		
+		ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
+		[sprite.texture setTexParameters:&params];
+		
+		[self updateForScreenReshape];
 	}
 	return self;
+}
+
+- (void) updateForScreenReshape
+{
+	CGSize s = [CCDirector sharedDirector].winSize;
+	
+	CCSprite *bg = (CCSprite *)[self getChildByTag: kTagBackgroundCheckerboard];
+	if ([bg isKindOfClass:[CCSprite class]])
+		[bg setTextureRect: CGRectMake(0, 0, s.width, s.height)];
 }
 
 - (CSSprite *)spriteForEvent:(NSEvent *)event

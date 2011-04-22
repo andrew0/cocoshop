@@ -45,4 +45,7 @@
 - (CSSprite *)spriteForEvent:(NSEvent *)event;
 - (void)addedSprite:(NSNotification *)aNotification;
 
+// updates background checkerboard if winSize is changed
+- (void) updateForScreenReshape;
+
 @end
