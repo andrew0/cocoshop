@@ -46,6 +46,7 @@
 - (void)addedSprite:(NSNotification *)aNotification;
 
 // updates background checkerboard if winSize is changed
-- (void) updateForScreenReshape;
+// can be called on any thread
+- (void) safeUpdateForScreenReshape;
 
 @end

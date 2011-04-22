@@ -53,8 +53,16 @@ enum
 		[self setIsMouseEnabled:YES];
 		[self setIsKeyboardEnabled:YES];
 		[self setController:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addedSprite:) name:@"addedSprite" object:nil];
 		
+		// Register for Notifications
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addedSprite:) name:@"addedSprite" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver: self
+												 selector: @selector(safeUpdateForScreenReshape:) 
+													 name: NSViewFrameDidChangeNotification 
+												   object: [CCDirector sharedDirector].openGLView];
+		[[CCDirector sharedDirector].openGLView setPostsFrameChangedNotifications: YES];
+		
+		// Add background checkerboard
 		CCSprite *sprite = [CCSprite spriteWithFile:@"checkerboard.png"];
 		[self addChild:sprite z:NSIntegerMin tag: kTagBackgroundCheckerboard ];
 		sprite.position = sprite.anchorPoint = ccp(0,0);
@@ -67,10 +75,19 @@ enum
 	return self;
 }
 
+
+// can be called from another thread
+- (void) safeUpdateForScreenReshape: (NSNotification *) aNotification
+{	
+	// call updateForScreenReshape on Cocos2D Thread
+	[self runAction: [CCCallFunc actionWithTarget: self selector: @selector(updateForScreenReshape) ]];
+}
+
 - (void) updateForScreenReshape
 {
 	CGSize s = [CCDirector sharedDirector].winSize;
 	
+	// update checkerboard size to fit winSize
 	CCSprite *bg = (CCSprite *)[self getChildByTag: kTagBackgroundCheckerboard];
 	if ([bg isKindOfClass:[CCSprite class]])
 		[bg setTextureRect: CGRectMake(0, 0, s.width, s.height)];
@@ -234,6 +251,7 @@ enum
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver: self];
 	[self setController:nil];
 	[super dealloc];
 }
