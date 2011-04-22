@@ -294,6 +294,8 @@
 // designated sprites adding method
 - (void) addSpritesWithFiles: (NSArray *) files
 {
+	[ [CCTextureCache sharedTextureCache] removeUnusedTextures ];
+	
 	for(NSString *filename in files)
 	{		
 		// create key for the sprite
