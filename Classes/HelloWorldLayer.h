@@ -47,6 +47,6 @@
 
 // updates background checkerboard if winSize is changed
 // can be called on any thread
-- (void) safeUpdateForScreenReshape;
+- (void) safeUpdateForScreenReshape:(NSNotification *) aNotification;
 
 @end

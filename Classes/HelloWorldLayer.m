@@ -70,7 +70,7 @@ enum
 		ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
 		[sprite.texture setTexParameters:&params];
 		
-		[self updateForScreenReshape];
+		[self safeUpdateForScreenReshape: nil];
 	}
 	return self;
 }
