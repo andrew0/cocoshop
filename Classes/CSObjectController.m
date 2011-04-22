@@ -462,8 +462,12 @@
 	{
 		values = [[modelObject_ spriteDictionary] allValues];
 	}
-	CSSprite *sprite = [values objectAtIndex:index];
-	[self deleteSpriteWithKey:[sprite key]];
+	
+	if ( values && (index >= 0) && (index < [values count]) )
+	{
+		CSSprite *sprite = [values objectAtIndex:index];
+		[self deleteSpriteWithKey:[sprite key]];
+	}
 }
 
 @end
