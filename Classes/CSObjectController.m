@@ -415,6 +415,7 @@
 	else
 	{
 		// Editing Selected Sprite 
+		[nameField_ setStringValue:[modelObject_ selectedSpriteKey]];
 		[nameField_ setEnabled:YES];
 		[posXField_ setEnabled:YES];
 		[posXStepper_ setEnabled:YES];
