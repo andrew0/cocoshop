@@ -198,21 +198,33 @@
 		{
 			[sprite setOpacity:[modelObject_ opacity]];
 		}
+		else 
+		{
+			// Changing Opacity of the Background
+			cocosView_.backgroundOpacity = [modelObject_ opacity];
+		}
+
 	}
 	else if( [keyPath isEqualToString:@"color"] )
 	{
+		// grab rgba values
+		NSColor *color = [[modelObject_ color] colorUsingColorSpaceName:NSDeviceRGBColorSpace];
+		
+		CGFloat r, g, b, a;			
+		a = [color alphaComponent];
+		r = [color redComponent] * a * 255;
+		g = [color greenComponent] * a * 255;
+		b = [color blueComponent] * a * 255;
+		
 		CSSprite *sprite = [modelObject_ selectedSprite];
 		if(sprite)
 		{
-			// grab rgba values
-			NSColor *color = [[modelObject_ color] colorUsingColorSpaceName:NSDeviceRGBColorSpace];
-			
-			CGFloat r, g, b, a;			
-			a = [color alphaComponent];
-			r = [color redComponent] * a * 255;
-			g = [color greenComponent] * a * 255;
-			b = [color blueComponent] * a * 255;						
 			[sprite setColor:ccc3(r, g, b)];
+		}
+		else
+		{
+			// Changing Color of the Background
+			cocosView_.backgroundColor = ccc3(r,g,b );
 		}
 	}
 	else if( [keyPath isEqualToString:@"relativeAnchor"] )
@@ -373,9 +385,9 @@
 
 - (void)didChangeSelectedSprite:(NSNotification *)aNotification
 {
-	// if there is no selected sprite...
 	if( ![modelObject_ selectedSpriteKey] )
 	{
+		// Editing Background
 		[nameField_ setStringValue:@"Background Layer"];
 		[nameField_ setEnabled:NO];
 		[posXField_ setEnabled:NO];
@@ -397,9 +409,12 @@
 		[relativeAnchorButton_ setEnabled:NO];
 		[rotationField_ setEnabled:NO];
 		[rotationSlider_ setEnabled:NO];
+		
+		//TODO: Set Info to Background's Properties
 	}
 	else
 	{
+		// Editing Selected Sprite 
 		[nameField_ setEnabled:YES];
 		[posXField_ setEnabled:YES];
 		[posXStepper_ setEnabled:YES];
