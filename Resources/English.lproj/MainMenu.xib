@@ -12,10 +12,10 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="554"/>
-			<integer value="907"/>
 			<integer value="29"/>
 			<integer value="372"/>
+			<integer value="554"/>
+			<integer value="907"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1753,7 +1753,7 @@
 				<int key="NSWindowStyleMask">23</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{124, 272}, {276, 378}}</string>
-				<int key="NSWTFlags">-1535639552</int>
+				<int key="NSWTFlags">-461897728</int>
 				<string key="NSWindowTitle">Sprites</string>
 				<string key="NSWindowClass">NSPanel</string>
 				<nil key="NSViewClass"/>
@@ -4018,7 +4018,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{525, 802}, {197, 73}}</string>
-					<string>{{999, 736}, {281, 20}}</string>
+					<string>{{687, 736}, {281, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{74, 862}</string>
