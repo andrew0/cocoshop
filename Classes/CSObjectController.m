@@ -51,6 +51,9 @@
 	
 	// listen to notification when we deselect the sprite
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeSelectedSprite:) name:@"didChangeSelectedSprite" object:nil];
+
+	// Disable Sprite Info for no Sprites at the beginning
+	[self didChangeSelectedSprite: nil];
 }
 
 - (void)setCocosView:(HelloWorldLayer *)view
@@ -195,21 +198,33 @@
 		{
 			[sprite setOpacity:[modelObject_ opacity]];
 		}
+		else 
+		{
+			// Changing Opacity of the Background
+			cocosView_.backgroundOpacity = [modelObject_ opacity];
+		}
+
 	}
 	else if( [keyPath isEqualToString:@"color"] )
 	{
+		// grab rgba values
+		NSColor *color = [[modelObject_ color] colorUsingColorSpaceName:NSDeviceRGBColorSpace];
+		
+		CGFloat r, g, b, a;			
+		a = [color alphaComponent];
+		r = [color redComponent] * a * 255;
+		g = [color greenComponent] * a * 255;
+		b = [color blueComponent] * a * 255;
+		
 		CSSprite *sprite = [modelObject_ selectedSprite];
 		if(sprite)
 		{
-			// grab rgba values
-			NSColor *color = [[modelObject_ color] colorUsingColorSpaceName:NSDeviceRGBColorSpace];
-			
-			CGFloat r, g, b, a;			
-			a = [color alphaComponent];
-			r = [color redComponent] * a * 255;
-			g = [color greenComponent] * a * 255;
-			b = [color blueComponent] * a * 255;						
 			[sprite setColor:ccc3(r, g, b)];
+		}
+		else
+		{
+			// Changing Color of the Background
+			cocosView_.backgroundColor = ccc3(r,g,b );
 		}
 	}
 	else if( [keyPath isEqualToString:@"relativeAnchor"] )
@@ -372,9 +387,10 @@
 
 - (void)didChangeSelectedSprite:(NSNotification *)aNotification
 {
-	// if there is no selected sprite...
 	if( ![modelObject_ selectedSpriteKey] )
 	{
+		// Editing Background
+		[nameField_ setStringValue:@"Background Layer"];
 		[nameField_ setEnabled:NO];
 		[posXField_ setEnabled:NO];
 		[posXStepper_ setEnabled:NO];
@@ -389,15 +405,19 @@
 		[scaleField_ setEnabled:NO];
 		[flipXButton_ setEnabled:NO];
 		[flipYButton_ setEnabled:NO];
-		[opacityField_ setEnabled:NO];
-		[opacitySlider_ setEnabled:NO];
-		[colorWell_ setEnabled:NO];
+		[opacityField_ setEnabled:YES];
+		[opacitySlider_ setEnabled:YES];
+		[colorWell_ setEnabled:YES];
 		[relativeAnchorButton_ setEnabled:NO];
 		[rotationField_ setEnabled:NO];
 		[rotationSlider_ setEnabled:NO];
+		
+		//TODO: Set Info to Background's Properties
 	}
 	else
 	{
+		// Editing Selected Sprite 
+		[nameField_ setStringValue:[modelObject_ selectedSpriteKey]];
 		[nameField_ setEnabled:YES];
 		[posXField_ setEnabled:YES];
 		[posXStepper_ setEnabled:YES];

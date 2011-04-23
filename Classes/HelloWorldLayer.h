@@ -40,9 +40,15 @@
 }
 
 @property(nonatomic, retain) CSObjectController *controller;
+@property(readwrite) ccColor3B backgroundColor;
+@property(readwrite) GLubyte backgroundOpacity;
 
 + (CCScene *)scene;
 - (CSSprite *)spriteForEvent:(NSEvent *)event;
 - (void)addedSprite:(NSNotification *)aNotification;
+
+// updates background checkerboard if winSize is changed
+// can be called on any thread
+- (void) safeUpdateForScreenReshape:(NSNotification *) aNotification;
 
 @end
