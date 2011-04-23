@@ -107,6 +107,21 @@
 			[self setColor:col];
 			[self setRelativeAnchor:([new isRelativeAnchorPoint]) ? NSOnState : NSOffState];
 		}
+		else
+		{
+			// TODO: sync with actual bg layer properties
+			[self setName:@"Background Layer"];
+			[self setPosX:0];
+			[self setPosY:0];
+			[self setAnchorX:0];
+			[self setAnchorY:0];
+			[self setFlipX:NSOffState];
+			[self setFlipY:NSOffState];
+			[self setScale:0];
+			[self setOpacity:0];
+			[self setRelativeAnchor:NSOffState];
+		}
+
 		
 		// tell controller we changed the selected sprite
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"didChangeSelectedSprite" object:nil];

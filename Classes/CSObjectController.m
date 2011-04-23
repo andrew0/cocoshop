@@ -391,7 +391,6 @@
 	if( ![modelObject_ selectedSpriteKey] )
 	{
 		// Editing Background
-		[nameField_ setStringValue:@"Background Layer"];
 		[nameField_ setEnabled:NO];
 		[posXField_ setEnabled:NO];
 		[posXStepper_ setEnabled:NO];
@@ -418,7 +417,6 @@
 	else
 	{
 		// Editing Selected Sprite 
-		[nameField_ setStringValue:[modelObject_ selectedSpriteKey]];
 		[nameField_ setEnabled:YES];
 		[posXField_ setEnabled:YES];
 		[posXStepper_ setEnabled:YES];
