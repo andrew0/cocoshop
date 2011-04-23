@@ -51,6 +51,9 @@
 	
 	// listen to notification when we deselect the sprite
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeSelectedSprite:) name:@"didChangeSelectedSprite" object:nil];
+
+	// Disable Sprite Info for no Sprites at the beginning
+	[self didChangeSelectedSprite: nil];
 }
 
 - (void)setCocosView:(HelloWorldLayer *)view
@@ -373,6 +376,7 @@
 	// if there is no selected sprite...
 	if( ![modelObject_ selectedSpriteKey] )
 	{
+		[nameField_ setStringValue:@"Background Layer"];
 		[nameField_ setEnabled:NO];
 		[posXField_ setEnabled:NO];
 		[posXStepper_ setEnabled:NO];
@@ -387,9 +391,9 @@
 		[scaleField_ setEnabled:NO];
 		[flipXButton_ setEnabled:NO];
 		[flipYButton_ setEnabled:NO];
-		[opacityField_ setEnabled:NO];
-		[opacitySlider_ setEnabled:NO];
-		[colorWell_ setEnabled:NO];
+		[opacityField_ setEnabled:YES];
+		[opacitySlider_ setEnabled:YES];
+		[colorWell_ setEnabled:YES];
 		[relativeAnchorButton_ setEnabled:NO];
 		[rotationField_ setEnabled:NO];
 		[rotationSlider_ setEnabled:NO];
