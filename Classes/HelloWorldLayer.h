@@ -44,10 +44,10 @@
 }
 
 @property(nonatomic, retain) CSObjectController *controller;
-@property(readwrite) ccColor3B backgroundColor;
-@property(readwrite) GLubyte backgroundOpacity;
 
 + (CCScene *)scene;
++ (id)nodeWithController:(CSObjectController *)aController;
+- (id)initWithController:(CSObjectController *)aController;
 - (CSSprite *)spriteForEvent:(NSEvent *)event;
 - (void)addedSprite:(NSNotification *)aNotification;
 

@@ -26,9 +26,12 @@
 #import <Cocoa/Cocoa.h>
 
 @class CSSprite;
+@class CCLayerColor;
 
 @interface CSModel : NSObject
 {
+	CCLayerColor *backgroundLayer_;
+	
 	NSMutableDictionary *spriteDictionary_;
 	NSString *selectedSpriteKey_;
 	
@@ -47,6 +50,7 @@
 	float rotation_;
 }
 
+@property(nonatomic, retain) CCLayerColor *backgroundLayer;
 @property(nonatomic, retain) NSMutableDictionary *spriteDictionary;
 @property(nonatomic, copy) NSString *selectedSpriteKey;
 @property(nonatomic, assign) NSString *name;

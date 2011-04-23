@@ -28,6 +28,7 @@
 
 @implementation CSModel
 
+@synthesize backgroundLayer=backgroundLayer_;
 @synthesize spriteDictionary=spriteDictionary_;
 @synthesize selectedSpriteKey=selectedSpriteKey_;
 @synthesize name=name_;
@@ -50,6 +51,11 @@
 	{
 		[self setSpriteDictionary:[NSMutableDictionary dictionary]];
 		[self setSelectedSpriteKey:nil];
+		
+		CCLayerColor *bgLayer = [CCLayerColor layerWithColor:ccc4(0, 0, 0, 0)];
+		[bgLayer setPosition:CGPointZero];
+		[bgLayer setAnchorPoint:CGPointZero];
+		[self setBackgroundLayer:bgLayer];
 	}
 	return self;
 }
@@ -109,19 +115,21 @@
 		}
 		else
 		{
+			CGPoint pos = [backgroundLayer_ position];
+			CGPoint anchor = [backgroundLayer_ anchorPoint];
+			
 			// TODO: sync with actual bg layer properties
 			[self setName:@"Background Layer"];
-			[self setPosX:0];
-			[self setPosY:0];
-			[self setAnchorX:0];
-			[self setAnchorY:0];
+			[self setPosX:pos.x];
+			[self setPosY:pos.y];
+			[self setAnchorX:anchor.x];
+			[self setAnchorY:anchor.y];
 			[self setFlipX:NSOffState];
 			[self setFlipY:NSOffState];
-			[self setScale:0];
-			[self setOpacity:0];
-			[self setRelativeAnchor:NSOffState];
+			[self setScale:[backgroundLayer_ scale]];
+			[self setOpacity:[backgroundLayer_ opacity]];
+			[self setRelativeAnchor:([backgroundLayer_ isRelativeAnchorPoint]) ? NSOnState : NSOffState];
 		}
-
 		
 		// tell controller we changed the selected sprite
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"didChangeSelectedSprite" object:nil];
@@ -134,6 +142,7 @@
 	[self setSelectedSpriteKey:nil];
 	[self setSelectedSpriteKey:nil];
 	[self setColor:nil];
+	[self setBackgroundLayer:nil];
 	[super dealloc];
 }
 

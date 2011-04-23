@@ -117,6 +117,13 @@
 			currentPos.x = [modelObject_ posX];
 			[sprite setPosition:currentPos];
 		}
+		else
+		{
+			CGPoint currentPos = [[modelObject_ backgroundLayer] position];
+			currentPos.x = [modelObject_ posX];
+			[[modelObject_ backgroundLayer] setPosition:currentPos];
+		}
+
 	}
 	else if( [keyPath isEqualToString:@"posY"] )
 	{
@@ -127,10 +134,17 @@
 			currentPos.y = [modelObject_ posY];
 			[sprite setPosition:currentPos];
 		}
+		else
+		{
+			CGPoint currentPos = [[modelObject_ backgroundLayer] position];
+			currentPos.y = [modelObject_ posY];
+			[[modelObject_ backgroundLayer] setPosition:currentPos];
+		}
+
 	}
 	else if( [keyPath isEqualToString:@"posZ"] )
 	{
-		
+		// TODO: reorder Z order
 	}
 	else if( [keyPath isEqualToString:@"anchorX"] )
 	{
@@ -140,6 +154,12 @@
 			CGPoint currentAnchor = [sprite anchorPoint];
 			currentAnchor.x = [modelObject_ anchorX];
 			[sprite setAnchorPoint:currentAnchor];
+		}
+		else
+		{
+			CGPoint currentAnchor = [[modelObject_ backgroundLayer] anchorPoint];
+			currentAnchor.x = [modelObject_ anchorX];
+			[[modelObject_ backgroundLayer] setAnchorPoint:currentAnchor];
 		}
 	}
 	else if( [keyPath isEqualToString:@"anchorY"] )
@@ -151,6 +171,12 @@
 			currentAnchor.y = [modelObject_ anchorY];
 			[sprite setAnchorPoint:currentAnchor];
 		}
+		else
+		{
+			CGPoint currentAnchor = [[modelObject_ backgroundLayer] anchorPoint];
+			currentAnchor.y = [modelObject_ anchorY];
+			[[modelObject_ backgroundLayer] setAnchorPoint:currentAnchor];
+		}		
 	}
 	else if( [keyPath isEqualToString:@"scale"] )
 	{
@@ -159,6 +185,11 @@
 		{
 			[sprite setScale:[modelObject_ scale]];
 		}
+		else
+		{
+			[[modelObject_ backgroundLayer] setScale:[modelObject_ scale]];
+		}
+
 	}
 	else if( [keyPath isEqualToString:@"flipX"] )
 	{
@@ -201,8 +232,7 @@
 		}
 		else 
 		{
-			// Changing Opacity of the Background
-			cocosView_.backgroundOpacity = [modelObject_ opacity];
+			[[modelObject_ backgroundLayer] setOpacity:[modelObject_ opacity]];
 		}
 
 	}
@@ -224,8 +254,7 @@
 		}
 		else
 		{
-			// Changing Color of the Background
-			cocosView_.backgroundColor = ccc3(r,g,b );
+			[[modelObject_ backgroundLayer] setColor:ccc3(r, g, b)];
 		}
 	}
 	else if( [keyPath isEqualToString:@"relativeAnchor"] )
@@ -243,6 +272,19 @@
 				[sprite setIsRelativeAnchorPoint:NO];
 			}
 		}
+		else
+		{
+			NSInteger state = [modelObject_ relativeAnchor];
+			if(state == NSOnState)
+			{
+				[[modelObject_ backgroundLayer] setIsRelativeAnchorPoint:YES];
+			}
+			else
+			{
+				[[modelObject_ backgroundLayer] setIsRelativeAnchorPoint:NO];
+			}			
+		}
+
 	}
 	else if( [keyPath isEqualToString:@"rotation"] )
 	{
@@ -250,6 +292,10 @@
 		if(sprite)
 		{
 			[sprite setRotation:[modelObject_ rotation]];
+		}
+		else
+		{
+			[[modelObject_ backgroundLayer] setRotation:[modelObject_ rotation]];
 		}
 	}
 	
@@ -392,25 +438,25 @@
 	{
 		// Editing Background
 		[nameField_ setEnabled:NO];
-		[posXField_ setEnabled:NO];
-		[posXStepper_ setEnabled:NO];
-		[posYField_ setEnabled:NO];
-		[posYStepper_ setEnabled:NO];
-		[posZField_ setEnabled:NO];
-		[posZStepper_ setEnabled:NO];
-		[anchorXField_ setEnabled:NO];
-		[anchorXStepper_ setEnabled:NO];
-		[anchorYField_ setEnabled:NO];
-		[anchorYStepper_ setEnabled:NO];
-		[scaleField_ setEnabled:NO];
+//		[posXField_ setEnabled:NO];
+//		[posXStepper_ setEnabled:NO];
+//		[posYField_ setEnabled:NO];
+//		[posYStepper_ setEnabled:NO];
+//		[posZField_ setEnabled:NO];
+//		[posZStepper_ setEnabled:NO];
+//		[anchorXField_ setEnabled:NO];
+//		[anchorXStepper_ setEnabled:NO];
+//		[anchorYField_ setEnabled:NO];
+//		[anchorYStepper_ setEnabled:NO];
+//		[scaleField_ setEnabled:NO];
 		[flipXButton_ setEnabled:NO];
 		[flipYButton_ setEnabled:NO];
-		[opacityField_ setEnabled:YES];
-		[opacitySlider_ setEnabled:YES];
-		[colorWell_ setEnabled:YES];
-		[relativeAnchorButton_ setEnabled:NO];
-		[rotationField_ setEnabled:NO];
-		[rotationSlider_ setEnabled:NO];
+//		[opacityField_ setEnabled:YES];
+//		[opacitySlider_ setEnabled:YES];
+//		[colorWell_ setEnabled:YES];
+//		[relativeAnchorButton_ setEnabled:NO];
+//		[rotationField_ setEnabled:NO];
+//		[rotationSlider_ setEnabled:NO];
 		
 		//TODO: Set Info to Background's Properties
 	}
@@ -418,25 +464,25 @@
 	{
 		// Editing Selected Sprite 
 		[nameField_ setEnabled:YES];
-		[posXField_ setEnabled:YES];
-		[posXStepper_ setEnabled:YES];
-		[posYField_ setEnabled:YES];
-		[posYStepper_ setEnabled:YES];
-		[posZField_ setEnabled:YES];
-		[posZStepper_ setEnabled:YES];
-		[anchorXField_ setEnabled:YES];
-		[anchorXStepper_ setEnabled:YES];
-		[anchorYField_ setEnabled:YES];
-		[anchorYStepper_ setEnabled:YES];
-		[scaleField_ setEnabled:YES];
+//		[posXField_ setEnabled:YES];
+//		[posXStepper_ setEnabled:YES];
+//		[posYField_ setEnabled:YES];
+//		[posYStepper_ setEnabled:YES];
+//		[posZField_ setEnabled:YES];
+//		[posZStepper_ setEnabled:YES];
+//		[anchorXField_ setEnabled:YES];
+//		[anchorXStepper_ setEnabled:YES];
+//		[anchorYField_ setEnabled:YES];
+//		[anchorYStepper_ setEnabled:YES];
+//		[scaleField_ setEnabled:YES];
 		[flipXButton_ setEnabled:YES];
 		[flipYButton_ setEnabled:YES];
-		[opacityField_ setEnabled:YES];
-		[opacitySlider_ setEnabled:YES];
-		[colorWell_ setEnabled:YES];
-		[relativeAnchorButton_ setEnabled:YES];
-		[rotationField_ setEnabled:YES];
-		[rotationSlider_ setEnabled:YES];
+//		[opacityField_ setEnabled:YES];
+//		[opacitySlider_ setEnabled:YES];
+//		[colorWell_ setEnabled:YES];
+//		[relativeAnchorButton_ setEnabled:YES];
+//		[rotationField_ setEnabled:YES];
+//		[rotationSlider_ setEnabled:YES];
 	}
 }
 

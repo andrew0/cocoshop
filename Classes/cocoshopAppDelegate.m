@@ -50,7 +50,7 @@
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
 	CCScene *scene = [CCScene node];
-	HelloWorldLayer *layer = [HelloWorldLayer node];
+	HelloWorldLayer *layer = [HelloWorldLayer nodeWithController:controller_];
 	[controller_ setCocosView:layer];
 	[scene addChild:layer];
 	[director runWithScene:scene];
