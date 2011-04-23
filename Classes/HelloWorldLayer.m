@@ -34,6 +34,7 @@
 enum 
 {
 	kTagBackgroundCheckerboard,
+	kTagBackgroundColorLayer,
 };
 
 @synthesize controller=controller_;
@@ -67,6 +68,11 @@ enum
 		[self addChild:sprite z:NSIntegerMin tag: kTagBackgroundCheckerboard ];
 		sprite.position = sprite.anchorPoint = ccp(0,0);
 		
+		// Add Colored Background
+		CCLayerColor *bgLayer = [CCLayerColor layerWithColor:ccc4(0, 0, 0, 0)];
+		[self addChild: bgLayer z:NSIntegerMin tag: kTagBackgroundColorLayer ];
+		bgLayer.position = sprite.anchorPoint = ccp(0,0);
+		
 		ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
 		[sprite.texture setTexParameters:&params];
 		
@@ -91,6 +97,11 @@ enum
 	CCSprite *bg = (CCSprite *)[self getChildByTag: kTagBackgroundCheckerboard];
 	if ([bg isKindOfClass:[CCSprite class]])
 		[bg setTextureRect: CGRectMake(0, 0, s.width, s.height)];
+	
+	// update color layer size to fit winSize
+	CCLayerColor *bgColor = (CCLayerColor *)[self getChildByTag: kTagBackgroundColorLayer];
+	if ([bgColor isKindOfClass:[CCLayerColor class]])
+		[bgColor setContentSize: s];
 }
 
 - (CSSprite *)spriteForEvent:(NSEvent *)event
@@ -107,6 +118,44 @@ enum
 	}
 	
 	return nil;
+}
+
+#pragma mark Background Properties
+
+@dynamic backgroundColor;
+
+- (ccColor3B) backgroundColor
+{
+	CCLayerColor *bgColor = (CCLayerColor *)[self getChildByTag: kTagBackgroundColorLayer];
+	if ([bgColor isKindOfClass:[CCLayerColor class]])
+		return bgColor.color;
+	
+	return ccc3(0,0,0);
+}
+
+- (void) setBackgroundColor:(ccColor3B) newColor
+{
+	CCLayerColor *bgColor = (CCLayerColor *)[self getChildByTag: kTagBackgroundColorLayer];
+	if ([bgColor isKindOfClass:[CCLayerColor class]])
+		[bgColor setColor: newColor];
+}
+
+@dynamic backgroundOpacity;
+
+- (GLubyte) backgroundOpacity
+{
+	CCLayerColor *bgColor = (CCLayerColor *)[self getChildByTag: kTagBackgroundColorLayer];
+	if ([bgColor isKindOfClass:[CCLayerColor class]])
+		return bgColor.opacity;
+	
+	return 0;
+}
+
+- (void) setBackgroundOpacity:(GLubyte) newOpacity
+{
+	CCLayerColor *bgColor = (CCLayerColor *)[self getChildByTag: kTagBackgroundColorLayer];
+	if ([bgColor isKindOfClass:[CCLayerColor class]])
+		[bgColor setOpacity: newOpacity];
 }
 
 #pragma mark Sprites Added Notification
