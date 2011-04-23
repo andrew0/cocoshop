@@ -39,6 +39,8 @@
 	CGPoint prevLocation_;
 	
 	BOOL spriteWasAdded_;
+	
+	CGSize prevSize_;
 }
 
 @property(nonatomic, retain) CSObjectController *controller;

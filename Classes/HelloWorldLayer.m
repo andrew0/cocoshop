@@ -56,6 +56,8 @@ enum
 		[self setIsKeyboardEnabled:YES];
 		[self setController:nil];
 		
+		prevSize_ = [[CCDirector sharedDirector] winSize];
+		
 		// Register for Notifications
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addedSprite:) name:@"addedSprite" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver: self
@@ -103,6 +105,22 @@ enum
 	CCLayerColor *bgColor = (CCLayerColor *)[self getChildByTag: kTagBackgroundColorLayer];
 	if ([bgColor isKindOfClass:[CCLayerColor class]])
 		[bgColor setContentSize: s];
+	
+	// dont calculate difference for X value - only the Y value
+	CGPoint diff = ccp(0, s.height - prevSize_.height);
+	CCNode *child;
+	CCARRAY_FOREACH(children_, child)
+	{
+		// reposition all CSSprites
+		if ( [child isKindOfClass:[CSSprite class]] )
+		{
+			CGPoint currentPos = [child position];
+			CGPoint newPos = ccpAdd(currentPos, diff);
+			[child setPosition:newPos];
+		}
+	}
+	
+	prevSize_ = s;
 }
 
 - (CSSprite *)spriteForEvent:(NSEvent *)event
