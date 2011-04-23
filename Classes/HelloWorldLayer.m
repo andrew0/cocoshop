@@ -2,6 +2,7 @@
  * cocoshop
  *
  * Copyright (c) 2011 Andrew
+ * Copyright (c) 2011 Stepan Generalov
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -194,6 +195,38 @@ enum
 {
 	// queue sprites update on next visit (in Cocos2D Thread)
 	spriteWasAdded_ = YES;
+}
+
+#pragma mark Touch Events
+
+- (void)csMagnifyWithEvent:(NSEvent *)event
+{
+	CSSprite *sprite = [[controller_ modelObject] selectedSprite];
+	if (sprite)
+	{
+		float currentScale = [sprite scale];
+		float newScale = currentScale + [event magnification];
+		[[controller_ modelObject] setScale:newScale];
+	}
+}
+
+- (void)csRotateWithEvent:(NSEvent *)event
+{
+	CSSprite *sprite = [[controller_ modelObject] selectedSprite];
+	if (sprite)
+	{
+		float currentRotation = [sprite rotation];
+		float rotationChange = -[event rotation]; // need to negate
+		float newRotation = currentRotation + rotationChange;
+		
+		// make the new rotation 0 - 360
+		if (newRotation < 0)
+			newRotation += 360;
+		else if (newRotation > 360)
+			newRotation -= 360;
+		
+		[[controller_ modelObject] setRotation:newRotation];
+	}
 }
 
 #pragma mark Mouse Events

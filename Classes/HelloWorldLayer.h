@@ -2,6 +2,7 @@
  * cocoshop
  *
  * Copyright (c) 2011 Andrew
+ * Copyright (c) 2011 Stepan Generalov
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +25,12 @@
  */
 
 #import "cocos2d.h"
+#import "CSGestureEventDelegate.h"
 
 @class CSObjectController;
 @class CSSprite;
 
-@interface HelloWorldLayer : CCLayer
+@interface HelloWorldLayer : CCLayer <CSGestureEventDelegate>
 {
 	CSObjectController *controller_;
 	

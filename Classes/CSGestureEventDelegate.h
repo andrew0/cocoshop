@@ -1,7 +1,7 @@
 /*
  * cocoshop
  *
- * Copyright (c) 2011 Stepan Generalov
+ * Copyright (c) 2011 Andrew
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,13 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import "cocos2d.h"
 
+@protocol CSGestureEventDelegate <NSObject>
 
-@interface CSMacGLView : MacGLView 
-{
+@optional
 
-}
+- (void)csMagnifyWithEvent:(NSEvent *)event;
+- (void)csRotateWithEvent:(NSEvent *)event;
+- (void)csSwipeWithEvent:(NSEvent *)event;
 
 @end
