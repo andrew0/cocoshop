@@ -92,7 +92,7 @@
 		{
 			CGPoint pos = [new position];
 			CGPoint anchor = [new anchorPoint];
-			NSColor *col = [NSColor colorWithDeviceRed:[new color].r green:[new color].g blue:[new color].b alpha:255];
+			NSColor *col = [NSColor colorWithDeviceRed:[new color].r/255.0f green:[new color].g/255.0f blue:[new color].b/255.0f alpha:255];
 			
 			[new setIsSelected:YES];
 			[self setName:[new name]];
