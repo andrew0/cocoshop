@@ -37,6 +37,7 @@
 	CSTableViewDataSource *dataSource_;
 	
 	IBOutlet NSPanel *infoPanel_;
+	IBOutlet NSPanel *spritesPanel_;
 	IBOutlet NSTextField *nameField_;
 	IBOutlet NSTextField *posXField_;
 	IBOutlet NSStepper *posXStepper_;
@@ -79,6 +80,7 @@
 
 - (IBAction)addSprite:(id)sender;
 - (IBAction)openInfoPanel:(id)sender;
+- (IBAction) openSpritesPanel: (id) sender;
 - (IBAction)spriteAddButtonClicked:(id)sender;
 - (IBAction)spriteDeleteButtonClicked:(id)sender;
 

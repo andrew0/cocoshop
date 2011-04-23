@@ -450,6 +450,11 @@
 	[infoPanel_ makeKeyAndOrderFront:nil];
 }
 
+- (IBAction) openSpritesPanel: (id) sender
+{
+	[spritesPanel_ makeKeyAndOrderFront: nil];
+}
+
 - (IBAction)spriteAddButtonClicked:(id)sender
 {
 	[self addSprite:sender];

@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="29"/>
+			<integer value="24"/>
 			<integer value="372"/>
 			<integer value="554"/>
 			<integer value="907"/>
@@ -215,6 +215,15 @@
 							<string key="NSTitle">Window</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSMenuItem" id="810000805">
+									<reference key="NSMenu" ref="835318025"/>
+									<string key="NSTitle">Sprites List</string>
+									<string key="NSKeyEquiv">l</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
 								<object class="NSMenuItem" id="883176103">
 									<reference key="NSMenu" ref="835318025"/>
 									<string key="NSTitle">Sprite Info</string>
@@ -2703,6 +2712,22 @@
 					</object>
 					<int key="connectionID">967</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">spritesPanel_</string>
+						<reference key="source" ref="994683652"/>
+						<reference key="destination" ref="899005037"/>
+					</object>
+					<int key="connectionID">969</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openSpritesPanel:</string>
+						<reference key="source" ref="994683652"/>
+						<reference key="destination" ref="810000805"/>
+					</object>
+					<int key="connectionID">970</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -2855,6 +2880,7 @@
 							<reference ref="1011231497"/>
 							<reference ref="883176103"/>
 							<reference ref="765684344"/>
+							<reference ref="810000805"/>
 						</object>
 						<reference key="parent" ref="713487014"/>
 					</object>
@@ -3735,6 +3761,11 @@
 						<reference key="object" ref="1045929377"/>
 						<reference key="parent" ref="317374991"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">968</int>
+						<reference key="object" ref="810000805"/>
+						<reference key="parent" ref="835318025"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -3981,6 +4012,7 @@
 					<string>964.IBPluginDependency</string>
 					<string>964.IBViewBoundsToFrameTransform</string>
 					<string>965.IBPluginDependency</string>
+					<string>968.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -4014,7 +4046,7 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{573, 684}, {194, 103}}</string>
+					<string>{{836, 613}, {194, 123}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{525, 802}, {197, 73}}</string>
@@ -4302,6 +4334,7 @@
 						<bytes key="NSTransformStruct">P4AAAL+AAABCzAAAwhwAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -4320,7 +4353,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">967</int>
+			<int key="maxID">970</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4358,11 +4391,13 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addSprite:</string>
 							<string>openInfoPanel:</string>
+							<string>openSpritesPanel:</string>
 							<string>spriteAddButtonClicked:</string>
 							<string>spriteDeleteButtonClicked:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -4375,6 +4410,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addSprite:</string>
 							<string>openInfoPanel:</string>
+							<string>openSpritesPanel:</string>
 							<string>spriteAddButtonClicked:</string>
 							<string>spriteDeleteButtonClicked:</string>
 						</object>
@@ -4386,6 +4422,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">openInfoPanel:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">openSpritesPanel:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -4426,6 +4466,7 @@
 							<string>scaleField_</string>
 							<string>scaleStepper_</string>
 							<string>spriteTableView_</string>
+							<string>spritesPanel_</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -4453,6 +4494,7 @@
 							<string>NSTextField</string>
 							<string>NSStepper</string>
 							<string>NSTableView</string>
+							<string>NSPanel</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -4483,6 +4525,7 @@
 							<string>scaleField_</string>
 							<string>scaleStepper_</string>
 							<string>spriteTableView_</string>
+							<string>spritesPanel_</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -4581,6 +4624,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">spriteTableView_</string>
 								<string key="candidateClassName">NSTableView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">spritesPanel_</string>
+								<string key="candidateClassName">NSPanel</string>
 							</object>
 						</object>
 					</object>
