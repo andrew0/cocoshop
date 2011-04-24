@@ -528,6 +528,12 @@
 	[spritesPanel_ makeKeyAndOrderFront: nil];
 }
 
+- (IBAction)openMainWindow:(id)sender
+{
+	cocoshopAppDelegate *delegate = [[NSApplication sharedApplication] delegate];
+	[[delegate window] makeKeyAndOrderFront:nil];
+}
+
 - (IBAction)spriteAddButtonClicked:(id)sender
 {
 	[self addSprite:sender];

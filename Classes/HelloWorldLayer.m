@@ -316,13 +316,67 @@ enum
 
 - (BOOL)ccKeyDown:(NSEvent *)event
 {
+	NSUInteger modifiers = [event modifierFlags];
 	unsigned short keyCode = [event keyCode];
+	CSModel *model = [controller_ modelObject];
 	
-	// we delete the sprite if the user hits delete (0x33) or forward delete (0x75)
-	if(keyCode == 0x33 || keyCode == 0x75)
+	// delete sprites
+	switch(keyCode)
 	{
-		[controller_ performSelectorOnMainThread:@selector(deleteSpriteWithKey:) withObject:[[controller_ modelObject] selectedSpriteKey] waitUntilDone:NO];
-		return YES;
+		case 0x33: // delete
+		case 0x75: // forward delete
+			[controller_ performSelectorOnMainThread:@selector(deleteSpriteWithKey:) withObject:[[controller_ modelObject] selectedSpriteKey] waitUntilDone:NO];
+			return YES;
+		default:
+			break;
+	}
+	
+	// if option/alt key is pressed....
+	if(modifiers & NSAlternateKeyMask)
+	{
+		// move anchor point
+		CGFloat increment = (modifiers & NSShiftKeyMask) ? 0.1f : 0.01f;
+		
+		switch(keyCode)
+		{
+			case 0x7B: // left arrow
+				[model setAnchorX:[model anchorX]-increment];
+				return YES;
+			case 0x7C: // right arrow
+				[model setAnchorX:[model anchorX]+increment];
+				return YES;
+			case 0x7D: // down arrow
+				[model setAnchorY:[model anchorY]-increment];
+				return YES;
+			case 0x7E: // up arrow
+				[model setAnchorY:[model anchorY]+increment];
+				return YES;
+			default:
+				return NO;
+		}		
+	}
+	else
+	{
+		// move position
+		NSInteger increment = (modifiers & NSShiftKeyMask) ? 10 : 1;
+		
+		switch(keyCode)
+		{
+			case 0x7B: // left arrow
+				[model setPosX:[model posX]-increment];
+				return YES;
+			case 0x7C: // right arrow
+				[model setPosX:[model posX]+increment];
+				return YES;
+			case 0x7D: // down arrow
+				[model setPosY:[model posY]-increment];
+				return YES;
+			case 0x7E: // up arrow
+				[model setPosY:[model posY]+increment];
+				return YES;
+			default:
+				return NO;
+		}
 	}
 	
 	return NO;

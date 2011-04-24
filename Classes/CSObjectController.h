@@ -82,6 +82,7 @@
 - (IBAction)addSprite:(id)sender;
 - (IBAction)openInfoPanel:(id)sender;
 - (IBAction) openSpritesPanel: (id) sender;
+- (IBAction)openMainWindow:(id)sender;
 - (IBAction)spriteAddButtonClicked:(id)sender;
 - (IBAction)spriteDeleteButtonClicked:(id)sender;
 
