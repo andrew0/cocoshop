@@ -2,6 +2,7 @@
  * cocoshop
  *
  * Copyright (c) 2011 Andrew
+ * Copyright (c) 2011 Stepan Generalov
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
