@@ -92,7 +92,7 @@
 		[super setAnchorPoint:anchor];
 		
 		// update position of anchor point
-		CGSize size = [self boundingBox].size;
+		CGSize size = contentSize_;
 		
 		if( ![self isRelativeAnchorPoint] )
 			[anchor_ setPosition:CGPointZero];
