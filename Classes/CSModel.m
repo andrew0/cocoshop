@@ -117,8 +117,9 @@
 		{
 			CGPoint pos = [backgroundLayer_ position];
 			CGPoint anchor = [backgroundLayer_ anchorPoint];
+			NSColor *col = [NSColor colorWithDeviceRed:[backgroundLayer_ color].r/255.0f green:[backgroundLayer_ color].g/255.0f blue:[backgroundLayer_ color].b/255.0f alpha:255];
 			
-			// TODO: sync with actual bg layer properties
+			// sync with actual bg layer properties
 			[self setName:@"Background Layer"];
 			[self setPosX:pos.x];
 			[self setPosY:pos.y];
@@ -128,6 +129,7 @@
 			[self setFlipY:NSOffState];
 			[self setScale:[backgroundLayer_ scale]];
 			[self setOpacity:[backgroundLayer_ opacity]];
+			[self setColor:col];
 			[self setRelativeAnchor:([backgroundLayer_ isRelativeAnchorPoint]) ? NSOnState : NSOffState];
 		}
 		
