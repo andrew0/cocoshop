@@ -321,7 +321,7 @@ enum
 	// we delete the sprite if the user hits delete (0x33) or forward delete (0x75)
 	if(keyCode == 0x33 || keyCode == 0x75)
 	{
-		[controller_ deleteSpriteWithKey:[[controller_ modelObject] selectedSpriteKey]];
+		[controller_ performSelectorOnMainThread:@selector(deleteSpriteWithKey:) withObject:[[controller_ modelObject] selectedSpriteKey] waitUntilDone:NO];
 		return YES;
 	}
 	
