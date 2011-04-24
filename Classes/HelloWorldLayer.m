@@ -111,15 +111,22 @@ enum
 		[bgLayer setContentSize: s];
 	
 	// dont calculate difference for X value - only the Y value
-	float diffY = s.height - prevSize_.height;
+	CGFloat diffY = s.height - prevSize_.height;
 	CCNode *child;
 	CCARRAY_FOREACH(children_, child)
 	{
 		// reposition all CSSprites
 		if ( [child isKindOfClass:[CSSprite class]] )
 		{
-			float currentY = [[controller_ modelObject] posY];
-			[[controller_ modelObject] setPosY:(currentY + diffY)];
+			CGPoint currentPos = [child position];
+			currentPos.y += diffY;
+			[child setPosition:currentPos];
+			
+			// if the sprite is selected, fix the positions in the panel
+			if ( [[controller_ modelObject] selectedSprite] == child )
+			{
+				[[controller_ modelObject] setPosY:currentPos.y];
+			}
 		}
 	}
 	
