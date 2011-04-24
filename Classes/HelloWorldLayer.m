@@ -111,16 +111,15 @@ enum
 		[bgLayer setContentSize: s];
 	
 	// dont calculate difference for X value - only the Y value
-	CGPoint diff = ccp(0, s.height - prevSize_.height);
+	float diffY = s.height - prevSize_.height;
 	CCNode *child;
 	CCARRAY_FOREACH(children_, child)
 	{
 		// reposition all CSSprites
 		if ( [child isKindOfClass:[CSSprite class]] )
 		{
-			CGPoint currentPos = [child position];
-			CGPoint newPos = ccpAdd(currentPos, diff);
-			[child setPosition:newPos];
+			float currentY = [[controller_ modelObject] posY];
+			[[controller_ modelObject] setPosY:(currentY + diffY)];
 		}
 	}
 	
@@ -190,6 +189,10 @@ enum
 	{
 		float currentScale = [sprite scale];
 		float newScale = currentScale + [event magnification];
+		
+		// rounding
+		newScale = roundf(newScale * 100)/100.0f;
+		
 		[[controller_ modelObject] setScale:newScale];
 	}
 }
@@ -208,6 +211,9 @@ enum
 			newRotation += 360;
 		else if (newRotation > 360)
 			newRotation -= 360;
+		
+		// rounding
+		newRotation = roundf(newRotation);
 		
 		[[controller_ modelObject] setRotation:newRotation];
 	}
