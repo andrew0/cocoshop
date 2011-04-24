@@ -457,8 +457,7 @@
 //		[relativeAnchorButton_ setEnabled:NO];
 //		[rotationField_ setEnabled:NO];
 //		[rotationSlider_ setEnabled:NO];
-		
-		//TODO: Set Info to Background's Properties
+		[spriteTableView_ deselectAll:nil];
 	}
 	else
 	{
@@ -483,6 +482,15 @@
 //		[relativeAnchorButton_ setEnabled:YES];
 //		[rotationField_ setEnabled:YES];
 //		[rotationSlider_ setEnabled:YES];
+		
+		// get the index for the sprite
+		CSSprite *sprite = [modelObject_ selectedSprite];
+		if (sprite)
+		{
+			NSArray *array = [[modelObject_ spriteDictionary] allValues];
+			NSIndexSet *set = [NSIndexSet indexSetWithIndex:[array indexOfObject:sprite]];
+			[spriteTableView_ selectRowIndexes:set byExtendingSelection:NO];
+		}
 	}
 }
 
