@@ -35,6 +35,7 @@
 
 @synthesize modelObject=modelObject_;
 @synthesize cocosView=cocosView_;
+@synthesize spriteTableView=spriteTableView_;
 
 - (void)awakeFromNib
 {
@@ -373,7 +374,7 @@
 		CSSprite *sprite = [CSSprite spriteWithFile:filename];
 		[sprite setKey:key];
 		[sprite setName:key];
-		[sprite setFilename:[filename lastPathComponent]];
+		[sprite setFilename:filename];
 		@synchronized ([modelObject_ spriteDictionary])
 		{
 			[[modelObject_ spriteDictionary] setValue:sprite forKey:key];
@@ -406,9 +407,6 @@
 		{
 			[[modelObject_ spriteDictionary] removeObjectForKey:[sprite key]];
 		}
-		
-		// update the table
-		[spriteTableView_ reloadData];
 	}	
 }
 
@@ -494,6 +492,68 @@
 	}
 }
 
+- (NSDictionary *)dictionaryFromLayer
+{
+	CCLayerColor *bgLayer = [modelObject_ backgroundLayer];
+	
+	NSMutableDictionary *bg = [NSMutableDictionary dictionaryWithCapacity:15];
+	[bg setValue:[NSNumber numberWithFloat:[bgLayer contentSize].width] forKey:@"stageWidth"];
+	[bg setValue:[NSNumber numberWithFloat:[bgLayer contentSize].height] forKey:@"stageHeight"];
+	[bg setValue:[NSNumber numberWithFloat:[bgLayer position].x] forKey:@"posX"];
+	[bg setValue:[NSNumber numberWithFloat:[bgLayer position].y] forKey:@"posY"];
+	[bg setValue:[NSNumber numberWithInteger:[bgLayer zOrder]] forKey:@"posZ"];
+	[bg setValue:[NSNumber numberWithFloat:[bgLayer anchorPoint].x] forKey:@"anchorX"];
+	[bg setValue:[NSNumber numberWithFloat:[bgLayer anchorPoint].y] forKey:@"anchorY"];
+	[bg setValue:[NSNumber numberWithFloat:[bgLayer scaleX]] forKey:@"scaleX"];
+	[bg setValue:[NSNumber numberWithFloat:[bgLayer scaleY]] forKey:@"scaleY"];
+	[bg setValue:[NSNumber numberWithFloat:[bgLayer opacity]] forKey:@"opacity"];
+	[bg setValue:[NSNumber numberWithFloat:[bgLayer color].r] forKey:@"colorR"];
+	[bg setValue:[NSNumber numberWithFloat:[bgLayer color].g] forKey:@"colorG"];
+	[bg setValue:[NSNumber numberWithFloat:[bgLayer color].b] forKey:@"colorB"];
+	[bg setValue:[NSNumber numberWithFloat:[bgLayer rotation]] forKey:@"rotation"];
+	[bg setValue:[NSNumber numberWithBool:[bgLayer isRelativeAnchorPoint]] forKey:@"relativeAnchor"];
+	
+	NSMutableDictionary *children = [NSMutableDictionary dictionaryWithCapacity:[[cocosView_ children] count]];
+	CCNode *child;
+	CCARRAY_FOREACH([cocosView_ children], child)
+	{
+		if( [child isKindOfClass:[CSSprite class]] )
+		{
+			CSSprite *sprite = (CSSprite *)child;
+			NSMutableDictionary *childValues = [NSMutableDictionary dictionaryWithCapacity:16];
+			[childValues setValue:[sprite filename] forKey:@"filename"];
+			[childValues setValue:[NSNumber numberWithFloat:[sprite position].x] forKey:@"posX"];
+			[childValues setValue:[NSNumber numberWithFloat:[sprite position].y] forKey:@"posY"];
+			[childValues setValue:[NSNumber numberWithInteger:[sprite zOrder]] forKey:@"posZ"];
+			[childValues setValue:[NSNumber numberWithFloat:[sprite anchorPoint].x] forKey:@"anchorX"];
+			[childValues setValue:[NSNumber numberWithFloat:[sprite anchorPoint].y] forKey:@"anchorY"];
+			[childValues setValue:[NSNumber numberWithFloat:[sprite scaleX]] forKey:@"scaleX"];
+			[childValues setValue:[NSNumber numberWithFloat:[sprite scaleY]] forKey:@"scaleY"];
+			[childValues setValue:[NSNumber numberWithBool:[sprite flipX]] forKey:@"flipX"];
+			[childValues setValue:[NSNumber numberWithBool:[sprite flipY]] forKey:@"flipY"];
+			[childValues setValue:[NSNumber numberWithFloat:[sprite opacity]] forKey:@"opacity"];
+			[childValues setValue:[NSNumber numberWithFloat:[sprite color].r] forKey:@"colorR"];
+			[childValues setValue:[NSNumber numberWithFloat:[sprite color].g] forKey:@"colorG"];
+			[childValues setValue:[NSNumber numberWithFloat:[sprite color].b] forKey:@"colorB"];
+			[childValues setValue:[NSNumber numberWithFloat:[sprite rotation]] forKey:@"rotation"];
+			[childValues setValue:[NSNumber numberWithBool:[sprite isRelativeAnchorPoint]] forKey:@"relativeAnchor"];
+			[children setValue:childValues forKey:[sprite name]];
+		}
+	}
+	
+	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
+	[dict setValue:bg forKey:@"background"];
+	[dict setValue:children forKey:@"children"];
+	
+	return [NSDictionary dictionaryWithDictionary:dict];
+}
+
+- (void)saveProjectToFile:(NSString *)filename
+{
+	NSDictionary *dict = [self dictionaryFromLayer];
+	[dict writeToFile:filename atomically:YES];
+}
+
 #pragma mark IBActions
 
 - (IBAction)addSprite:(id)sender
@@ -532,6 +592,66 @@
 {
 	cocoshopAppDelegate *delegate = [[NSApplication sharedApplication] delegate];
 	[[delegate window] makeKeyAndOrderFront:nil];
+}
+
+- (IBAction)saveProject:(id)sender
+{
+//	cocoshopAppDelegate *delegate = [[NSApplication sharedApplication] delegate];
+//	
+//	NSSavePanel *savePanel = [NSSavePanel savePanel];
+//	[savePanel setCanCreateDirectories:YES];
+//	[savePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"csd", @"ccb"]];
+//	
+//	// handle the save panel
+//	[savePanel beginSheetModalForWindow:[delegate window] completionHandler:^(NSInteger result) {
+//		if(result == NSOKButton)
+//		{
+//			NSString *file = [savePanel filename];
+//			[self saveProjectToFile:file];
+//		}
+//	}];
+}
+
+- (IBAction)saveProjectAs:(id)sender
+{
+	cocoshopAppDelegate *delegate = [[NSApplication sharedApplication] delegate];
+	
+	NSSavePanel *savePanel = [NSSavePanel savePanel];
+	[savePanel setCanCreateDirectories:YES];
+	[savePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"csd", @"ccb", nil]];
+	
+	// handle the save panel
+	[savePanel beginSheetModalForWindow:[delegate window] completionHandler:^(NSInteger result) {
+		if(result == NSOKButton)
+		{
+			NSString *file = [savePanel filename];
+			[self saveProjectToFile:file];
+		}
+	}];
+}
+
+- (IBAction)openProject:(id)sender
+{
+	// initialize panel + set flags
+	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+	[openPanel setCanChooseFiles:YES];
+	[openPanel setAllowsMultipleSelection:YES];
+	[openPanel setCanChooseDirectories:NO];
+	[openPanel setAllowedFileTypes:[NSArray arrayWithObject:@"csd"]];
+	[openPanel setAllowsOtherFileTypes:NO];
+	
+	// run the panel
+	if( [[NSDocumentController sharedDocumentController] runModalOpenPanel:openPanel forTypes:[NSArray arrayWithObject:@"csd"]] == NSOKButton )
+	{
+		NSArray *files = [openPanel filenames];
+		NSString *file = [files objectAtIndex:0];
+		NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:file];
+		
+		if(dict)
+		{
+			[cocosView_ safeAddSpritesFromDictionary:dict];
+		}
+	}	
 }
 
 - (IBAction)spriteAddButtonClicked:(id)sender

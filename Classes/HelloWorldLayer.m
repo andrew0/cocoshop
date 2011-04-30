@@ -88,6 +88,95 @@ enum
 	return self;
 }
 
+- (void)safeAddSpritesFromDictionary:(NSDictionary *)dict
+{
+	NSThread *cocosThread = [[CCDirector sharedDirector] runningThread] ;
+	
+	[self performSelector:@selector(addSpritesFromDictionary:)
+				 onThread:cocosThread
+			   withObject:dict
+			waitUntilDone:([[NSThread currentThread] isEqualTo:cocosThread])];
+}
+
+- (void)addSpritesFromDictionary:(NSDictionary *)dict
+{
+	NSDictionary *bg = [dict objectForKey:@"background"];
+	NSDictionary *children = [dict objectForKey:@"children"];
+	
+	if(bg && children)
+	{
+		CCLayerColor *bgLayer = [[controller_ modelObject] backgroundLayer];
+		
+		CGPoint bgPos = ccp([[bg objectForKey:@"posX"] floatValue], [[bg objectForKey:@"posY"] floatValue]);
+		[bgLayer setPosition:bgPos];
+		
+		CGPoint bgAnchor = ccp([[bg objectForKey:@"anchorX"] floatValue], [[bg objectForKey:@"anchorY"] floatValue]);
+		[bgLayer setAnchorPoint:bgAnchor];
+		
+		CGFloat bgScaleX = [[bg objectForKey:@"scaleX"] floatValue];
+		CGFloat bgScaleY = [[bg objectForKey:@"scaleY"] floatValue];
+		[bgLayer setScaleX:bgScaleX];
+		[bgLayer setScaleY:bgScaleY];
+		
+		CGFloat bgOpacity = [[bg objectForKey:@"opacity"] floatValue];
+		[bgLayer setOpacity:bgOpacity];
+		
+		ccColor3B bgColor = ccc3([[bg objectForKey:@"colorR"] floatValue], [[bg objectForKey:@"colorG"] floatValue], [[bg objectForKey:@"colorB"] floatValue]);
+		[bgLayer setColor:bgColor];
+		
+		CGFloat bgRotation = [[bg objectForKey:@"rotation"] floatValue];
+		[bgLayer setRotation:bgRotation];
+		
+		BOOL bgRelativeAnchor = [[bg objectForKey:@"relativeAnchor"] boolValue];
+		[bgLayer setIsRelativeAnchorPoint:bgRelativeAnchor];
+		
+		for(NSString *key in children)
+		{
+			NSDictionary *child = [children objectForKey:key];
+			
+			NSString *childFilename = [child objectForKey:@"filename"];
+			CSSprite *sprite = [CSSprite spriteWithFile:childFilename];
+			
+			CGPoint childPos = ccp([[child objectForKey:@"posX"] floatValue], [[child objectForKey:@"posY"] floatValue]);
+			[sprite setPosition:childPos];
+			
+			CGPoint childAnchor = ccp([[child objectForKey:@"anchorX"] floatValue], [[child objectForKey:@"anchorY"] floatValue]);
+			[sprite setAnchorPoint:childAnchor];
+			
+			CGFloat childScaleX = [[child objectForKey:@"scaleX"] floatValue];
+			CGFloat childScaleY = [[child objectForKey:@"scaleY"] floatValue];
+			[sprite setScaleX:childScaleX];
+			[sprite setScaleY:childScaleY];
+			
+			BOOL childFlipX = [[child objectForKey:@"flipX"] boolValue];
+			BOOL childFlipY = [[child objectForKey:@"flipX"] boolValue];
+			[sprite setFlipX:childFlipX];
+			[sprite setFlipY:childFlipY];
+			
+			CGFloat childOpacity = [[child objectForKey:@"opacity"] floatValue];
+			[sprite setOpacity:childOpacity];
+			
+			ccColor3B childColor = ccc3([[child objectForKey:@"colorR"] floatValue], [[child objectForKey:@"colorG"] floatValue], [[child objectForKey:@"colorB"] floatValue]);
+			[sprite setColor:childColor];
+			
+			CGFloat childRotation = [[child objectForKey:@"rotation"] floatValue];
+			[sprite setRotation:childRotation];
+			
+			BOOL childRelativeAnchor = [[child objectForKey:@"relativeAnchor"] boolValue];
+			[sprite setIsRelativeAnchorPoint:childRelativeAnchor];
+			
+			[sprite setKey:key];
+			[sprite setName:key];
+			[sprite setFilename:childFilename];
+			@synchronized ([[controller_ modelObject] spriteDictionary])
+			{
+				[[[controller_ modelObject] spriteDictionary] setValue:sprite forKey:key];
+			}
+			
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"addedSprite" object:nil];
+		}
+	}
+}
 
 // can be called from another thread
 - (void) safeUpdateForScreenReshape: (NSNotification *) aNotification
@@ -185,6 +274,7 @@ enum
 {
 	// queue sprites update on next visit (in Cocos2D Thread)
 	spriteWasAdded_ = YES;
+	[[controller_ spriteTableView] reloadData];
 }
 
 #pragma mark Touch Events
@@ -199,7 +289,7 @@ enum
 		
 		// rounding
 		newScale = roundf(newScale * 100)/100.0f;
-		
+				
 		[[controller_ modelObject] setScale:newScale];
 	}
 }

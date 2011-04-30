@@ -65,6 +65,7 @@
 
 @property(assign) IBOutlet CSModel *modelObject;
 @property(nonatomic, retain) HelloWorldLayer *cocosView;
+@property(assign) NSTableView *spriteTableView;
 
 // filters array of filenames, leaving only allowed
 - (NSArray *) allowedFilesWithFiles: (NSArray *) files;
@@ -73,16 +74,20 @@
 // executes safely on cocos2d thread
 - (void) addSpritesSafelyWithFiles: (NSArray *) files;
 
-#pragma mark IBActions
 - (void)deleteSpriteWithKey:(NSString *)key;
 - (void)spriteTableSelectionDidChange:(NSNotification *)aNotification;
 - (void)didChangeSelectedSprite:(NSNotification *)aNotification;
+- (NSDictionary *)dictionaryFromLayer;
+- (void)saveProjectToFile:(NSString *)filename;
 
-
+#pragma mark IBActions
 - (IBAction)addSprite:(id)sender;
 - (IBAction)openInfoPanel:(id)sender;
 - (IBAction) openSpritesPanel: (id) sender;
 - (IBAction)openMainWindow:(id)sender;
+- (IBAction)saveProject:(id)sender;
+- (IBAction)saveProjectAs:(id)sender;
+- (IBAction)openProject:(id)sender;
 - (IBAction)spriteAddButtonClicked:(id)sender;
 - (IBAction)spriteDeleteButtonClicked:(id)sender;
 
