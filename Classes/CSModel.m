@@ -38,7 +38,8 @@
 @synthesize posZ=posZ_;
 @synthesize anchorX=anchorX_;
 @synthesize anchorY=anchorY_;
-@synthesize scale=scale_;
+@synthesize scaleX=scaleX_;
+@synthesize scaleY=scaleY_;
 @synthesize flipX=flipX_;
 @synthesize flipY=flipY_;
 @synthesize opacity=opacity_;
@@ -110,7 +111,8 @@
 			[self setAnchorY:anchor.y];
 			[self setFlipX:([new flipX]) ? NSOnState : NSOffState];
 			[self setFlipY:([new flipY]) ? NSOnState : NSOffState];
-			[self setScale:[new scale]];
+			[self setScaleX:[new scaleX]];
+			[self setScaleY:[new scaleY]];
 			[self setOpacity:[new opacity]];
 			[self setColor:col];
 			[self setRelativeAnchor:([new isRelativeAnchorPoint]) ? NSOnState : NSOffState];
@@ -129,7 +131,8 @@
 			[self setAnchorY:anchor.y];
 			[self setFlipX:NSOffState];
 			[self setFlipY:NSOffState];
-			[self setScale:[backgroundLayer_ scale]];
+			[self setScaleX:[backgroundLayer_ scaleX]];
+			[self setScaleY:[backgroundLayer_ scaleY]];
 			[self setOpacity:[backgroundLayer_ opacity]];
 			[self setColor:col];
 			[self setRelativeAnchor:([backgroundLayer_ isRelativeAnchorPoint]) ? NSOnState : NSOffState];

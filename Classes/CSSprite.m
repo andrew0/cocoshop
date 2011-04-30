@@ -121,12 +121,21 @@
 	}
 }
 
-- (void)setScale:(float)s
+- (void)setScaleX:(float)s
 {
 	if(!locked_)
 	{
-		[super setScale:s];
-		[anchor_ setScale:(s != 0) ? 1.0f/s : 0];
+		[super setScaleX:s];
+		[anchor_ setScaleX:(s != 0) ? 1.0f/s : 0];
+	}
+}
+
+- (void)setScaleY:(float)s
+{
+	if(!locked_)
+	{
+		[super setScaleY:s];
+		[anchor_ setScaleY:(s != 0) ? 1.0f/s : 0];
 	}
 }
 

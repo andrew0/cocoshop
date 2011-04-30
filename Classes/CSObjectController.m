@@ -79,7 +79,8 @@
 	[modelObject_ addObserver:self forKeyPath:@"posZ" options:NSKeyValueObservingOptionNew context:NULL];
 	[modelObject_ addObserver:self forKeyPath:@"anchorX" options:NSKeyValueObservingOptionNew context:NULL];
 	[modelObject_ addObserver:self forKeyPath:@"anchorY" options:NSKeyValueObservingOptionNew context:NULL];
-	[modelObject_ addObserver:self forKeyPath:@"scale" options:NSKeyValueObservingOptionNew context:NULL];
+	[modelObject_ addObserver:self forKeyPath:@"scaleX" options:NSKeyValueObservingOptionNew context:NULL];
+	[modelObject_ addObserver:self forKeyPath:@"scaleY" options:NSKeyValueObservingOptionNew context:NULL];
 	[modelObject_ addObserver:self forKeyPath:@"flipX" options:NSKeyValueObservingOptionNew context:NULL];
 	[modelObject_ addObserver:self forKeyPath:@"flipY" options:NSKeyValueObservingOptionNew context:NULL];
 	[modelObject_ addObserver:self forKeyPath:@"opacity" options:NSKeyValueObservingOptionNew context:NULL];
@@ -179,19 +180,30 @@
 			[[modelObject_ backgroundLayer] setAnchorPoint:currentAnchor];
 		}		
 	}
-	else if( [keyPath isEqualToString:@"scale"] )
+	else if( [keyPath isEqualToString:@"scaleX"] )
 	{
 		CSSprite *sprite = [modelObject_ selectedSprite];
 		if(sprite)
 		{
-			[sprite setScale:[modelObject_ scale]];
+			[sprite setScaleX:[modelObject_ scaleX]];
 		}
 		else
 		{
-			[[modelObject_ backgroundLayer] setScale:[modelObject_ scale]];
+			[[modelObject_ backgroundLayer] setScaleX:[modelObject_ scaleX]];
 		}
-
 	}
+	else if( [keyPath isEqualToString:@"scaleY"] )
+	{
+		CSSprite *sprite = [modelObject_ selectedSprite];
+		if(sprite)
+		{
+			[sprite setScaleY:[modelObject_ scaleY]];
+		}
+		else
+		{
+			[[modelObject_ backgroundLayer] setScaleY:[modelObject_ scaleY]];
+		}
+	}	
 	else if( [keyPath isEqualToString:@"flipX"] )
 	{
 		CSSprite *sprite = [modelObject_ selectedSprite];

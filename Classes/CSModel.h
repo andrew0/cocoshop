@@ -42,7 +42,8 @@
 	float posZ_;
 	float anchorX_;
 	float anchorY_;
-	float scale_;
+	float scaleX_;
+	float scaleY_;
 	NSInteger flipX_;
 	NSInteger flipY_;
 	float opacity_;
@@ -60,7 +61,8 @@
 @property(nonatomic, assign) float posZ;
 @property(nonatomic, assign) float anchorX;
 @property(nonatomic, assign) float anchorY;
-@property(nonatomic, assign) float scale;
+@property(nonatomic, assign) float scaleX;
+@property(nonatomic, assign) float scaleY;
 @property(nonatomic, assign) NSInteger flipX;
 @property(nonatomic, assign) NSInteger flipY;
 @property(nonatomic, assign) float opacity;

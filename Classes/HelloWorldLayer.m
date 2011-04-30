@@ -284,13 +284,17 @@ enum
 	CSSprite *sprite = [[controller_ modelObject] selectedSprite];
 	if (sprite)
 	{
-		float currentScale = [sprite scale];
-		float newScale = currentScale + [event magnification];
+		float currentScaleX = [sprite scaleX];
+		float currentScaleY = [sprite scaleY];
+		float newScaleX = currentScaleX + [event magnification];
+		float newScaleY = currentScaleY + [event magnification];
 		
-		// rounding
-		newScale = roundf(newScale * 100)/100.0f;
+		// round to nearest hundredth
+		newScaleX = roundf(newScaleX * 100)/100.0f;
+		newScaleY = roundf(newScaleY * 100)/100.0f;
 				
-		[[controller_ modelObject] setScale:newScale];
+		[[controller_ modelObject] setScaleX:newScaleX];
+		[[controller_ modelObject] setScaleY:newScaleY];
 	}
 }
 
