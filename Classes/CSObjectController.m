@@ -40,11 +40,11 @@
 - (void)awakeFromNib
 {
 	// add a data source to the table view
-	NSMutableDictionary *dict = [modelObject_ spriteDictionary];
+	NSMutableArray *spriteArray = [modelObject_ spriteArray];
 	
-	@synchronized (dict)
+	@synchronized(spriteArray)
 	{
-		dataSource_ = [[CSTableViewDataSource dataSourceWithDictionary:dict] retain];
+		dataSource_ = [[CSTableViewDataSource dataSourceWithArray:spriteArray] retain];
 	}
 	[spriteTableView_ setDataSource:dataSource_];
 	
@@ -55,7 +55,7 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeSelectedSprite:) name:@"didChangeSelectedSprite" object:nil];
 
 	// Disable Sprite Info for no Sprites at the beginning
-	[self didChangeSelectedSprite: nil];
+	[self didChangeSelectedSprite:nil];
 }
 
 - (void)setCocosView:(HelloWorldLayer *)view
@@ -345,7 +345,7 @@
 		{
 			if ([fileType isEqualToString: curFileExtension])
 			{
-				[allowedFiles addObject: file];
+				[allowedFiles addObject:file];
 				break;
 			}
 		}
@@ -367,29 +367,28 @@
 }
 
 // designated sprites adding method
-- (void) addSpritesWithFiles: (NSArray *) files
+- (void)addSpritesWithFiles:(NSArray *)files
 {
-	[ [CCTextureCache sharedTextureCache] removeUnusedTextures ];
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 	
 	for(NSString *filename in files)
 	{		
 		// create key for the sprite
-		NSString *originalKey = [filename lastPathComponent];
-		NSString *key = [NSString stringWithString:originalKey];
+		NSString *originalName = [filename lastPathComponent];
+		NSString *name = [NSString stringWithString:originalName];
 		NSUInteger i = 0;
-		while([[modelObject_ spriteDictionary] objectForKey:key] != nil)
+		while( [modelObject_ selectedSprite] != nil )
 		{
 			NSAssert(i <= NSUIntegerMax, @"Added too many of the same sprite");
-			key = [originalKey stringByAppendingFormat:@"_%u", i++];
+			name = [originalName stringByAppendingFormat:@"_%u", i++];
 		}
 		
 		CSSprite *sprite = [CSSprite spriteWithFile:filename];
-		[sprite setKey:key];
-		[sprite setName:key];
+		[sprite setName:name];
 		[sprite setFilename:filename];
-		@synchronized ([modelObject_ spriteDictionary])
+		@synchronized( [modelObject_ spriteArray] )
 		{
-			[[modelObject_ spriteDictionary] setValue:sprite forKey:key];
+			[[modelObject_ spriteArray] addObject:sprite];
 		}
 		
 		// notify view that we added the sprite
@@ -400,24 +399,23 @@
 	[spriteTableView_ reloadData];
 }
 
-- (void)deleteSpriteWithKey:(NSString *)key
+- (void)deleteSprite:(CSSprite *)sprite
 {
 	// delete sprite
-	CSSprite *sprite = [[modelObject_ spriteDictionary] objectForKey:key];
 	if(sprite)
 	{
 		// deselect sprite if necessary
-		if( [key isEqualToString:[modelObject_ selectedSpriteKey]] )
-			[modelObject_ setSelectedSpriteKey:nil];
+		if( [sprite isEqualTo:sprite] )
+			[modelObject_ setSelectedSprite:nil];
 		
 		// only remove child if we're the parent
 		if( [sprite parent] == cocosView_ )
 			[cocosView_ removeChild:sprite cleanup:YES];
 		
 		// remove the sprite from the dictionary
-		@synchronized( [modelObject_ spriteDictionary])
+		@synchronized([modelObject_ spriteArray])
 		{
-			[[modelObject_ spriteDictionary] removeObjectForKey:[sprite key]];
+			[[modelObject_ spriteArray] removeObject:sprite];
 		}
 	}	
 }
@@ -427,24 +425,19 @@
 	NSInteger index = [spriteTableView_ selectedRow];
 	if(index >= 0)
 	{
-		NSArray *values = nil;
-		@synchronized ([modelObject_ spriteDictionary])
-		{
-			values = [[modelObject_ spriteDictionary] allValues];
-		}
-		CSSprite *sprite = [values objectAtIndex:index];
-		[modelObject_ setSelectedSpriteKey:[sprite key]];
+		CSSprite *sprite = [[modelObject_ spriteArray] objectAtIndex:index];
+		[modelObject_ setSelectedSprite:sprite];
 	}
 	else
 	{
-		[modelObject_ setSelectedSpriteKey:nil];
+		[modelObject_ setSelectedSprite:nil];
 	}
 
 }
 
 - (void)didChangeSelectedSprite:(NSNotification *)aNotification
 {
-	if( ![modelObject_ selectedSpriteKey] )
+	if( ![modelObject_ selectedSprite] )
 	{
 		// Editing Background
 		[nameField_ setEnabled:NO];
@@ -495,9 +488,9 @@
 		
 		// get the index for the sprite
 		CSSprite *sprite = [modelObject_ selectedSprite];
-		if (sprite)
+		if(sprite)
 		{
-			NSArray *array = [[modelObject_ spriteDictionary] allValues];
+			NSArray *array = [modelObject_ spriteArray];
 			NSIndexSet *set = [NSIndexSet indexSetWithIndex:[array indexOfObject:sprite]];
 			[spriteTableView_ selectRowIndexes:set byExtendingSelection:NO];
 		}
@@ -525,7 +518,7 @@
 	[bg setValue:[NSNumber numberWithFloat:[bgLayer rotation]] forKey:@"rotation"];
 	[bg setValue:[NSNumber numberWithBool:[bgLayer isRelativeAnchorPoint]] forKey:@"relativeAnchor"];
 	
-	NSMutableDictionary *children = [NSMutableDictionary dictionaryWithCapacity:[[cocosView_ children] count]];
+	NSMutableArray *children = [NSMutableArray arrayWithCapacity:[[cocosView_ children] count]];
 	CCNode *child;
 	CCARRAY_FOREACH([cocosView_ children], child)
 	{
@@ -533,6 +526,7 @@
 		{
 			CSSprite *sprite = (CSSprite *)child;
 			NSMutableDictionary *childValues = [NSMutableDictionary dictionaryWithCapacity:16];
+			[childValues setValue:[sprite name] forKey:@"name"];
 			[childValues setValue:[sprite filename] forKey:@"filename"];
 			[childValues setValue:[NSNumber numberWithFloat:[sprite position].x] forKey:@"posX"];
 			[childValues setValue:[NSNumber numberWithFloat:[sprite position].y] forKey:@"posY"];
@@ -549,7 +543,7 @@
 			[childValues setValue:[NSNumber numberWithFloat:[sprite color].b] forKey:@"colorB"];
 			[childValues setValue:[NSNumber numberWithFloat:[sprite rotation]] forKey:@"rotation"];
 			[childValues setValue:[NSNumber numberWithBool:[sprite isRelativeAnchorPoint]] forKey:@"relativeAnchor"];
-			[children setValue:childValues forKey:[sprite name]];
+			[children addObject:childValues];
 		}
 	}
 	
@@ -674,17 +668,12 @@
 - (IBAction)spriteDeleteButtonClicked:(id)sender
 {
 	NSInteger index =  [spriteTableView_ selectedRow];
-	NSArray *values = nil;
-	
-	@synchronized ( [modelObject_ spriteDictionary])
-	{
-		values = [[modelObject_ spriteDictionary] allValues];
-	}
+	NSArray *values = [modelObject_ spriteArray];
 	
 	if ( values && (index >= 0) && (index < [values count]) )
 	{
 		CSSprite *sprite = [values objectAtIndex:index];
-		[self deleteSpriteWithKey:[sprite key]];
+		[self deleteSprite:sprite];
 	}
 }
 

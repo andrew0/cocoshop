@@ -38,7 +38,7 @@
 	BOOL shouldDragSprite_;
 	CGPoint prevLocation_;
 	
-	BOOL spriteWasAdded_;
+	BOOL didAddSprite_;
 	
 	CGSize prevSize_;
 }

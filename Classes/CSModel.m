@@ -29,9 +29,9 @@
 
 @implementation CSModel
 
+@synthesize selectedSprite=selectedSprite_;
 @synthesize backgroundLayer=backgroundLayer_;
-@synthesize spriteDictionary=spriteDictionary_;
-@synthesize selectedSpriteKey=selectedSpriteKey_;
+@synthesize spriteArray=spriteArray_;
 @synthesize name=name_;
 @synthesize posX=posX_;
 @synthesize posY=posY_;
@@ -51,8 +51,7 @@
 {
 	if((self=[super init]))
 	{
-		[self setSpriteDictionary:[NSMutableDictionary dictionary]];
-		[self setSelectedSpriteKey:nil];
+		[self setSpriteArray:[NSMutableArray array]];
 		
 		CCLayerColor *bgLayer = [CCLayerColor layerWithColor:ccc4(0, 0, 0, 0)];
 		[bgLayer setPosition:CGPointZero];
@@ -66,37 +65,23 @@
 {
 }
 
-- (CSSprite *)selectedSprite
-{
-	CSSprite *sprite = nil;
-	
-	@synchronized ( spriteDictionary_ )
-	{
-		sprite = [spriteDictionary_ objectForKey:selectedSpriteKey_];
-	}
-	
-	return sprite;
-}
-
 #pragma mark Custom Accessors
 
-- (void)setSelectedSpriteKey:(NSString *)aKey
+- (void)setSelectedSprite:(CSSprite *)aSprite
 {
 	// make sure that sprites aren't same key or both nil
-	if( ![selectedSpriteKey_ isEqualToString:aKey] && !(selectedSpriteKey_ == nil && aKey == nil) )
+	if( ![selectedSprite_ isEqualTo:aSprite] )
 	{
 		// deselect old sprite
-		CSSprite *old = [self selectedSprite];
-		if(old)
+		if(selectedSprite_)
 		{
-			[old setIsSelected:NO];
+			[selectedSprite_ setIsSelected:NO];
 		}
 		
-		[selectedSpriteKey_ release];
-		selectedSpriteKey_ = [aKey copy];
+		selectedSprite_ = aSprite;
 		
 		// select new sprite
-		CSSprite *new = [self selectedSprite];
+		CSSprite *new = selectedSprite_;
 		if(new)
 		{
 			CGPoint pos = [new position];
@@ -145,9 +130,7 @@
 
 - (void)dealloc
 {
-	[self setSpriteDictionary:nil];
-	[self setSelectedSpriteKey:nil];
-	[self setSelectedSpriteKey:nil];
+	[self setSpriteArray:nil];
 	[self setColor:nil];
 	[self setBackgroundLayer:nil];
 	[super dealloc];

@@ -31,7 +31,6 @@
 @implementation CSSprite
 
 @synthesize isSelected=isSelected_;
-@synthesize key=key_;
 @synthesize filename=filename_;
 @synthesize name=name_;
 @synthesize locked=locked_;
@@ -40,7 +39,6 @@
 {
 	if((self=[super init]))
 	{
-		[self setKey:nil];
 		[self setFilename:nil];
 		[self setName:nil];
 		locked_ = NO;
@@ -224,7 +222,6 @@
 	[fill_ release];
 	[anchor_ release];
 	[positionLabel_ release];
-	[self setKey:nil];
 	[self setFilename:nil];
 	[self setName:nil];
 	[super dealloc];

@@ -28,6 +28,7 @@
 #import "cocos2d.h"
 
 @class CSModel;
+@class CSSprite;
 @class HelloWorldLayer;
 @class CSTableViewDataSource;
 
@@ -79,7 +80,7 @@
  */
 - (void) addSpritesWithFilesSafely:(NSArray *)files;
 
-- (void)deleteSpriteWithKey:(NSString *)key;
+- (void)deleteSprite:(CSSprite *)sprite;
 - (void)spriteTableSelectionDidChange:(NSNotification *)aNotification;
 - (void)didChangeSelectedSprite:(NSNotification *)aNotification;
 - (NSDictionary *)dictionaryFromLayer;

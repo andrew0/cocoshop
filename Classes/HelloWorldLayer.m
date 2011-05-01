@@ -129,12 +129,12 @@ enum
 		BOOL bgRelativeAnchor = [[bg objectForKey:@"relativeAnchor"] boolValue];
 		[bgLayer setIsRelativeAnchorPoint:bgRelativeAnchor];
 		
-		for(NSString *key in children)
+		for(NSDictionary *child in children)
 		{
-			NSDictionary *child = [children objectForKey:key];
-			
 			NSString *childFilename = [child objectForKey:@"filename"];
 			CSSprite *sprite = [CSSprite spriteWithFile:childFilename];
+			
+			NSString *name = [child objectForKey:@"name"];
 			
 			CGPoint childPos = ccp([[child objectForKey:@"posX"] floatValue], [[child objectForKey:@"posY"] floatValue]);
 			[sprite setPosition:childPos];
@@ -164,12 +164,11 @@ enum
 			BOOL childRelativeAnchor = [[child objectForKey:@"relativeAnchor"] boolValue];
 			[sprite setIsRelativeAnchorPoint:childRelativeAnchor];
 			
-			[sprite setKey:key];
-			[sprite setName:key];
+			[sprite setName:name];
 			[sprite setFilename:childFilename];
-			@synchronized ([[controller_ modelObject] spriteDictionary])
+			@synchronized ([[controller_ modelObject] spriteArray])
 			{
-				[[[controller_ modelObject] spriteDictionary] setValue:sprite forKey:key];
+				[[[controller_ modelObject] spriteArray] addObject:sprite];
 			}
 			
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"addedSprite" object:nil];
@@ -243,18 +242,16 @@ enum
 - (void) updateSpritesFromModel
 {
 	CSModel *model = [controller_ modelObject];
-	NSMutableDictionary *spriteDictionary = [model spriteDictionary];
+	NSMutableArray *spriteArray = [model spriteArray];
 	
-	@synchronized (spriteDictionary)
+	@synchronized(spriteArray)
 	{
-		for(NSString *key in spriteDictionary)
+		for(CSSprite *sprite in spriteArray)
 		{
-			// check each sprite's parent. if there is none, add it
-			CSSprite *sprite = [spriteDictionary objectForKey:key];
-			if(![sprite parent])
+			if( ![sprite parent] )
 			{
 				[self addChild:sprite];
-				[model setSelectedSpriteKey:key];
+				[model setSelectedSprite:sprite];
 			}
 		}
 	}
@@ -262,9 +259,9 @@ enum
 
 - (void) visit
 {
-	if (spriteWasAdded_)
+	if (didAddSprite_)
 		[self updateSpritesFromModel];
-	spriteWasAdded_ = NO;
+	didAddSprite_ = NO;
 	
 	[super visit];
 }
@@ -272,7 +269,7 @@ enum
 - (void)addedSprite:(NSNotification *)aNotification
 {
 	// queue sprites update on next visit (in Cocos2D Thread)
-	spriteWasAdded_ = YES;
+	didAddSprite_ = YES;
 	[[controller_ spriteTableView] reloadData];
 }
 
@@ -335,7 +332,7 @@ enum
 		// otherwise, plan on deselecting it (unless it is moved)
 		if([model selectedSprite] != sprite)
 		{
-			[model setSelectedSpriteKey:[sprite key]];
+			[model setSelectedSprite:sprite];
 		}
 		else
 		{
@@ -351,7 +348,7 @@ enum
 	{
 		if(![selectedSprite isEventInRect:event])
 		{
-			[model setSelectedSpriteKey:nil];
+			[model setSelectedSprite:nil];
 		}
 	}
 	
@@ -397,7 +394,7 @@ enum
 	if(shouldToggleVisibility_)
 	{
 		CSModel *model = [controller_ modelObject];
-		[model setSelectedSpriteKey:nil];
+		[model setSelectedSprite:nil];
 	}
 	
 	prevLocation_ = [[CCDirector sharedDirector] convertEventToGL:event];
@@ -418,7 +415,7 @@ enum
 	{
 		case 0x33: // delete
 		case 0x75: // forward delete
-			[controller_ performSelectorOnMainThread:@selector(deleteSpriteWithKey:) withObject:[[controller_ modelObject] selectedSpriteKey] waitUntilDone:NO];
+			[controller_ performSelectorOnMainThread:@selector(deleteSprite:) withObject:[[controller_ modelObject] selectedSprite] waitUntilDone:NO];
 			return YES;
 		default:
 			break;

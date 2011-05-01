@@ -31,10 +31,11 @@
 
 @interface CSModel : NSObject
 {
+	CSSprite *selectedSprite_;
+	
 	CCLayerColor *backgroundLayer_;
 	
-	NSMutableDictionary *spriteDictionary_;
-	NSString *selectedSpriteKey_;
+	NSMutableArray *spriteArray_;
 	
 	NSString *name_;
 	float posX_;
@@ -52,9 +53,9 @@
 	float rotation_;
 }
 
+@property(nonatomic, assign) CSSprite *selectedSprite;
 @property(nonatomic, retain) CCLayerColor *backgroundLayer;
-@property(nonatomic, retain) NSMutableDictionary *spriteDictionary;
-@property(nonatomic, copy) NSString *selectedSpriteKey;
+@property(nonatomic, retain) NSMutableArray *spriteArray;
 @property(nonatomic, assign) NSString *name;
 @property(nonatomic, assign) float posX;
 @property(nonatomic, assign) float posY;
