@@ -67,12 +67,17 @@
 @property(nonatomic, retain) HelloWorldLayer *cocosView;
 @property(assign) NSTableView *spriteTableView;
 
-// filters array of filenames, leaving only allowed
-- (NSArray *) allowedFilesWithFiles: (NSArray *) files;
+/**
+ * filters array of filenames, leaving only allowed
+ * @returns The filtered files
+ */
+- (NSArray *)allowedFilesWithFiles:(NSArray *)files;
 
-// adds sprites will filenames taken from array, doesn't do any filtering
-// executes safely on cocos2d thread
-- (void) addSpritesSafelyWithFiles: (NSArray *) files;
+/**
+ * adds sprites will filenames taken from array, doesn't do any filtering. executes safely on cocos2d thread
+ * @param files Filenames of sprites to add
+ */
+- (void) addSpritesWithFilesSafely:(NSArray *)files;
 
 - (void)deleteSpriteWithKey:(NSString *)key;
 - (void)spriteTableSelectionDidChange:(NSNotification *)aNotification;
@@ -83,7 +88,7 @@
 #pragma mark IBActions
 - (IBAction)addSprite:(id)sender;
 - (IBAction)openInfoPanel:(id)sender;
-- (IBAction) openSpritesPanel: (id) sender;
+- (IBAction)openSpritesPanel: (id) sender;
 - (IBAction)openMainWindow:(id)sender;
 - (IBAction)saveProject:(id)sender;
 - (IBAction)saveProjectAs:(id)sender;

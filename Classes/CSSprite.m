@@ -106,9 +106,7 @@
 	if(!locked_)
 	{
 		[super setPosition:pos];
-		
-		// update the position label on next visit
-		mustUpdatePositionLabel_ = YES;
+		[self updatePositionLabelSafely];
 	}
 }
 
@@ -174,20 +172,27 @@
 
 // changes position and text of positionLabel
 // must be called on Cocos2D thread
-- (void) updatePositionLabel
+- (void)updatePositionLabel
 {
 	CGSize s = [anchor_ contentSize];
 	NSString *posText = [NSString stringWithFormat:@"%g, %g", floorf( [self position].x ), floorf( [self position].y )];
 	[positionLabel_ setString:posText];
 	[positionLabel_ setPosition:ccp(s.width/2, -10)];
 	
-	mustUpdatePositionLabel_ = NO;
+	willUpdatePositionLabel_ = NO;
 }
 
-- (void) visit
+- (void)updatePositionLabelSafely
 {
-	if (mustUpdatePositionLabel_)
+	willUpdatePositionLabel_ = YES;
+}
+
+- (void)visit
+{
+	if(willUpdatePositionLabel_)
+	{
 		[self updatePositionLabel];
+	}
 	
 	[super visit];
 }

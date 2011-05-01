@@ -49,12 +49,12 @@
 + (id)nodeWithController:(CSObjectController *)aController;
 - (id)initWithController:(CSObjectController *)aController;
 - (CSSprite *)spriteForEvent:(NSEvent *)event;
-- (void)safeAddSpritesFromDictionary:(NSDictionary *)dict;
+- (void)addSpritesFromDictionarySafely:(NSDictionary *)dict;
 - (void)addSpritesFromDictionary:(NSDictionary *)dict;
 - (void)addedSprite:(NSNotification *)aNotification;
 
 // updates background checkerboard if winSize is changed
 // can be called on any thread
-- (void) safeUpdateForScreenReshape:(NSNotification *) aNotification;
+- (void) updateForScreenReshapeSafely:(NSNotification *) aNotification;
 
 @end

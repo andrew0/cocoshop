@@ -65,30 +65,29 @@ enum
 		// Register for Notifications
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addedSprite:) name:@"addedSprite" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver: self
-												 selector: @selector(safeUpdateForScreenReshape:) 
+												 selector: @selector(updateForScreenReshapeSafely:) 
 													 name: NSViewFrameDidChangeNotification 
 												   object: [CCDirector sharedDirector].openGLView];
 		[[CCDirector sharedDirector].openGLView setPostsFrameChangedNotifications: YES];
 		
 		// Add background checkerboard
 		CCSprite *sprite = [CCSprite spriteWithFile:@"checkerboard.png"];
-		[self addChild:sprite z:NSIntegerMin tag: kTagBackgroundCheckerboard ];
+		ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
+		[sprite.texture setTexParameters:&params];
 		sprite.position = sprite.anchorPoint = ccp(0,0);
+		[self addChild:sprite z:NSIntegerMin tag:kTagBackgroundCheckerboard ];
 		
 		// Add Colored Background
 		CCLayerColor *bgLayer = [[controller_ modelObject] backgroundLayer];
 		if (bgLayer)
 			[self addChild:bgLayer z:NSIntegerMin];
 		
-		ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
-		[sprite.texture setTexParameters:&params];
-		
-		[self safeUpdateForScreenReshape: nil];
+		[self updateForScreenReshapeSafely: nil];
 	}
 	return self;
 }
 
-- (void)safeAddSpritesFromDictionary:(NSDictionary *)dict
+- (void)addSpritesFromDictionarySafely:(NSDictionary *)dict
 {
 	NSThread *cocosThread = [[CCDirector sharedDirector] runningThread] ;
 	
@@ -179,7 +178,7 @@ enum
 }
 
 // can be called from another thread
-- (void) safeUpdateForScreenReshape: (NSNotification *) aNotification
+- (void) updateForScreenReshapeSafely: (NSNotification *) aNotification
 {	
 	// call updateForScreenReshape on Cocos2D Thread
 	[self runAction: [CCCallFunc actionWithTarget: self selector: @selector(updateForScreenReshape) ]];

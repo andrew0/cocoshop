@@ -42,7 +42,7 @@
 	NSString *name_;
 	BOOL locked_;
 	
-	BOOL mustUpdatePositionLabel_;
+	BOOL willUpdatePositionLabel_;
 }
 
 @property(nonatomic, assign) BOOL isSelected;
@@ -50,5 +50,8 @@
 @property(nonatomic, copy) NSString *filename;
 @property(nonatomic, copy) NSString *name;
 @property(nonatomic, assign) BOOL locked;
+
+- (void)updatePositionLabel;
+- (void)updatePositionLabelSafely;
 
 @end
