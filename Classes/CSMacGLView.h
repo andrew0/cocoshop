@@ -27,7 +27,7 @@
 #import "cocos2d.h"
 
 
-@interface CSMacGLView : MacGLView 
+@interface CSMacGLView : MacGLView <CCProjectionProtocol>
 {
 
 }

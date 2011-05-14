@@ -36,15 +36,14 @@
 	
 	[director setDisplayFPS:NO];
 	
-	
 	// register for receiving filenames
 	[glView_ registerForDraggedTypes:[NSArray arrayWithObjects:  NSFilenamesPboardType, nil]];
 	[director setOpenGLView:glView_];
-
-	// EXPERIMENTAL stuff.
-	// 'Effects' don't work correctly when autoscale is turned on.
-	// Use kCCDirectorResize_NoScale if you don't want auto-scaling.
+	
+	// We use NoScale with own Projection for NSScrollView
 	[director setResizeMode:kCCDirectorResize_NoScale];
+	[director setProjection: kCCDirectorProjectionCustom];
+	[director setProjectionDelegate: glView_];
 	
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];

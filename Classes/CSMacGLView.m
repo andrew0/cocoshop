@@ -30,6 +30,27 @@
 
 @implementation CSMacGLView
 
+#pragma mark  Own Projection 
+
+// works just like kCCDirectorProjection2D, but uses visibleRect instead of only size of the window
+- (void) updateProjection
+{
+	CGSize size = [[CCDirector sharedDirector] winSizeInPixels];
+	
+	CGRect rect = NSRectToCGRect([self visibleRect]);
+	CGPoint offset = CGPointMake( - rect.origin.x, - rect.origin.y ) ;
+	float widthAspect = size.width;
+	float heightAspect = size.height; 
+	
+	//case kCCDirectorProjection2D:
+	glViewport(offset.x, offset.y, widthAspect, heightAspect);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	ccglOrtho(0, size.width, 0, size.height, -1024, 1024);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
+
 - (cocoshopAppDelegate *) CSAppDelegate
 {
 	return (cocoshopAppDelegate *)[[NSApplication sharedApplication ] delegate];
