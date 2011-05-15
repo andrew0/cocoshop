@@ -27,27 +27,92 @@
 #import "cocoshopAppDelegate.h"
 #import "CSObjectController.h"
 #import "CSGestureEventDelegate.h"
+#import "DebugLog.h"
+
+//TODO: Fix CCDirector convertToUI/convertToGL 
+// Looks like it is broken with scrolling, zooming or else
 
 @implementation CSMacGLView
 
+@synthesize viewportSize, zoomFactor;
+
+
+# pragma Init / DeInit
+
+- (void)awakeFromNib
+{
+	DebugLog(@"awaken, %@, window =  %@, frame = {%d, %d, %d, %d}", 
+			 self, 
+			 [self window], 
+			 [self frame].origin.x, 
+			 [self frame].origin.y, 
+			 [self frame].size.width, 
+			 [self frame].size.height);
+	
+	// register for window resizing notification
+	NSWindow *window = [self window];
+	[[NSNotificationCenter defaultCenter] addObserver: self 
+											 selector: @selector(windowDidResizeNotification:) 
+												 name: NSWindowDidResizeNotification 
+											   object: window ];
+	
+}
+
+- (void) dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver: self];
+	
+	[super dealloc];
+}
+
 #pragma mark  Own Projection 
+
+// Resizes the View for Centering the Workspace in Window
+// This is needed cause it's impossible to set the position of contentNode of
+// NSScrollView
+- (void) windowDidResizeNotification: (NSNotification *) aNotification
+{
+	DebugLog(@"window did resize, viewPortSize = {%d, %d}", (int)self.viewportSize.width, (int)self.viewportSize.height);
+	
+	// Size is equal to self.viewportSize
+	CGSize size = [[CCDirector sharedDirector] winSizeInPixels];
+	
+	// Get the Real Size of Workspace in Pixels
+	float widthAspect = size.width * self.zoomFactor;
+	float heightAspect = size.height * self.zoomFactor;
+	
+	// Resize self frame if Real Size of Workspace is less than available space in the Window
+	CGSize superViewFrameSize = [[self superview] frame].size;
+	
+	CGSize frameSize = [self frame].size;
+	
+	if ( widthAspect < superViewFrameSize.width )
+		frameSize.width = superViewFrameSize.width;
+	else 
+		frameSize.width = widthAspect;
+		
+	
+	if ( heightAspect < superViewFrameSize.height )
+		frameSize.height = superViewFrameSize.height;
+	else 
+		frameSize.height = heightAspect;
+	
+	[self setFrameSize: frameSize ];
+		
+}
 
 // works just like kCCDirectorProjection2D, but uses visibleRect instead of only size of the window
 - (void) updateProjection
-{
-	//TODO: this is temp - remove - should be ivar
-	float zoomFactor_ = 1.0f;
-	
+{	
 	CGSize size = [[CCDirector sharedDirector] winSizeInPixels];
 	
 	CGRect rect = NSRectToCGRect([self visibleRect]);
 	CGPoint offset = CGPointMake( - rect.origin.x, - rect.origin.y ) ;
-	float widthAspect = size.width * zoomFactor_;
-	float heightAspect = size.height * zoomFactor_; //<TODO: multiply with zoom like this
+	float widthAspect = size.width * self.zoomFactor;
+	float heightAspect = size.height * self.zoomFactor;
 	
-	//TODO: normal center positioning doesnt work for CSMacGLView - simulate it 
-	// with projection change
-	
+	//normal center positioning doesnt work for CSMacGLView - simulate it 
+	// with projection change	
 	CGSize superViewFrameSize = [[self superview] frame].size;
 	
 	if ( widthAspect < superViewFrameSize.width )
@@ -63,6 +128,35 @@
 	ccglOrtho(0, size.width, 0, size.height, -1024, 1024);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	
+	//TODO: enable 3d projection choice
+}
+
+// reshape that uses self.viewportSize instead of self bounds
+- (void) reshape
+{
+	// Set viewport equal to frame size first time, when Cocoshop is started
+	static BOOL firstReshape = YES;
+	if (firstReshape)
+	{
+		self.zoomFactor = 1.0f;
+		self.viewportSize = [self frame].size;
+	}
+	firstReshape = NO;
+	
+	// We draw on a secondary thread through the display link
+	// When resizing the view, -reshape is called automatically on the main thread
+	// Add a mutex around to avoid the threads accessing the context simultaneously when resizing
+	CGLLockContext([[self openGLContext] CGLContextObj]);
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	[director reshapeProjection: self.viewportSize ];
+	
+	// avoid flicker
+	[director drawScene];
+	//	[self setNeedsDisplay:YES];
+	
+	CGLUnlockContext([[self openGLContext] CGLContextObj]);
 }
 
 - (cocoshopAppDelegate *) CSAppDelegate

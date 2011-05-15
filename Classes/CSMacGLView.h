@@ -32,4 +32,17 @@
 
 }
 
+/* Size of the viewport, this property sets CCDirector#winSize and
+ * is used in Cocoshop for setting workspace size
+ *
+ * Due to NSGLView restrictions and zoom functionalty of the CSMacGLView
+ * this value isn't always equal to view's frame size. */
+@property (readwrite) CGSize viewportSize;
+
+/* Zoom factor just like in Gimp or other Graphics Editors
+ Zoomes the node with changing glViewport
+ 1.0f is for 100% Scale
+ */
+@property (readwrite) CGFloat zoomFactor;
+
 @end
