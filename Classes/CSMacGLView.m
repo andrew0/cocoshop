@@ -175,6 +175,27 @@
 	CGLUnlockContext([[self openGLContext] CGLContextObj]);
 }
 
+// fixes cordinate conversion when zooming, or scrolling or centering is applied
+- (NSPoint)convertPoint:(NSPoint)aPoint fromView:(NSView *)aView
+{
+	NSPoint p = [super convertPoint: aPoint fromView: aView];
+	
+	
+	// Use offset only when Centered 
+	CGPoint offset = [self viewportRect].origin;
+	offset.x = MAX(offset.x, 0);
+	offset.y = MAX(offset.y, 0);
+	
+	DebugLog(@"original p = {%d, %d}", (int)p.x, (int)p.y);
+	DebugLog(@"offset = {%d, %d}", (int)offset.x, (int)offset.y)
+	
+	p = ccpSub(p, offset);
+	
+	DebugLog(@"p = {%d, %d}", (int)p.x, (int)p.y);
+	
+	return p;
+}
+
 
 #pragma mark Drag & Drop Support
 
