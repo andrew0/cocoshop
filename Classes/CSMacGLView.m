@@ -244,7 +244,14 @@
     return YES;
 }
 
-#pragma mark Trackpad Gestures
+#pragma mark Trackpad Gestures & Mouse Support
+
+-(void) scrollWheel:(NSEvent *)theEvent 
+{
+	[[self enclosingScrollView] scrollWheel: theEvent];
+	
+	[super scrollWheel: theEvent];
+}
 
 - (void)magnifyWithEvent:(NSEvent *)event
 {
