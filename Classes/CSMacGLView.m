@@ -106,31 +106,42 @@
 		
 }
 
-// works just like kCCDirectorProjection2D, but uses visibleRect instead of only size of the window
-- (void) updateProjection
-{	
+// This methods calculates offset (rect.origin) and width & height aspect (rect.size) 
+// of the viewport. 
+// Normal center positioning doesnt work for CSMacGLView - we will simulate it with
+// projection offset change & view resize. 
+- (CGRect) viewportRect
+{
 	CGSize size = [[CCDirector sharedDirector] winSizeInPixels];
 	
 	CGRect rect = NSRectToCGRect([self visibleRect]);
-	CGPoint offset = CGPointMake( - rect.origin.x, - rect.origin.y ) ;
+	CGPoint offset = CGPointMake( - rect.origin.x, - rect.origin.y );
 	float widthAspect = size.width * self.zoomFactor;
 	float heightAspect = size.height * self.zoomFactor;
 	
-	//normal center positioning doesnt work for CSMacGLView - simulate it 
-	// with projection change	
 	CGSize superViewFrameSize = [[self superview] frame].size;
 	
 	if ( widthAspect < superViewFrameSize.width )
 		offset.x = ( superViewFrameSize.width - widthAspect ) / 2.0f;
-		
+	
 	if ( heightAspect < superViewFrameSize.height )
 		offset.y = ( superViewFrameSize.height - heightAspect ) / 2.0f;
 	
+	return CGRectMake( offset.x , offset.y, widthAspect, heightAspect );
+}
+
+// works just like kCCDirectorProjection2D, but uses visibleRect instead of only size of the window
+- (void) updateProjection
+{	
+	CGRect offsetAspectRect = [self viewportRect];
+	CGPoint offset = offsetAspectRect.origin;
+	CGSize aspect = offsetAspectRect.size;
+	
 	//case kCCDirectorProjection2D:
-	glViewport(offset.x, offset.y, widthAspect, heightAspect);
+	glViewport(offset.x, offset.y, aspect.width, aspect.height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	ccglOrtho(0, size.width, 0, size.height, -1024, 1024);
+	ccglOrtho(0, self.viewportSize.width, 0, self.viewportSize.height, -1024, 1024);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
