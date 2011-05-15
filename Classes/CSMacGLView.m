@@ -36,6 +36,11 @@
 
 @synthesize viewportSize, zoomFactor;
 
+- (cocoshopAppDelegate *) appDelegate
+{
+	return (cocoshopAppDelegate *)[[NSApplication sharedApplication ] delegate];
+}
+
 
 # pragma Init / DeInit
 
@@ -159,10 +164,8 @@
 	CGLUnlockContext([[self openGLContext] CGLContextObj]);
 }
 
-- (cocoshopAppDelegate *) CSAppDelegate
-{
-	return (cocoshopAppDelegate *)[[NSApplication sharedApplication ] delegate];
-}
+
+#pragma mark Drag & Drop Support
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender 
 {	
@@ -195,7 +198,7 @@
 		
         if (sourceDragMask & NSDragOperationLink) 
 		{			
-			CSObjectController *controller = [self CSAppDelegate].controller;
+			CSObjectController *controller = [self appDelegate].controller;
 			
 			NSArray *allowedFiles = [controller allowedFilesWithFiles: files];
 			
@@ -211,7 +214,7 @@
 - (void)magnifyWithEvent:(NSEvent *)event
 {
 	// try to send magnification gesture to view
-	CSObjectController *controller = [[self CSAppDelegate] controller];
+	CSObjectController *controller = [[self appDelegate] controller];
 	
 	if ( [controller cocosView] && [[controller cocosView] respondsToSelector:@selector(csMagnifyWithEvent:)] )
 	{
@@ -222,7 +225,7 @@
 - (void)rotateWithEvent:(NSEvent *)event
 {
 	// try to send rotation gesture to view
-	CSObjectController *controller = [[self CSAppDelegate] controller];
+	CSObjectController *controller = [[self appDelegate] controller];
 	
 	if ( [controller cocosView] && [[controller cocosView] respondsToSelector:@selector(csRotateWithEvent:)] )
 	{
@@ -233,7 +236,7 @@
 - (void)swipeWithEvent:(NSEvent *)event
 {
 	// try to send swipe gesture to view
-	CSObjectController *controller = [[self CSAppDelegate] controller];
+	CSObjectController *controller = [[self appDelegate] controller];
 	
 	if ( [controller cocosView] && [[controller cocosView] respondsToSelector:@selector(csSwipeWithEvent:)] )
 	{
