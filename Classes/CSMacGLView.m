@@ -35,12 +35,26 @@
 // works just like kCCDirectorProjection2D, but uses visibleRect instead of only size of the window
 - (void) updateProjection
 {
+	//TODO: this is temp - remove - should be ivar
+	float zoomFactor_ = 1.0f;
+	
 	CGSize size = [[CCDirector sharedDirector] winSizeInPixels];
 	
 	CGRect rect = NSRectToCGRect([self visibleRect]);
 	CGPoint offset = CGPointMake( - rect.origin.x, - rect.origin.y ) ;
-	float widthAspect = size.width;
-	float heightAspect = size.height; 
+	float widthAspect = size.width * zoomFactor_;
+	float heightAspect = size.height * zoomFactor_; //<TODO: multiply with zoom like this
+	
+	//TODO: normal center positioning doesnt work for CSMacGLView - simulate it 
+	// with projection change
+	
+	CGSize superViewFrameSize = [[self superview] frame].size;
+	
+	if ( widthAspect < superViewFrameSize.width )
+		offset.x = ( superViewFrameSize.width - widthAspect ) / 2.0f;
+		
+	if ( heightAspect < superViewFrameSize.height )
+		offset.y = ( superViewFrameSize.height - heightAspect ) / 2.0f;
 	
 	//case kCCDirectorProjection2D:
 	glViewport(offset.x, offset.y, widthAspect, heightAspect);
