@@ -193,6 +193,9 @@
 	
 	DebugLog(@"p = {%d, %d}", (int)p.x, (int)p.y);
 	
+	p.x /= self.zoomFactor;
+	p.y /= self.zoomFactor;
+	
 	return p;
 }
 
