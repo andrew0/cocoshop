@@ -20,6 +20,7 @@
 		49A1427B135BE453000C3BD8 /* CCNode+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 49A14279135BE453000C3BD8 /* CCNode+Additions.h */; };
 		49A1427C135BE453000C3BD8 /* CCNode+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1427A135BE453000C3BD8 /* CCNode+Additions.m */; };
 		49A14394135BF374000C3BD8 /* CCNode+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1427A135BE453000C3BD8 /* CCNode+Additions.m */; };
+		6D1FEC0B138074630039076A /* DebugLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D1FEC0A138074630039076A /* DebugLog.m */; };
 		6D3249821361CD6900165ABE /* checkerboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D3249811361CD6900165ABE /* checkerboard.png */; };
 		6D4702CE135F52BC00FDEADD /* CSMacGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4702CD135F52BC00FDEADD /* CSMacGLView.m */; };
 		6DFAD27313609A4B00006D0B /* CSTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DFAD27213609A4B00006D0B /* CSTableViewDataSource.m */; };
@@ -239,6 +240,8 @@
 		49A1425D135BE3C1000C3BD8 /* anchor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = anchor.png; path = Resources/anchor.png; sourceTree = "<group>"; };
 		49A14279135BE453000C3BD8 /* CCNode+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+Additions.h"; sourceTree = "<group>"; };
 		49A1427A135BE453000C3BD8 /* CCNode+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+Additions.m"; sourceTree = "<group>"; };
+		6D1FEC09138074630039076A /* DebugLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugLog.h; sourceTree = "<group>"; };
+		6D1FEC0A138074630039076A /* DebugLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugLog.m; sourceTree = "<group>"; };
 		6D3249811361CD6900165ABE /* checkerboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkerboard.png; sourceTree = "<group>"; };
 		6D4702CC135F52BC00FDEADD /* CSMacGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSMacGLView.h; sourceTree = "<group>"; };
 		6D4702CD135F52BC00FDEADD /* CSMacGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSMacGLView.m; sourceTree = "<group>"; };
@@ -554,6 +557,8 @@
 		E02A83D1129F000100341C97 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				6D1FEC09138074630039076A /* DebugLog.h */,
+				6D1FEC0A138074630039076A /* DebugLog.m */,
 				49A1405B135BC9EC000C3BD8 /* cocos2d */,
 				496706FC135B9E1B0074D05A /* CSModel.h */,
 				496706FB135B9E1B0074D05A /* CSModel.m */,
@@ -1089,6 +1094,7 @@
 				49A14394135BF374000C3BD8 /* CCNode+Additions.m in Sources */,
 				6D4702CE135F52BC00FDEADD /* CSMacGLView.m in Sources */,
 				6DFAD27313609A4B00006D0B /* CSTableViewDataSource.m in Sources */,
+				6D1FEC0B138074630039076A /* DebugLog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
