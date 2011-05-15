@@ -37,7 +37,7 @@
  *
  * Due to NSGLView restrictions and zoom functionalty of the CSMacGLView
  * this value isn't always equal to view's frame size. */
-@property (readwrite) CGSize viewportSize;
+@property (readwrite) CGSize workspaceSize;
 
 /* Zoom factor just like in Gimp or other Graphics Editors
  Zoomes the node with changing glViewport

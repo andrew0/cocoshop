@@ -34,7 +34,7 @@
 
 @implementation CSMacGLView
 
-@synthesize viewportSize, zoomFactor;
+@synthesize workspaceSize, zoomFactor;
 
 - (cocoshopAppDelegate *) appDelegate
 {
@@ -77,9 +77,9 @@
 // NSScrollView
 - (void) windowDidResizeNotification: (NSNotification *) aNotification
 {
-	DebugLog(@"window did resize, viewPortSize = {%d, %d}", (int)self.viewportSize.width, (int)self.viewportSize.height);
+	DebugLog(@"window did resize, workspaceSize = {%d, %d}", (int)self.workspaceSize.width, (int)self.workspaceSize.height);
 	
-	// Size is equal to self.viewportSize
+	// Size is equal to self.workspaceSize
 	CGSize size = [[CCDirector sharedDirector] winSizeInPixels];
 	
 	// Get the Real Size of Workspace in Pixels
@@ -141,14 +141,14 @@
 	glViewport(offset.x, offset.y, aspect.width, aspect.height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	ccglOrtho(0, self.viewportSize.width, 0, self.viewportSize.height, -1024, 1024);
+	ccglOrtho(0, self.workspaceSize.width, 0, self.workspaceSize.height, -1024, 1024);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
 	//TODO: enable 3d projection choice
 }
 
-// reshape that uses self.viewportSize instead of self bounds
+// reshape that uses self.workspaceSize instead of self bounds
 - (void) reshape
 {
 	// Set viewport equal to frame size first time, when Cocoshop is started
@@ -156,7 +156,7 @@
 	if (firstReshape)
 	{
 		self.zoomFactor = 1.0f;
-		self.viewportSize = [self frame].size;
+		self.workspaceSize = [self frame].size;
 	}
 	firstReshape = NO;
 	
@@ -166,7 +166,7 @@
 	CGLLockContext([[self openGLContext] CGLContextObj]);
 	
 	CCDirector *director = [CCDirector sharedDirector];
-	[director reshapeProjection: self.viewportSize ];
+	[director reshapeProjection: self.workspaceSize ];
 	
 	// avoid flicker
 	[director drawScene];
