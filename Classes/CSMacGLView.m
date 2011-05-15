@@ -248,6 +248,24 @@
 
 -(void) scrollWheel:(NSEvent *)theEvent 
 {
+	if ( [theEvent modifierFlags] & NSCommandKeyMask )
+	{
+		zoomFactor -= [theEvent deltaY] / 100.0f;
+		
+		// Update Window
+		[[self superview] setNeedsDisplay: YES];
+		[[NSNotificationCenter defaultCenter] postNotificationName: NSWindowDidResizeNotification object:[self window]];
+		
+		/*
+		NSRect frame = [[self superview] frame];
+		frame.size.width += 1;
+		[[self superview] setFrame: frame  ];
+		frame.size.width -= 1;
+		[[self superview] setFrame: frame ];*/
+		
+		return;
+	}
+	
 	[[self enclosingScrollView] scrollWheel: theEvent];
 	
 	[super scrollWheel: theEvent];
