@@ -464,7 +464,7 @@ enum
 	}
 	else
 	{
-		// move position
+		// move position & change z
 		NSInteger increment = (modifiers & NSShiftKeyMask) ? 10 : 1;
 		
 		switch(keyCode)
@@ -480,6 +480,12 @@ enum
 				return YES;
 			case 0x7E: // up arrow
 				[model setPosY:[model posY]+increment];
+				return YES;
+			case 0x74: // page up
+				[model setPosZ:[model posZ]+increment];
+				return YES;
+			case 0x79: // page down
+				[model setPosZ:[model posZ]-increment];
 				return YES;
 			default:
 				return NO;
