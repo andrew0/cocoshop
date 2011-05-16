@@ -45,4 +45,10 @@
  */
 @property (readwrite) CGFloat zoomFactor;
 
+@property (readwrite) CGFloat zoomSpeed; //< default is 0.1f
+@property (readwrite) CGFloat zoomFactorMax; //< default is 3.0f
+@property (readwrite) CGFloat zoomFactorMin; //< default is 0.1f
+
+- (void) resetZoom;
+
 @end

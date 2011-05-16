@@ -34,7 +34,7 @@
 
 @implementation CSMacGLView
 
-@synthesize workspaceSize, zoomFactor;
+@synthesize workspaceSize, zoomFactor, zoomSpeed, zoomFactorMax, zoomFactorMin;
 
 - (cocoshopAppDelegate *) appDelegate
 {
@@ -61,6 +61,10 @@
 												 name: NSWindowDidResizeNotification 
 											   object: window ];
 	
+	// Setup Zoom Settings
+	self.zoomSpeed = 0.01f;
+	self.zoomFactorMin = 0.1f;
+	self.zoomFactorMax = 3.0f;	
 }
 
 - (void) dealloc
@@ -244,30 +248,46 @@
     return YES;
 }
 
+#pragma mark Zoom
+
+- (void) resetZoom
+{
+	self.zoomFactor = 1.0f;
+	
+	// Update Window
+	[[NSNotificationCenter defaultCenter] postNotificationName: NSWindowDidResizeNotification object:[self window]];
+	[self reshape]; //< without this line there will be no update with zoomFactor < 1
+}
+
+- (BOOL) zoomWithEvent:(NSEvent *)theEvent 
+{	
+	if ( [theEvent modifierFlags] & NSCommandKeyMask )
+	{
+		self.zoomFactor -= [theEvent deltaY] * self.zoomSpeed;
+		
+		self.zoomFactor = MAX(self.zoomFactorMin, MIN(self.zoomFactor, self.zoomFactorMax));		
+		
+		// Update Window Size, to Show Scrollers of NSScrollView
+		// (this is the best implementation, that i found within a hour)
+		[[NSNotificationCenter defaultCenter] postNotificationName: NSWindowDidResizeNotification object:[self window]];
+		[self reshape]; //< without this line there will be no update with zoomFactor < 1, and i DUNNO Y		
+		
+		return YES;
+	}
+	
+	return NO;
+}
+
 #pragma mark Trackpad Gestures & Mouse Support
 
 -(void) scrollWheel:(NSEvent *)theEvent 
 {
-	if ( [theEvent modifierFlags] & NSCommandKeyMask )
-	{
-		zoomFactor -= [theEvent deltaY] / 100.0f;
-		
-		// Update Window
-		[[self superview] setNeedsDisplay: YES];
-		[[NSNotificationCenter defaultCenter] postNotificationName: NSWindowDidResizeNotification object:[self window]];
-		
-		/*
-		NSRect frame = [[self superview] frame];
-		frame.size.width += 1;
-		[[self superview] setFrame: frame  ];
-		frame.size.width -= 1;
-		[[self superview] setFrame: frame ];*/
-		
+	// Zoom
+	if ([self zoomWithEvent: theEvent])
 		return;
-	}
 	
-	[[self enclosingScrollView] scrollWheel: theEvent];
-	
+	// Or Scroll
+	[[self enclosingScrollView] scrollWheel: theEvent];	
 	[super scrollWheel: theEvent];
 }
 

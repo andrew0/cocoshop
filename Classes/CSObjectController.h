@@ -96,5 +96,6 @@
 - (IBAction)openProject:(id)sender;
 - (IBAction)spriteAddButtonClicked:(id)sender;
 - (IBAction)spriteDeleteButtonClicked:(id)sender;
+- (IBAction)resetZoom:(id)sender;
 
 @end
