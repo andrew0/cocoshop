@@ -34,6 +34,19 @@
 
 @synthesize workspaceSize, zoomFactor, zoomSpeed, zoomFactorMax, zoomFactorMin;
 
+@dynamic projection;
+
+- (void) setProjection:(ccDirectorProjection) newProjection
+{
+	projection_ = newProjection;
+	[self updateProjection];
+}
+
+- (ccDirectorProjection) projection
+{
+	return projection_;
+}
+
 - (cocoshopAppDelegate *) appDelegate
 {
 	return (cocoshopAppDelegate *)[[NSApplication sharedApplication ] delegate];
@@ -55,6 +68,9 @@
 	self.zoomSpeed = 0.01f;
 	self.zoomFactorMin = 0.1f;
 	self.zoomFactorMax = 3.0f;	
+	
+	// Setup Projection
+	projection_ = kCCDirectorProjection2D;
 }
 
 - (void) dealloc
@@ -127,17 +143,38 @@
 {	
 	CGRect offsetAspectRect = [self viewportRect];
 	CGPoint offset = offsetAspectRect.origin;
-	CGSize aspect = offsetAspectRect.size;
+	CGSize aspect = offsetAspectRect.size;	
 	
-	//case kCCDirectorProjection2D:
-	glViewport(offset.x, offset.y, aspect.width, aspect.height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	ccglOrtho(0, self.workspaceSize.width, 0, self.workspaceSize.height, -1024, 1024);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	
-	//TODO: enable 3d projection choice
+	switch (projection_) {
+		case kCCDirectorProjection2D:
+			glViewport(offset.x, offset.y, aspect.width, aspect.height);
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			ccglOrtho(0, self.workspaceSize.width, 0, self.workspaceSize.height, -1024, 1024);
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			break;
+			
+		case kCCDirectorProjection3D:
+			glViewport(offset.x, offset.y, aspect.width, aspect.height);
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluPerspective(60, (GLfloat)aspect.width/aspect.height, 0.1f, 1500.0f);
+			
+			glMatrixMode(GL_MODELVIEW);	
+			glLoadIdentity();
+			
+			float eyeZ = [[CCDirector sharedDirector] getZEye];
+			
+			gluLookAt( self.workspaceSize.width/2, self.workspaceSize.height/2, eyeZ,
+					  self.workspaceSize.width/2, self.workspaceSize.height/2, 0,
+					  0.0f, 1.0f, 0.0f);			
+			break;
+			
+		default:
+			DebugLog(@"Unsupported Projection");
+			break;
+	}
 }
 
 // reshape that uses self.workspaceSize instead of self bounds
