@@ -1,6 +1,7 @@
 /*
  * cocoshop
  *
+ * Copyright (c) 2011 Andrew
  * Copyright (c) 2011 Stepan Generalov
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -29,9 +30,6 @@
 #import "CSGestureEventDelegate.h"
 #import "DebugLog.h"
 
-//TODO: Fix CCDirector convertToUI/convertToGL 
-// Looks like it is broken with scrolling, zooming or else
-
 @implementation CSMacGLView
 
 @synthesize workspaceSize, zoomFactor, zoomSpeed, zoomFactorMax, zoomFactorMin;
@@ -45,15 +43,7 @@
 # pragma Init / DeInit
 
 - (void)awakeFromNib
-{
-	DebugLog(@"awaken, %@, window =  %@, frame = {%d, %d, %d, %d}", 
-			 self, 
-			 [self window], 
-			 [self frame].origin.x, 
-			 [self frame].origin.y, 
-			 [self frame].size.width, 
-			 [self frame].size.height);
-	
+{	
 	// register for window resizing notification
 	NSWindow *window = [self window];
 	[[NSNotificationCenter defaultCenter] addObserver: self 
@@ -81,8 +71,6 @@
 // NSScrollView
 - (void) windowDidResizeNotification: (NSNotification *) aNotification
 {
-	DebugLog(@"window did resize, workspaceSize = {%d, %d}", (int)self.workspaceSize.width, (int)self.workspaceSize.height);
-	
 	// Size is equal to self.workspaceSize
 	CGSize size = [[CCDirector sharedDirector] winSizeInPixels];
 	
@@ -184,19 +172,13 @@
 {
 	NSPoint p = [super convertPoint: aPoint fromView: aView];
 	
-	
-	// Use offset only when Centered 
+	// Apply offset only when Centered 
 	CGPoint offset = [self viewportRect].origin;
 	offset.x = MAX(offset.x, 0);
 	offset.y = MAX(offset.y, 0);
-	
-	DebugLog(@"original p = {%d, %d}", (int)p.x, (int)p.y);
-	DebugLog(@"offset = {%d, %d}", (int)offset.x, (int)offset.y)
-	
 	p = ccpSub(p, offset);
 	
-	DebugLog(@"p = {%d, %d}", (int)p.x, (int)p.y);
-	
+	// Apply Zooming
 	p.x /= self.zoomFactor;
 	p.y /= self.zoomFactor;
 	
