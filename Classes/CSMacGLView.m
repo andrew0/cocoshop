@@ -290,7 +290,7 @@
 {	
 	if ( [theEvent modifierFlags] & NSCommandKeyMask )
 	{
-		self.zoomFactor -= [theEvent deltaY] * self.zoomSpeed;
+		self.zoomFactor += [theEvent deltaY] * self.zoomSpeed;
 		
 		self.zoomFactor = MAX(self.zoomFactorMin, MIN(self.zoomFactor, self.zoomFactorMax));		
 		
