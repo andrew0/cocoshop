@@ -146,7 +146,14 @@
 	}
 	else if( [keyPath isEqualToString:@"posZ"] )
 	{
-		// TODO: reorder Z order
+		// Reorder Z order
+		CSSprite *sprite = [modelObject_ selectedSprite];
+		if(sprite)
+		{
+			CGFloat currentZ = [sprite zOrder];
+			currentZ = [modelObject_ posZ];
+			[[sprite parent] reorderChild: sprite z: currentZ ];
+		}
 	}
 	else if( [keyPath isEqualToString:@"anchorX"] )
 	{
