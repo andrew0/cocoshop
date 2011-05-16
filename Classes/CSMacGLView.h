@@ -27,9 +27,50 @@
 #import "cocos2d.h"
 
 
-@interface CSMacGLView : MacGLView 
+@interface CSMacGLView : MacGLView <CCProjectionProtocol>
 {
-
+	ccDirectorProjection projection_;
 }
+
+#pragma mark Workspace
+
+/* Size of the viewport, this property sets CCDirector#winSize and
+ * is used in Cocoshop for setting workspace size
+ *
+ * Due to NSGLView restrictions and zoom functionalty of the CSMacGLView
+ * this value isn't always equal to view's frame size.
+ * 
+ * After each change of this value you probably would like to call
+ * updateWindow to reshape the view and update enclosing scrollView
+ */
+@property (readwrite) CGSize workspaceSize;
+
+- (void) updateWindow;
+
+
+/* Since CSMacGLView uses custom projection
+ * we need a method, that will allow us to choose between 2D/3D projections
+ * without cancelling custom projection.
+ * Use this property to set kCCDirectorProjection3D || kCCDirectorProjection2D
+ * Do not set projection with CCDirector#setProjection: while using CSMacGLView !
+ * Custom projection isn't supported, but you can easily add it by implementing
+ * delegate property and copypasting some code from MacGLView
+ */
+@property (readwrite) ccDirectorProjection projection;
+
+
+#pragma mark Zoom
+/* Zoom factor just like in Gimp or other Graphics Editors
+ Zoomes the node with changing glViewport
+ 1.0f is for 100% Scale
+ */
+@property (readwrite) CGFloat zoomFactor;
+
+@property (readwrite) CGFloat zoomSpeed; //< default is 0.1f
+@property (readwrite) CGFloat zoomFactorMax; //< default is 3.0f
+@property (readwrite) CGFloat zoomFactorMin; //< default is 0.1f
+
+- (void) resetZoom;
+
 
 @end

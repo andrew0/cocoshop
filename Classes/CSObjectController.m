@@ -677,4 +677,9 @@
 	}
 }
 
+- (IBAction)resetZoom:(id)sender
+{
+	[(CSMacGLView *)[[CCDirector sharedDirector] openGLView] resetZoom];
+}
+
 @end
