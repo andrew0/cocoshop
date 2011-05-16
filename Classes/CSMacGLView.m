@@ -204,6 +204,14 @@
 	CGLUnlockContext([[self openGLContext] CGLContextObj]);
 }
 
+// Updates Window Size, to Show Scrollers of NSScrollView
+- (void) updateWindow
+{
+	// (this is the best implementation, that i found within a hour)
+	[[NSNotificationCenter defaultCenter] postNotificationName: NSWindowDidResizeNotification object:[self window]];
+	[self reshape]; //< without this line there will be no update with zoomFactor < 1, and i DUNNO Y
+}
+
 // fixes cordinate conversion when zooming, or scrolling or centering is applied
 - (NSPoint)convertPoint:(NSPoint)aPoint fromView:(NSView *)aView
 {
@@ -286,10 +294,7 @@
 		
 		self.zoomFactor = MAX(self.zoomFactorMin, MIN(self.zoomFactor, self.zoomFactorMax));		
 		
-		// Update Window Size, to Show Scrollers of NSScrollView
-		// (this is the best implementation, that i found within a hour)
-		[[NSNotificationCenter defaultCenter] postNotificationName: NSWindowDidResizeNotification object:[self window]];
-		[self reshape]; //< without this line there will be no update with zoomFactor < 1, and i DUNNO Y		
+		[self updateWindow];		
 		
 		return YES;
 	}
