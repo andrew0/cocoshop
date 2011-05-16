@@ -445,6 +445,23 @@ enum
 				return NO;
 		}		
 	}
+	else if (modifiers & NSControlKeyMask)
+	{
+		// rotate sprite
+		CGFloat increment = (modifiers & NSShiftKeyMask) ? 10.0f : 1.0f;
+		
+		switch(keyCode)
+		{
+			case 0x7B: // left arrow
+				[model setRotation:[model rotation]-increment];
+				return YES;
+			case 0x7C: // right arrow
+				[model setRotation:[model rotation]+increment];
+				return YES;
+			default:
+				return NO;
+		}
+	}
 	else
 	{
 		// move position
