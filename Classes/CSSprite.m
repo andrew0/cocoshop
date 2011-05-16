@@ -113,7 +113,9 @@
 	if(!locked_)
 	{
 		[super setRotation:rot];
-		[anchor_ setRotation:-rot];
+		[positionLabel_ setRotation:-rot];
+		//TODO: reposition somehow positionLabel_ to be always at the bottom of anchor_
+		// if this is necessary 
 	}
 }
 
