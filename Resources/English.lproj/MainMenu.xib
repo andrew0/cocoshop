@@ -12,11 +12,11 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="554"/>
-			<integer value="296"/>
 			<integer value="907"/>
-			<integer value="1251"/>
+			<integer value="554"/>
+			<integer value="974"/>
 			<integer value="372"/>
+			<integer value="1251"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -3010,22 +3010,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">saveDocument:</string>
-						<reference key="source" ref="1014"/>
-						<reference key="destination" ref="313839519"/>
-					</object>
-					<int key="connectionID">995</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">revertDocumentToSaved:</string>
-						<reference key="source" ref="1014"/>
-						<reference key="destination" ref="1048303649"/>
-					</object>
-					<int key="connectionID">996</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">saveProjectAs:</string>
 						<reference key="source" ref="994683652"/>
 						<reference key="destination" ref="1069232753"/>
@@ -3607,6 +3591,22 @@
 						</object>
 					</object>
 					<int key="connectionID">1385</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">revertToSavedProject:</string>
+						<reference key="source" ref="994683652"/>
+						<reference key="destination" ref="1048303649"/>
+					</object>
+					<int key="connectionID">1386</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">saveProject:</string>
+						<reference key="source" ref="994683652"/>
+						<reference key="destination" ref="313839519"/>
+					</object>
+					<int key="connectionID">1387</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -5899,7 +5899,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1385</int>
+			<int key="maxID">1387</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5941,6 +5941,7 @@
 							<string>openProject:</string>
 							<string>openSpritesPanel:</string>
 							<string>resetZoom:</string>
+							<string>revertToSavedProject:</string>
 							<string>saveProject:</string>
 							<string>saveProjectAs:</string>
 							<string>spriteAddButtonClicked:</string>
@@ -5948,6 +5949,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -5970,6 +5972,7 @@
 							<string>openProject:</string>
 							<string>openSpritesPanel:</string>
 							<string>resetZoom:</string>
+							<string>revertToSavedProject:</string>
 							<string>saveProject:</string>
 							<string>saveProjectAs:</string>
 							<string>spriteAddButtonClicked:</string>
@@ -5999,6 +6002,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">resetZoom:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">revertToSavedProject:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

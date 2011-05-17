@@ -39,6 +39,7 @@
 @synthesize spriteTableView=spriteTableView_;
 @synthesize spriteInfoView;
 @synthesize backgroundInfoView;
+@synthesize projectFilename;
 
 #pragma mark Init / DeInit
 
@@ -69,6 +70,7 @@
 
 - (void)dealloc
 {
+	self.projectFilename = nil;
 	self.spriteInfoView = nil;
 	self.backgroundInfoView = nil;
 	
@@ -616,23 +618,35 @@
 
 #pragma mark IBActions - Save/Load
 
+// if we're opened a file - we can revert to saved and save without save as
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+	// "Save"
+	if ([menuItem action] == @selector(saveProject:))
+		return YES;
+	
+	// "Revert to Saved"
+	if ([menuItem action] == @selector(saveProject:))
+	{
+		if (self.projectFilename)
+			return YES;
+		return NO;
+	}
+	
+	return YES;
+}
+
 - (IBAction)saveProject:(id)sender
 {
-//	cocoshopAppDelegate *delegate = [[NSApplication sharedApplication] delegate];
-//	
-//	NSSavePanel *savePanel = [NSSavePanel savePanel];
-//	[savePanel setCanCreateDirectories:YES];
-//	[savePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"csd", @"ccb"]];
-//	
-//	// handle the save panel
-//	[savePanel beginSheetModalForWindow:[delegate window] completionHandler:^(NSInteger result) {
-//		if(result == NSOKButton)
-//		{
-//			NSString *file = [savePanel filename];
-//			[self saveProjectToFile:file];
-//		}
-//	}];
+	if (! self.projectFilename) 
+	{
+		[self saveProjectAs: sender];
+		return;
+	}
+	
+	[self saveProjectToFile:self.projectFilename];
 }
+
 
 - (IBAction)saveProjectAs:(id)sender
 {
@@ -672,8 +686,15 @@
 		if(dict)
 		{
 			[mainLayer_ loadProjectFromDictionarySafely:dict];
+			self.projectFilename = file;
 		}
 	}	
+}
+
+- (IBAction)revertToSavedProject:(id)sender
+{
+	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:self.projectFilename];
+	[mainLayer_ loadProjectFromDictionarySafely:dict];
 }
 
 #pragma mark IBActions - Sprites

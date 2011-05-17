@@ -69,6 +69,7 @@
 @property(assign) NSTableView *spriteTableView;
 @property(retain) IBOutlet NSView *spriteInfoView;
 @property(retain) IBOutlet NSView *backgroundInfoView;
+@property(copy) NSString *projectFilename;
 
 #pragma mark Sprites
 
@@ -104,6 +105,7 @@
 - (IBAction)saveProject:(id)sender;
 - (IBAction)saveProjectAs:(id)sender;
 - (IBAction)openProject:(id)sender;
+- (IBAction)revertToSavedProject:(id)sender;
 
 #pragma mark IBActions - Sprites
 - (IBAction)addSprite:(id)sender;
