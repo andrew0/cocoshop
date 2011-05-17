@@ -99,6 +99,7 @@
 			[self setAnchorY:anchor.y];
 			[self setFlipX:([new flipX]) ? NSOnState : NSOffState];
 			[self setFlipY:([new flipY]) ? NSOnState : NSOffState];
+			[self setRotation:[new rotation]];
 			[self setScaleX:[new scaleX]];
 			[self setScaleY:[new scaleY]];
 			[self setOpacity:[new opacity]];
@@ -119,6 +120,7 @@
 			[self setAnchorY:anchor.y];
 			[self setFlipX:NSOffState];
 			[self setFlipY:NSOffState];
+			[self setRotation:[backgroundLayer_ rotation]];
 			[self setScaleX:[backgroundLayer_ scaleX]];
 			[self setScaleY:[backgroundLayer_ scaleY]];
 			[self setOpacity:[backgroundLayer_ opacity]];
