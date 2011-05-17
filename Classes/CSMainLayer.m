@@ -47,14 +47,8 @@ enum
 
 @synthesize controller=controller_;
 
-+ (CCScene *)scene
-{
-	CCScene *scene = [CCScene node];
-	CSMainLayer *layer = [CSMainLayer node];
-	[scene addChild:layer];	
-	return scene;
-}
 
+#pragma mark Init / DeInit
 + (id)nodeWithController:(CSObjectController *)aController
 {
 	return [[[self alloc] initWithController:aController] autorelease];
@@ -95,6 +89,15 @@ enum
 	return self;
 }
 
+- (void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver: self];
+	[self setController:nil];
+	[super dealloc];
+}
+
+#pragma mark Loading CSD Files
+
 - (void)loadProjectFromDictionarySafely:(NSDictionary *)dict
 {
 	NSThread *cocosThread = [[CCDirector sharedDirector] runningThread] ;
@@ -109,9 +112,7 @@ enum
 {
 	NSDictionary *bg = [dict objectForKey:@"background"];
 	NSDictionary *children = [dict objectForKey:@"children"];
-	
-	
-	
+		
 	if(bg && children)
 	{
 		// clear all existing sprites first
@@ -198,6 +199,27 @@ enum
 	}
 }
 
+#pragma mark Children Getters
+
+- (CSSprite *)spriteForEvent:(NSEvent *)event
+{
+	// we check to see if it's less than children_'s count as well
+	// because once it gets to zero, the i-- will make it NSUIntegerMax
+	for(NSUInteger i=[children_ count]-1; i>=0 && i<[children_ count]; i--)
+	{
+		CCNode *child = [children_ objectAtIndex:i];
+		if([child isKindOfClass:[CSSprite class]] && [child isEventInRect:event])
+		{
+			return (CSSprite *)child;
+		}
+	}
+	
+	return nil;
+}
+
+
+#pragma mark Notifications
+
 // can be called from another thread
 - (void) updateForScreenReshapeSafely: (NSNotification *) aNotification
 {	
@@ -242,23 +264,12 @@ enum
 	prevSize_ = s;
 }
 
-- (CSSprite *)spriteForEvent:(NSEvent *)event
+- (void)addedSprite:(NSNotification *)aNotification
 {
-	// we check to see if it's less than children_'s count as well
-	// because once it gets to zero, the i-- will make it NSUIntegerMax
-	for(NSUInteger i=[children_ count]-1; i>=0 && i<[children_ count]; i--)
-	{
-		CCNode *child = [children_ objectAtIndex:i];
-		if([child isKindOfClass:[CSSprite class]] && [child isEventInRect:event])
-		{
-			return (CSSprite *)child;
-		}
-	}
-	
-	return nil;
+	// queue sprites update on next visit (in Cocos2D Thread)
+	didAddSprite_ = YES;
+	[[controller_ spriteTableView] reloadData];
 }
-
-#pragma mark Sprites Added Notification
 
 // adds new sprites as children if needed - should be called on Cocos2D Thread
 - (void) updateSpritesFromModel
@@ -279,6 +290,8 @@ enum
 	}
 }
 
+#pragma mark CCNode Reimplemented Methods
+
 - (void) onEnter
 {
 	[super onEnter];
@@ -296,12 +309,7 @@ enum
 	[super visit];
 }
 
-- (void)addedSprite:(NSNotification *)aNotification
-{
-	// queue sprites update on next visit (in Cocos2D Thread)
-	didAddSprite_ = YES;
-	[[controller_ spriteTableView] reloadData];
-}
+
 
 #pragma mark Touch Events
 
@@ -525,10 +533,5 @@ enum
 	return NO;
 }
 
-- (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver: self];
-	[self setController:nil];
-	[super dealloc];
-}
+
 @end

@@ -45,14 +45,19 @@
 
 @property(nonatomic, retain) CSObjectController *controller;
 
-+ (CCScene *)scene;
+#pragma mark Creation
 + (id)nodeWithController:(CSObjectController *)aController;
 - (id)initWithController:(CSObjectController *)aController;
-- (CSSprite *)spriteForEvent:(NSEvent *)event;
+
+#pragma mark Loading CSD Files 
 - (void)loadProjectFromDictionarySafely:(NSDictionary *)dict;
 - (void)loadProjectFromDictionary:(NSDictionary *)dict;
-- (void)addedSprite:(NSNotification *)aNotification;
 
+#pragma mark Children Getters
+- (CSSprite *)spriteForEvent:(NSEvent *)event;
+
+#pragma mark Notifications
+- (void)addedSprite:(NSNotification *)aNotification;
 // updates background checkerboard if winSize is changed
 // can be called on any thread
 - (void) updateForScreenReshapeSafely:(NSNotification *) aNotification;
