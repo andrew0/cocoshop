@@ -29,13 +29,13 @@
 
 @class CSModel;
 @class CSSprite;
-@class HelloWorldLayer;
+@class CSMainLayer;
 @class CSTableViewDataSource;
 
 @interface CSObjectController : NSObjectController
 {
     CSModel *modelObject_;
-	HelloWorldLayer *cocosView_;
+	CSMainLayer *cocosView_;
 	CSTableViewDataSource *dataSource_;
 	
 	IBOutlet NSPanel *infoPanel_;
@@ -65,7 +65,7 @@
 }
 
 @property(assign) IBOutlet CSModel *modelObject;
-@property(nonatomic, retain) HelloWorldLayer *cocosView;
+@property(nonatomic, retain) CSMainLayer *cocosView;
 @property(assign) NSTableView *spriteTableView;
 @property(retain) IBOutlet NSView *spriteInfoView;
 @property(retain) IBOutlet NSView *backgroundInfoView;

@@ -25,7 +25,7 @@
 
 #import "cocoshopAppDelegate.h"
 #import "CSObjectController.h"
-#import "HelloWorldLayer.h"
+#import "CSMainLayer.h"
 
 @implementation cocoshopAppDelegate
 @synthesize window=window_, glView=glView_, controller=controller_;
@@ -49,7 +49,7 @@
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
 	CCScene *scene = [CCScene node];
-	HelloWorldLayer *layer = [HelloWorldLayer nodeWithController:controller_];
+	CSMainLayer *layer = [CSMainLayer nodeWithController:controller_];
 	[controller_ setCocosView:layer];
 	[scene addChild:layer];
 	[director runWithScene:scene];

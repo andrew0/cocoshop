@@ -24,7 +24,7 @@
  *
  */
 
-#import "HelloWorldLayer.h"
+#import "CSMainLayer.h"
 #import "CCNode+Additions.h"
 #import "CSSprite.h"
 #import "CSObjectController.h"
@@ -38,7 +38,7 @@
 @end
 
 
-@implementation HelloWorldLayer
+@implementation CSMainLayer
 
 enum 
 {
@@ -50,7 +50,7 @@ enum
 + (CCScene *)scene
 {
 	CCScene *scene = [CCScene node];
-	HelloWorldLayer *layer = [HelloWorldLayer node];
+	CSMainLayer *layer = [CSMainLayer node];
 	[scene addChild:layer];	
 	return scene;
 }

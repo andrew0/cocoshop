@@ -30,7 +30,7 @@
 @class CSObjectController;
 @class CSSprite;
 
-@interface HelloWorldLayer : CCLayer <CSGestureEventDelegate>
+@interface CSMainLayer : CCLayer <CSGestureEventDelegate>
 {
 	CSObjectController *controller_;
 	

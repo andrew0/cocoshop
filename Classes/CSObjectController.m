@@ -27,7 +27,7 @@
 #import "CSObjectController.h"
 #import "CSModel.h"
 #import "CSSprite.h"
-#import "HelloWorldLayer.h"
+#import "CSMainLayer.h"
 #import "cocoshopAppDelegate.h"
 #import "CSTableViewDataSource.h"
 #import "DebugLog.h"
@@ -61,7 +61,7 @@
 	[self didChangeSelectedSprite:nil];
 }
 
-- (void)setCocosView:(HelloWorldLayer *)view
+- (void)setCocosView:(CSMainLayer *)view
 {
 	// release old view, set the new view to cocosView_ and
 	// set the view's controller to self
