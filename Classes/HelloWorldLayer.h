@@ -49,8 +49,8 @@
 + (id)nodeWithController:(CSObjectController *)aController;
 - (id)initWithController:(CSObjectController *)aController;
 - (CSSprite *)spriteForEvent:(NSEvent *)event;
-- (void)addSpritesFromDictionarySafely:(NSDictionary *)dict;
-- (void)addSpritesFromDictionary:(NSDictionary *)dict;
+- (void)loadProjectFromDictionarySafely:(NSDictionary *)dict;
+- (void)loadProjectFromDictionary:(NSDictionary *)dict;
 - (void)addedSprite:(NSNotification *)aNotification;
 
 // updates background checkerboard if winSize is changed

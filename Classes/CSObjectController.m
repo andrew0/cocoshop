@@ -657,7 +657,7 @@
 		
 		if(dict)
 		{
-			[cocosView_ addSpritesFromDictionarySafely:dict];
+			[cocosView_ loadProjectFromDictionarySafely:dict];
 		}
 	}	
 }

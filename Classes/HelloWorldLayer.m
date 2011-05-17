@@ -95,17 +95,17 @@ enum
 	return self;
 }
 
-- (void)addSpritesFromDictionarySafely:(NSDictionary *)dict
+- (void)loadProjectFromDictionarySafely:(NSDictionary *)dict
 {
 	NSThread *cocosThread = [[CCDirector sharedDirector] runningThread] ;
 	
-	[self performSelector:@selector(addSpritesFromDictionary:)
+	[self performSelector:@selector(loadProjectFromDictionary:)
 				 onThread:cocosThread
 			   withObject:dict
 			waitUntilDone:([[NSThread currentThread] isEqualTo:cocosThread])];
 }
 
-- (void)addSpritesFromDictionary:(NSDictionary *)dict
+- (void)loadProjectFromDictionary:(NSDictionary *)dict
 {
 	NSDictionary *bg = [dict objectForKey:@"background"];
 	NSDictionary *children = [dict objectForKey:@"children"];
