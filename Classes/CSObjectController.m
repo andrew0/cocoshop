@@ -76,6 +76,9 @@
 
 - (void)registerAsObserver
 {
+	[modelObject_ addObserver:self forKeyPath:@"stageWidth" options:NSKeyValueObservingOptionNew context:NULL];
+	[modelObject_ addObserver:self forKeyPath:@"stageHeight" options:NSKeyValueObservingOptionNew context:NULL];
+	
 	[modelObject_ addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:NULL];
 	[modelObject_ addObserver:self forKeyPath:@"posX" options:NSKeyValueObservingOptionNew context:NULL];
 	[modelObject_ addObserver:self forKeyPath:@"posY" options:NSKeyValueObservingOptionNew context:NULL];
@@ -322,6 +325,20 @@
 		{
 			[[modelObject_ backgroundLayer] setRotation:[modelObject_ rotation]];
 		}
+	}
+	else if( [keyPath isEqualToString:@"stageWidth"] )
+	{
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		s.width = modelObject_.stageWidth;
+		[(CSMacGLView *)[[CCDirector sharedDirector] openGLView] setWorkspaceSize: s];
+		[(CSMacGLView *)[[CCDirector sharedDirector] openGLView] updateWindow ];
+	}
+	else if( [keyPath isEqualToString:@"stageHeight"] )
+	{
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		s.height = modelObject_.stageHeight;
+		[(CSMacGLView *)[[CCDirector sharedDirector] openGLView] setWorkspaceSize: s];
+		[(CSMacGLView *)[[CCDirector sharedDirector] openGLView] updateWindow ];
 	}
 	
 	[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

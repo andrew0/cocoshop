@@ -71,6 +71,9 @@
 @property(nonatomic, assign) NSInteger relativeAnchor;
 @property(nonatomic, assign) float rotation;
 
+@property(nonatomic, assign) CGFloat stageWidth;
+@property(nonatomic, assign) CGFloat stageHeight;
+
 - (CSSprite *)selectedSprite;
 
 @end

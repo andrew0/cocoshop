@@ -46,6 +46,8 @@
 @synthesize color=color_;
 @synthesize relativeAnchor=relativeAnchor_;
 @synthesize rotation=rotation_;
+@synthesize stageWidth;
+@synthesize stageHeight;
 
 - (id)init
 {
@@ -109,7 +111,7 @@
 			NSColor *col = [NSColor colorWithDeviceRed:[backgroundLayer_ color].r/255.0f green:[backgroundLayer_ color].g/255.0f blue:[backgroundLayer_ color].b/255.0f alpha:255];
 			
 			// sync with actual bg layer properties
-			[self setName:@"Background Layer"];
+			[self setName:@"Background Layer"]; //<TODO: set as default in backgroundView
 			[self setPosX:pos.x];
 			[self setPosY:pos.y];
 			[self setAnchorX:anchor.x];
@@ -121,6 +123,8 @@
 			[self setOpacity:[backgroundLayer_ opacity]];
 			[self setColor:col];
 			[self setRelativeAnchor:([backgroundLayer_ isRelativeAnchorPoint]) ? NSOnState : NSOffState];
+			self.stageWidth = [[CCDirector sharedDirector] winSize].width;
+			self.stageHeight = [[CCDirector sharedDirector] winSize].height;
 		}
 		
 		// tell controller we changed the selected sprite
