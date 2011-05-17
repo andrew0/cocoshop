@@ -110,8 +110,13 @@ enum
 	NSDictionary *bg = [dict objectForKey:@"background"];
 	NSDictionary *children = [dict objectForKey:@"children"];
 	
+	
+	
 	if(bg && children)
 	{
+		// clear all existing sprites first
+		[controller_ deleteAllSprites];
+		
 		CCLayerColor *bgLayer = [[controller_ modelObject] backgroundLayer];
 		
 		CGSize workspaceSize = CGSizeMake([[bg objectForKey:@"stageWidth"] floatValue], [[bg objectForKey:@"stageHeight"] floatValue]);

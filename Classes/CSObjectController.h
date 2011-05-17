@@ -83,6 +83,7 @@
 - (void) addSpritesWithFilesSafely:(NSArray *)files;
 
 - (void)deleteSprite:(CSSprite *)sprite;
+- (void)deleteAllSprites;
 - (void)spriteTableSelectionDidChange:(NSNotification *)aNotification;
 - (void)didChangeSelectedSprite:(NSNotification *)aNotification;
 - (NSDictionary *)dictionaryFromLayer;

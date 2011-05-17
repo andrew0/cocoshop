@@ -431,6 +431,26 @@
 	[spriteTableView_ reloadData];
 }
 
+- (void)deleteAllSprites
+{
+	// deselect everything
+	[modelObject_ setSelectedSprite:nil];
+		
+	// remove all sprites from main layer
+	for (CCNode * sprite in [modelObject_ spriteArray])
+	{
+		// only remove child if we're the parent
+		if( [sprite parent] == cocosView_ )
+			[cocosView_ removeChild:sprite cleanup:YES];
+	}
+		
+	// remove all sprites from the dictionary
+	@synchronized([modelObject_ spriteArray])
+	{
+		[[modelObject_ spriteArray] removeAllObjects];
+	}	
+}
+
 - (void)deleteSprite:(CSSprite *)sprite
 {
 	// delete sprite
