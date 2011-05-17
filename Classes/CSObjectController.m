@@ -61,6 +61,10 @@
 
 	// Disable Sprite Info for no Sprites at the beginning
 	[self didChangeSelectedSprite:nil];
+	
+	// This will make panels less distracting
+	[infoPanel_ setBecomesKeyOnlyIfNeeded: YES];
+	[spritesPanel_ setBecomesKeyOnlyIfNeeded: YES];
 }
 
 - (void)dealloc
