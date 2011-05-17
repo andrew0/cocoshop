@@ -94,6 +94,7 @@
 			[self setName:[new name]];
 			[self setPosX:pos.x];
 			[self setPosY:pos.y];
+			[self setPosZ: [new zOrder]];
 			[self setAnchorX:anchor.x];
 			[self setAnchorY:anchor.y];
 			[self setFlipX:([new flipX]) ? NSOnState : NSOffState];

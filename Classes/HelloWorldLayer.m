@@ -31,6 +31,13 @@
 #import "CSModel.h"
 #import "CSMacGLView.h"
 
+@interface CCNode (Internal)
+
+-(void) _setZOrder:(int) z;
+
+@end
+
+
 @implementation HelloWorldLayer
 
 enum 
@@ -173,6 +180,9 @@ enum
 			
 			[sprite setName:name];
 			[sprite setFilename:childFilename];
+			
+			[sprite _setZOrder:  [[child objectForKey:@"posZ"] floatValue]];
+			
 			@synchronized ([[controller_ modelObject] spriteArray])
 			{
 				[[[controller_ modelObject] spriteArray] addObject:sprite];
@@ -257,7 +267,7 @@ enum
 		{
 			if( ![sprite parent] )
 			{
-				[self addChild:sprite];
+				[self addChild:sprite z: [sprite zOrder]];
 				[model setSelectedSprite:sprite];
 			}
 		}
