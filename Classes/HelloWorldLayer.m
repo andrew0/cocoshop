@@ -29,6 +29,7 @@
 #import "CSSprite.h"
 #import "CSObjectController.h"
 #import "CSModel.h"
+#import "CSMacGLView.h"
 
 @implementation HelloWorldLayer
 
@@ -105,6 +106,12 @@ enum
 	if(bg && children)
 	{
 		CCLayerColor *bgLayer = [[controller_ modelObject] backgroundLayer];
+		
+		CGSize workspaceSize = CGSizeMake([[bg objectForKey:@"stageWidth"] floatValue], [[bg objectForKey:@"stageHeight"] floatValue]);
+		[(CSMacGLView *)[[CCDirector sharedDirector] openGLView] setWorkspaceSize: workspaceSize];
+		[(CSMacGLView *)[[CCDirector sharedDirector] openGLView] updateWindow];
+		[[controller_ modelObject] setSelectedSprite: nil];
+		
 		
 		CGPoint bgPos = ccp([[bg objectForKey:@"posX"] floatValue], [[bg objectForKey:@"posY"] floatValue]);
 		[bgLayer setPosition:bgPos];
