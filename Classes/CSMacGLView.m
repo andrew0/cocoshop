@@ -320,9 +320,9 @@
 	// try to send magnification gesture to view
 	CSObjectController *controller = [[self appDelegate] controller];
 	
-	if ( [controller cocosView] && [[controller cocosView] respondsToSelector:@selector(csMagnifyWithEvent:)] )
+	if ( [controller mainLayer] && [[controller mainLayer] respondsToSelector:@selector(csMagnifyWithEvent:)] )
 	{
-		[[controller cocosView] csMagnifyWithEvent:event];
+		[[controller mainLayer] csMagnifyWithEvent:event];
 	}
 }
 
@@ -331,9 +331,9 @@
 	// try to send rotation gesture to view
 	CSObjectController *controller = [[self appDelegate] controller];
 	
-	if ( [controller cocosView] && [[controller cocosView] respondsToSelector:@selector(csRotateWithEvent:)] )
+	if ( [controller mainLayer] && [[controller mainLayer] respondsToSelector:@selector(csRotateWithEvent:)] )
 	{
-		[[controller cocosView] csRotateWithEvent:event];
+		[[controller mainLayer] csRotateWithEvent:event];
 	}
 }
 
@@ -342,9 +342,9 @@
 	// try to send swipe gesture to view
 	CSObjectController *controller = [[self appDelegate] controller];
 	
-	if ( [controller cocosView] && [[controller cocosView] respondsToSelector:@selector(csSwipeWithEvent:)] )
+	if ( [controller mainLayer] && [[controller mainLayer] respondsToSelector:@selector(csSwipeWithEvent:)] )
 	{
-		[[controller cocosView] csSwipeWithEvent:event];
+		[[controller mainLayer] csSwipeWithEvent:event];
 	}
 }
 

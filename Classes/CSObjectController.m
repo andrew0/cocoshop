@@ -35,7 +35,7 @@
 @implementation CSObjectController
 
 @synthesize modelObject=modelObject_;
-@synthesize cocosView=cocosView_;
+@synthesize mainLayer=mainLayer_;
 @synthesize spriteTableView=spriteTableView_;
 @synthesize spriteInfoView;
 @synthesize backgroundInfoView;
@@ -61,15 +61,15 @@
 	[self didChangeSelectedSprite:nil];
 }
 
-- (void)setCocosView:(CSMainLayer *)view
+- (void)setMainLayer:(CSMainLayer *)view
 {
-	// release old view, set the new view to cocosView_ and
+	// release old view, set the new view to mainLayer_ and
 	// set the view's controller to self
-	if(view != cocosView_)
+	if(view != mainLayer_)
 	{
 		[view retain];
-		[cocosView_ release];
-		cocosView_ = view;
+		[mainLayer_ release];
+		mainLayer_ = view;
 		[view setController:self];
 	}
 }
@@ -349,7 +349,7 @@
 	self.spriteInfoView = nil;
 	self.backgroundInfoView = nil;
 	
-	[self setCocosView:nil];
+	[self setMainLayer:nil];
 	[dataSource_ release];
 	[super dealloc];
 }
@@ -440,8 +440,8 @@
 	for (CCNode * sprite in [modelObject_ spriteArray])
 	{
 		// only remove child if we're the parent
-		if( [sprite parent] == cocosView_ )
-			[cocosView_ removeChild:sprite cleanup:YES];
+		if( [sprite parent] == mainLayer_ )
+			[mainLayer_ removeChild:sprite cleanup:YES];
 	}
 		
 	// remove all sprites from the dictionary
@@ -461,8 +461,8 @@
 			[modelObject_ setSelectedSprite:nil];
 		
 		// only remove child if we're the parent
-		if( [sprite parent] == cocosView_ )
-			[cocosView_ removeChild:sprite cleanup:YES];
+		if( [sprite parent] == mainLayer_ )
+			[mainLayer_ removeChild:sprite cleanup:YES];
 		
 		// remove the sprite from the dictionary
 		@synchronized([modelObject_ spriteArray])
@@ -540,9 +540,9 @@
 	[bg setValue:[NSNumber numberWithFloat:[bgLayer rotation]] forKey:@"rotation"];
 	[bg setValue:[NSNumber numberWithBool:[bgLayer isRelativeAnchorPoint]] forKey:@"relativeAnchor"];
 	
-	NSMutableArray *children = [NSMutableArray arrayWithCapacity:[[cocosView_ children] count]];
+	NSMutableArray *children = [NSMutableArray arrayWithCapacity:[[mainLayer_ children] count]];
 	CCNode *child;
-	CCARRAY_FOREACH([cocosView_ children], child)
+	CCARRAY_FOREACH([mainLayer_ children], child)
 	{
 		if( [child isKindOfClass:[CSSprite class]] )
 		{
@@ -677,7 +677,7 @@
 		
 		if(dict)
 		{
-			[cocosView_ loadProjectFromDictionarySafely:dict];
+			[mainLayer_ loadProjectFromDictionarySafely:dict];
 		}
 	}	
 }

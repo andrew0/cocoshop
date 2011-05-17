@@ -50,7 +50,7 @@
 	
 	CCScene *scene = [CCScene node];
 	CSMainLayer *layer = [CSMainLayer nodeWithController:controller_];
-	[controller_ setCocosView:layer];
+	[controller_ setMainLayer:layer];
 	[scene addChild:layer];
 	[director runWithScene:scene];
 }

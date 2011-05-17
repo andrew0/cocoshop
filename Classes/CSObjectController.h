@@ -35,7 +35,7 @@
 @interface CSObjectController : NSObjectController
 {
     CSModel *modelObject_;
-	CSMainLayer *cocosView_;
+	CSMainLayer *mainLayer_;
 	CSTableViewDataSource *dataSource_;
 	
 	IBOutlet NSPanel *infoPanel_;
@@ -65,7 +65,7 @@
 }
 
 @property(assign) IBOutlet CSModel *modelObject;
-@property(nonatomic, retain) CSMainLayer *cocosView;
+@property(nonatomic, retain) CSMainLayer *mainLayer;
 @property(assign) NSTableView *spriteTableView;
 @property(retain) IBOutlet NSView *spriteInfoView;
 @property(retain) IBOutlet NSView *backgroundInfoView;
