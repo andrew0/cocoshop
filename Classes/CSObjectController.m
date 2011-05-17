@@ -40,6 +40,8 @@
 @synthesize spriteInfoView;
 @synthesize backgroundInfoView;
 
+#pragma mark Init / DeInit
+
 - (void)awakeFromNib
 {
 	// add a data source to the table view
@@ -61,6 +63,16 @@
 	[self didChangeSelectedSprite:nil];
 }
 
+- (void)dealloc
+{
+	self.spriteInfoView = nil;
+	self.backgroundInfoView = nil;
+	
+	[self setMainLayer:nil];
+	[dataSource_ release];
+	[super dealloc];
+}
+
 - (void)setMainLayer:(CSMainLayer *)view
 {
 	// release old view, set the new view to mainLayer_ and
@@ -73,6 +85,8 @@
 		[view setController:self];
 	}
 }
+
+#pragma mark Values Observer
 
 - (void)registerAsObserver
 {
@@ -344,15 +358,7 @@
 	[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
 
-- (void)dealloc
-{
-	self.spriteInfoView = nil;
-	self.backgroundInfoView = nil;
-	
-	[self setMainLayer:nil];
-	[dataSource_ release];
-	[super dealloc];
-}
+#pragma mark Sprites
 
 - (NSArray *) allowedFileTypes
 {
@@ -472,6 +478,8 @@
 	}	
 }
 
+#pragma mark Notifications
+
 - (void)spriteTableSelectionDidChange:(NSNotification *)aNotification
 {
 	NSInteger index = [spriteTableView_ selectedRow];
@@ -518,6 +526,8 @@
 		}
 	}
 }
+
+#pragma mark Save / Load
 
 - (NSDictionary *)dictionaryFromLayer
 {
@@ -582,29 +592,7 @@
 	[dict writeToFile:filename atomically:YES];
 }
 
-#pragma mark IBActions
-
-- (IBAction)addSprite:(id)sender
-{
-	// allowed file types
-	NSArray *allowedTypes = [self allowedFileTypes];
-	
-	// initialize panel + set flags
-	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-	[openPanel setCanChooseFiles:YES];
-	[openPanel setAllowsMultipleSelection:YES];
-	[openPanel setCanChooseDirectories:NO];
-	[openPanel setAllowedFileTypes:allowedTypes];
-	[openPanel setAllowsOtherFileTypes:NO];
-	
-	// run the panel
-	if( [[NSDocumentController sharedDocumentController] runModalOpenPanel:openPanel forTypes:allowedTypes] == NSOKButton )
-	{
-		NSArray *files = [openPanel filenames];
-		
-		[self addSpritesWithFilesSafely: files];
-	}	
-}
+#pragma mark IBActions - Windows
 
 - (IBAction)openInfoPanel:(id)sender
 {
@@ -621,6 +609,8 @@
 	cocoshopAppDelegate *delegate = [[NSApplication sharedApplication] delegate];
 	[[delegate window] makeKeyAndOrderFront:nil];
 }
+
+#pragma mark IBActions - Save/Load
 
 - (IBAction)saveProject:(id)sender
 {
@@ -682,6 +672,30 @@
 	}	
 }
 
+#pragma mark IBActions - Sprites
+
+- (IBAction)addSprite:(id)sender
+{
+	// allowed file types
+	NSArray *allowedTypes = [self allowedFileTypes];
+	
+	// initialize panel + set flags
+	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+	[openPanel setCanChooseFiles:YES];
+	[openPanel setAllowsMultipleSelection:YES];
+	[openPanel setCanChooseDirectories:NO];
+	[openPanel setAllowedFileTypes:allowedTypes];
+	[openPanel setAllowsOtherFileTypes:NO];
+	
+	// run the panel
+	if( [[NSDocumentController sharedDocumentController] runModalOpenPanel:openPanel forTypes:allowedTypes] == NSOKButton )
+	{
+		NSArray *files = [openPanel filenames];
+		
+		[self addSpritesWithFilesSafely: files];
+	}	
+}
+
 - (IBAction)spriteAddButtonClicked:(id)sender
 {
 	[self addSprite:sender];
@@ -698,6 +712,8 @@
 		[self deleteSprite:sprite];
 	}
 }
+
+#pragma mark IBActions - Zoom
 
 - (IBAction)resetZoom:(id)sender
 {

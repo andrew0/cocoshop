@@ -49,7 +49,11 @@
 @property(nonatomic, copy) NSString *name;
 @property(nonatomic, assign) BOOL locked;
 
+// changes position and text of positionLabel
+// must be called on Cocos2D thread
 - (void)updatePositionLabel;
+
+// marks that updatePositionLabel must be called once at next visit
 - (void)updatePositionLabelSafely;
 
 @end

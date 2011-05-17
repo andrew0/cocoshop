@@ -35,6 +35,8 @@
 @synthesize name=name_;
 @synthesize locked=locked_;
 
+#pragma mark Init / DeInit
+
 - (id)init
 {
 	if((self=[super init]))
@@ -58,17 +60,36 @@
 	return self;
 }
 
-- (void)onEnter
+- (void)dealloc
 {
-	[super onEnter];
-	
-	CGSize size = contentSize_;
-	[fill_ changeWidth:size.width height:size.height];
-	[anchor_ setPosition:ccp(size.width*anchorPoint_.x, size.height*anchorPoint_.y)];
-	
-	CGSize s = [anchor_ contentSize];
-	[positionLabel_ setPosition:ccp(s.width/2, -10)];	
+	[fill_ release];
+	[anchor_ release];
+	[positionLabel_ release];
+	[self setFilename:nil];
+	[self setName:nil];
+	[super dealloc];
 }
+
+#pragma mark Update 
+
+// changes position and text of positionLabel
+// must be called on Cocos2D thread
+- (void)updatePositionLabel
+{
+	CGSize s = [anchor_ contentSize];
+	NSString *posText = [NSString stringWithFormat:@"%g, %g", floorf( [self position].x ), floorf( [self position].y )];
+	[positionLabel_ setString:posText];
+	[positionLabel_ setPosition:ccp(s.width/2, -10)];
+	
+	willUpdatePositionLabel_ = NO;
+}
+
+- (void)updatePositionLabelSafely
+{
+	willUpdatePositionLabel_ = YES;
+}
+
+#pragma mark Properties
 
 - (void)setName:(NSString *)aName
 {
@@ -170,21 +191,19 @@
 	}
 }
 
-// changes position and text of positionLabel
-// must be called on Cocos2D thread
-- (void)updatePositionLabel
-{
-	CGSize s = [anchor_ contentSize];
-	NSString *posText = [NSString stringWithFormat:@"%g, %g", floorf( [self position].x ), floorf( [self position].y )];
-	[positionLabel_ setString:posText];
-	[positionLabel_ setPosition:ccp(s.width/2, -10)];
-	
-	willUpdatePositionLabel_ = NO;
-}
 
-- (void)updatePositionLabelSafely
+#pragma mark CCNode Reimplemented Methods
+
+- (void)onEnter
 {
-	willUpdatePositionLabel_ = YES;
+	[super onEnter];
+	
+	CGSize size = contentSize_;
+	[fill_ changeWidth:size.width height:size.height];
+	[anchor_ setPosition:ccp(size.width*anchorPoint_.x, size.height*anchorPoint_.y)];
+	
+	CGSize s = [anchor_ contentSize];
+	[positionLabel_ setPosition:ccp(s.width/2, -10)];	
 }
 
 - (void)visit
@@ -217,16 +236,6 @@
 		
 		ccDrawPoly(vertices, 4, YES);
 	}
-}
-
-- (void)dealloc
-{
-	[fill_ release];
-	[anchor_ release];
-	[positionLabel_ release];
-	[self setFilename:nil];
-	[self setName:nil];
-	[super dealloc];
 }
 
 @end

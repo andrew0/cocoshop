@@ -34,26 +34,13 @@
 
 @synthesize workspaceSize, zoomFactor, zoomSpeed, zoomFactorMax, zoomFactorMin;
 
-@dynamic projection;
-
-- (void) setProjection:(ccDirectorProjection) newProjection
-{
-	projection_ = newProjection;
-	[self updateProjection];
-}
-
-- (ccDirectorProjection) projection
-{
-	return projection_;
-}
-
 - (cocoshopAppDelegate *) appDelegate
 {
 	return (cocoshopAppDelegate *)[[NSApplication sharedApplication ] delegate];
 }
 
 
-# pragma Init / DeInit
+#pragma mark Init / DeInit
 
 - (void)awakeFromNib
 {	
@@ -80,7 +67,20 @@
 	[super dealloc];
 }
 
-#pragma mark  Own Projection 
+#pragma mark  Own Projection
+
+@dynamic projection;
+
+- (void) setProjection:(ccDirectorProjection) newProjection
+{
+	projection_ = newProjection;
+	[self updateProjection];
+}
+
+- (ccDirectorProjection) projection
+{
+	return projection_;
+}
 
 // Resizes the View for Centering the Workspace in Window
 // This is needed cause it's impossible to set the position of contentNode of

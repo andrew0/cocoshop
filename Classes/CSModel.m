@@ -49,6 +49,8 @@
 @synthesize stageWidth;
 @synthesize stageHeight;
 
+#pragma mark Init / DeInit
+
 - (id)init
 {
 	if((self=[super init]))
@@ -65,6 +67,14 @@
 
 - (void)awakeFromNib
 {
+}
+
+- (void)dealloc
+{
+	[self setSpriteArray:nil];
+	[self setColor:nil];
+	[self setBackgroundLayer:nil];
+	[super dealloc];
 }
 
 #pragma mark Custom Accessors
@@ -113,7 +123,7 @@
 			NSColor *col = [NSColor colorWithDeviceRed:[backgroundLayer_ color].r/255.0f green:[backgroundLayer_ color].g/255.0f blue:[backgroundLayer_ color].b/255.0f alpha:255];
 			
 			// sync with actual bg layer properties
-			[self setName:@"Background Layer"]; //<TODO: set as default in backgroundView
+			[self setName:@"Background Layer"];
 			[self setPosX:pos.x];
 			[self setPosY:pos.y];
 			[self setAnchorX:anchor.x];
@@ -133,14 +143,6 @@
 		// tell controller we changed the selected sprite
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"didChangeSelectedSprite" object:nil];
 	}
-}
-
-- (void)dealloc
-{
-	[self setSpriteArray:nil];
-	[self setColor:nil];
-	[self setBackgroundLayer:nil];
-	[super dealloc];
 }
 
 @end

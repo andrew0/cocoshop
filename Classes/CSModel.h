@@ -56,6 +56,8 @@
 @property(nonatomic, assign) CSSprite *selectedSprite;
 @property(nonatomic, retain) CCLayerColor *backgroundLayer;
 @property(nonatomic, retain) NSMutableArray *spriteArray;
+
+// Children Properties
 @property(nonatomic, assign) NSString *name;
 @property(nonatomic, assign) float posX;
 @property(nonatomic, assign) float posY;
@@ -71,6 +73,7 @@
 @property(nonatomic, assign) NSInteger relativeAnchor;
 @property(nonatomic, assign) float rotation;
 
+// Background Properties
 @property(nonatomic, assign) CGFloat stageWidth;
 @property(nonatomic, assign) CGFloat stageHeight;
 

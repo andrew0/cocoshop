@@ -70,6 +70,8 @@
 @property(retain) IBOutlet NSView *spriteInfoView;
 @property(retain) IBOutlet NSView *backgroundInfoView;
 
+#pragma mark Sprites
+
 /**
  * filters array of filenames, leaving only allowed
  * @returns The filtered files
@@ -84,21 +86,31 @@
 
 - (void)deleteSprite:(CSSprite *)sprite;
 - (void)deleteAllSprites;
+
+#pragma mark  Notifications
 - (void)spriteTableSelectionDidChange:(NSNotification *)aNotification;
 - (void)didChangeSelectedSprite:(NSNotification *)aNotification;
+
+#pragma mark Save/Load
 - (NSDictionary *)dictionaryFromLayer;
 - (void)saveProjectToFile:(NSString *)filename;
 
-#pragma mark IBActions
-- (IBAction)addSprite:(id)sender;
+#pragma mark IBActions - Windows
 - (IBAction)openInfoPanel:(id)sender;
 - (IBAction)openSpritesPanel: (id) sender;
 - (IBAction)openMainWindow:(id)sender;
+
+#pragma mark IBActions - Save/Load
 - (IBAction)saveProject:(id)sender;
 - (IBAction)saveProjectAs:(id)sender;
 - (IBAction)openProject:(id)sender;
+
+#pragma mark IBActions - Sprites
+- (IBAction)addSprite:(id)sender;
 - (IBAction)spriteAddButtonClicked:(id)sender;
 - (IBAction)spriteDeleteButtonClicked:(id)sender;
+
+#pragma mark IBActions - Zoom
 - (IBAction)resetZoom:(id)sender;
 
 @end
