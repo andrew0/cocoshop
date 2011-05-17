@@ -67,6 +67,8 @@
 @property(assign) IBOutlet CSModel *modelObject;
 @property(nonatomic, retain) HelloWorldLayer *cocosView;
 @property(assign) NSTableView *spriteTableView;
+@property(retain) IBOutlet NSView *spriteInfoView;
+@property(retain) IBOutlet NSView *backgroundInfoView;
 
 /**
  * filters array of filenames, leaving only allowed

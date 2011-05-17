@@ -30,12 +30,15 @@
 #import "HelloWorldLayer.h"
 #import "cocoshopAppDelegate.h"
 #import "CSTableViewDataSource.h"
+#import "DebugLog.h"
 
 @implementation CSObjectController
 
 @synthesize modelObject=modelObject_;
 @synthesize cocosView=cocosView_;
 @synthesize spriteTableView=spriteTableView_;
+@synthesize spriteInfoView;
+@synthesize backgroundInfoView;
 
 - (void)awakeFromNib
 {
@@ -96,6 +99,8 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+	DebugLog(@"keyPath  = %@", keyPath);
+	
 	if( [keyPath isEqualToString:@"name"] )
 	{
 		CSSprite *sprite = [modelObject_ selectedSprite];
@@ -324,6 +329,9 @@
 
 - (void)dealloc
 {
+	self.spriteInfoView = nil;
+	self.backgroundInfoView = nil;
+	
 	[self setCocosView:nil];
 	[dataSource_ release];
 	[super dealloc];
@@ -442,56 +450,26 @@
 
 }
 
+- (void) setInfoPanelView: (NSView *) aView
+{
+	//CGRect frame = [infoPanel_ frame];
+	//frame.size = [aView frame].size;
+	[infoPanel_ setContentView:aView];
+	//[infoPanel_ setFrame: frame display: YES];
+}
+
 - (void)didChangeSelectedSprite:(NSNotification *)aNotification
 {
 	if( ![modelObject_ selectedSprite] )
 	{
 		// Editing Background
-		[nameField_ setEnabled:NO];
-//		[posXField_ setEnabled:NO];
-//		[posXStepper_ setEnabled:NO];
-//		[posYField_ setEnabled:NO];
-//		[posYStepper_ setEnabled:NO];
-//		[posZField_ setEnabled:NO];
-//		[posZStepper_ setEnabled:NO];
-//		[anchorXField_ setEnabled:NO];
-//		[anchorXStepper_ setEnabled:NO];
-//		[anchorYField_ setEnabled:NO];
-//		[anchorYStepper_ setEnabled:NO];
-//		[scaleField_ setEnabled:NO];
-		[flipXButton_ setEnabled:NO];
-		[flipYButton_ setEnabled:NO];
-//		[opacityField_ setEnabled:YES];
-//		[opacitySlider_ setEnabled:YES];
-//		[colorWell_ setEnabled:YES];
-//		[relativeAnchorButton_ setEnabled:NO];
-//		[rotationField_ setEnabled:NO];
-//		[rotationSlider_ setEnabled:NO];
+		[self setInfoPanelView: self.backgroundInfoView];
 		[spriteTableView_ deselectAll:nil];
 	}
 	else
 	{
 		// Editing Selected Sprite 
-		[nameField_ setEnabled:YES];
-//		[posXField_ setEnabled:YES];
-//		[posXStepper_ setEnabled:YES];
-//		[posYField_ setEnabled:YES];
-//		[posYStepper_ setEnabled:YES];
-//		[posZField_ setEnabled:YES];
-//		[posZStepper_ setEnabled:YES];
-//		[anchorXField_ setEnabled:YES];
-//		[anchorXStepper_ setEnabled:YES];
-//		[anchorYField_ setEnabled:YES];
-//		[anchorYStepper_ setEnabled:YES];
-//		[scaleField_ setEnabled:YES];
-		[flipXButton_ setEnabled:YES];
-		[flipYButton_ setEnabled:YES];
-//		[opacityField_ setEnabled:YES];
-//		[opacitySlider_ setEnabled:YES];
-//		[colorWell_ setEnabled:YES];
-//		[relativeAnchorButton_ setEnabled:YES];
-//		[rotationField_ setEnabled:YES];
-//		[rotationSlider_ setEnabled:YES];
+		[self setInfoPanelView: self.spriteInfoView];
 		
 		// get the index for the sprite
 		CSSprite *sprite = [modelObject_ selectedSprite];
