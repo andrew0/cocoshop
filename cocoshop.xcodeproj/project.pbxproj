@@ -541,37 +541,29 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		49A1405B135BC9EC000C3BD8 /* cocos2d */ = {
-			isa = PBXGroup;
-			children = (
-				E0507116131760D700EAE33F /* CSMainLayer.h */,
-				E0507117131760D700EAE33F /* CSMainLayer.m */,
-				49A14062135BCA0A000C3BD8 /* CSSprite.h */,
-				49A14063135BCA0A000C3BD8 /* CSSprite.m */,
-				49A14279135BE453000C3BD8 /* CCNode+Additions.h */,
-				49A1427A135BE453000C3BD8 /* CCNode+Additions.m */,
-			);
-			name = cocos2d;
-			sourceTree = "<group>";
-		};
 		E02A83D1129F000100341C97 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				6D1FEC09138074630039076A /* DebugLog.h */,
 				6D1FEC0A138074630039076A /* DebugLog.m */,
-				49A1405B135BC9EC000C3BD8 /* cocos2d */,
+				49A14279135BE453000C3BD8 /* CCNode+Additions.h */,
+				49A1427A135BE453000C3BD8 /* CCNode+Additions.m */,
+				49A14062135BCA0A000C3BD8 /* CSSprite.h */,
+				49A14063135BCA0A000C3BD8 /* CSSprite.m */,
 				496706FC135B9E1B0074D05A /* CSModel.h */,
 				496706FB135B9E1B0074D05A /* CSModel.m */,
+				E0507116131760D700EAE33F /* CSMainLayer.h */,
+				E0507117131760D700EAE33F /* CSMainLayer.m */,
 				496706F8135B9DDE0074D05A /* CSObjectController.h */,
 				496706F9135B9DDE0074D05A /* CSObjectController.m */,
+				4930EBB0136363FF006E5DA5 /* CSGestureEventDelegate.h */,
+				6D4702CC135F52BC00FDEADD /* CSMacGLView.h */,
+				6D4702CD135F52BC00FDEADD /* CSMacGLView.m */,
 				6DFAD27113609A4B00006D0B /* CSTableViewDataSource.h */,
 				6DFAD27213609A4B00006D0B /* CSTableViewDataSource.m */,
 				E02A83FB129F023B00341C97 /* main.m */,
 				E02A83D2129F000100341C97 /* cocoshopAppDelegate.h */,
 				E02A83D3129F000100341C97 /* cocoshopAppDelegate.m */,
-				6D4702CC135F52BC00FDEADD /* CSMacGLView.h */,
-				6D4702CD135F52BC00FDEADD /* CSMacGLView.m */,
-				4930EBB0136363FF006E5DA5 /* CSGestureEventDelegate.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
