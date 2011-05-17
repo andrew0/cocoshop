@@ -257,6 +257,14 @@ enum
 	}
 }
 
+- (void) onEnter
+{
+	[super onEnter];
+	
+	// Update Background Info View at App Start
+	[[controller_ modelObject] setSelectedSprite: nil];
+}
+
 - (void) visit
 {
 	if (didAddSprite_)
