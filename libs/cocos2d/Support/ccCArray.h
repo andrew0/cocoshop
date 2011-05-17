@@ -97,11 +97,36 @@ static inline void ccArrayEnsureExtraCapacity(ccArray *arr, NSUInteger extra)
 		ccArrayDoubleCapacity(arr);
 }
 
+/** shrinks the array so the memory footprint corresponds with the number of items */
+static inline void ccArrayShrink(ccArray *arr)
+{
+    uint newSize;
+	
+	//only resize when necessary
+	if (arr->max > arr->num && !(arr->num==0 && arr->max==1))
+	{
+		if (arr->num!=0) 
+		{
+			newSize=arr->num;
+			arr->max=arr->num; 
+		}
+		else 
+		{//minimum capacity of 1, with 0 elements the array would be free'd by realloc
+			newSize=1;
+			arr->max=1;
+		}
+		
+		arr->arr = (id*) realloc(arr->arr,newSize * sizeof(id) );
+		NSCAssert(arr->arr!=NULL,@"could not reallocate the memory");
+	}
+} 
+
 /** Returns index of first occurence of object, NSNotFound if object not found. */
 static inline NSUInteger ccArrayGetIndexOfObject(ccArray *arr, id object)
 {
 	for( NSUInteger i = 0; i < arr->num; i++)
 		if( arr->arr[i] == object ) return i;
+    
 	return NSNotFound;
 }
 
@@ -140,18 +165,31 @@ static inline void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr)
 	ccArrayAppendArray(arr, plusArr);
 }
 
+/** Inserts an object at index */
 static inline void ccArrayInsertObjectAtIndex(ccArray *arr, id object, NSUInteger index)
 {
 	NSCAssert(index<=arr->num, @"Invalid index. Out of bounds");
 	
 	ccArrayEnsureExtraCapacity(arr, 1);
 	
-	int remaining = arr->num - index;
+	NSUInteger remaining = arr->num - index;
 	if( remaining > 0)
 		memmove(&arr->arr[index+1], &arr->arr[index], sizeof(id) * remaining );
 	
 	arr->arr[index] = [object retain];
 	arr->num++;
+}
+
+/** Swaps two objects */
+static inline void ccArraySwapObjectsAtIndexes(ccArray *arr, NSUInteger index1, NSUInteger index2)
+{
+	NSCAssert(index1 < arr->num, @"(1) Invalid index. Out of bounds");
+	NSCAssert(index2 < arr->num, @"(2) Invalid index. Out of bounds");
+	
+	id object1 = arr->arr[index1];
+    
+	arr->arr[index1] = arr->arr[index2];
+	arr->arr[index2] = object1;
 }
 
 /** Removes all objects from arr */
@@ -168,7 +206,7 @@ static inline void ccArrayRemoveObjectAtIndex(ccArray *arr, NSUInteger index)
 	[arr->arr[index] release];
 	arr->num--;
 	
-	int remaining = arr->num - index;
+	NSUInteger remaining = arr->num - index;
 	if(remaining>0)
 		memmove(&arr->arr[index], &arr->arr[index+1], remaining * sizeof(id));
 }
@@ -300,7 +338,7 @@ static inline void ccCArrayInsertValueAtIndex( ccCArray *arr, void *value, NSUIn
 {
 	assert( index < arr->max );
 	
-	int remaining = arr->num - index;
+	NSUInteger remaining = arr->num - index;
 	
 	// last Value doesn't need to be moved
 	if( remaining > 0) {

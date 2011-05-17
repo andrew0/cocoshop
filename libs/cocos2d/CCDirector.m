@@ -217,6 +217,12 @@ static CCDirector *_sharedDirector = nil;
 		dt = (now.tv_sec - lastUpdate_.tv_sec) + (now.tv_usec - lastUpdate_.tv_usec) / 1000000.0f;
 		dt = MAX(0,dt);
 	}
+
+#ifdef DEBUG
+	// If we are debugging our code, prevent big delta time
+	if( dt > 0.2f )
+		dt = 1/60.0f;
+#endif
 	
 	lastUpdate_ = now;	
 }
@@ -262,7 +268,7 @@ static CCDirector *_sharedDirector = nil;
 		ccglClearDepth(1.0f);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+//		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	} else
 		glDisable( GL_DEPTH_TEST );
 }
@@ -523,7 +529,7 @@ static CCDirector *_sharedDirector = nil;
 	}
 	
 	NSString *str = [NSString stringWithFormat:@"%.2f",frameRate_];
-	CCTexture2D *texture = [[CCTexture2D alloc] initWithString:str dimensions:CGSizeMake(100,30) alignment:UITextAlignmentLeft fontName:@"Arial" fontSize:24];
+	CCTexture2D *texture = [[CCTexture2D alloc] initWithString:str dimensions:CGSizeMake(100,30) alignment:CCTextAlignmentLeft fontName:@"Arial" fontSize:24];
 
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
