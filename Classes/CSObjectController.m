@@ -603,17 +603,20 @@
 - (IBAction)openInfoPanel:(id)sender
 {
 	[infoPanel_ makeKeyAndOrderFront:nil];
+	[infoPanel_ setLevel:[[[[CCDirector sharedDirector] openGLView] window] level]+1];
 }
 
 - (IBAction) openSpritesPanel: (id) sender
 {
 	[spritesPanel_ makeKeyAndOrderFront: nil];
+	[spritesPanel_ setLevel:[[[[CCDirector sharedDirector] openGLView] window] level]+1];
 }
 
 - (IBAction)openMainWindow:(id)sender
 {
-	cocoshopAppDelegate *delegate = [[NSApplication sharedApplication] delegate];
-	[[delegate window] makeKeyAndOrderFront:nil];
+	[[[[CCDirector sharedDirector] openGLView] window] makeKeyAndOrderFront:nil];
+	[infoPanel_ setLevel:NSNormalWindowLevel];
+	[spritesPanel_ setLevel:NSNormalWindowLevel];
 }
 
 #pragma mark IBActions - Save/Load
@@ -656,18 +659,25 @@
 	[savePanel setCanCreateDirectories:YES];
 	[savePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"csd", @"ccb", nil]];
 	
+	// disable fullscreen
+	BOOL wasFullscreen = [(CCDirectorMac*)[CCDirector sharedDirector] isFullScreen];
+	[(CCDirectorMac*)[CCDirector sharedDirector] setFullScreen: NO];
+	
 	// handle the save panel
 	[savePanel beginSheetModalForWindow:[delegate window] completionHandler:^(NSInteger result) {
 		if(result == NSOKButton)
 		{
 			NSString *file = [savePanel filename];
 			[self saveProjectToFile:file];
+			[(CCDirectorMac*)[CCDirector sharedDirector] setFullScreen: wasFullscreen ];
 		}
 	}];
 }
 
 - (IBAction)openProject:(id)sender
 {
+	cocoshopAppDelegate *delegate = [[NSApplication sharedApplication] delegate];
+	
 	// initialize panel + set flags
 	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 	[openPanel setCanChooseFiles:YES];
@@ -676,19 +686,27 @@
 	[openPanel setAllowedFileTypes:[NSArray arrayWithObject:@"csd"]];
 	[openPanel setAllowsOtherFileTypes:NO];
 	
-	// run the panel
-	if( [[NSDocumentController sharedDocumentController] runModalOpenPanel:openPanel forTypes:[NSArray arrayWithObject:@"csd"]] == NSOKButton )
-	{
-		NSArray *files = [openPanel filenames];
-		NSString *file = [files objectAtIndex:0];
-		NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:file];
-		
-		if(dict)
+	// disable fullscreen
+	BOOL wasFullscreen = [(CCDirectorMac*)[CCDirector sharedDirector] isFullScreen];
+	[(CCDirectorMac*)[CCDirector sharedDirector] setFullScreen: NO];
+	
+	
+	// handle the open panel
+	[openPanel beginSheetModalForWindow:[delegate window] completionHandler:^(NSInteger result) {
+		if(result == NSOKButton)
 		{
-			[mainLayer_ loadProjectFromDictionarySafely:dict];
-			self.projectFilename = file;
+			NSArray *files = [openPanel filenames];
+			NSString *file = [files objectAtIndex:0];
+			NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:file];
+			
+			if(dict)
+			{
+				[mainLayer_ loadProjectFromDictionarySafely:dict];
+				self.projectFilename = file;
+				[(CCDirectorMac*)[CCDirector sharedDirector] setFullScreen: wasFullscreen ];
+			}
 		}
-	}	
+	}];
 }
 
 - (IBAction)revertToSavedProject:(id)sender
