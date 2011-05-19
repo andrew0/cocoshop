@@ -31,6 +31,7 @@
 #import "cocoshopAppDelegate.h"
 #import "CSTableViewDataSource.h"
 #import "DebugLog.h"
+#import "NSString+RelativePath.h"
 
 @implementation CSObjectController
 
@@ -540,7 +541,7 @@
 
 #pragma mark Save / Load
 
-- (NSDictionary *)dictionaryFromLayer
+- (NSDictionary *)dictionaryFromLayerForBaseDirPath: (NSString *) baseDirPath
 {
 	CCLayerColor *bgLayer = [modelObject_ backgroundLayer];
 	
@@ -568,8 +569,15 @@
 		if( [child isKindOfClass:[CSSprite class]] )
 		{
 			CSSprite *sprite = (CSSprite *)child;
+			
+			// Use relative path if possible
+			NSString *relativePath = [[sprite filename] relativePathFromBaseDirPath: baseDirPath ];
+			if (relativePath)
+				sprite.filename = relativePath;			
+			
+			// Save Sprite to Dictionary
 			NSMutableDictionary *childValues = [NSMutableDictionary dictionaryWithCapacity:16];
-			[childValues setValue:[sprite name] forKey:@"name"];
+			[childValues setValue:[sprite name] forKey:@"name"];			
 			[childValues setValue:[sprite filename] forKey:@"filename"];
 			[childValues setValue:[NSNumber numberWithFloat:[sprite position].x] forKey:@"posX"];
 			[childValues setValue:[NSNumber numberWithFloat:[sprite position].y] forKey:@"posY"];
@@ -599,7 +607,7 @@
 
 - (void)saveProjectToFile:(NSString *)filename
 {
-	NSDictionary *dict = [self dictionaryFromLayer];
+	NSDictionary *dict = [self dictionaryFromLayerForBaseDirPath:[filename stringByDeletingLastPathComponent]];
 	[dict writeToFile:filename atomically:YES];
 }
 

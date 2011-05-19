@@ -93,7 +93,7 @@
 - (void)didChangeSelectedSprite:(NSNotification *)aNotification;
 
 #pragma mark Save/Load
-- (NSDictionary *)dictionaryFromLayer;
+- (NSDictionary *)dictionaryFromLayerForBaseDirPath: (NSString *) baseDirPath;
 - (void)saveProjectToFile:(NSString *)filename;
 
 #pragma mark IBActions - Windows

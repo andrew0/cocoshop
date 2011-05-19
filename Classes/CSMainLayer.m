@@ -30,6 +30,7 @@
 #import "CSObjectController.h"
 #import "CSModel.h"
 #import "CSMacGLView.h"
+#import "NSString+RelativePath.h"
 
 @interface CCNode (Internal)
 
@@ -97,6 +98,7 @@ enum
 }
 
 #pragma mark Loading CSD Files
+//TODO: move loading logic to CSObjectController
 
 - (void)loadProjectFromDictionarySafely:(NSDictionary *)dict
 {
@@ -152,7 +154,11 @@ enum
 		for(NSDictionary *child in children)
 		{
 			NSString *childFilename = [child objectForKey:@"filename"];
+			NSString *absolutePath = [childFilename absolutePathFromBaseDirPath: [controller_.projectFilename stringByDeletingLastPathComponent]];
+			if (absolutePath)
+				childFilename = absolutePath;
 			CSSprite *sprite = [CSSprite spriteWithFile:childFilename];
+			//TODO: show error message instead of crash, if file not found
 			
 			NSString *name = [child objectForKey:@"name"];
 			
