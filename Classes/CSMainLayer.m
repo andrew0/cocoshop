@@ -223,8 +223,8 @@ enum
 // can be called from another thread
 - (void) updateForScreenReshapeSafely: (NSNotification *) aNotification
 {	
-	// call updateForScreenReshape on Cocos2D Thread
-	[self runAction: [CCCallFunc actionWithTarget: self selector: @selector(updateForScreenReshape) ]];
+	// call updateForScreenReshape on next visit (CCActions aren't threadsafe in fullscreen)
+	shouldUpdateAfterScreenReshape_ = YES;
 }
 
 - (void) updateForScreenReshape
@@ -302,6 +302,10 @@ enum
 
 - (void) visit
 {
+	if (shouldUpdateAfterScreenReshape_)
+		[self updateForScreenReshape];
+	shouldUpdateAfterScreenReshape_ = NO;
+	
 	if (didAddSprite_)
 		[self updateSpritesFromModel];
 	didAddSprite_ = NO;

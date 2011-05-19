@@ -38,7 +38,9 @@
 	BOOL shouldDragSprite_;
 	CGPoint prevLocation_;
 	
+	// delayed actions
 	BOOL didAddSprite_;
+	BOOL shouldUpdateAfterScreenReshape_;
 	
 	CGSize prevSize_;
 }
