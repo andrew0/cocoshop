@@ -242,7 +242,7 @@ enum
 		[bgLayer setContentSize: s];
 	
 	// dont calculate difference for X value - only the Y value
-	CGFloat diffY = s.height - prevSize_.height;
+	/*CGFloat diffY = s.height - prevSize_.height;
 	CCNode *child;
 	CCARRAY_FOREACH(children_, child)
 	{
@@ -259,7 +259,7 @@ enum
 				[[controller_ modelObject] setPosY:currentPos.y];
 			}
 		}
-	}
+	}*/
 	
 	prevSize_ = s;
 }
