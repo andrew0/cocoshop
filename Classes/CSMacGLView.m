@@ -207,6 +207,11 @@
 // Updates Window Size, to Show Scrollers of NSScrollView
 - (void) updateWindow
 {
+	if ([(CCDirectorMac *)[CCDirector sharedDirector] isFullScreen])
+	{
+		[[self window] setFrame:[[self window] frame] display:YES animate:YES];
+	}
+	
 	// (this is the best implementation, that i found within a hour)
 	[[NSNotificationCenter defaultCenter] postNotificationName: NSWindowDidResizeNotification object:[self window]];
 	[self reshape]; //< without this line there will be no update with zoomFactor < 1, and i DUNNO Y

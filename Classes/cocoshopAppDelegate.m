@@ -73,6 +73,9 @@
 {
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	[director setFullScreen: ! [director isFullScreen] ];
+	
+	[ controller_.mainLayer updateForScreenReshapeSafely: nil ];
+	[(CSMacGLView *)[director openGLView] updateWindow];
 }
 
 @end

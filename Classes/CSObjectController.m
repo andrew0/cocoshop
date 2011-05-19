@@ -352,6 +352,9 @@
 		s.width = modelObject_.stageWidth;
 		[(CSMacGLView *)[[CCDirector sharedDirector] openGLView] setWorkspaceSize: s];
 		[(CSMacGLView *)[[CCDirector sharedDirector] openGLView] updateWindow ];
+		
+		[self.mainLayer updateForScreenReshapeSafely: nil];
+		
 	}
 	else if( [keyPath isEqualToString:@"stageHeight"] )
 	{
@@ -359,6 +362,8 @@
 		s.height = modelObject_.stageHeight;
 		[(CSMacGLView *)[[CCDirector sharedDirector] openGLView] setWorkspaceSize: s];
 		[(CSMacGLView *)[[CCDirector sharedDirector] openGLView] updateWindow ];
+		
+		[self.mainLayer updateForScreenReshapeSafely: nil];
 	}
 	
 	[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
