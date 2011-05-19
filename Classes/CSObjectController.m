@@ -652,47 +652,33 @@
 
 
 - (IBAction)saveProjectAs:(id)sender
-{
-	cocoshopAppDelegate *delegate = [[NSApplication sharedApplication] delegate];
-	
+{	
 	NSSavePanel *savePanel = [NSSavePanel savePanel];
 	[savePanel setCanCreateDirectories:YES];
 	[savePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"csd", @"ccb", nil]];
 	
-	// disable fullscreen
-	BOOL wasFullscreen = [(CCDirectorMac*)[CCDirector sharedDirector] isFullScreen];
-	[(CCDirectorMac*)[CCDirector sharedDirector] setFullScreen: NO];
-	
 	// handle the save panel
-	[savePanel beginSheetModalForWindow:[delegate window] completionHandler:^(NSInteger result) {
+	[savePanel beginSheetModalForWindow:[[[CCDirector sharedDirector] openGLView] window] completionHandler:^(NSInteger result) {
 		if(result == NSOKButton)
 		{
 			NSString *file = [savePanel filename];
 			[self saveProjectToFile:file];
-			[(CCDirectorMac*)[CCDirector sharedDirector] setFullScreen: wasFullscreen ];
 		}
 	}];
 }
 
 - (IBAction)openProject:(id)sender
 {
-	cocoshopAppDelegate *delegate = [[NSApplication sharedApplication] delegate];
-	
 	// initialize panel + set flags
 	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 	[openPanel setCanChooseFiles:YES];
 	[openPanel setAllowsMultipleSelection:YES];
 	[openPanel setCanChooseDirectories:NO];
 	[openPanel setAllowedFileTypes:[NSArray arrayWithObject:@"csd"]];
-	[openPanel setAllowsOtherFileTypes:NO];
-	
-	// disable fullscreen
-	BOOL wasFullscreen = [(CCDirectorMac*)[CCDirector sharedDirector] isFullScreen];
-	[(CCDirectorMac*)[CCDirector sharedDirector] setFullScreen: NO];
-	
+	[openPanel setAllowsOtherFileTypes:NO];	
 	
 	// handle the open panel
-	[openPanel beginSheetModalForWindow:[delegate window] completionHandler:^(NSInteger result) {
+	[openPanel beginSheetModalForWindow:[[[CCDirector sharedDirector] openGLView] window] completionHandler:^(NSInteger result) {
 		if(result == NSOKButton)
 		{
 			NSArray *files = [openPanel filenames];
@@ -703,7 +689,6 @@
 			{
 				[mainLayer_ loadProjectFromDictionarySafely:dict];
 				self.projectFilename = file;
-				[(CCDirectorMac*)[CCDirector sharedDirector] setFullScreen: wasFullscreen ];
 			}
 		}
 	}];
