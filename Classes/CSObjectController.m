@@ -720,13 +720,15 @@
 	[openPanel setAllowedFileTypes:allowedTypes];
 	[openPanel setAllowsOtherFileTypes:NO];
 	
-	// run the panel
-	if( [[NSDocumentController sharedDocumentController] runModalOpenPanel:openPanel forTypes:allowedTypes] == NSOKButton )
-	{
-		NSArray *files = [openPanel filenames];
-		
-		[self addSpritesWithFilesSafely: files];
-	}	
+	// handle the open panel
+	[openPanel beginSheetModalForWindow:[[[CCDirector sharedDirector] openGLView] window] completionHandler:^(NSInteger result) {
+		if(result == NSOKButton)
+		{
+			NSArray *files = [openPanel filenames];
+			
+			[self addSpritesWithFilesSafely: files];
+		}
+	}];
 }
 
 - (IBAction)spriteAddButtonClicked:(id)sender
