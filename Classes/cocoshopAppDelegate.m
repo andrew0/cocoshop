@@ -55,6 +55,11 @@
 	[director runWithScene:scene];
 }
 
+- (void)applicationWillUpdate:(NSNotification *)aNotification
+{
+	[[NSColorPanel sharedColorPanel] setLevel:[[[[CCDirector sharedDirector] openGLView] window] level]+1];
+}
+
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
 {
 	return YES;
