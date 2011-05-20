@@ -145,6 +145,10 @@ Class restartAction()
 	CCNode *aNode = [csd newNode];
 	[self addChild: aNode];
 	
+	// fit node intro screen
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	aNode.scale = MIN( 1.0f, MIN (s.width / aNode.contentSize.width, s.height / aNode.contentSize.height));
+	
 	return self;
 }
 
