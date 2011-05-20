@@ -38,7 +38,10 @@
 @property (assign) IBOutlet NSWindow	*window;
 @property (assign) IBOutlet CSMacGLView	*glView;
 @property (assign) IBOutlet CSObjectController *controller;
+@property (readwrite, copy) NSString *filenameToOpen;
+@property (readwrite) BOOL appIsRunning;
 
 - (IBAction)toggleFullScreen:(id)sender;
+- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename;
 
 @end

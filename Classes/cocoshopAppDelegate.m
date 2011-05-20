@@ -26,9 +26,33 @@
 #import "cocoshopAppDelegate.h"
 #import "CSObjectController.h"
 #import "CSMainLayer.h"
+#import "DebugLog.h"
 
 @implementation cocoshopAppDelegate
 @synthesize window=window_, glView=glView_, controller=controller_;
+@synthesize appIsRunning, filenameToOpen;
+
+// called before applicationDidFinishLaunching: if app is open by double-clicking
+// csd file
+- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
+{
+	if ([[filename pathExtension] isEqualToString: @"csd"])
+	{
+		DebugLog(@"Will Open File: %@", filename);
+		self.filenameToOpen = filename;
+		
+		if (self.appIsRunning)
+		{
+			NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: filename];
+			[controller_.mainLayer loadProjectFromDictionarySafely: dict];
+			controller_.projectFilename = filenameToOpen;
+			self.filenameToOpen = nil;
+		}
+		return YES;
+	}
+	
+	return NO;
+}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -53,6 +77,9 @@
 	[controller_ setMainLayer:layer];
 	[scene addChild:layer];
 	[director runWithScene:scene];
+	
+	self.appIsRunning = YES;
+
 }
 
 - (void)applicationWillUpdate:(NSNotification *)aNotification
