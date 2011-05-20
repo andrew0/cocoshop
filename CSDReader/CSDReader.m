@@ -140,7 +140,8 @@
 		if ([element canCreateNewNodeWithBatchNode: batchNode])
 		{
 			CCNode *newElementNode = [element newNodeWithBatchNode: batchNode ];
-			[batchNode addChild: newElementNode z: [newElementNode zOrder] tag: [element tag]];
+			if (![newElementNode parent])
+				[batchNode addChild: newElementNode z: [newElementNode zOrder] tag: [element tag]];
 			continue;
 		}
 		

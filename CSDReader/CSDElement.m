@@ -297,15 +297,17 @@
 		[aSprite setTextureRect:rect];
 		aSprite.tag = tag_;
 		[aSprite _setZOrder: zOrder_];
+		
+		// isRelativeAnchorPoint is valid only when sprite DOES NOT use batch node
+		aSprite.isRelativeAnchorPoint = relativeAnchor_;
 	}
 	
-	
+	// common sprite setup
 	aSprite.anchorPoint = anchorPoint_;
 	aSprite.flipX = flipX_;
 	aSprite.flipY = flipY_;
 	aSprite.position = position_;
 	aSprite.rotation = rotation_;
-	aSprite.isRelativeAnchorPoint = relativeAnchor_;
 	aSprite.scaleX = scale_.x;
 	aSprite.scaleY = scale_.y;
 	aSprite.color = ccc3(color_.r, color_.g, color_.b);
