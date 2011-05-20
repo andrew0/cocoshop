@@ -215,7 +215,7 @@
 					  (GLubyte)[[dict valueForKey: @"opacity" ] intValue] );
 		
 		// CCSprite
-		imageName_ = [[dict valueForKey:@"filename"] lastPathComponent];		
+		imageName_ = [[[dict valueForKey:@"filename"] lastPathComponent] retain];		
 	}
 	
 	return self;
