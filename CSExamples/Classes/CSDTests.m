@@ -31,8 +31,8 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
-	@"TestLayer",
 	@"CSDTest1",
+	@"CSDTest2",
 	
 };
 
@@ -69,6 +69,12 @@ Class restartAction()
 #pragma mark Base TestLayer
 
 @implementation TestLayer
+
++ (id) scene
+{
+	return [nextAction() node];
+}
+
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -155,6 +161,40 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Auto: newNode";
+}
+
+@end
+
+@implementation CSDTest2
+-(id) init
+{
+	if( !( self=[super init]) )
+		return nil;
+	
+	// Load spriteSheet & create batchNode
+	[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"CSDTest2.plist" textureFile:@"CSDTest2.png"];
+	CCSpriteBatchNode *batchNode = [CCSpriteBatchNode batchNodeWithFile:@"CSDTest2.png"];
+	
+	// Create Node from CSD using batchNode
+	CSDReader *csd = [CSDReader readerWithFile:@"example1.csd"];
+	CCNode *aNode = [csd newNodeWithClass:[CCNode class] usingBatchNode: batchNode];
+	[self addChild: aNode];
+	
+	// fit node intro screen
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	aNode.scale = MIN( 1.0f, MIN (s.width / aNode.contentSize.width, s.height / aNode.contentSize.height));
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Auto: newNode";
+}
+
+-(NSString *) subtitle
+{
+	return @"spriteBatchNode Mode";
 }
 
 @end

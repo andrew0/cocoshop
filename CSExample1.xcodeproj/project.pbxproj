@@ -69,6 +69,8 @@
 		6D13B11113868B87004FA7F1 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D13B0FF13868B87004FA7F1 /* r1.png */; };
 		6D13B11213868B87004FA7F1 /* r2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D13B10013868B87004FA7F1 /* r2-hd.png */; };
 		6D13B11313868B87004FA7F1 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D13B10113868B87004FA7F1 /* r2.png */; };
+		6D13B1BB13869B1A004FA7F1 /* CSDTest2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6D13B1B913869B1A004FA7F1 /* CSDTest2.plist */; };
+		6D13B1BC13869B1A004FA7F1 /* CSDTest2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D13B1BA13869B1A004FA7F1 /* CSDTest2.png */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -335,6 +337,8 @@
 		6D13B0FF13868B87004FA7F1 /* r1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = r1.png; sourceTree = "<group>"; };
 		6D13B10013868B87004FA7F1 /* r2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "r2-hd.png"; sourceTree = "<group>"; };
 		6D13B10113868B87004FA7F1 /* r2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = r2.png; sourceTree = "<group>"; };
+		6D13B1B913869B1A004FA7F1 /* CSDTest2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CSDTest2.plist; sourceTree = "<group>"; };
+		6D13B1BA13869B1A004FA7F1 /* CSDTest2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CSDTest2.png; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -695,8 +699,9 @@
 		50F414EB1069373D002A0D5E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				6D13B0EE13868B87004FA7F1 /* CSDTest1 */,
 				6D13B0F513868B87004FA7F1 /* TestLayerCommon */,
+				6D13B0EE13868B87004FA7F1 /* CSDTest1 */,
+				6D13B1B813869B1A004FA7F1 /* CSDTest2 */,
 				E02BB762126CC1E0006E46A2 /* iTunesArtwork */,
 				E02BB4FE126CA50F006E46A2 /* Icon@2x.png */,
 				E02BB4FF126CA50F006E46A2 /* Icon-Small@2x.png */,
@@ -753,6 +758,15 @@
 				6D13B10113868B87004FA7F1 /* r2.png */,
 			);
 			path = TestLayerCommon;
+			sourceTree = "<group>";
+		};
+		6D13B1B813869B1A004FA7F1 /* CSDTest2 */ = {
+			isa = PBXGroup;
+			children = (
+				6D13B1B913869B1A004FA7F1 /* CSDTest2.plist */,
+				6D13B1BA13869B1A004FA7F1 /* CSDTest2.png */,
+			);
+			path = CSDTest2;
 			sourceTree = "<group>";
 		};
 		E02BB764126CC223006E46A2 /* cocos2d */ = {
@@ -1207,6 +1221,8 @@
 				6D13B11113868B87004FA7F1 /* r1.png in Resources */,
 				6D13B11213868B87004FA7F1 /* r2-hd.png in Resources */,
 				6D13B11313868B87004FA7F1 /* r2.png in Resources */,
+				6D13B1BB13869B1A004FA7F1 /* CSDTest2.plist in Resources */,
+				6D13B1BC13869B1A004FA7F1 /* CSDTest2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

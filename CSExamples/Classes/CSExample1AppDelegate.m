@@ -110,9 +110,7 @@
 	[self removeStartupFlicker];
 	
 	// Run the intro Scene
-	CCScene *s = [CCScene node];
-	[s addChild:[CSDTest1 node]];
-	[[CCDirector sharedDirector] runWithScene: s ];
+	[[CCDirector sharedDirector] runWithScene: [TestLayer scene] ];
 }
 
 

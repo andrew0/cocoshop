@@ -28,11 +28,16 @@
 
 @interface TestLayer : CCLayer
 {}
++ (id) scene;
 -(NSString*) title;
 -(NSString*) subtitle;
 @end
 
 @interface CSDTest1 : TestLayer
+{}
+@end
+
+@interface CSDTest2 : TestLayer
 {}
 @end
 
