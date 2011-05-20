@@ -95,15 +95,15 @@
 			<key>opacity</key>
 			<real>255</real>
 			<key>posX</key>
-			<real>562</real>
+			<real>569</real>
 			<key>posY</key>
-			<real>232</real>
+			<real>214</real>
 			<key>posZ</key>
 			<integer>4</integer>
 			<key>relativeAnchor</key>
 			<true/>
 			<key>rotation</key>
-			<real>14.340191841125488</real>
+			<real>-183.65980529785156</real>
 			<key>scaleX</key>
 			<real>1</real>
 			<key>scaleY</key>
@@ -131,9 +131,9 @@
 			<key>opacity</key>
 			<real>196</real>
 			<key>posX</key>
-			<real>162</real>
+			<real>200</real>
 			<key>posY</key>
-			<real>483</real>
+			<real>529</real>
 			<key>posZ</key>
 			<integer>5</integer>
 			<key>relativeAnchor</key>
@@ -167,9 +167,9 @@
 			<key>opacity</key>
 			<real>127</real>
 			<key>posX</key>
-			<real>677</real>
+			<real>706</real>
 			<key>posY</key>
-			<real>467</real>
+			<real>514</real>
 			<key>posZ</key>
 			<integer>10</integer>
 			<key>relativeAnchor</key>
@@ -203,15 +203,15 @@
 			<key>opacity</key>
 			<real>255</real>
 			<key>posX</key>
-			<real>573</real>
+			<real>453</real>
 			<key>posY</key>
-			<real>99</real>
+			<real>489</real>
 			<key>posZ</key>
 			<integer>10</integer>
 			<key>relativeAnchor</key>
 			<true/>
 			<key>rotation</key>
-			<real>18.434947967529297</real>
+			<real>-4.5650520324707031</real>
 			<key>scaleX</key>
 			<real>1</real>
 			<key>scaleY</key>

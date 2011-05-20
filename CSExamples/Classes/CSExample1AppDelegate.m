@@ -10,7 +10,7 @@
 
 #import "CSExample1AppDelegate.h"
 #import "GameConfig.h"
-#import "HelloWorldLayer.h"
+#import "CSDTests.h"
 #import "RootViewController.h"
 
 @implementation CSExample1AppDelegate
@@ -110,7 +110,9 @@
 	[self removeStartupFlicker];
 	
 	// Run the intro Scene
-	[[CCDirector sharedDirector] runWithScene: [HelloWorldLayer scene]];
+	CCScene *s = [CCScene node];
+	[s addChild:[CSDTest1 node]];
+	[[CCDirector sharedDirector] runWithScene: s ];
 }
 
 
