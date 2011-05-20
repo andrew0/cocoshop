@@ -104,6 +104,7 @@
 #pragma mark IBActions - Save/Load
 - (IBAction)saveProject:(id)sender;
 - (IBAction)saveProjectAs:(id)sender;
+- (IBAction)newProject:(id)sender;
 - (IBAction)openProject:(id)sender;
 - (IBAction)revertToSavedProject:(id)sender;
 

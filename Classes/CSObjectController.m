@@ -679,6 +679,24 @@
 		}
 	}];
 }
+- (IBAction)newProject:(id)sender
+{
+	// remove all sprites
+	[self deleteAllSprites];
+	
+	// reset background
+	modelObject_.color = [NSColor colorWithDeviceRed:0 green:0 blue:0 alpha:0];
+	modelObject_.opacity = 0;
+	modelObject_.stageWidth = 480;
+	modelObject_.stageHeight = 320;
+	
+	// reset filename
+	self.projectFilename = nil;
+	
+	// reload the table
+	[spriteTableView_ reloadData];
+	
+}
 
 - (IBAction)openProject:(id)sender
 {
