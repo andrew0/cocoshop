@@ -59,9 +59,9 @@
 			<key>opacity</key>
 			<real>255</real>
 			<key>posX</key>
-			<real>-111</real>
+			<real>-3</real>
 			<key>posY</key>
-			<real>-149</real>
+			<real>0.0</real>
 			<key>posZ</key>
 			<integer>0</integer>
 			<key>relativeAnchor</key>
@@ -69,9 +69,9 @@
 			<key>rotation</key>
 			<real>0.0</real>
 			<key>scaleX</key>
-			<real>0.69999998807907104</real>
+			<real>1</real>
 			<key>scaleY</key>
-			<real>0.69999998807907104</real>
+			<real>1</real>
 		</dict>
 		<dict>
 			<key>anchorX</key>
@@ -95,15 +95,15 @@
 			<key>opacity</key>
 			<real>255</real>
 			<key>posX</key>
-			<real>569</real>
+			<real>559</real>
 			<key>posY</key>
-			<real>214</real>
+			<real>100</real>
 			<key>posZ</key>
 			<integer>4</integer>
 			<key>relativeAnchor</key>
 			<true/>
 			<key>rotation</key>
-			<real>-183.65980529785156</real>
+			<real>5.1944289207458496</real>
 			<key>scaleX</key>
 			<real>1</real>
 			<key>scaleY</key>
@@ -131,9 +131,9 @@
 			<key>opacity</key>
 			<real>196</real>
 			<key>posX</key>
-			<real>200</real>
+			<real>106</real>
 			<key>posY</key>
-			<real>529</real>
+			<real>371</real>
 			<key>posZ</key>
 			<integer>5</integer>
 			<key>relativeAnchor</key>
@@ -142,6 +142,42 @@
 			<real>24.775140762329102</real>
 			<key>scaleX</key>
 			<real>1.2999999523162842</real>
+			<key>scaleY</key>
+			<real>1</real>
+		</dict>
+		<dict>
+			<key>anchorX</key>
+			<real>0.5</real>
+			<key>anchorY</key>
+			<real>0.5</real>
+			<key>colorB</key>
+			<real>255</real>
+			<key>colorG</key>
+			<real>255</real>
+			<key>colorR</key>
+			<real>255</real>
+			<key>filename</key>
+			<string>github.png</string>
+			<key>flipX</key>
+			<false/>
+			<key>flipY</key>
+			<false/>
+			<key>name</key>
+			<string>github_png</string>
+			<key>opacity</key>
+			<real>255</real>
+			<key>posX</key>
+			<real>310</real>
+			<key>posY</key>
+			<real>404</real>
+			<key>posZ</key>
+			<integer>10</integer>
+			<key>relativeAnchor</key>
+			<true/>
+			<key>rotation</key>
+			<real>-4.5650520324707031</real>
+			<key>scaleX</key>
+			<real>1</real>
 			<key>scaleY</key>
 			<real>1</real>
 		</dict>
@@ -167,9 +203,9 @@
 			<key>opacity</key>
 			<real>127</real>
 			<key>posX</key>
-			<real>706</real>
+			<real>516</real>
 			<key>posY</key>
-			<real>514</real>
+			<real>419</real>
 			<key>posZ</key>
 			<integer>10</integer>
 			<key>relativeAnchor</key>
@@ -177,45 +213,9 @@
 			<key>rotation</key>
 			<real>49.398704528808594</real>
 			<key>scaleX</key>
-			<real>0.20000000298023224</real>
+			<real>0.80000001192092896</real>
 			<key>scaleY</key>
-			<real>0.20000000298023224</real>
-		</dict>
-		<dict>
-			<key>anchorX</key>
-			<real>0.5</real>
-			<key>anchorY</key>
-			<real>0.5</real>
-			<key>colorB</key>
-			<real>255</real>
-			<key>colorG</key>
-			<real>255</real>
-			<key>colorR</key>
-			<real>255</real>
-			<key>filename</key>
-			<string>github.png</string>
-			<key>flipX</key>
-			<false/>
-			<key>flipY</key>
-			<false/>
-			<key>name</key>
-			<string>github_png</string>
-			<key>opacity</key>
-			<real>255</real>
-			<key>posX</key>
-			<real>453</real>
-			<key>posY</key>
-			<real>489</real>
-			<key>posZ</key>
-			<integer>10</integer>
-			<key>relativeAnchor</key>
-			<true/>
-			<key>rotation</key>
-			<real>-4.5650520324707031</real>
-			<key>scaleX</key>
-			<real>1</real>
-			<key>scaleY</key>
-			<real>1</real>
+			<real>0.80000001192092896</real>
 		</dict>
 	</array>
 </dict>
