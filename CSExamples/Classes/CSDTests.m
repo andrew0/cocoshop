@@ -189,12 +189,12 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"Auto: newNode";
+	return @"Auto: newNode with spriteBatch";
 }
 
 -(NSString *) subtitle
 {
-	return @"spriteBatchNode Mode";
+	return @"Note: isRelativeAnchorPoint not supported.";
 }
 
 @end
