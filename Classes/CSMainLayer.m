@@ -31,6 +31,7 @@
 #import "CSModel.h"
 #import "CSMacGLView.h"
 #import "NSString+RelativePath.h"
+#import "cocoshopAppDelegate.h"
 
 @interface CCNode (Internal)
 
@@ -304,6 +305,18 @@ enum
 	
 	// Update Background Info View at App Start
 	[[controller_ modelObject] setSelectedSprite: nil];
+	
+	NSString *filename = nil;
+	if ( (filename = [(cocoshopAppDelegate *)[[NSApplication sharedApplication ] delegate] filenameToOpen]))
+	{
+		[self runAction:[CCCallBlock actionWithBlock: ^{
+			NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: filename];
+			controller_.projectFilename = filename;
+			[self loadProjectFromDictionarySafely: dict];			
+			[(cocoshopAppDelegate *)[[NSApplication sharedApplication ] delegate] setFilenameToOpen: nil];
+		}]];
+		
+	}
 }
 
 - (void) visit
