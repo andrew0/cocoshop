@@ -26,6 +26,7 @@
 
 #import "cocos2d.h"
 #import "CSGestureEventDelegate.h"
+#import "DebugLog.h"
 
 @class CSObjectController;
 @class CSSprite;
@@ -46,6 +47,9 @@
 }
 
 @property(nonatomic, retain) CSObjectController *controller;
+
+// Whenever should it render borderline around self or not
+@property(readwrite) BOOL showBorders;
 
 #pragma mark Creation
 + (id)nodeWithController:(CSObjectController *)aController;

@@ -90,7 +90,12 @@
 		[mainLayer_ release];
 		mainLayer_ = view;
 		[view setController:self];
+		
+		// Using ivar, cause IB sucks
+		showBordersMenuItem_.state = (mainLayer_.showBorders) ? NSOnState : NSOffState;
 	}
+	
+	
 }
 
 #pragma mark Values Observer
@@ -637,6 +642,8 @@
 // if we're opened a file - we can revert to saved and save without save as
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
+	DebugLog(@"fuck");
+	
 	// "Save"
 	if ([menuItem action] == @selector(saveProject:))
 		return YES;
@@ -648,6 +655,9 @@
 			return YES;
 		return NO;
 	}
+	
+	// "Show Borders"- using ivar, because NSOnState doesn't set right in IB
+	showBordersMenuItem_.state = (mainLayer_.showBorders) ? NSOnState : NSOffState;
 	
 	return YES;
 }
@@ -779,6 +789,12 @@
 - (IBAction)resetZoom:(id)sender
 {
 	[(CSMacGLView *)[[CCDirector sharedDirector] openGLView] resetZoom];
+}
+
+#pragma mark IBActions - Menus
+- (IBAction) showBordersMenuItemPressed: (id) sender
+{
+	mainLayer_.showBorders = ([sender state] == NSOffState);
 }
 
 @end

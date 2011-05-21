@@ -65,6 +65,9 @@
 	// Sprites List View	
 	IBOutlet NSPanel *spritesPanel_;
 	IBOutlet NSTableView *spriteTableView_;
+	
+	// Menus
+	IBOutlet NSMenuItem *showBordersMenuItem_;
 }
 
 @property(assign) IBOutlet CSModel *modelObject;
@@ -118,5 +121,8 @@
 
 #pragma mark IBActions - Zoom
 - (IBAction)resetZoom:(id)sender;
+
+#pragma mark IBAction - Menus
+- (IBAction) showBordersMenuItemPressed: (id) sender;
 
 @end

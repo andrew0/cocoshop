@@ -48,6 +48,7 @@ enum
 };
 
 @synthesize controller=controller_;
+@synthesize showBorders;
 
 
 #pragma mark Init / DeInit
@@ -63,6 +64,13 @@ enum
 		[self setIsMouseEnabled:YES];
 		[self setIsKeyboardEnabled:YES];
 		[self setController:aController];
+		
+		// Show Borders if needed (On on first run)
+		NSNumber *showBordersState = [[NSUserDefaults standardUserDefaults] valueForKey:@"CSMainLayerShowBorders"];
+		if (!showBordersState)
+			self.showBorders = YES;
+		else 
+			self.showBorders = [showBordersState intValue];
 		
 		prevSize_ = [[CCDirector sharedDirector] winSize];
 		
@@ -338,29 +346,32 @@ enum
 	
 	CGSize s = contentSize_;
 
-	// Get BG Color
-	ccColor3B bgColor = [[[controller_ modelObject] backgroundLayer] color];
-	GLfloat bgR = ( (float)bgColor.r / 255.0f );
-	GLfloat bgB = ( (float)bgColor.g / 255.0f );
-	GLfloat bgG = ( (float)bgColor.b / 255.0f );
-	GLfloat antiBrightness = 1.0f / sqrtf(bgR*bgR + bgB*bgB + bgG*bgG);
-	GLfloat lineWidth = 2.0f;
+	if (self.showBorders)
+	{
+		// Get BG Color
+		ccColor3B bgColor = [[[controller_ modelObject] backgroundLayer] color];
+		GLfloat bgR = ( (float)bgColor.r / 255.0f );
+		GLfloat bgB = ( (float)bgColor.g / 255.0f );
+		GLfloat bgG = ( (float)bgColor.b / 255.0f );
+		GLfloat antiBrightness = 1.0f / sqrtf(bgR*bgR + bgB*bgB + bgG*bgG);
+		GLfloat lineWidth = 2.0f;
 
-	// Use Inverted BG Color to Draw the Outline
-	glColor4f(antiBrightness * (0.5f - (bgR - 0.5f)),
-			  antiBrightness * (0.5f - (bgB - 0.5f)),
-			  antiBrightness * (0.5f - (bgG - 0.5f)),
-			  1.0f);
-	glLineWidth(2.0f);
-	
-	CGPoint vertices[] = {
-		ccp(1, s.height - lineWidth / 2.0f),
-		ccp(s.width - lineWidth / 2.0f, s.height - lineWidth / 2.0f),
-		ccp(s.width - lineWidth / 2.0f, 1),
-		ccp(1, 1)
-	};
-	
-	ccDrawPoly(vertices, 4, YES);
+		// Use Inverted BG Color to Draw the Outline
+		glColor4f(antiBrightness * (0.5f - (bgR - 0.5f)),
+				  antiBrightness * (0.5f - (bgB - 0.5f)),
+				  antiBrightness * (0.5f - (bgG - 0.5f)),
+				  1.0f);
+		glLineWidth(2.0f);
+		
+		CGPoint vertices[] = {
+			ccp(1, s.height - lineWidth / 2.0f),
+			ccp(s.width - lineWidth / 2.0f, s.height - lineWidth / 2.0f),
+			ccp(s.width - lineWidth / 2.0f, 1),
+			ccp(1, 1)
+		};
+		
+		ccDrawPoly(vertices, 4, YES);
+	}
 }
 
 

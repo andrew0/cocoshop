@@ -12,11 +12,11 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="554"/>
-			<integer value="372"/>
-			<integer value="907"/>
-			<integer value="974"/>
 			<integer value="1251"/>
+			<integer value="554"/>
+			<integer value="296"/>
+			<integer value="907"/>
+			<integer value="371"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -322,6 +322,26 @@
 							<string key="NSTitle">View</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSMenuItem" id="614452043">
+									<reference key="NSMenu" ref="466310130"/>
+									<string key="NSTitle">Show Borders</string>
+									<string key="NSKeyEquiv">b</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<int key="NSState">1</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
+								<object class="NSMenuItem" id="1068658214">
+									<reference key="NSMenu" ref="466310130"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
 								<object class="NSMenuItem" id="593943139">
 									<reference key="NSMenu" ref="466310130"/>
 									<string key="NSTitle">Toggle Full Screen</string>
@@ -743,6 +763,7 @@
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
+				<string key="NSFrameAutosaveName"/>
 			</object>
 			<object class="NSCustomObject" id="976324537">
 				<string key="NSClassName">cocoshopAppDelegate</string>
@@ -777,6 +798,11 @@
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
 			</object>
 			<object class="NSUserDefaultsController" id="225372361">
+				<object class="NSMutableArray" key="NSDeclaredKeys">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>workspaceShowBorders</string>
+					<string>CSMainLayerShowBorders</string>
+				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 			<object class="NSCustomObject" id="541437039">
@@ -3616,6 +3642,38 @@
 					</object>
 					<int key="connectionID">1389</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showBordersMenuItemPressed:</string>
+						<reference key="source" ref="994683652"/>
+						<reference key="destination" ref="614452043"/>
+					</object>
+					<int key="connectionID">1394</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.CSMainLayerShowBorders</string>
+						<reference key="source" ref="614452043"/>
+						<reference key="destination" ref="225372361"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="614452043"/>
+							<reference key="NSDestination" ref="225372361"/>
+							<string key="NSLabel">value: values.CSMainLayerShowBorders</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.CSMainLayerShowBorders</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1395</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">showBordersMenuItem_</string>
+						<reference key="source" ref="994683652"/>
+						<reference key="destination" ref="614452043"/>
+					</object>
+					<int key="connectionID">1396</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -3687,10 +3745,10 @@
 							<reference ref="646227648"/>
 							<reference ref="609285721"/>
 							<reference ref="481834944"/>
-							<reference ref="304266470"/>
 							<reference ref="1046388886"/>
 							<reference ref="1056857174"/>
 							<reference ref="342932134"/>
+							<reference ref="304266470"/>
 						</object>
 						<reference key="parent" ref="694149608"/>
 					</object>
@@ -3810,6 +3868,8 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="593943139"/>
 							<reference ref="772586534"/>
+							<reference ref="614452043"/>
+							<reference ref="1068658214"/>
 						</object>
 						<reference key="parent" ref="586577488"/>
 					</object>
@@ -5104,6 +5164,16 @@
 						<reference key="object" ref="847138271"/>
 						<reference key="parent" ref="626315375"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1390</int>
+						<reference key="object" ref="614452043"/>
+						<reference key="parent" ref="466310130"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1391</int>
+						<reference key="object" ref="1068658214"/>
+						<reference key="parent" ref="466310130"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -5322,6 +5392,8 @@
 					<string>1375.IBPluginDependency</string>
 					<string>1376.IBPluginDependency</string>
 					<string>1377.IBPluginDependency</string>
+					<string>1390.IBPluginDependency</string>
+					<string>1391.IBPluginDependency</string>
 					<string>143.IBPluginDependency</string>
 					<string>143.ImportedFromIB2</string>
 					<string>144.IBPluginDependency</string>
@@ -5764,6 +5836,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
@@ -5791,12 +5865,12 @@
 					<string>{74, 862}</string>
 					<string>{{6, 978}, {478, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{580, 424}, {199, 43}}</string>
+					<string>{{580, 394}, {199, 73}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{475, 832}, {234, 43}}</string>
-					<string>{{400, 186}, {495, 356}}</string>
+					<string>{{837, 166}, {495, 356}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{400, 186}, {495, 356}}</string>
+					<string>{{837, 166}, {495, 356}}</string>
 					<integer value="1"/>
 					<string>{{33, 99}, {480, 360}}</string>
 					<boolean value="NO"/>
@@ -5804,7 +5878,7 @@
 					<string>{480, 320}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{772, 713}, {191, 23}}</string>
+					<string>{{701, 444}, {172, 23}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5831,7 +5905,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{286, 129}, {275, 183}}</string>
+					<string>{{451, 284}, {201, 183}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{23, 794}, {245, 183}}</string>
@@ -5907,7 +5981,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1389</int>
+			<int key="maxID">1396</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5953,11 +6027,13 @@
 							<string>revertToSavedProject:</string>
 							<string>saveProject:</string>
 							<string>saveProjectAs:</string>
+							<string>showBordersMenuItemPressed:</string>
 							<string>spriteAddButtonClicked:</string>
 							<string>spriteDeleteButtonClicked:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -5986,6 +6062,7 @@
 							<string>revertToSavedProject:</string>
 							<string>saveProject:</string>
 							<string>saveProjectAs:</string>
+							<string>showBordersMenuItemPressed:</string>
 							<string>spriteAddButtonClicked:</string>
 							<string>spriteDeleteButtonClicked:</string>
 						</object>
@@ -6032,6 +6109,10 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
+								<string key="name">showBordersMenuItemPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
 								<string key="name">spriteAddButtonClicked:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -6069,6 +6150,7 @@
 							<string>rotationSlider_</string>
 							<string>scaleField_</string>
 							<string>scaleStepper_</string>
+							<string>showBordersMenuItem_</string>
 							<string>spriteInfoView</string>
 							<string>spriteTableView_</string>
 							<string>spritesPanel_</string>
@@ -6099,6 +6181,7 @@
 							<string>NSSlider</string>
 							<string>NSTextField</string>
 							<string>NSStepper</string>
+							<string>NSMenuItem</string>
 							<string>NSView</string>
 							<string>NSTableView</string>
 							<string>NSPanel</string>
@@ -6132,6 +6215,7 @@
 							<string>rotationSlider_</string>
 							<string>scaleField_</string>
 							<string>scaleStepper_</string>
+							<string>showBordersMenuItem_</string>
 							<string>spriteInfoView</string>
 							<string>spriteTableView_</string>
 							<string>spritesPanel_</string>
@@ -6233,6 +6317,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">scaleStepper_</string>
 								<string key="candidateClassName">NSStepper</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">showBordersMenuItem_</string>
+								<string key="candidateClassName">NSMenuItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">spriteInfoView</string>
