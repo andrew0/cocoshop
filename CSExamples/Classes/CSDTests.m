@@ -33,6 +33,7 @@ static NSString *transitions[] = {
 	
 	@"CSDTest1",
 	@"CSDTest2",
+	@"CSDTest3",
 	
 };
 
@@ -195,6 +196,51 @@ Class restartAction()
 -(NSString *) subtitle
 {
 	return @"Note: isRelativeAnchorPoint not supported.";
+}
+
+@end
+
+@implementation CSDTest3
+-(id) init
+{
+	if( !( self=[super init]) )
+		return nil;
+	
+	// Load spriteSheet & create batchNode
+	[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"CSDTest2.plist" textureFile:@"CSDTest2.png"];
+	CCSpriteBatchNode *batchNode = [CCSpriteBatchNode batchNodeWithFile:@"CSDTest2.png"];
+	
+	// Create Node from CSD using batchNode
+	CSDReader *csd = [CSDReader readerWithFile:@"example1.csd"];
+	CCNode *aNode = [csd newNodeWithClass:[CCNode class] usingBatchNode: batchNode];
+	[self addChild: aNode];
+	
+	// fit node intro screen
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	aNode.scale = MIN( 1.0f, MIN (s.width / aNode.contentSize.width, s.height / aNode.contentSize.height));
+	
+	// Find the Kenny before the bastards.
+	CCSprite *kenny = (CCSprite *)[aNode getChildByTag: [csd tagForElementWithName:@"Kenny_png"] ];
+	if (!kenny)
+	{
+		// kenny is a child of batchNode
+		kenny = (CCSprite *)[batchNode getChildByTag: [csd tagForElementWithName:@"Kenny_png"] ];
+	}
+	
+	// Spin the Kenny!
+	[kenny runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:3.0f angle:360.0f]]];
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Node tag by element name.";
+}
+
+-(NSString *) subtitle
+{
+	return @"Kenny should dodge from bastards!";
 }
 
 @end

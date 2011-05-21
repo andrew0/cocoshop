@@ -41,3 +41,7 @@
 {}
 @end
 
+@interface CSDTest3 : TestLayer
+{}
+@end
+
