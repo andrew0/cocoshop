@@ -781,6 +781,7 @@
 	{
 		CSSprite *sprite = [values objectAtIndex:index];
 		[self deleteSprite:sprite];
+		[spriteTableView_ reloadData];
 	}
 }
 
