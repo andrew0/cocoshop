@@ -332,6 +332,34 @@ enum
 	[super visit];
 }
 
+- (void)draw
+{
+	[super draw];
+	
+	CGSize s = contentSize_;
+	
+	// Get BG Color
+	ccColor3B bgColor = [[[controller_ modelObject] backgroundLayer] color];
+	GLfloat bgR = ( (float)bgColor.r / 255.0f );
+	GLfloat bgB = ( (float)bgColor.g / 255.0f );
+	GLfloat bgG = ( (float)bgColor.b / 255.0f );
+	
+	GLfloat lineWidth = 2.0f;
+
+	// Use Inverted BG Color to Draw the Outline
+	glColor4f(0.5f - (bgR - 0.5f), 0.5f - (bgB - 0.5f), 0.5f - (bgG - 0.5f), 1.0f);
+	glLineWidth(2.0f);
+	
+	CGPoint vertices[] = {
+		ccp(1, s.height - lineWidth / 2.0f),
+		ccp(s.width - lineWidth / 2.0f, s.height - lineWidth / 2.0f),
+		ccp(s.width - lineWidth / 2.0f, 1),
+		ccp(1, 1)
+	};
+	
+	ccDrawPoly(vertices, 4, YES);
+}
+
 
 
 #pragma mark Touch Events
