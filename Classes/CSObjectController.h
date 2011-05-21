@@ -38,8 +38,8 @@
 	CSMainLayer *mainLayer_;
 	CSTableViewDataSource *dataSource_;
 	
+	// Info Editing View
 	IBOutlet NSPanel *infoPanel_;
-	IBOutlet NSPanel *spritesPanel_;
 	IBOutlet NSTextField *nameField_;
 	IBOutlet NSTextField *posXField_;
 	IBOutlet NSStepper *posXStepper_;
@@ -61,6 +61,9 @@
 	IBOutlet NSButton *relativeAnchorButton_;
 	IBOutlet NSTextField *rotationField_;
 	IBOutlet NSSlider *rotationSlider_;
+	
+	// Sprites List View	
+	IBOutlet NSPanel *spritesPanel_;
 	IBOutlet NSTableView *spriteTableView_;
 }
 
