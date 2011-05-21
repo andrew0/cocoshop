@@ -60,6 +60,9 @@
 	
 	// listen to notification when we deselect the sprite
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeSelectedSprite:) name:@"didChangeSelectedSprite" object:nil];
+	
+	// listen to rename in table view
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(spriteTableSelectionDidRename:) name:@"didRenameSelectedSprite" object:nil];
 
 	// Disable Sprite Info for no Sprites at the beginning
 	[self didChangeSelectedSprite:nil];
@@ -510,6 +513,18 @@
 		[modelObject_ setSelectedSprite:nil];
 	}
 
+}
+
+- (void) spriteTableSelectionDidRename: (NSNotification *) aNotification
+{
+	NSInteger index = [spriteTableView_ selectedRow];
+	if(index >= 0)
+	{
+		CSSprite *sprite = [[modelObject_ spriteArray] objectAtIndex:index];
+		[modelObject_ setSelectedSprite:sprite];
+		[modelObject_ setName:[[aNotification userInfo] objectForKey:@"name"]];
+		
+	}
 }
 
 - (void) setInfoPanelView: (NSView *) aView

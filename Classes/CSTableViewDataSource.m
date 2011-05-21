@@ -24,6 +24,7 @@
  */
 
 #import "CSTableViewDataSource.h"
+#import "CSSprite.h"
 
 @implementation CSTableViewDataSource
 
@@ -46,12 +47,21 @@
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-	return [[array_ objectAtIndex:rowIndex] name];
+	return [(CSSprite *)[array_ objectAtIndex:rowIndex] name];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
 	return [array_ count];
+}
+
+- (void)tableView:(NSTableView *)aTableView setObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+	[(CSSprite *)[array_ objectAtIndex:rowIndex] setName: anObject];
+	
+	// Update other windows
+	NSDictionary *userInfoDict = [NSDictionary dictionaryWithObjectsAndKeys: anObject, @"name", nil];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"didRenameSelectedSprite" object:self userInfo:userInfoDict];
 }
 
 - (void)dealloc
