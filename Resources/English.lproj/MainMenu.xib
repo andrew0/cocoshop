@@ -322,7 +322,7 @@
 							<string key="NSTitle">View</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSMenuItem" id="614452043">
+								<object class="NSMenuItem" id="413317768">
 									<reference key="NSMenu" ref="466310130"/>
 									<string key="NSTitle">Show Borders</string>
 									<string key="NSKeyEquiv">b</string>
@@ -332,7 +332,7 @@
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
-								<object class="NSMenuItem" id="1068658214">
+								<object class="NSMenuItem" id="174546501">
 									<reference key="NSMenu" ref="466310130"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
@@ -763,7 +763,7 @@
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
-				<string key="NSFrameAutosaveName"/>
+				<string key="NSFrameAutosaveName">MainWindow</string>
 			</object>
 			<object class="NSCustomObject" id="976324537">
 				<string key="NSClassName">cocoshopAppDelegate</string>
@@ -3646,17 +3646,17 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">showBordersMenuItemPressed:</string>
 						<reference key="source" ref="994683652"/>
-						<reference key="destination" ref="614452043"/>
+						<reference key="destination" ref="413317768"/>
 					</object>
 					<int key="connectionID">1394</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: values.CSMainLayerShowBorders</string>
-						<reference key="source" ref="614452043"/>
+						<reference key="source" ref="413317768"/>
 						<reference key="destination" ref="225372361"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="614452043"/>
+							<reference key="NSSource" ref="413317768"/>
 							<reference key="NSDestination" ref="225372361"/>
 							<string key="NSLabel">value: values.CSMainLayerShowBorders</string>
 							<string key="NSBinding">value</string>
@@ -3670,7 +3670,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">showBordersMenuItem_</string>
 						<reference key="source" ref="994683652"/>
-						<reference key="destination" ref="614452043"/>
+						<reference key="destination" ref="413317768"/>
 					</object>
 					<int key="connectionID">1396</int>
 				</object>
@@ -3868,8 +3868,8 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="593943139"/>
 							<reference ref="772586534"/>
-							<reference ref="614452043"/>
-							<reference ref="1068658214"/>
+							<reference ref="413317768"/>
+							<reference ref="174546501"/>
 						</object>
 						<reference key="parent" ref="586577488"/>
 					</object>
@@ -5166,12 +5166,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1390</int>
-						<reference key="object" ref="614452043"/>
+						<reference key="object" ref="413317768"/>
 						<reference key="parent" ref="466310130"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1391</int>
-						<reference key="object" ref="1068658214"/>
+						<reference key="object" ref="174546501"/>
 						<reference key="parent" ref="466310130"/>
 					</object>
 				</object>
@@ -5868,9 +5868,9 @@
 					<string>{{580, 394}, {199, 73}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{475, 832}, {234, 43}}</string>
-					<string>{{837, 166}, {495, 356}}</string>
+					<string>{{853, 165}, {495, 356}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{837, 166}, {495, 356}}</string>
+					<string>{{853, 165}, {495, 356}}</string>
 					<integer value="1"/>
 					<string>{{33, 99}, {480, 360}}</string>
 					<boolean value="NO"/>
