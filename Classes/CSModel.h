@@ -37,7 +37,10 @@
 	
 	NSMutableArray *spriteArray_;
 	
+	// General
 	NSString *name_;
+	
+	// CCNode
 	float posX_;
 	float posY_;
 	float posZ_;
@@ -45,12 +48,17 @@
 	float anchorY_;
 	float scaleX_;
 	float scaleY_;
+	float contentSizeWidth_;
+	float contentSizeHeight_;
+	NSInteger relativeAnchor_;
+	float rotation_;
+	NSInteger tag_;
+	
+	// CCSprite
 	NSInteger flipX_;
 	NSInteger flipY_;
 	float opacity_;
 	NSColor *color_;
-	NSInteger relativeAnchor_;
-	float rotation_;
 }
 
 @property(nonatomic, assign) CSSprite *selectedSprite;
@@ -66,12 +74,15 @@
 @property(nonatomic, assign) float anchorY;
 @property(nonatomic, assign) float scaleX;
 @property(nonatomic, assign) float scaleY;
+@property(nonatomic, assign) float contentSizeWidth;
+@property(nonatomic, assign) float contentSizeHeight;
 @property(nonatomic, assign) NSInteger flipX;
 @property(nonatomic, assign) NSInteger flipY;
 @property(nonatomic, assign) float opacity;
 @property(nonatomic, copy) NSColor *color;
 @property(nonatomic, assign) NSInteger relativeAnchor;
 @property(nonatomic, assign) float rotation;
+@property(nonatomic, assign) NSInteger tag;
 
 // Background Properties
 @property(nonatomic, assign) CGFloat stageWidth;

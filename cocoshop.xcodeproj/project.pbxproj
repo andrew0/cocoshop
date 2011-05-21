@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4905FEF61388815C006839AC /* CSTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4905FEF31388815C006839AC /* CSTabView.m */; };
+		4905FEF71388815C006839AC /* CSSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4905FEF51388815C006839AC /* CSSideViewController.m */; };
 		4930EBB1136363FF006E5DA5 /* CSGestureEventDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4930EBB0136363FF006E5DA5 /* CSGestureEventDelegate.h */; };
 		496706FA135B9DDE0074D05A /* CSObjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 496706F9135B9DDE0074D05A /* CSObjectController.m */; };
 		496706FD135B9E1B0074D05A /* CSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 496706FB135B9E1B0074D05A /* CSModel.m */; };
@@ -227,6 +229,10 @@
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		4905FEF21388815C006839AC /* CSTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTabView.h; sourceTree = "<group>"; };
+		4905FEF31388815C006839AC /* CSTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSTabView.m; sourceTree = "<group>"; };
+		4905FEF41388815C006839AC /* CSSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSideViewController.h; sourceTree = "<group>"; };
+		4905FEF51388815C006839AC /* CSSideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSideViewController.m; sourceTree = "<group>"; };
 		4930EBB0136363FF006E5DA5 /* CSGestureEventDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGestureEventDelegate.h; sourceTree = "<group>"; };
 		496706F8135B9DDE0074D05A /* CSObjectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSObjectController.h; sourceTree = "<group>"; };
 		496706F9135B9DDE0074D05A /* CSObjectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSObjectController.m; sourceTree = "<group>"; };
@@ -577,6 +583,10 @@
 				E02A83FB129F023B00341C97 /* main.m */,
 				E02A83D2129F000100341C97 /* cocoshopAppDelegate.h */,
 				E02A83D3129F000100341C97 /* cocoshopAppDelegate.m */,
+				4905FEF21388815C006839AC /* CSTabView.h */,
+				4905FEF31388815C006839AC /* CSTabView.m */,
+				4905FEF41388815C006839AC /* CSSideViewController.h */,
+				4905FEF51388815C006839AC /* CSSideViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1101,6 +1111,8 @@
 				6DFAD27313609A4B00006D0B /* CSTableViewDataSource.m in Sources */,
 				6D1FEC0B138074630039076A /* DebugLog.m in Sources */,
 				6D13ADE81385A768004FA7F1 /* NSString+RelativePath.m in Sources */,
+				4905FEF61388815C006839AC /* CSTabView.m in Sources */,
+				4905FEF71388815C006839AC /* CSSideViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -46,6 +46,9 @@
 @synthesize color=color_;
 @synthesize relativeAnchor=relativeAnchor_;
 @synthesize rotation=rotation_;
+@synthesize contentSizeWidth=contentSizeWidth_;
+@synthesize contentSizeHeight=contentSizeHeight_;
+@synthesize tag=tag_;
 @synthesize stageWidth;
 @synthesize stageHeight;
 
