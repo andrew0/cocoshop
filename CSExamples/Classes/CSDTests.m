@@ -34,6 +34,7 @@ static NSString *transitions[] = {
 	@"CSDTest1",
 	@"CSDTest2",
 	@"CSDTest3",
+	@"CSDTest4",
 	
 };
 
@@ -241,6 +242,36 @@ Class restartAction()
 -(NSString *) subtitle
 {
 	return @"Kenny should dodge from bastards!";
+}
+
+@end
+
+@implementation CSDTest4
+
+-(id) init
+{
+	if( !( self=[super init]) )
+		return nil;
+	
+	CSDReader *csd = [CSDReader readerWithFile:@"test4.csd"];
+	CCNode *aNode = [csd newNode];
+	[self addChild: aNode];
+	
+	// fit node intro screen
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	aNode.scale = MIN( 1.0f, MIN (s.width / aNode.contentSize.width, s.height / aNode.contentSize.height));
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"CSD Menus";
+}
+
+-(NSString *) subtitle
+{
+	return @"Press the button!";
 }
 
 @end
