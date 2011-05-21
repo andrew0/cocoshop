@@ -141,6 +141,7 @@
 			{
 				[sprite setName:newName];
 				[nameField_ setStringValue:[sprite name]];
+				[spriteTableView_ reloadData];
 			}
 		}
 	}
