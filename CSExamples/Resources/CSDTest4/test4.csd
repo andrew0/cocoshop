@@ -31,12 +31,84 @@
 		<key>scaleY</key>
 		<real>1</real>
 		<key>stageHeight</key>
-		<real>768</real>
+		<real>512</real>
 		<key>stageWidth</key>
 		<real>1024</real>
 	</dict>
 	<key>children</key>
 	<array>
+		<dict>
+			<key>anchorX</key>
+			<real>0.5</real>
+			<key>anchorY</key>
+			<real>0.0</real>
+			<key>colorB</key>
+			<real>255</real>
+			<key>colorG</key>
+			<real>255</real>
+			<key>colorR</key>
+			<real>255</real>
+			<key>filename</key>
+			<string>forum.png</string>
+			<key>flipX</key>
+			<false/>
+			<key>flipY</key>
+			<false/>
+			<key>name</key>
+			<string>forum</string>
+			<key>opacity</key>
+			<real>255</real>
+			<key>posX</key>
+			<real>320</real>
+			<key>posY</key>
+			<real>8</real>
+			<key>posZ</key>
+			<integer>0</integer>
+			<key>relativeAnchor</key>
+			<true/>
+			<key>rotation</key>
+			<real>0.0</real>
+			<key>scaleX</key>
+			<real>1</real>
+			<key>scaleY</key>
+			<real>1</real>
+		</dict>
+		<dict>
+			<key>anchorX</key>
+			<real>0.5</real>
+			<key>anchorY</key>
+			<real>0.0</real>
+			<key>colorB</key>
+			<real>247</real>
+			<key>colorG</key>
+			<real>254</real>
+			<key>colorR</key>
+			<real>248</real>
+			<key>filename</key>
+			<string>coconade.png</string>
+			<key>flipX</key>
+			<false/>
+			<key>flipY</key>
+			<false/>
+			<key>name</key>
+			<string>coconade</string>
+			<key>opacity</key>
+			<real>255</real>
+			<key>posX</key>
+			<real>704</real>
+			<key>posY</key>
+			<real>0.0</real>
+			<key>posZ</key>
+			<integer>0</integer>
+			<key>relativeAnchor</key>
+			<true/>
+			<key>rotation</key>
+			<real>0.0</real>
+			<key>scaleX</key>
+			<real>1</real>
+			<key>scaleY</key>
+			<real>1</real>
+		</dict>
 		<dict>
 			<key>anchorX</key>
 			<real>0.5</real>
@@ -61,79 +133,7 @@
 			<key>posX</key>
 			<real>512</real>
 			<key>posY</key>
-			<real>768</real>
-			<key>posZ</key>
-			<integer>0</integer>
-			<key>relativeAnchor</key>
-			<true/>
-			<key>rotation</key>
-			<real>0.0</real>
-			<key>scaleX</key>
-			<real>1</real>
-			<key>scaleY</key>
-			<real>1</real>
-		</dict>
-		<dict>
-			<key>anchorX</key>
-			<real>0.5</real>
-			<key>anchorY</key>
-			<real>0.5</real>
-			<key>colorB</key>
-			<real>247</real>
-			<key>colorG</key>
-			<real>254</real>
-			<key>colorR</key>
-			<real>248</real>
-			<key>filename</key>
-			<string>coconade.png</string>
-			<key>flipX</key>
-			<false/>
-			<key>flipY</key>
-			<false/>
-			<key>name</key>
-			<string>coconade</string>
-			<key>opacity</key>
-			<real>255</real>
-			<key>posX</key>
-			<real>704</real>
-			<key>posY</key>
-			<real>352</real>
-			<key>posZ</key>
-			<integer>0</integer>
-			<key>relativeAnchor</key>
-			<true/>
-			<key>rotation</key>
-			<real>0.0</real>
-			<key>scaleX</key>
-			<real>1</real>
-			<key>scaleY</key>
-			<real>1</real>
-		</dict>
-		<dict>
-			<key>anchorX</key>
-			<real>0.5</real>
-			<key>anchorY</key>
-			<real>0.5</real>
-			<key>colorB</key>
-			<real>255</real>
-			<key>colorG</key>
-			<real>255</real>
-			<key>colorR</key>
-			<real>255</real>
-			<key>filename</key>
-			<string>forum.png</string>
-			<key>flipX</key>
-			<false/>
-			<key>flipY</key>
-			<false/>
-			<key>name</key>
-			<string>forum</string>
-			<key>opacity</key>
-			<real>255</real>
-			<key>posX</key>
-			<real>320</real>
-			<key>posY</key>
-			<real>352</real>
+			<real>534</real>
 			<key>posZ</key>
 			<integer>0</integer>
 			<key>relativeAnchor</key>
