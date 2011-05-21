@@ -256,6 +256,8 @@ enum
 	if ( [bgLayer isKindOfClass:[CCLayerColor class]] )
 		[bgLayer setContentSize: s];
 	
+	[self setContentSize: s];
+	
 	// dont calculate difference for X value - only the Y value
 	/*CGFloat diffY = s.height - prevSize_.height;
 	CCNode *child;
