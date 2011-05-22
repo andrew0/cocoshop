@@ -30,7 +30,7 @@
 
 @implementation cocoshopAppDelegate
 @synthesize window=window_, glView=glView_, controller=controller_;
-@synthesize appIsRunning, filenameToOpen;
+@synthesize appIsRunning = appIsRunning_, filenameToOpen = filenameToOpen_;
 
 // called before applicationDidFinishLaunching: if app is open by double-clicking
 // csd file
@@ -45,7 +45,7 @@
 		{
 			NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: filename];
 			[controller_.mainLayer loadProjectFromDictionarySafely: dict];
-			controller_.projectFilename = filenameToOpen;
+			controller_.projectFilename = self.filenameToOpen;
 			self.filenameToOpen = nil;
 		}
 		return YES;

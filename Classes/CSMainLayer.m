@@ -48,7 +48,7 @@ enum
 };
 
 @synthesize controller=controller_;
-@synthesize showBorders;
+@synthesize showBorders = showBorders_;
 
 
 #pragma mark Init / DeInit

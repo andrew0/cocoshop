@@ -38,9 +38,9 @@
 @synthesize modelObject=modelObject_;
 @synthesize mainLayer=mainLayer_;
 @synthesize spriteTableView=spriteTableView_;
-@synthesize spriteInfoView;
-@synthesize backgroundInfoView;
-@synthesize projectFilename;
+@synthesize spriteInfoView = spriteInfoView_;
+@synthesize backgroundInfoView = backgroundInfoView_;
+@synthesize projectFilename = projectFilename_;
 
 #pragma mark Init / DeInit
 

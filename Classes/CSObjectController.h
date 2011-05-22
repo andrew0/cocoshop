@@ -37,9 +37,12 @@
     CSModel *modelObject_;
 	CSMainLayer *mainLayer_;
 	CSTableViewDataSource *dataSource_;
+	NSString *projectFilename_;
 	
 	// Info Editing View
 	IBOutlet NSPanel *infoPanel_;
+	NSView *spriteInfoView_;
+	NSView *backgroundInfoView_;
 	IBOutlet NSTextField *nameField_;
 	IBOutlet NSTextField *posXField_;
 	IBOutlet NSStepper *posXStepper_;

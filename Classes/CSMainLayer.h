@@ -44,6 +44,7 @@
 	BOOL shouldUpdateAfterScreenReshape_;
 	
 	CGSize prevSize_;
+	BOOL showBorders_;
 }
 
 @property(nonatomic, retain) CSObjectController *controller;

@@ -33,6 +33,9 @@
 	NSWindow	*window_;
 	CSMacGLView	*glView_;
 	CSObjectController *controller_;
+	
+	BOOL appIsRunning_;
+	NSString *filenameToOpen_;
 }
 
 @property (assign) IBOutlet NSWindow	*window;

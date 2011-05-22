@@ -51,6 +51,8 @@
 	NSColor *color_;
 	NSInteger relativeAnchor_;
 	float rotation_;
+	CGFloat stageWidth_;
+	CGFloat stageHeight_;
 }
 
 @property(nonatomic, assign) CSSprite *selectedSprite;

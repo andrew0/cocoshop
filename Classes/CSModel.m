@@ -46,8 +46,8 @@
 @synthesize color=color_;
 @synthesize relativeAnchor=relativeAnchor_;
 @synthesize rotation=rotation_;
-@synthesize stageWidth;
-@synthesize stageHeight;
+@synthesize stageWidth = stageWidth_;
+@synthesize stageHeight = stageHeight_;
 
 #pragma mark Init / DeInit
 
