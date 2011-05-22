@@ -27,6 +27,7 @@
 
 #import "CSDTests.h"
 #import "CSDReader.h"
+#import "CCMenuItemSpriteIndependent.h"
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
@@ -246,6 +247,97 @@ Class restartAction()
 
 @end
 
+
+@interface MenuFromCSD : CCNode
+{
+	ccColor4B savedBGColor_;
+}
+
+- (ccColor4B) savedBGColor;
+
+@end
+
+@implementation MenuFromCSD
+
+- (id) init
+{
+	if ( (self == [super init]) )
+	{
+		// Setup self from CSD
+		CSDReader *csd = [CSDReader readerWithFile:@"test4.csd"];
+		[csd setupNode: self];
+		
+		// save the color and remove the background from self
+		savedBGColor_ = [[csd backgroundElement] color];
+		[self removeChildByTag: [[csd backgroundElement] tag] cleanup:YES];
+		
+		// TODO: create simple way for generating CCMenuItemSprite from CSDSprite 
+		
+		// get sprites for buttons
+		CCSprite *coconade = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"coconade"]];
+		CCSprite *coconadePressed = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"coconadePressed"]];
+		CCSprite *forum = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"forum"]];
+		CCSprite *forumPressed = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"forumPressed"]];
+		CCSprite *site = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"site"]];
+		CCSprite *sitePressed = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"sitePressed"]];
+		
+		
+		
+		// hide pressed ones
+		coconadePressed.visible = NO;
+		forumPressed.visible = NO;
+		sitePressed.visible = NO;
+		
+		// create menu items
+		CCMenuItemSpriteIndependent *coconadeMenuItem = 
+			[CCMenuItemSpriteIndependent itemFromNormalSprite: coconade
+											   selectedSprite: coconadePressed
+														block: ^(id sender) {
+															[[UIApplication sharedApplication] openURL: [NSURL URLWithString: @"https://github.com/andrew0/cocoshop/"]]; //<TODO: change to CocoNade URL after rename																									
+														}];
+		
+		CCMenuItemSpriteIndependent *forumMenuItem = 
+		[CCMenuItemSpriteIndependent itemFromNormalSprite: forum
+										   selectedSprite: forumPressed
+													block: ^(id sender) {
+														NSLog(@"forum");
+														[[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.cocos2d-iphone.org/forum"]];																									
+													}];
+		
+		CCMenuItemSpriteIndependent *siteMenuItem = 
+		[CCMenuItemSpriteIndependent itemFromNormalSprite: site
+										   selectedSprite: sitePressed
+													block: ^(id sender) {
+														NSLog(@"site");
+														[[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.cocos2d-iphone.org/"]];																									
+													}];
+		
+		// position menu items like sprites (probably it should be done automatically in CCMenuItemSpriteIndependent#init)
+		coconadeMenuItem.position = coconade.position;
+		coconadeMenuItem.anchorPoint = coconade.anchorPoint;
+		forumMenuItem.position = forum.position;
+		forumMenuItem.anchorPoint = forum.anchorPoint;
+		siteMenuItem.position = site.position;
+		siteMenuItem.anchorPoint = site.anchorPoint;
+		
+		//create and add menu
+		CCMenu *menu = [CCMenu menuWithItems:coconadeMenuItem, forumMenuItem, siteMenuItem, nil];
+		menu.position = ccp(0,0);
+		menu.anchorPoint = ccp(0,0);
+		[self addChild: menu];
+	}
+	
+	return self;
+}
+
+- (ccColor4B) savedBGColor
+{
+	return savedBGColor_;
+}
+
+@end
+
+
 @implementation CSDTest4
 
 -(id) init
@@ -253,13 +345,24 @@ Class restartAction()
 	if( !( self=[super init]) )
 		return nil;
 	
-	CSDReader *csd = [CSDReader readerWithFile:@"test4.csd"];
-	CCNode *aNode = [csd newNode];
+	// Add Custom Node
+	MenuFromCSD *aNode = [MenuFromCSD node];
 	[self addChild: aNode];
 	
 	// fit node intro screen
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	aNode.scale = MIN( 1.0f, MIN (s.width / aNode.contentSize.width, s.height / aNode.contentSize.height));
+	
+	// place it on center
+	aNode.anchorPoint = ccp(0.5f,0.5f);
+	aNode.position = ccp(s.width / 2.0f,s.height / 2.0f);
+	
+	// Add fullscreen background with color from CSD
+	CCLayerColor *bgLayer = [CCLayerColor layerWithColor: [aNode savedBGColor]];
+	[self addChild: bgLayer z: -1];
+	
+	
+	
 	
 	return self;
 }
