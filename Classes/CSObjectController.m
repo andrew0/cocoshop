@@ -590,10 +590,14 @@
 		{
 			CSSprite *sprite = (CSSprite *)child;
 			
-			// Use relative path if possible
-			NSString *relativePath = [[sprite filename] relativePathFromBaseDirPath: baseDirPath ];
-			if (relativePath)
-				sprite.filename = relativePath;			
+			// Use relative path if needed
+			if ([[sprite filename] isAbsolutePath])
+			{
+				// Use relative path if possible
+				NSString *relativePath = [[sprite filename] relativePathFromBaseDirPath: baseDirPath ];
+				if (relativePath)
+					sprite.filename = relativePath;		
+			}
 			
 			// Save Sprite to Dictionary
 			NSMutableDictionary *childValues = [NSMutableDictionary dictionaryWithCapacity:16];
