@@ -70,16 +70,16 @@ Keyboard Shortcuts
 
 File
 --------------------
- * CMD + N - New Project (Warning: no changes will be saved, save your work before creating new one)
- * CMD + O - Open existing CSD project
- * CMD + S - Save Project
- * CMD + SHIFT + S - Save As
+ * __CMD + N__ - New Project (Warning: no changes will be saved, save your work before creating new one)
+ * __CMD + O__ - Open existing CSD project
+ * __CMD + S__ - Save Project
+ * __CMD + SHIFT + S__ - Save As
 
 View
 --------------------
- * CMD + F - Toggle Fullscreen
- * CMD + B - Toggle Workspace Borders
- * CMD + 0 - Reset Zoom (you can zoom with CMD + MouseScroll)
+ * __CMD + F__ - Toggle Fullscreen
+ * __CMD + B__ - Toggle Workspace Borders
+ * __CMD + 0__ - Reset Zoom (you can zoom with CMD + MouseScroll)
  
 Windows
 -------------------
@@ -87,21 +87,21 @@ All cocoshop windows can be used in both fullscreen & windowed mode.
 The only fullscreen issue is that if your project is bigger than your screen - you cannot scroll the node in fullscreen.  
 But you always can scroll it in windowed mode. (Issue #30 )
 
- * CMD + M - Main Editor Window
- * CMD + I - Sprite Info
- * CMD + L - Sprites List
+ * __CMD + M__ - Main Editor Window
+ * __CMD + I__ - Sprite Info
+ * __CMD + L__ - Sprites List
  
 Editing Sprites
 -------------------
 To use these combinations you need to select some sprite.
 
- * Arrows - move sprite by one point in any direction.
- * SHIFT + Arrows - move sprite faster.
- * ALT + Arrows - move sprite's anchorPoint
- * ALT + SHIFT + Arrows - move sprite's anchorPoint faster
- * CTRL + Left/Right Arrows - rotate sprite left/right
- * CTRL + SHIFT + Left/Right Arrows - rotate sprite faster.
- * Backspace or Delete - Remove Selected Sprite.
+ * __Arrows__ - move sprite by one point in any direction.
+ * __SHIFT + Arrows__ - move sprite faster.
+ * __ALT + Arrows__ - move sprite's anchorPoint
+ * __ALT + SHIFT + Arrows__ - move sprite's anchorPoint faster
+ * __CTRL + Left/Right Arrows__ - rotate sprite left/right
+ * __CTRL + SHIFT + Left/Right Arrows__ - rotate sprite faster.
+ * __Backspace__ or __Delete__ - Remove Selected Sprite.
  
 Mouse
 =====================
@@ -111,6 +111,7 @@ Currently to rotate sprites with mouse you need to use sprite info window.
 Trackpad Gestures
 =====================
 Cocoshop supports these trackpad gestures:  
+
  * Pinch - Scale Selected Sprite
  * Rotate - Rotate Selected Sprite
  
