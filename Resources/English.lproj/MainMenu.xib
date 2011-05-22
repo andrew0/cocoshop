@@ -12,11 +12,11 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1251"/>
 			<integer value="554"/>
-			<integer value="296"/>
+			<integer value="1251"/>
 			<integer value="907"/>
 			<integer value="371"/>
+			<integer value="296"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -506,7 +506,6 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>05EA3C2B-59D2-41D6-802E-F2A8007E66CD</string>
-							<string>32C940A4-E755-4C5D-89F9-D518003EF66C</string>
 							<string>6F4F900F-BB5A-441D-A3D9-925A3EFF6975</string>
 							<string>NSToolbarFlexibleSpaceItem</string>
 							<string>NSToolbarSeparatorItem</string>
@@ -525,28 +524,6 @@
 								<object class="NSCustomResource" key="NSToolbarItemImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSInfo</string>
-								</object>
-								<nil key="NSToolbarItemTarget"/>
-								<nil key="NSToolbarItemAction"/>
-								<string key="NSToolbarItemMinSize">{0, 0}</string>
-								<string key="NSToolbarItemMaxSize">{0, 0}</string>
-								<bool key="NSToolbarItemEnabled">YES</bool>
-								<bool key="NSToolbarItemAutovalidates">YES</bool>
-								<int key="NSToolbarItemTag">-1</int>
-								<bool key="NSToolbarIsUserRemovable">YES</bool>
-								<int key="NSToolbarItemVisibilityPriority">0</int>
-							</object>
-							<object class="NSToolbarItem" id="441452936">
-								<object class="NSMutableString" key="NSToolbarItemIdentifier">
-									<characters key="NS.bytes">32C940A4-E755-4C5D-89F9-D518003EF66C</characters>
-								</object>
-								<string key="NSToolbarItemLabel">Generate</string>
-								<string key="NSToolbarItemPaletteLabel">Generate</string>
-								<string key="NSToolbarItemToolTip"/>
-								<nil key="NSToolbarItemView"/>
-								<object class="NSCustomResource" key="NSToolbarItemImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">Burn</string>
 								</object>
 								<nil key="NSToolbarItemTarget"/>
 								<nil key="NSToolbarItemAction"/>
@@ -670,14 +647,12 @@
 						<reference ref="325155449"/>
 						<reference ref="305904569"/>
 						<reference ref="89129789"/>
-						<reference ref="441452936"/>
 					</object>
 					<object class="NSMutableArray" key="NSToolbarIBDefaultItems">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<reference ref="305904569"/>
 						<reference ref="89129789"/>
 						<reference ref="325155449"/>
-						<reference ref="441452936"/>
 					</object>
 					<object class="NSMutableArray" key="NSToolbarIBSelectableItems">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -798,11 +773,6 @@
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
 			</object>
 			<object class="NSUserDefaultsController" id="225372361">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>workspaceShowBorders</string>
-					<string>CSMainLayerShowBorders</string>
-				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 			<object class="NSCustomObject" id="541437039">
@@ -3945,7 +3915,6 @@
 							<reference ref="325155449"/>
 							<reference ref="305904569"/>
 							<reference ref="89129789"/>
-							<reference ref="441452936"/>
 						</object>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -3972,11 +3941,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">551</int>
 						<reference key="object" ref="89129789"/>
-						<reference key="parent" ref="150757602"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">552</int>
-						<reference key="object" ref="441452936"/>
 						<reference key="parent" ref="150757602"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -5452,7 +5416,6 @@
 					<string>548.IBPluginDependency</string>
 					<string>550.IBPluginDependency</string>
 					<string>551.IBPluginDependency</string>
-					<string>552.IBPluginDependency</string>
 					<string>553.IBEditorWindowLastContentRect</string>
 					<string>553.IBPluginDependency</string>
 					<string>553.IBWindowTemplateEditedContentRect</string>
@@ -5890,8 +5853,7 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{317, 697}, {616, 0}}</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>{{792, 521}, {617, 0}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7210,7 +7172,6 @@
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>Add</string>
-				<string>Burn</string>
 				<string>NSAddTemplate</string>
 				<string>NSInfo</string>
 				<string>NSMenuCheckmark</string>
@@ -7220,7 +7181,6 @@
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{32, 32}</string>
 				<string>{32, 32}</string>
 				<string>{8, 8}</string>
 				<string>{32, 32}</string>
