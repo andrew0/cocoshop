@@ -1,6 +1,16 @@
 Cocoshop - Open Source Visual Editor for Cocos2D
 ================================================
 
+Cocoshop is a tiny, easy to use visual editor for Cocos2D-iPhone Engine, that
+can be used for designing menus, game scenes and even levels.
+
+Cocoshop idea is to have minimum can't-live-without features, that will let developers easily create graphics part of cocos2d projects.
+If some feature of Cocos2D can be supported only by CSDReader - it shouldn't be included in Cocoshop.
+I.E. spriteSheets - a lot of work needed to add & debug CCSpriteBatchNode support to Cocoshop Editor.
+It's much easier just to load sprites with CSDReader using spriteBatchNode in your project. 
+(Example: https://github.com/andrew0/cocoshop/blob/release-0.1/CSExamples/Classes/CSDTests.m#L211 )
+
+
 ```
     cocoshop
    
@@ -44,7 +54,7 @@ How to use Cocoshop
  1. Drag&Drop your sprites to the Cocoshop's main window.
  1. After editing - save csd file and import folder with csd & sprites to your project.
  1. Import CSDReader.h, CSDReader.m, CSDElement.h, CSDElement.m to your project (located in 'CSDReader' folder)
- 1. Load csd file & setup your node with CSDReader
+ 1. Load csd file & setup your node with CSDReader  
  ```
 	CSDReader *csd = [CSDReader readerWithFile:@"example1.csd"];
 	CCNode *aNode = [csd newNode];
@@ -81,9 +91,40 @@ But you always can scroll it in windowed mode. (Issue #30 )
  
 Editing Sprites
 -------------------
+To use these combinations you need to select some sprite.
 
-
-
-
-Philosophy
+ * Arrows - move sprite by one point in any direction.
+ * SHIFT + Arrows - move sprite faster.
+ * ALT + Arrows - move sprite's anchorPoint
+ * ALT + SHIFT + Arrows - move sprite's anchorPoint faster
+ * CTRL + Left/Right Arrows - rotate sprite left/right
+ * CTRL + SHIFT + Left/Right Arrows - rotate sprite faster.
+ * Backspace or Delete - Remove Selected Sprite.
+ 
+Mouse
 =====================
+In cocoshop you can move and select sprites with mouse. 
+Currently to rotate sprites with mouse you need to use sprite info window.
+
+Trackpad Gestures
+=====================
+Cocoshop supports these trackpad gestures:
+ * Pinch - Scale Selected Sprite
+ * Rotate - Rotate Selected Sprite
+ 
+Repo Contents
+=====================
+
+ * cocoshop.xcodeproj - Cocoshop Project
+ * CSExample1.xcodeproj - Cocos2d-iOS Cocoshop Examples
+ * Files to inlcude to your Project
+   1. CSDReader - CSD File Support.
+   2. Cocos2DExtensions - Different Handy Classes, used in CSExamples. Makes your life easier.
+ * libs - Cocos2d Engine 1.0.0-rc2 from Mac Template used in cocoshop.xcodeproj.
+ * CSExamples/libs - Cocos2d Engine 1.0.0-rc2 from iOS Template used in CSExample1.xcodeproj
+
+Contributing
+=====================
+Feel free to fork, modify & send pull requests as usual ;)
+There's always some issues to solve here: https://github.com/andrew0/cocoshop/issues
+You can also use them to see, what's on cocoshop's roadmap.
