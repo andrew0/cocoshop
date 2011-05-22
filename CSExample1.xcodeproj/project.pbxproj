@@ -78,6 +78,7 @@
 		6DECF7BC1388940B0070C774 /* coconadePressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 6DECF7B91388940B0070C774 /* coconadePressed.png */; };
 		6DECF7BD1388940B0070C774 /* forumPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 6DECF7BA1388940B0070C774 /* forumPressed.png */; };
 		6DECF7BE1388940B0070C774 /* sitePressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 6DECF7BB1388940B0070C774 /* sitePressed.png */; };
+		6DECF7C7138894D60070C774 /* CCMenuItemSpriteIndependent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DECF7C6138894D60070C774 /* CCMenuItemSpriteIndependent.m */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -353,6 +354,8 @@
 		6DECF7B91388940B0070C774 /* coconadePressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coconadePressed.png; sourceTree = "<group>"; };
 		6DECF7BA1388940B0070C774 /* forumPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forumPressed.png; sourceTree = "<group>"; };
 		6DECF7BB1388940B0070C774 /* sitePressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sitePressed.png; sourceTree = "<group>"; };
+		6DECF7C5138894D60070C774 /* CCMenuItemSpriteIndependent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenuItemSpriteIndependent.h; sourceTree = "<group>"; };
+		6DECF7C6138894D60070C774 /* CCMenuItemSpriteIndependent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMenuItemSpriteIndependent.m; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -636,6 +639,8 @@
 			children = (
 				6D13AE861385BB72004FA7F1 /* CSDReader */,
 				E0F80F5D120A0182005866B8 /* GameConfig.h */,
+				6DECF7C5138894D60070C774 /* CCMenuItemSpriteIndependent.h */,
+				6DECF7C6138894D60070C774 /* CCMenuItemSpriteIndependent.m */,
 				506EDC2F102F528A00A389B3 /* CSDTests.h */,
 				506EDC30102F528A00A389B3 /* CSDTests.m */,
 				E0F80F5E120A0182005866B8 /* RootViewController.h */,
@@ -1275,6 +1280,7 @@
 				E0F80F60120A0182005866B8 /* RootViewController.m in Sources */,
 				6D13AE8B1385BB72004FA7F1 /* CSDElement.m in Sources */,
 				6D13AE8C1385BB72004FA7F1 /* CSDReader.m in Sources */,
+				6DECF7C7138894D60070C774 /* CCMenuItemSpriteIndependent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
