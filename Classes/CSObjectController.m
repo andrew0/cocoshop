@@ -435,7 +435,7 @@
 		NSString *originalName = [filename lastPathComponent];
 		NSString *name = [NSString stringWithString:originalName];
 		NSUInteger i = 0;
-		while( [modelObject_ selectedSprite] != nil )
+		while( [modelObject_ spriteWithName: name] != nil )
 		{
 			NSAssert(i <= NSUIntegerMax, @"Added too many of the same sprite");
 			name = [originalName stringByAppendingFormat:@"_%u", i++];

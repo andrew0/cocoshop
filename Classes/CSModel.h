@@ -77,6 +77,8 @@
 @property(nonatomic, assign) CGFloat stageWidth;
 @property(nonatomic, assign) CGFloat stageHeight;
 
+// Sprites Acces
 - (CSSprite *)selectedSprite;
+- (CSSprite *)spriteWithName: (NSString *) name;
 
 @end

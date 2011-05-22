@@ -77,7 +77,7 @@
 	[super dealloc];
 }
 
-#pragma mark Custom Accessors
+#pragma mark Sprite Access 
 
 - (void)setSelectedSprite:(CSSprite *)aSprite
 {
@@ -143,6 +143,18 @@
 		// tell controller we changed the selected sprite
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"didChangeSelectedSprite" object:nil];
 	}
+}
+
+- (CSSprite *)spriteWithName: (NSString *) name
+{
+	for (CSSprite *sprite in spriteArray_)
+	{
+		if ([sprite.name isEqualToString: name]) {
+			return sprite;
+		}
+	}
+	
+	return nil;
 }
 
 @end
