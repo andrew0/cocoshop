@@ -57,9 +57,9 @@ How to use Cocoshop
  1. Import CSDReader.h, CSDReader.m, CSDElement.h, CSDElement.m to your project (located in 'CSDReader' folder)
  1. Load csd file & setup your node with CSDReader  
  ```
-	CSDReader *csd = [CSDReader readerWithFile:@"example1.csd"];
-	CCNode *aNode = [csd newNode];
-	[self addChild: aNode];
+	CSDReader *csd = [CSDReader readerWithFile:@"example1.csd"];  
+	CCNode *aNode = [csd newNode];  
+	[self addChild: aNode];  
  ```
  1. Take a look at CSExample1.xcodeproj in this repo's root for more info about using CSDReader & CSDElement's
 
