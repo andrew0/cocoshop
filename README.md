@@ -4,13 +4,6 @@ Cocoshop - Open Source Visual Editor for Cocos2D
 Cocoshop is a tiny, easy to use visual editor for Cocos2D-iPhone Engine, that
 can be used for designing menus, game scenes and even levels.
 
-Cocoshop idea is to have minimum can't-live-without features, that will let developers easily create graphics part of cocos2d projects.
-If some feature of Cocos2D can be supported only by CSDReader - it shouldn't be included in Cocoshop.
-I.E. spriteSheets - a lot of work needed to add & debug CCSpriteBatchNode support to Cocoshop Editor.
-It's much easier just to load sprites with CSDReader using spriteBatchNode in your project. 
-(Example: https://github.com/andrew0/cocoshop/blob/release-0.1/CSExamples/Classes/CSDTests.m#L211 )
-
-
 ```
     cocoshop
    
@@ -37,13 +30,21 @@ It's much easier just to load sprites with CSDReader using spriteBatchNode in yo
  
 ```
 
+Philosophy
+=====================
+Cocoshop idea is to have minimum can't-live-without features, that will let developers easily create graphics part of cocos2d projects.  
+If some feature of Cocos2D can be supported only by CSDReader - it shouldn't be included in Cocoshop.  
+I.E. spriteSheets - a lot of work needed to add & debug CCSpriteBatchNode support to Cocoshop Editor.  
+It's much easier just to load sprites with CSDReader using spriteBatchNode in your project.  
+(Example: https://github.com/andrew0/cocoshop/blob/release-0.1/CSExamples/Classes/CSDTests.m#L211 )  
+
 Features
 =====================
 In cocoshop you edit a node. Currently it supports background and sprites.  
 You can change the size of the node, change it's background color & opacity.  
 You can add sprites by drag&drop them to the main window, or by clicking 'Add Sprite' toolbar item.
 
-Sprites have unique names, that you will use to distinguish individual sprites in your application code.
+Sprites have unique names, that you will use to distinguish individual sprites in your application code.  
 Sprites can be positioned/scaled/rotated with mouse, keyboard shortcuts, trackpad gestures and the Sprite Info Window.
 
 How to use Cocoshop
@@ -81,8 +82,8 @@ View
  
 Windows
 -------------------
-All cocoshop windows can be used in both fullscreen & windowed mode.
-The only fullscreen issue is that if your project is bigger than your screen - you cannot scroll the node in fullscreen.
+All cocoshop windows can be used in both fullscreen & windowed mode.  
+The only fullscreen issue is that if your project is bigger than your screen - you cannot scroll the node in fullscreen.  
 But you always can scroll it in windowed mode. (Issue #30 )
 
  * CMD + M - Main Editor Window
@@ -103,12 +104,12 @@ To use these combinations you need to select some sprite.
  
 Mouse
 =====================
-In cocoshop you can move and select sprites with mouse. 
+In cocoshop you can move and select sprites with mouse.  
 Currently to rotate sprites with mouse you need to use sprite info window.
 
 Trackpad Gestures
 =====================
-Cocoshop supports these trackpad gestures:
+Cocoshop supports these trackpad gestures:  
  * Pinch - Scale Selected Sprite
  * Rotate - Rotate Selected Sprite
  
@@ -125,6 +126,6 @@ Repo Contents
 
 Contributing
 =====================
-Feel free to fork, modify & send pull requests as usual ;)
-There's always some issues to solve here: https://github.com/andrew0/cocoshop/issues
-You can also use them to see, what's on cocoshop's roadmap.
+Feel free to fork, modify & send pull requests as usual ;)  
+There's always some issues to solve here: https://github.com/andrew0/cocoshop/issues  
+You can also use them to see, what's on cocoshop's roadmap.  
