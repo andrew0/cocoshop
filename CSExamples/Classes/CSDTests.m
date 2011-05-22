@@ -305,8 +305,6 @@ Class restartAction()
 		
 		//create and add menu
 		CCMenu *menu = [CCMenu menuWithItems:coconadeMenuItem, forumMenuItem, siteMenuItem, nil];
-		menu.position = ccp(0,0);
-		menu.anchorPoint = ccp(0,0);
 		[self addChild: menu];
 	}
 	
