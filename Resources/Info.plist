@@ -11,6 +11,8 @@
 			<array>
 				<string>csd</string>
 			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>icon.icns</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
 				<string>text/xml</string>
@@ -38,7 +40,7 @@
 	<key>CFBundleIconFile</key>
 	<string>icon</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>org.cocos2d-iphone.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
