@@ -41,42 +41,6 @@
 			<key>anchorX</key>
 			<real>0.5</real>
 			<key>anchorY</key>
-			<real>1</real>
-			<key>colorB</key>
-			<real>255</real>
-			<key>colorG</key>
-			<real>255</real>
-			<key>colorR</key>
-			<real>255</real>
-			<key>filename</key>
-			<string>site.png</string>
-			<key>flipX</key>
-			<false/>
-			<key>flipY</key>
-			<false/>
-			<key>name</key>
-			<string>site</string>
-			<key>opacity</key>
-			<real>255</real>
-			<key>posX</key>
-			<real>512</real>
-			<key>posY</key>
-			<real>534</real>
-			<key>posZ</key>
-			<integer>0</integer>
-			<key>relativeAnchor</key>
-			<true/>
-			<key>rotation</key>
-			<real>0.0</real>
-			<key>scaleX</key>
-			<real>1</real>
-			<key>scaleY</key>
-			<real>1</real>
-		</dict>
-		<dict>
-			<key>anchorX</key>
-			<real>0.5</real>
-			<key>anchorY</key>
 			<real>0.0</real>
 			<key>colorB</key>
 			<real>255</real>
@@ -134,42 +98,6 @@
 			<real>704</real>
 			<key>posY</key>
 			<real>0.0</real>
-			<key>posZ</key>
-			<integer>0</integer>
-			<key>relativeAnchor</key>
-			<true/>
-			<key>rotation</key>
-			<real>0.0</real>
-			<key>scaleX</key>
-			<real>1</real>
-			<key>scaleY</key>
-			<real>1</real>
-		</dict>
-		<dict>
-			<key>anchorX</key>
-			<real>0.5</real>
-			<key>anchorY</key>
-			<real>1</real>
-			<key>colorB</key>
-			<real>255</real>
-			<key>colorG</key>
-			<real>255</real>
-			<key>colorR</key>
-			<real>255</real>
-			<key>filename</key>
-			<string>sitePressed.png</string>
-			<key>flipX</key>
-			<false/>
-			<key>flipY</key>
-			<false/>
-			<key>name</key>
-			<string>sitePressed</string>
-			<key>opacity</key>
-			<real>255</real>
-			<key>posX</key>
-			<real>512</real>
-			<key>posY</key>
-			<real>534</real>
 			<key>posZ</key>
 			<integer>0</integer>
 			<key>relativeAnchor</key>
@@ -252,6 +180,78 @@
 			<real>1</real>
 			<key>scaleY</key>
 			<real>1</real>
+		</dict>
+		<dict>
+			<key>anchorX</key>
+			<real>0.5</real>
+			<key>anchorY</key>
+			<real>1</real>
+			<key>colorB</key>
+			<real>255</real>
+			<key>colorG</key>
+			<real>255</real>
+			<key>colorR</key>
+			<real>255</real>
+			<key>filename</key>
+			<string>site.png</string>
+			<key>flipX</key>
+			<false/>
+			<key>flipY</key>
+			<false/>
+			<key>name</key>
+			<string>site</string>
+			<key>opacity</key>
+			<real>255</real>
+			<key>posX</key>
+			<real>512</real>
+			<key>posY</key>
+			<real>424</real>
+			<key>posZ</key>
+			<integer>0</integer>
+			<key>relativeAnchor</key>
+			<true/>
+			<key>rotation</key>
+			<real>14.036243438720703</real>
+			<key>scaleX</key>
+			<real>0.60000002384185791</real>
+			<key>scaleY</key>
+			<real>0.60000002384185791</real>
+		</dict>
+		<dict>
+			<key>anchorX</key>
+			<real>0.5</real>
+			<key>anchorY</key>
+			<real>1</real>
+			<key>colorB</key>
+			<real>255</real>
+			<key>colorG</key>
+			<real>255</real>
+			<key>colorR</key>
+			<real>255</real>
+			<key>filename</key>
+			<string>sitePressed.png</string>
+			<key>flipX</key>
+			<false/>
+			<key>flipY</key>
+			<false/>
+			<key>name</key>
+			<string>sitePressed</string>
+			<key>opacity</key>
+			<real>255</real>
+			<key>posX</key>
+			<real>512</real>
+			<key>posY</key>
+			<real>424</real>
+			<key>posZ</key>
+			<integer>0</integer>
+			<key>relativeAnchor</key>
+			<true/>
+			<key>rotation</key>
+			<real>14</real>
+			<key>scaleX</key>
+			<real>0.60000002384185791</real>
+			<key>scaleY</key>
+			<real>0.60000002384185791</real>
 		</dict>
 	</array>
 </dict>

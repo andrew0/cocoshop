@@ -11,6 +11,16 @@
 @implementation CCMenuItemSpriteIndependent
 
 
+-(CGRect) rect
+{
+	return CGRectMake( 0, 0, contentSize_.width, contentSize_.height );	
+}
+
+- (CGPoint)convertToNodeSpace:(CGPoint)worldPoint
+{
+	return [normalImage_ convertToNodeSpace: worldPoint];
+}
+
 -(void) setNormalImage:(CCNode <CCRGBAProtocol>*)image
 {
 	if( image != normalImage_ ) {

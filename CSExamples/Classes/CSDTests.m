@@ -271,22 +271,13 @@ Class restartAction()
 		savedBGColor_ = [[csd backgroundElement] color];
 		[self removeChildByTag: [[csd backgroundElement] tag] cleanup:YES];
 		
-		// TODO: create simple way for generating CCMenuItemSprite from CSDSprite 
-		
-		// get sprites for buttons
+		// get sprites for buttons ( Note that pressed & normal sprites have different sizes! )
 		CCSprite *coconade = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"coconade"]];
 		CCSprite *coconadePressed = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"coconadePressed"]];
 		CCSprite *forum = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"forum"]];
 		CCSprite *forumPressed = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"forumPressed"]];
 		CCSprite *site = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"site"]];
-		CCSprite *sitePressed = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"sitePressed"]];
-		
-		
-		
-		// hide pressed ones
-		coconadePressed.visible = NO;
-		forumPressed.visible = NO;
-		sitePressed.visible = NO;
+		CCSprite *sitePressed = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"sitePressed"]];		
 		
 		// create menu items
 		CCMenuItemSpriteIndependent *coconadeMenuItem = 
@@ -311,14 +302,6 @@ Class restartAction()
 														NSLog(@"site");
 														[[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.cocos2d-iphone.org/"]];																									
 													}];
-		
-		// position menu items like sprites (probably it should be done automatically in CCMenuItemSpriteIndependent#init)
-		coconadeMenuItem.position = coconade.position;
-		coconadeMenuItem.anchorPoint = coconade.anchorPoint;
-		forumMenuItem.position = forum.position;
-		forumMenuItem.anchorPoint = forum.anchorPoint;
-		siteMenuItem.position = site.position;
-		siteMenuItem.anchorPoint = site.anchorPoint;
 		
 		//create and add menu
 		CCMenu *menu = [CCMenu menuWithItems:coconadeMenuItem, forumMenuItem, siteMenuItem, nil];
@@ -359,10 +342,7 @@ Class restartAction()
 	
 	// Add fullscreen background with color from CSD
 	CCLayerColor *bgLayer = [CCLayerColor layerWithColor: [aNode savedBGColor]];
-	[self addChild: bgLayer z: -1];
-	
-	
-	
+	[self addChild: bgLayer z: -1];	
 	
 	return self;
 }
