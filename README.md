@@ -102,6 +102,9 @@ To use these combinations you need to select some sprite.
  * __CTRL + Left/Right Arrows__ - rotate sprite left/right
  * __CTRL + SHIFT + Left/Right Arrows__ - rotate sprite faster.
  * __Backspace__ or __Delete__ - Remove Selected Sprite.
+ * __CMD+C__ - Copy Selected Sprite
+ * __CMD+V__ - Paste Sprite
+ * __CMD+X__ - Cut Selected Sprite
  
 Mouse
 =====================
