@@ -157,4 +157,14 @@
 	return nil;
 }
 
+//TODO: add ability to have multiple selection and return array of selected sprites here
+- (NSArray *)selectedSprites
+{
+	if ([self selectedSprite])
+	{
+		return [NSArray arrayWithObjects: [self selectedSprite], nil];
+	}
+	return nil;
+}
+
 @end

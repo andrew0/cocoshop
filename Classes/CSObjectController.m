@@ -694,8 +694,9 @@
 	// "Paste"
 	if ([menuItem action] == @selector(pasteMenuItemPressed:))
 	{
-		// TODO: return YES if there's sprite in pasteboard
-		return NO;
+		NSPasteboard *generalPasteboard = [NSPasteboard generalPasteboard];
+        NSDictionary *options = [NSDictionary dictionary];
+        return [generalPasteboard canReadObjectForClasses:[NSArray arrayWithObject:[CSSprite class]] options:options];
 	}
 	
 	// "Delete"
@@ -849,22 +850,58 @@
 
 - (IBAction) deleteMenuItemPressed: (id) sender
 {
-	//TODO: delete selected sprite
+	[self deleteSprite:[modelObject_ selectedSprite]];
 }
 
 - (IBAction) cutMenuItemPressed: (id) sender
 {
-	//TODO: copy & delete selected sprite
+	[self copyMenuItemPressed: sender];
+	[self deleteSprite:[modelObject_ selectedSprite]];
 }
 
 - (IBAction) copyMenuItemPressed: (id) sender
 {
-	//TODO: copy selected sprite
+	// write selected sprite to pasteboard
+	NSArray *objectsToCopy = [modelObject_ selectedSprites];
+	if (objectsToCopy)
+	{
+		NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+		[pasteboard clearContents];		
+		
+		if (![pasteboard writeObjects:objectsToCopy] )
+		{
+			DebugLog(@"Error writing to pasteboard, sprite = %@", sprite);
+		}
+	}
+}
+
+- (void)addSpritesWithArray:(NSArray *)sprites
+{
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
+	
+	for(CSSprite *sprite in sprites)
+	{
+		@synchronized( [modelObject_ spriteArray] )
+		{
+			[[modelObject_ spriteArray] addObject:sprite];
+		}
+		
+		// notify view that we added the sprite
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"addedSprite" object:nil];
+	}
+	
+	// reload the table
+	[spriteTableView_ reloadData];
 }
 
 - (IBAction) pasteMenuItemPressed: (id) sender
-{
-	//TODO: paste sprite if there's one in pasteboard
+{    
+    NSPasteboard *generalPasteboard = [NSPasteboard generalPasteboard];
+    NSDictionary *options = [NSDictionary dictionary];
+    
+    NSArray *newSprites = [generalPasteboard readObjectsForClasses:[NSArray arrayWithObject:[CSSprite class]] options:options];
+    
+	[self addSpritesWithArray: newSprites];
 }
 
 
