@@ -675,6 +675,37 @@
 		return NO;
 	}
 	
+	// "Cut"
+	if ([menuItem action] == @selector(cutMenuItemPressed:))
+	{
+		if ([modelObject_ selectedSprite])
+			return YES;
+		return NO;
+	}
+	
+	// "Copy"
+	if ([menuItem action] == @selector(copyMenuItemPressed:))
+	{
+		if ([modelObject_ selectedSprite])
+			return YES;
+		return NO;
+	}
+	
+	// "Paste"
+	if ([menuItem action] == @selector(pasteMenuItemPressed:))
+	{
+		// TODO: return YES if there's sprite in pasteboard
+		return NO;
+	}
+	
+	// "Delete"
+	if ([menuItem action] == @selector(deleteMenuItemPressed:))
+	{
+		if ([modelObject_ selectedSprite])
+			return YES;
+		return NO;
+	}
+	
 	// "Show Borders"- using ivar, because NSOnState doesn't set right in IB
 	showBordersMenuItem_.state = (mainLayer_.showBorders) ? NSOnState : NSOffState;
 	
@@ -815,5 +846,26 @@
 {
 	mainLayer_.showBorders = ([sender state] == NSOffState);
 }
+
+- (IBAction) deleteMenuItemPressed: (id) sender
+{
+	//TODO: delete selected sprite
+}
+
+- (IBAction) cutMenuItemPressed: (id) sender
+{
+	//TODO: copy & delete selected sprite
+}
+
+- (IBAction) copyMenuItemPressed: (id) sender
+{
+	//TODO: copy selected sprite
+}
+
+- (IBAction) pasteMenuItemPressed: (id) sender
+{
+	//TODO: paste sprite if there's one in pasteboard
+}
+
 
 @end
