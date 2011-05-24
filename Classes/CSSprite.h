@@ -29,7 +29,7 @@
 
 @class CSObjectController;
 
-@interface CSSprite : CCSprite
+@interface CSSprite : CCSprite <NSCoding,NSPasteboardReading, NSPasteboardWriting>
 {
 	BOOL isSelected_;
 	

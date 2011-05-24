@@ -238,4 +238,80 @@
 	}
 }
 
+#pragma mark -
+#pragma mark Archiving
+
+//TODO: implement NSCoding archivings
+
+static NSString *BodyKey = @"Body";
+static NSString *ToolTipKey = @"ToolTip";
+static NSString *TableSummaryKey = @"TableSummary";
+
+
+- (id)initWithCoder:(NSCoder *)coder 
+{
+    if (self = [super init]) 
+	{
+        body = [[coder decodeObjectForKey:BodyKey] retain];    
+        tooltip = [[coder decodeObjectForKey:ToolTipKey] retain];    
+        tableSummary = [[coder decodeObjectForKey:TableSummaryKey] retain];    
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder 
+{
+    [encoder encodeObject:body forKey:BodyKey];
+    [encoder encodeObject:tooltip forKey:ToolTipKey];
+    [encoder encodeObject:tableSummary forKey:TableSummaryKey];
+}
+
+//< implement it here
+
+#pragma mark NSPasteboardWriting
+NSString *CSSpriteUTI = @"org.cocos2d-iphone.cocoshop.CSSprite";
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard 
+{
+    static NSArray *writableTypes = nil;
+    
+    if (!writableTypes) {
+        writableTypes = [[NSArray alloc] initWithObjects:CSSpriteUTI, nil];
+    }
+    return writableTypes;
+}
+
+- (id)pasteboardPropertyListForType:(NSString *)type 
+{
+    if ([type isEqualToString:CSSpriteUTI]) 
+	{
+        return [NSKeyedArchiver archivedDataWithRootObject:self];
+    }
+	
+    return nil;
+}
+
+#pragma mark NSPasteboardReading
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard 
+{    
+    static NSArray *readableTypes = nil;
+    if (!readableTypes) 
+	{
+        readableTypes = [[NSArray alloc] initWithObjects:CSSpriteUTI, nil];
+    }
+    return readableTypes;
+}
+
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pboard 
+{
+    if ([type isEqualToString:CSSpriteUTI]) 
+	{
+        /*
+         This means you don't need to implement code for this type in initWithPasteboardPropertyList:ofType: -- initWithCoder: is invoked instead.
+         */
+        return NSPasteboardReadingAsKeyedArchive;
+    }
+    return 0;
+}
+
 @end
