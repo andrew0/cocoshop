@@ -27,6 +27,7 @@
 #import "CCNode+Additions.h"
 #import "CSObjectController.h"
 #import "CSModel.h"
+#import "NSString+RelativePath.h"
 
 @implementation CSSprite
 
@@ -245,12 +246,78 @@ static NSString *dictRepresentation = @"dictionaryRepresentation";
 
 - (NSDictionary *) dictionaryRepresentation
 {
-	//TODO: move saving CSSprite here
+	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:16];
+	
+	[childValues setValue:[self name] forKey:@"name"];			
+	[childValues setValue:[self filename] forKey:@"filename"];
+	[childValues setValue:[NSNumber numberWithFloat:[self position].x] forKey:@"posX"];
+	[childValues setValue:[NSNumber numberWithFloat:[self position].y] forKey:@"posY"];
+	[childValues setValue:[NSNumber numberWithInteger:[self zOrder]] forKey:@"posZ"];
+	[childValues setValue:[NSNumber numberWithFloat:[self anchorPoint].x] forKey:@"anchorX"];
+	[childValues setValue:[NSNumber numberWithFloat:[self anchorPoint].y] forKey:@"anchorY"];
+	[childValues setValue:[NSNumber numberWithFloat:[self scaleX]] forKey:@"scaleX"];
+	[childValues setValue:[NSNumber numberWithFloat:[self scaleY]] forKey:@"scaleY"];
+	[childValues setValue:[NSNumber numberWithBool:[self flipX]] forKey:@"flipX"];
+	[childValues setValue:[NSNumber numberWithBool:[self flipY]] forKey:@"flipY"];
+	[childValues setValue:[NSNumber numberWithFloat:[self opacity]] forKey:@"opacity"];
+	[childValues setValue:[NSNumber numberWithFloat:[self color].r] forKey:@"colorR"];
+	[childValues setValue:[NSNumber numberWithFloat:[self color].g] forKey:@"colorG"];
+	[childValues setValue:[NSNumber numberWithFloat:[self color].b] forKey:@"colorB"];
+	[childValues setValue:[NSNumber numberWithFloat:[self rotation]] forKey:@"rotation"];
+	[childValues setValue:[NSNumber numberWithBool:[self isRelativeAnchorPoint]] forKey:@"relativeAnchor"];
+	
+	return dict;
 }
 
 - (void) setupFromDictionaryRepresentation: (NSDictionary *) aDict
 {
-	//TODO: move loading CSSprite here
+	self.name = [aDict objectForKey:@"name"];
+	self.filename = [aDict objectForKey:@"filename"];
+	
+	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: self.filename];
+	if (!texture)
+	{
+		//TODO: implement spriteSetupFailed notification listener in CSObjectController & show error message
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"spriteSetupFailed" object: aDict];
+		return;		
+	}
+	
+	// Set Texture & TextureRect
+	CGRect rect = CGRectZero;
+	rect.size = texture.contentSize;
+	[self setTexture:texture];
+	[self setTextureRect:rect];
+	
+	// Set Other Properties for CCSprite
+	CGPoint childPos = ccp([[aDict objectForKey:@"posX"] floatValue], [[aDict objectForKey:@"posY"] floatValue]);
+	[self setPosition:childPos];
+	
+	CGPoint childAnchor = ccp([[aDict objectForKey:@"anchorX"] floatValue], [[aDict objectForKey:@"anchorY"] floatValue]);
+	[self setAnchorPoint:childAnchor];
+	
+	CGFloat childScaleX = [[aDict objectForKey:@"scaleX"] floatValue];
+	CGFloat childScaleY = [[aDict objectForKey:@"scaleY"] floatValue];
+	[self setScaleX:childScaleX];
+	[self setScaleY:childScaleY];
+	
+	BOOL childFlipX = [[aDict objectForKey:@"flipX"] boolValue];
+	BOOL childFlipY = [[aDict objectForKey:@"flipX"] boolValue];
+	[self setFlipX:childFlipX];
+	[self setFlipY:childFlipY];
+	
+	CGFloat childOpacity = [[aDict objectForKey:@"opacity"] floatValue];
+	[self setOpacity:childOpacity];
+	
+	ccColor3B childColor = ccc3([[aDict objectForKey:@"colorR"] floatValue], [[aDict objectForKey:@"colorG"] floatValue], [[aDict objectForKey:@"colorB"] floatValue]);
+	[self setColor:childColor];
+	
+	CGFloat childRotation = [[aDict objectForKey:@"rotation"] floatValue];
+	[self setRotation:childRotation];
+	
+	BOOL childRelativeAnchor = [[aDict objectForKey:@"relativeAnchor"] boolValue];
+	[self setIsRelativeAnchorPoint:childRelativeAnchor];
+	
+	[self _setZOrder:  [[aDict objectForKey:@"posZ"] floatValue]];
 }
 
 - (id)initWithCoder:(NSCoder *)coder 

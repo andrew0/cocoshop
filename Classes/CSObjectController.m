@@ -599,25 +599,8 @@
 					sprite.filename = relativePath;		
 			}
 			
-			// Save Sprite to Dictionary
-			NSMutableDictionary *childValues = [NSMutableDictionary dictionaryWithCapacity:16];
-			[childValues setValue:[sprite name] forKey:@"name"];			
-			[childValues setValue:[sprite filename] forKey:@"filename"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite position].x] forKey:@"posX"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite position].y] forKey:@"posY"];
-			[childValues setValue:[NSNumber numberWithInteger:[sprite zOrder]] forKey:@"posZ"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite anchorPoint].x] forKey:@"anchorX"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite anchorPoint].y] forKey:@"anchorY"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite scaleX]] forKey:@"scaleX"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite scaleY]] forKey:@"scaleY"];
-			[childValues setValue:[NSNumber numberWithBool:[sprite flipX]] forKey:@"flipX"];
-			[childValues setValue:[NSNumber numberWithBool:[sprite flipY]] forKey:@"flipY"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite opacity]] forKey:@"opacity"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite color].r] forKey:@"colorR"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite color].g] forKey:@"colorG"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite color].b] forKey:@"colorB"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite rotation]] forKey:@"rotation"];
-			[childValues setValue:[NSNumber numberWithBool:[sprite isRelativeAnchorPoint]] forKey:@"relativeAnchor"];
+			// Get Sprite Dictionary Representation & Save it to children array
+			NSDictionary *childValues = [sprite dictionaryRepresentation];			
 			[children addObject:childValues];
 		}
 	}
