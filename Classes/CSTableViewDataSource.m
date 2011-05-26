@@ -24,21 +24,22 @@
  */
 
 #import "CSTableViewDataSource.h"
+#import "CSSprite.h"
 
 @implementation CSTableViewDataSource
 
-@synthesize dictionary=dictionary_;
+@synthesize array=array_;
 
-+ (id)dataSourceWithDictionary:(NSMutableDictionary *)dict
++ (id)dataSourceWithArray:(NSArray *)anArray
 {
-	return [[[self alloc] initWithDictionary:dict] autorelease];
+	return [[[self alloc] initWithArray:anArray] autorelease];
 }
 
-- (id)initWithDictionary:(NSMutableDictionary *)dict
+- (id)initWithArray:(NSArray *)anArray
 {
 	if((self=[super init]))
 	{
-		[self setDictionary:dict];
+		[self setArray:anArray];
 	}
 	
 	return self;
@@ -46,25 +47,26 @@
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-	if(dictionary_)
-	{
-		NSArray *values = [dictionary_ allValues];
-		return [[values objectAtIndex:rowIndex] name];
-	}
-	
-	return nil;
+	return [(CSSprite *)[array_ objectAtIndex:rowIndex] name];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-	NSArray *values = [dictionary_ allValues];
-	return [values count];
-	return 1;
+	return [array_ count];
+}
+
+- (void)tableView:(NSTableView *)aTableView setObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+	[(CSSprite *)[array_ objectAtIndex:rowIndex] setName: anObject];
+	
+	// Update other windows
+	NSDictionary *userInfoDict = [NSDictionary dictionaryWithObjectsAndKeys: anObject, @"name", nil];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"didRenameSelectedSprite" object:self userInfo:userInfoDict];
 }
 
 - (void)dealloc
 {
-	[self setDictionary:nil];
+	[self setArray:nil];
 	[super dealloc];
 }
 

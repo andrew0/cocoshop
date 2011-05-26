@@ -2,6 +2,7 @@
  * cocoshop
  *
  * Copyright (c) 2011 Andrew
+ * Copyright (c) 2011 Stepan Generalov
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,11 +27,15 @@
 #import <Cocoa/Cocoa.h>
 
 @class CSSprite;
+@class CCLayerColor;
 
 @interface CSModel : NSObject
 {
-	NSMutableDictionary *spriteDictionary_;
-	NSString *selectedSpriteKey_;
+	CSSprite *selectedSprite_;
+	
+	CCLayerColor *backgroundLayer_;
+	
+	NSMutableArray *spriteArray_;
 	
 	NSString *name_;
 	float posX_;
@@ -38,24 +43,31 @@
 	float posZ_;
 	float anchorX_;
 	float anchorY_;
-	float scale_;
+	float scaleX_;
+	float scaleY_;
 	NSInteger flipX_;
 	NSInteger flipY_;
 	float opacity_;
 	NSColor *color_;
 	NSInteger relativeAnchor_;
 	float rotation_;
+	CGFloat stageWidth_;
+	CGFloat stageHeight_;
 }
 
-@property(nonatomic, retain) NSMutableDictionary *spriteDictionary;
-@property(nonatomic, copy) NSString *selectedSpriteKey;
+@property(nonatomic, assign) CSSprite *selectedSprite;
+@property(nonatomic, retain) CCLayerColor *backgroundLayer;
+@property(nonatomic, retain) NSMutableArray *spriteArray;
+
+// Children Properties
 @property(nonatomic, assign) NSString *name;
 @property(nonatomic, assign) float posX;
 @property(nonatomic, assign) float posY;
 @property(nonatomic, assign) float posZ;
 @property(nonatomic, assign) float anchorX;
 @property(nonatomic, assign) float anchorY;
-@property(nonatomic, assign) float scale;
+@property(nonatomic, assign) float scaleX;
+@property(nonatomic, assign) float scaleY;
 @property(nonatomic, assign) NSInteger flipX;
 @property(nonatomic, assign) NSInteger flipY;
 @property(nonatomic, assign) float opacity;
@@ -63,6 +75,15 @@
 @property(nonatomic, assign) NSInteger relativeAnchor;
 @property(nonatomic, assign) float rotation;
 
+// Background Properties
+@property(nonatomic, assign) CGFloat stageWidth;
+@property(nonatomic, assign) CGFloat stageHeight;
+
+// Sprites Access
 - (CSSprite *)selectedSprite;
+- (CSSprite *)spriteWithName: (NSString *) name;
+
+// Multiple Selection Sprite Access, returns nil if no sprite is selected
+- (NSArray *)selectedSprites;
 
 @end

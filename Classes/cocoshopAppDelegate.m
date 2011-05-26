@@ -25,10 +25,34 @@
 
 #import "cocoshopAppDelegate.h"
 #import "CSObjectController.h"
-#import "HelloWorldLayer.h"
+#import "CSMainLayer.h"
+#import "DebugLog.h"
 
 @implementation cocoshopAppDelegate
 @synthesize window=window_, glView=glView_, controller=controller_;
+@synthesize appIsRunning = appIsRunning_, filenameToOpen = filenameToOpen_;
+
+// called before applicationDidFinishLaunching: if app is open by double-clicking
+// csd file
+- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
+{
+	if ([[filename pathExtension] isEqualToString: @"csd"])
+	{
+		DebugLog(@"Will Open File: %@", filename);
+		self.filenameToOpen = filename;
+		
+		if (self.appIsRunning)
+		{
+			NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: filename];
+			[controller_.mainLayer loadProjectFromDictionarySafely: dict];
+			controller_.projectFilename = self.filenameToOpen;
+			self.filenameToOpen = nil;
+		}
+		return YES;
+	}
+	
+	return NO;
+}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -36,21 +60,31 @@
 	
 	[director setDisplayFPS:NO];
 	
+	// register for receiving filenames
+	[glView_ registerForDraggedTypes:[NSArray arrayWithObjects:  NSFilenamesPboardType, nil]];
 	[director setOpenGLView:glView_];
-
-	// EXPERIMENTAL stuff.
-	// 'Effects' don't work correctly when autoscale is turned on.
-	// Use kCCDirectorResize_NoScale if you don't want auto-scaling.
+	
+	// We use NoScale with own Projection for NSScrollView
 	[director setResizeMode:kCCDirectorResize_NoScale];
+	[director setProjection: kCCDirectorProjectionCustom];
+	[director setProjectionDelegate: glView_];
 	
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
 	CCScene *scene = [CCScene node];
-	HelloWorldLayer *layer = [HelloWorldLayer node];
-	[controller_ setCocosView:layer];
+	CSMainLayer *layer = [CSMainLayer nodeWithController:controller_];
+	[controller_ setMainLayer:layer];
 	[scene addChild:layer];
 	[director runWithScene:scene];
+	
+	self.appIsRunning = YES;
+
+}
+
+- (void)applicationWillUpdate:(NSNotification *)aNotification
+{
+	[[NSColorPanel sharedColorPanel] setLevel:[[[[CCDirector sharedDirector] openGLView] window] level]+1];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
@@ -71,6 +105,9 @@
 {
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	[director setFullScreen: ! [director isFullScreen] ];
+	
+	[ controller_.mainLayer updateForScreenReshapeSafely: nil ];
+	[(CSMacGLView *)[director openGLView] updateWindow];
 }
 
 @end

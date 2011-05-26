@@ -27,12 +27,12 @@
 
 @interface CSTableViewDataSource : NSObject <NSTableViewDataSource>
 {
-	NSMutableDictionary *dictionary_;
+	NSArray *array_;
 }
 
-@property(nonatomic, retain) NSMutableDictionary *dictionary;
+@property(nonatomic, retain) NSArray *array;
 
-+ (id)dataSourceWithDictionary:(NSMutableDictionary *)dict;
-- (id)initWithDictionary:(NSMutableDictionary *)dict;
++ (id)dataSourceWithArray:(NSArray *)anArray;
+- (id)initWithArray:(NSArray *)anArray;
 
 @end
