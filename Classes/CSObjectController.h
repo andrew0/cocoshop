@@ -82,6 +82,10 @@
 
 #pragma mark Sprites
 
+// Changes aSprite.name to unique if modelObject_ already contains sprite with
+// the same name.
+- (void) ensureUniqueNameForSprite: (CSSprite *) aSprite;
+
 /**
  * filters array of filenames, leaving only allowed
  * @returns The filtered files

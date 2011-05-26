@@ -143,6 +143,7 @@
 			if( ![currentName isEqualToString:newName] )
 			{
 				[sprite setName:newName];
+				[self ensureUniqueNameForSprite:sprite];
 				[nameField_ setStringValue:[sprite name]];
 			}
 		}
@@ -380,6 +381,19 @@
 
 #pragma mark Sprites
 
+- (void) ensureUniqueNameForSprite: (CSSprite *) aSprite
+{
+	NSString *originalName = [aSprite name];
+	NSString *name = [NSString stringWithString: originalName];
+	NSUInteger i = 0;
+	while( ([modelObject_ spriteWithName: name] != nil) && ([modelObject_ spriteWithName: name] != aSprite) )
+	{
+		NSAssert(i <= NSUIntegerMax, @"CSObjectController#ensureUniqueNameForSprite: Added too many of the same sprite");
+		name = [originalName stringByAppendingFormat:@"_%u", i++];
+	}
+	aSprite.name = name;
+}
+
 - (NSArray *) allowedFileTypes
 {
 	return [NSArray arrayWithObjects:@"png", @"gif", @"jpg", @"jpeg", @"tif", @"tiff", @"bmp", @"ccz", @"pvr", nil];
@@ -434,16 +448,13 @@
 		// create key for the sprite
 		NSString *originalName = [filename lastPathComponent];
 		NSString *name = [NSString stringWithString:originalName];
-		NSUInteger i = 0;
-		while( [modelObject_ spriteWithName: name] != nil )
-		{
-			NSAssert(i <= NSUIntegerMax, @"Added too many of the same sprite");
-			name = [originalName stringByAppendingFormat:@"_%u", i++];
-		}
 		
 		CSSprite *sprite = [CSSprite spriteWithFile:filename];
 		[sprite setName:name];
 		[sprite setFilename:filename];
+		
+		[self ensureUniqueNameForSprite: sprite];
+		
 		@synchronized( [modelObject_ spriteArray] )
 		{
 			[[modelObject_ spriteArray] addObject:sprite];
@@ -589,6 +600,7 @@
 		if( [child isKindOfClass:[CSSprite class]] )
 		{
 			CSSprite *sprite = (CSSprite *)child;
+			[self ensureUniqueNameForSprite: sprite];
 			
 			// Use relative path if needed
 			if ([[sprite filename] isAbsolutePath])
@@ -864,8 +876,9 @@
 	
 	for(CSSprite *sprite in sprites)
 	{
+		[self ensureUniqueNameForSprite: sprite];
 		@synchronized( [modelObject_ spriteArray] )
-		{
+		{			
 			[[modelObject_ spriteArray] addObject:sprite];
 		}
 		
