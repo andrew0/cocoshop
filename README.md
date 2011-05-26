@@ -132,6 +132,8 @@ You can also use them to see, what's on cocoshop's roadmap.
 
 Contributors
 =====================
-[Andrew](https://github.com/andrew0 "Core Developer") - Cocoshop Core Developer  
-[Stepan Generalov](https://github.com/psineur "Bla-bla")  
-[Sean Duffy](http://www.shogan.co.uk/ "Shogan") - Creator of Cool Toolbar Icons for Cocoshop
+
+ * [Andrew](https://github.com/andrew0 "Core Developer") (Cocoshop Core)
+ * [Stepan Generalov](https://github.com/psineur "Bla-bla") (Icon & Features)
+ * [Sean Duffy](http://www.shogan.co.uk/ "Shogan") (Toolbar Icons)
+ 
