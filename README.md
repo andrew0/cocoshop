@@ -4,12 +4,7 @@ Cocoshop - Open Source Visual Editor for Cocos2D
 Cocoshop is a tiny, easy to use visual editor for Cocos2D-iPhone Engine, that
 can be used for designing menus, game scenes and even levels.
 
-```
-    cocoshop
-   
-    Copyright (c) 2011 Andrew
-    Copyright (c) 2011 Stepan Generalov
-   
+```   
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
@@ -134,3 +129,9 @@ Contributing
 Feel free to fork, modify & send pull requests as usual ;)  
 There's always some issues to solve here: https://github.com/andrew0/cocoshop/issues  
 You can also use them to see, what's on cocoshop's roadmap.  
+
+Contributors
+=====================
+[Andrew](https://github.com/andrew0 "Core Developer") - Cocoshop Core Developer
+[Stepan Generalov](https://github.com/psineur "Bla-bla") 
+[Sean Duffy](http://www.shogan.co.uk/ "Shogan") - Creator of Cool Toolbar Icons for Cocoshop
