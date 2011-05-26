@@ -241,32 +241,32 @@
 #pragma mark -
 #pragma mark Archiving
 
-//TODO: implement NSCoding archivings
+static NSString *dictRepresentation = @"dictionaryRepresentation";
 
-static NSString *BodyKey = @"Body";
-static NSString *ToolTipKey = @"ToolTip";
-static NSString *TableSummaryKey = @"TableSummary";
+- (NSDictionary *) dictionaryRepresentation
+{
+	//TODO: move saving CSSprite here
+}
 
+- (void) setupFromDictionaryRepresentation: (NSDictionary *) aDict
+{
+	//TODO: move loading CSSprite here
+}
 
 - (id)initWithCoder:(NSCoder *)coder 
 {
     if (self = [super init]) 
 	{
-        body = [[coder decodeObjectForKey:BodyKey] retain];    
-        tooltip = [[coder decodeObjectForKey:ToolTipKey] retain];    
-        tableSummary = [[coder decodeObjectForKey:TableSummaryKey] retain];    
+        NSDictionary *dict = [coder decodeObjectForKey:dictRepresentation]; 
+		[self setupFromDictionaryRepresentation:dict];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder 
 {
-    [encoder encodeObject:body forKey:BodyKey];
-    [encoder encodeObject:tooltip forKey:ToolTipKey];
-    [encoder encodeObject:tableSummary forKey:TableSummaryKey];
+    [encoder encodeObject:[self dictionaryRepresentation] forKey:dictRepresentation];
 }
-
-//< implement it here
 
 #pragma mark NSPasteboardWriting
 NSString *CSSpriteUTI = @"org.cocos2d-iphone.cocoshop.CSSprite";
