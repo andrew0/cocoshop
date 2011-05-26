@@ -12,9 +12,9 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="542"/>
-			<integer value="554"/>
 			<integer value="907"/>
+			<integer value="554"/>
+			<integer value="371"/>
 			<integer value="1398"/>
 			<integer value="1251"/>
 		</object>
@@ -577,7 +577,7 @@
 								<nil key="NSToolbarItemView"/>
 								<object class="NSCustomResource" key="NSToolbarItemImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">NSInfo</string>
+									<string key="NSResourceName">icon4-b</string>
 								</object>
 								<nil key="NSToolbarItemTarget"/>
 								<nil key="NSToolbarItemAction"/>
@@ -599,7 +599,7 @@
 								<nil key="NSToolbarItemView"/>
 								<object class="NSCustomResource" key="NSToolbarItemImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">NSListViewTemplate</string>
+									<string key="NSResourceName">icon7-c</string>
 								</object>
 								<nil key="NSToolbarItemTarget"/>
 								<nil key="NSToolbarItemAction"/>
@@ -6099,7 +6099,7 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{813, 240}, {617, 227}}</string>
+					<string>{{813, 467}, {617, 0}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7447,25 +7447,25 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>Add</string>
 				<string>NSAddTemplate</string>
-				<string>NSInfo</string>
-				<string>NSListViewTemplate</string>
 				<string>NSMenuCheckmark</string>
 				<string>NSMenuMixedState</string>
 				<string>NSRemoveTemplate</string>
 				<string>NSSwitch</string>
 				<string>icon1</string>
 				<string>icon3</string>
+				<string>icon4-b</string>
+				<string>icon7-c</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{256, 256}</string>
 				<string>{8, 8}</string>
-				<string>{32, 32}</string>
-				<string>{11, 10}</string>
 				<string>{9, 8}</string>
 				<string>{7, 2}</string>
 				<string>{8, 8}</string>
 				<string>{15, 15}</string>
+				<string>{256, 256}</string>
+				<string>{256, 256}</string>
 				<string>{256, 256}</string>
 				<string>{256, 256}</string>
 			</object>
