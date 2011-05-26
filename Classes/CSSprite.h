@@ -112,6 +112,8 @@
     return dict;
  }
  
+ More info about this format should be discussed here: http://www.cocos2d-iphone.org/forum/topic/16980
+ 
  */
 - (NSDictionary *) dictionaryRepresentation;
 
