@@ -865,7 +865,7 @@
 		
 		if (![pasteboard writeObjects:objectsToCopy] )
 		{
-			DebugLog(@"Error writing to pasteboard, sprite = %@", sprite);
+			DebugLog(@"Error writing to pasteboard, sprites = %@", objectsToCopy);
 		}
 	}
 }
