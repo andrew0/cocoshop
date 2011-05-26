@@ -29,6 +29,15 @@
 
 @class CSObjectController;
 
+/*
+	CSSprite is a CCSprite subclass, that is used in cocoshop to display sprites
+ on the workspace.
+	It can be selected - in that state it is highlighted with a rectangle around
+ its contents, shows anchorPoint and position.
+	Also it supports NSCoding and provides methods to load & save self to/from 
+ NSDictionary.
+	TODO: Refactor it to the CSNode, for support of other CCNodes in Cocoshop.
+ */
 @interface CSSprite : CCSprite <NSCoding,NSPasteboardReading, NSPasteboardWriting>
 {
 	BOOL isSelected_;
@@ -55,5 +64,60 @@
 
 // marks that updatePositionLabel must be called once at next visit
 - (void)updatePositionLabelSafely;
+
+#pragma mark NSCoding Support
+
+/* 
+    Creates NSDictionary that contains info about node.
+ Currently it supports only CCSprite & saves its properties into dictionary root
+ But it should be better to have this format:
+ 
+ Dictionary Root
+ |
+ + "ClassName" => "CCSprite"
+ |
+ + "CCNode" => NSDictionary
+               |
+               + "position" => NSStringFromCGPoint
+               |
+               + "anchor point" => NSStringFromCGPoint
+               |
+               + "contentSize" => NSStringFromCGRect
+               |
+               ...
+ |
+ + "CCSprite" => NSDictionary
+               |
+               + "filename" => "foo.png"
+               |
+               + "color" => NSDictionary
+                            |
+                            + "r" = 255
+							|
+                            + "g" = 255
+							|
+							...
+               |
+               ...
+ 
+ That format should be easy to use with NSCoding, and Cocos2D-X
+ 
+ Subclassing any CCNode you will code like this:
+ 
+ - (NSDictionary *) dictionaryRepresentation
+ {
+	NSDictionary *dict = [super dictionaryRepresentation];
+	NSDictionary *selfPropDict = [self customPropertiesDictionaryRepresentation];
+    [dict setObject: selfPropDict forKey: @"MyCustomCCNodeSubclass" ];
+    return dict;
+ }
+ 
+ */
+- (NSDictionary *) dictionaryRepresentation;
+
+/* Setups self from given NSDictionary 
+ * Uses [super setupFromDictionaryRepresentation: aDict] before setting self properties
+ */
+- (void) setupFromDictionaryRepresentation: (NSDictionary *) aDict;
 
 @end
