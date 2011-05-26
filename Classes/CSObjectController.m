@@ -493,9 +493,10 @@
 	// delete sprite
 	if(sprite)
 	{
-		// deselect sprite if necessary
-		if( [sprite isEqualTo:sprite] )
-			[modelObject_ setSelectedSprite:nil];
+		// deselect sprite 
+		[modelObject_ setSelectedSprite:nil];
+		[spriteTableView_ deselectAll:nil];
+		[spriteTableView_ setDataSource: nil];
 		
 		// only remove child if we're the parent
 		if( [sprite parent] == mainLayer_ )
@@ -506,6 +507,8 @@
 		{
 			[[modelObject_ spriteArray] removeObject:sprite];
 		}
+		
+		[spriteTableView_ setDataSource: dataSource_];
 	}	
 }
 
