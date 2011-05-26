@@ -29,6 +29,12 @@
 #import "CSModel.h"
 #import "NSString+RelativePath.h"
 
+@interface CCNode (Internal)
+
+-(void) _setZOrder:(int) z;
+
+@end
+
 @implementation CSSprite
 
 @synthesize isSelected=isSelected_;
@@ -248,23 +254,23 @@ static NSString *dictRepresentation = @"dictionaryRepresentation";
 {
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:16];
 	
-	[childValues setValue:[self name] forKey:@"name"];			
-	[childValues setValue:[self filename] forKey:@"filename"];
-	[childValues setValue:[NSNumber numberWithFloat:[self position].x] forKey:@"posX"];
-	[childValues setValue:[NSNumber numberWithFloat:[self position].y] forKey:@"posY"];
-	[childValues setValue:[NSNumber numberWithInteger:[self zOrder]] forKey:@"posZ"];
-	[childValues setValue:[NSNumber numberWithFloat:[self anchorPoint].x] forKey:@"anchorX"];
-	[childValues setValue:[NSNumber numberWithFloat:[self anchorPoint].y] forKey:@"anchorY"];
-	[childValues setValue:[NSNumber numberWithFloat:[self scaleX]] forKey:@"scaleX"];
-	[childValues setValue:[NSNumber numberWithFloat:[self scaleY]] forKey:@"scaleY"];
-	[childValues setValue:[NSNumber numberWithBool:[self flipX]] forKey:@"flipX"];
-	[childValues setValue:[NSNumber numberWithBool:[self flipY]] forKey:@"flipY"];
-	[childValues setValue:[NSNumber numberWithFloat:[self opacity]] forKey:@"opacity"];
-	[childValues setValue:[NSNumber numberWithFloat:[self color].r] forKey:@"colorR"];
-	[childValues setValue:[NSNumber numberWithFloat:[self color].g] forKey:@"colorG"];
-	[childValues setValue:[NSNumber numberWithFloat:[self color].b] forKey:@"colorB"];
-	[childValues setValue:[NSNumber numberWithFloat:[self rotation]] forKey:@"rotation"];
-	[childValues setValue:[NSNumber numberWithBool:[self isRelativeAnchorPoint]] forKey:@"relativeAnchor"];
+	[dict setValue:[self name] forKey:@"name"];			
+	[dict setValue:[self filename] forKey:@"filename"];
+	[dict setValue:[NSNumber numberWithFloat:[self position].x] forKey:@"posX"];
+	[dict setValue:[NSNumber numberWithFloat:[self position].y] forKey:@"posY"];
+	[dict setValue:[NSNumber numberWithInteger:[self zOrder]] forKey:@"posZ"];
+	[dict setValue:[NSNumber numberWithFloat:[self anchorPoint].x] forKey:@"anchorX"];
+	[dict setValue:[NSNumber numberWithFloat:[self anchorPoint].y] forKey:@"anchorY"];
+	[dict setValue:[NSNumber numberWithFloat:[self scaleX]] forKey:@"scaleX"];
+	[dict setValue:[NSNumber numberWithFloat:[self scaleY]] forKey:@"scaleY"];
+	[dict setValue:[NSNumber numberWithBool:[self flipX]] forKey:@"flipX"];
+	[dict setValue:[NSNumber numberWithBool:[self flipY]] forKey:@"flipY"];
+	[dict setValue:[NSNumber numberWithFloat:[self opacity]] forKey:@"opacity"];
+	[dict setValue:[NSNumber numberWithFloat:[self color].r] forKey:@"colorR"];
+	[dict setValue:[NSNumber numberWithFloat:[self color].g] forKey:@"colorG"];
+	[dict setValue:[NSNumber numberWithFloat:[self color].b] forKey:@"colorB"];
+	[dict setValue:[NSNumber numberWithFloat:[self rotation]] forKey:@"rotation"];
+	[dict setValue:[NSNumber numberWithBool:[self isRelativeAnchorPoint]] forKey:@"relativeAnchor"];
 	
 	return dict;
 }

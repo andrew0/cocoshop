@@ -33,13 +33,6 @@
 #import "NSString+RelativePath.h"
 #import "cocoshopAppDelegate.h"
 
-@interface CCNode (Internal)
-
--(void) _setZOrder:(int) z;
-
-@end
-
-
 @implementation CSMainLayer
 
 enum 
