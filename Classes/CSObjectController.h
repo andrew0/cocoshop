@@ -127,5 +127,9 @@
 
 #pragma mark IBAction - Menus
 - (IBAction) showBordersMenuItemPressed: (id) sender;
+- (IBAction) deleteMenuItemPressed: (id) sender;
+- (IBAction) cutMenuItemPressed: (id) sender;
+- (IBAction) copyMenuItemPressed: (id) sender;
+- (IBAction) pasteMenuItemPressed: (id) sender;
 
 @end

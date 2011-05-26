@@ -33,13 +33,6 @@
 #import "NSString+RelativePath.h"
 #import "cocoshopAppDelegate.h"
 
-@interface CCNode (Internal)
-
--(void) _setZOrder:(int) z;
-
-@end
-
-
 @implementation CSMainLayer
 
 enum 
@@ -162,47 +155,18 @@ enum
 		
 		for(NSDictionary *child in children)
 		{
-			NSString *childFilename = [child objectForKey:@"filename"];
-			NSString *absolutePath = [childFilename absolutePathFromBaseDirPath: [controller_.projectFilename stringByDeletingLastPathComponent]];
+			// change path to relative while loading
+			NSMutableDictionary *mutableChild = [NSMutableDictionary dictionaryWithDictionary: child];
+			NSString *absolutePath = [[mutableChild objectForKey:@"filename"] absolutePathFromBaseDirPath: [controller_.projectFilename stringByDeletingLastPathComponent]];
 			if (absolutePath)
-				childFilename = absolutePath;
-			CSSprite *sprite = [CSSprite spriteWithFile:childFilename];
-			//TODO: show error message instead of crash, if file not found
+			{
+				[mutableChild removeObjectForKey:@"filename"];
+				[mutableChild setObject: absolutePath forKey:@"filename"];
+			}
 			
-			NSString *name = [child objectForKey:@"name"];
-			
-			CGPoint childPos = ccp([[child objectForKey:@"posX"] floatValue], [[child objectForKey:@"posY"] floatValue]);
-			[sprite setPosition:childPos];
-			
-			CGPoint childAnchor = ccp([[child objectForKey:@"anchorX"] floatValue], [[child objectForKey:@"anchorY"] floatValue]);
-			[sprite setAnchorPoint:childAnchor];
-			
-			CGFloat childScaleX = [[child objectForKey:@"scaleX"] floatValue];
-			CGFloat childScaleY = [[child objectForKey:@"scaleY"] floatValue];
-			[sprite setScaleX:childScaleX];
-			[sprite setScaleY:childScaleY];
-			
-			BOOL childFlipX = [[child objectForKey:@"flipX"] boolValue];
-			BOOL childFlipY = [[child objectForKey:@"flipX"] boolValue];
-			[sprite setFlipX:childFlipX];
-			[sprite setFlipY:childFlipY];
-			
-			CGFloat childOpacity = [[child objectForKey:@"opacity"] floatValue];
-			[sprite setOpacity:childOpacity];
-			
-			ccColor3B childColor = ccc3([[child objectForKey:@"colorR"] floatValue], [[child objectForKey:@"colorG"] floatValue], [[child objectForKey:@"colorB"] floatValue]);
-			[sprite setColor:childColor];
-			
-			CGFloat childRotation = [[child objectForKey:@"rotation"] floatValue];
-			[sprite setRotation:childRotation];
-			
-			BOOL childRelativeAnchor = [[child objectForKey:@"relativeAnchor"] boolValue];
-			[sprite setIsRelativeAnchorPoint:childRelativeAnchor];
-			
-			[sprite setName:name];
-			[sprite setFilename:childFilename];
-			
-			[sprite _setZOrder:  [[child objectForKey:@"posZ"] floatValue]];
+			// Create & setup Sprite
+			CSSprite *sprite = [[CSSprite new] autorelease];			
+			[sprite setupFromDictionaryRepresentation: mutableChild ];
 			
 			@synchronized ([[controller_ modelObject] spriteArray])
 			{

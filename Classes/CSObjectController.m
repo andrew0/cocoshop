@@ -599,25 +599,8 @@
 					sprite.filename = relativePath;		
 			}
 			
-			// Save Sprite to Dictionary
-			NSMutableDictionary *childValues = [NSMutableDictionary dictionaryWithCapacity:16];
-			[childValues setValue:[sprite name] forKey:@"name"];			
-			[childValues setValue:[sprite filename] forKey:@"filename"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite position].x] forKey:@"posX"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite position].y] forKey:@"posY"];
-			[childValues setValue:[NSNumber numberWithInteger:[sprite zOrder]] forKey:@"posZ"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite anchorPoint].x] forKey:@"anchorX"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite anchorPoint].y] forKey:@"anchorY"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite scaleX]] forKey:@"scaleX"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite scaleY]] forKey:@"scaleY"];
-			[childValues setValue:[NSNumber numberWithBool:[sprite flipX]] forKey:@"flipX"];
-			[childValues setValue:[NSNumber numberWithBool:[sprite flipY]] forKey:@"flipY"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite opacity]] forKey:@"opacity"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite color].r] forKey:@"colorR"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite color].g] forKey:@"colorG"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite color].b] forKey:@"colorB"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite rotation]] forKey:@"rotation"];
-			[childValues setValue:[NSNumber numberWithBool:[sprite isRelativeAnchorPoint]] forKey:@"relativeAnchor"];
+			// Get Sprite Dictionary Representation & Save it to children array
+			NSDictionary *childValues = [sprite dictionaryRepresentation];			
 			[children addObject:childValues];
 		}
 	}
@@ -671,6 +654,38 @@
 	if ([menuItem action] == @selector(saveProject:))
 	{
 		if (self.projectFilename)
+			return YES;
+		return NO;
+	}
+	
+	// "Cut"
+	if ([menuItem action] == @selector(cutMenuItemPressed:))
+	{
+		if ([modelObject_ selectedSprite])
+			return YES;
+		return NO;
+	}
+	
+	// "Copy"
+	if ([menuItem action] == @selector(copyMenuItemPressed:))
+	{
+		if ([modelObject_ selectedSprite])
+			return YES;
+		return NO;
+	}
+	
+	// "Paste"
+	if ([menuItem action] == @selector(pasteMenuItemPressed:))
+	{
+		NSPasteboard *generalPasteboard = [NSPasteboard generalPasteboard];
+        NSDictionary *options = [NSDictionary dictionary];
+        return [generalPasteboard canReadObjectForClasses:[NSArray arrayWithObject:[CSSprite class]] options:options];
+	}
+	
+	// "Delete"
+	if ([menuItem action] == @selector(deleteMenuItemPressed:))
+	{
+		if ([modelObject_ selectedSprite])
 			return YES;
 		return NO;
 	}
@@ -815,5 +830,62 @@
 {
 	mainLayer_.showBorders = ([sender state] == NSOffState);
 }
+
+- (IBAction) deleteMenuItemPressed: (id) sender
+{
+	[self deleteSprite:[modelObject_ selectedSprite]];
+}
+
+- (IBAction) cutMenuItemPressed: (id) sender
+{
+	[self copyMenuItemPressed: sender];
+	[self deleteSprite:[modelObject_ selectedSprite]];
+}
+
+- (IBAction) copyMenuItemPressed: (id) sender
+{
+	// write selected sprite to pasteboard
+	NSArray *objectsToCopy = [modelObject_ selectedSprites];
+	if (objectsToCopy)
+	{
+		NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+		[pasteboard clearContents];		
+		
+		if (![pasteboard writeObjects:objectsToCopy] )
+		{
+			DebugLog(@"Error writing to pasteboard, sprite = %@", sprite);
+		}
+	}
+}
+
+- (void)addSpritesWithArray:(NSArray *)sprites
+{
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
+	
+	for(CSSprite *sprite in sprites)
+	{
+		@synchronized( [modelObject_ spriteArray] )
+		{
+			[[modelObject_ spriteArray] addObject:sprite];
+		}
+		
+		// notify view that we added the sprite
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"addedSprite" object:nil];
+	}
+	
+	// reload the table
+	[spriteTableView_ reloadData];
+}
+
+- (IBAction) pasteMenuItemPressed: (id) sender
+{    
+    NSPasteboard *generalPasteboard = [NSPasteboard generalPasteboard];
+    NSDictionary *options = [NSDictionary dictionary];
+    
+    NSArray *newSprites = [generalPasteboard readObjectsForClasses:[NSArray arrayWithObject:[CSSprite class]] options:options];
+    
+	[self addSpritesWithArray: newSprites];
+}
+
 
 @end
