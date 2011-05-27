@@ -32,7 +32,11 @@
 
 @implementation CSMacGLView
 
-@synthesize workspaceSize, zoomFactor, zoomSpeed, zoomFactorMax, zoomFactorMin;
+@synthesize workspaceSize = workspaceSize_, 
+			zoomFactor = zoomFactor_, 
+			zoomSpeed = zoomSpeed_, 
+			zoomFactorMax = zoomFactorMax_, 
+			zoomFactorMin = zoomFactorMin_;
 
 - (cocoshopAppDelegate *) appDelegate
 {
@@ -95,9 +99,9 @@
 	float heightAspect = size.height * self.zoomFactor;
 	
 	// Resize self frame if Real Size of Workspace is less than available space in the Window
-	CGSize superViewFrameSize = [[self superview] frame].size;
+	CGSize superViewFrameSize = NSSizeToCGSize(	[[self superview] frame].size );
 	
-	CGSize frameSize = [self frame].size;
+	NSSize frameSize = [self frame].size;
 	
 	if ( widthAspect < superViewFrameSize.width )
 		frameSize.width = superViewFrameSize.width;
@@ -127,7 +131,7 @@
 	float widthAspect = size.width * self.zoomFactor;
 	float heightAspect = size.height * self.zoomFactor;
 	
-	CGSize superViewFrameSize = [[self superview] frame].size;
+	CGSize superViewFrameSize = NSSizeToCGSize(	[[self superview] frame].size );
 	
 	if ( widthAspect < superViewFrameSize.width )
 		offset.x = ( superViewFrameSize.width - widthAspect ) / 2.0f;
@@ -185,7 +189,7 @@
 	if (firstReshape)
 	{
 		self.zoomFactor = 1.0f;
-		self.workspaceSize = [self frame].size;
+		self.workspaceSize = NSSizeToCGSize( [self frame].size );
 	}
 	firstReshape = NO;
 	
@@ -226,7 +230,8 @@
 	CGPoint offset = [self viewportRect].origin;
 	offset.x = MAX(offset.x, 0);
 	offset.y = MAX(offset.y, 0);
-	p = ccpSub(p, offset);
+	p.x -= offset.x;
+	p.y -= offset.y;
 	
 	// Apply Zooming
 	p.x /= self.zoomFactor;

@@ -31,53 +31,34 @@
 @class CSSprite;
 @class CSMainLayer;
 @class CSTableViewDataSource;
+@class CSSideViewController;
 
 @interface CSObjectController : NSObjectController
 {
     CSModel *modelObject_;
 	CSMainLayer *mainLayer_;
 	CSTableViewDataSource *dataSource_;
-	
-	// Info Editing View
-	IBOutlet NSPanel *infoPanel_;
-	IBOutlet NSTextField *nameField_;
-	IBOutlet NSTextField *posXField_;
-	IBOutlet NSStepper *posXStepper_;
-	IBOutlet NSTextField *posYField_;
-	IBOutlet NSStepper *posYStepper_;
-	IBOutlet NSTextField *posZField_;
-	IBOutlet NSStepper *posZStepper_;
-	IBOutlet NSTextField *anchorXField_;
-	IBOutlet NSStepper *anchorXStepper_;
-	IBOutlet NSTextField *anchorYField_;
-	IBOutlet NSStepper *anchorYStepper_;
-	IBOutlet NSTextField *scaleField_;
-	IBOutlet NSStepper *scaleStepper_;
-	IBOutlet NSButton *flipXButton_;
-	IBOutlet NSButton *flipYButton_;
-	IBOutlet NSTextField *opacityField_;
-	IBOutlet NSSlider *opacitySlider_;
-	IBOutlet NSColorWell *colorWell_;
-	IBOutlet NSButton *relativeAnchorButton_;
-	IBOutlet NSTextField *rotationField_;
-	IBOutlet NSSlider *rotationSlider_;
-	
+	NSString *projectFilename_;
+		
 	// Sprites List View	
-	IBOutlet NSPanel *spritesPanel_;
 	IBOutlet NSTableView *spriteTableView_;
 	
 	// Menus
 	IBOutlet NSMenuItem *showBordersMenuItem_;
+	
+	IBOutlet CSSideViewController *sideViewController_;
 }
 
 @property(assign) IBOutlet CSModel *modelObject;
 @property(nonatomic, retain) CSMainLayer *mainLayer;
 @property(assign) NSTableView *spriteTableView;
-@property(retain) IBOutlet NSView *spriteInfoView;
-@property(retain) IBOutlet NSView *backgroundInfoView;
 @property(copy) NSString *projectFilename;
 
 #pragma mark Sprites
+
+// Changes aSprite.name to unique if modelObject_ already contains sprite with
+// the same name.
+- (void) ensureUniqueNameForSprite: (CSSprite *) aSprite;
 
 /**
  * filters array of filenames, leaving only allowed
@@ -102,11 +83,6 @@
 - (NSDictionary *)dictionaryFromLayerForBaseDirPath: (NSString *) baseDirPath;
 - (void)saveProjectToFile:(NSString *)filename;
 
-#pragma mark IBActions - Windows
-- (IBAction)openInfoPanel:(id)sender;
-- (IBAction)openSpritesPanel: (id) sender;
-- (IBAction)openMainWindow:(id)sender;
-
 #pragma mark IBActions - Save/Load
 - (IBAction)saveProject:(id)sender;
 - (IBAction)saveProjectAs:(id)sender;
@@ -124,5 +100,9 @@
 
 #pragma mark IBAction - Menus
 - (IBAction) showBordersMenuItemPressed: (id) sender;
+- (IBAction) deleteMenuItemPressed: (id) sender;
+- (IBAction) cutMenuItemPressed: (id) sender;
+- (IBAction) copyMenuItemPressed: (id) sender;
+- (IBAction) pasteMenuItemPressed: (id) sender;
 
 @end

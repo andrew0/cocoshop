@@ -41,3 +41,11 @@
 {}
 @end
 
+@interface CSDTest3 : TestLayer
+{}
+@end
+
+@interface CSDTest4 : TestLayer
+{}
+@end
+

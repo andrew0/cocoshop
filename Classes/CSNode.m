@@ -23,34 +23,10 @@
  *
  */
 
-#import <Cocoa/Cocoa.h>
+#import "CSNode.h"
 
-@interface CSSideViewController : NSObject
-{
-	IBOutlet NSView *rightSideView_;
-	
-	IBOutlet NSView *generalPropertiesTab_;
-	IBOutlet NSView *generalPropertiesView_;
-	
-	IBOutlet NSView *nodePropertiesTab_;
-	IBOutlet NSView *nodePropertiesView_;
-	
-	IBOutlet NSView *spritePropertiesTab_;
-	IBOutlet NSView *spritePropertiesView_;
-	
-	IBOutlet NSView *backgroundPropertiesTab_;
-	IBOutlet NSView *backgroundPropertiesView_;
-}
+@implementation CSNode
 
-@property(nonatomic, readonly) NSView *generalPropertiesTab;
-@property(nonatomic, readonly) NSView *generalPropertiesView;
-@property(nonatomic, readonly) NSView *nodePropertiesTab;
-@property(nonatomic, readonly) NSView *nodePropertiesView;
-@property(nonatomic, readonly) NSView *spritePropertiesTab;
-@property(nonatomic, readonly) NSView *spritePropertiesView;
-@property(nonatomic, readonly) NSView *backgroundPropertiesTab;
-@property(nonatomic, readonly) NSView *backgroundPropertiesView;
 
-- (void)alignItems:(NSArray *)item, ... NS_REQUIRES_NIL_TERMINATION;
 
 @end

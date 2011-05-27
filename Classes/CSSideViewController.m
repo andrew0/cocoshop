@@ -28,8 +28,17 @@
 
 @implementation CSSideViewController
 
+@synthesize generalPropertiesTab=generalPropertiesTab_;
+@synthesize generalPropertiesView=generalPropertiesView_;
+@synthesize nodePropertiesTab=nodePropertiesTab_;
+@synthesize nodePropertiesView=nodePropertiesView_;
+@synthesize spritePropertiesTab=spritePropertiesTab_;
+@synthesize spritePropertiesView=spritePropertiesView_;
+@synthesize backgroundPropertiesTab=backgroundPropertiesTab_;
+@synthesize backgroundPropertiesView=backgroundPropertiesView_;
+
 - (void)awakeFromNib
-{	
+{
 	[self alignItems:
 	 [NSArray arrayWithObjects:generalPropertiesTab_, generalPropertiesView_, nil],
 	 [NSArray arrayWithObjects:nodePropertiesTab_, nodePropertiesView_, nil],
@@ -80,7 +89,7 @@
 		if(i != nil)
 		{
 			NSAssert([i count] == 2, @"Invalid array passed to alignItems:");
-						
+			
 			NSView *tab = [i objectAtIndex:0];
 			NSView *view = [i objectAtIndex:1];
 			
