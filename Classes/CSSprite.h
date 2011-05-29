@@ -27,6 +27,7 @@
 
 #define kCSSpriteStrokeSize 1
 
+@class CSNode;
 @class CSObjectController;
 
 /*
@@ -38,32 +39,21 @@
  NSDictionary.
 	TODO: Refactor it to the CSNode, for support of other CCNodes in Cocoshop.
  */
-@interface CSSprite : CCSprite <NSCoding,NSPasteboardReading, NSPasteboardWriting>
+@interface CSSprite : CCSprite <NSCoding, NSPasteboardReading, NSPasteboardWriting>
 {
-	BOOL isSelected_;
-	
-	CCLayerColor *fill_;
-	CCSprite *anchor_;
-	CCLabelBMFont *positionLabel_;
-	
+	CSNode *node_;
 	NSString *filename_;
-	NSString *name_;
-	BOOL locked_;
-	
-	BOOL willUpdatePositionLabel_;
 }
 
-@property(nonatomic, assign) BOOL isSelected;
+@property(nonatomic, retain) CSNode *node;
 @property(nonatomic, copy) NSString *filename;
-@property(nonatomic, copy) NSString *name;
-@property(nonatomic, assign) BOOL locked;
-
-// changes position and text of positionLabel
-// must be called on Cocos2D thread
-- (void)updatePositionLabel;
-
-// marks that updatePositionLabel must be called once at next visit
-- (void)updatePositionLabelSafely;
+// dynamic properties
+@property(nonatomic, assign) BOOL isSelected;
+@property(nonatomic, assign) NSString *nodeName;
+@property(nonatomic, assign) BOOL isLocked;
+@property(nonatomic, assign) CCLayerColor *fill;
+@property(nonatomic, assign) CCSprite *anchor;
+@property(nonatomic, assign) CCLabelBMFont *positionLabel;
 
 #pragma mark NSCoding Support
 

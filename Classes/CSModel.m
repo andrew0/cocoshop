@@ -107,7 +107,7 @@
 			NSColor *col = [NSColor colorWithDeviceRed:[new color].r/255.0f green:[new color].g/255.0f blue:[new color].b/255.0f alpha:255];
 			
 			[new setIsSelected:YES];
-			[self setName:[new name]];
+			[self setName:[new nodeName]];
 			[self setPosX:pos.x];
 			[self setPosY:pos.y];
 			[self setPosZ: [new zOrder]];
@@ -155,7 +155,7 @@
 {
 	for (CSSprite *sprite in spriteArray_)
 	{
-		if ([sprite.name isEqualToString: name]) {
+		if ([sprite.nodeName isEqualToString: name]) {
 			return sprite;
 		}
 	}
