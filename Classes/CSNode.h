@@ -23,15 +23,38 @@
  *
  */
 
-#import "cocos2d.h"
+@class CCLayerColor;
+@class CCSprite;
+@class CCLabelBMFont;
 
 @interface CSNode : CCNode
 {
+	CCNode *delegate_;
+	
+	BOOL isLocked_;
 	BOOL isSelected_;
 	
 	CCLayerColor *fill_;
 	CCSprite *anchor_;
-	CCLabelBMFont *positionLabel_;	
+	CCLabelBMFont *positionLabel_;
+	
+	NSString *nodeName_;
+	BOOL willUpdatePositionLabel_;
 }
+
+// changes position and text of positionLabel
+// must be called on Cocos2D thread
+- (void)updatePositionLabel;
+
+// marks that updatePositionLabel must be called once at next visit
+- (void)updatePositionLabelSafely;
+
+@property(nonatomic, retain) CCNode *delegate;
+@property(nonatomic, assign) BOOL isSelected;
+@property(nonatomic, copy) NSString *nodeName;
+@property(nonatomic, assign) BOOL isLocked;
+@property(nonatomic, retain) CCLayerColor *fill;
+@property(nonatomic, retain) CCSprite *anchor;
+@property(nonatomic, retain) CCLabelBMFont *positionLabel;
 
 @end

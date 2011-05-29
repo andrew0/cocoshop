@@ -124,18 +124,18 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	DebugLog(@"keyPath  = %@", keyPath);
+//	DebugLog(@"keyPath  = %@", keyPath);
 	
 	if( [keyPath isEqualToString:@"name"] )
 	{
 		CSSprite *sprite = [modelObject_ selectedSprite];
 		if(sprite)
 		{
-			NSString *currentName = [sprite name];
+			NSString *currentName = [sprite nodeName];
 			NSString *newName = [modelObject_ name];
 			if( ![currentName isEqualToString:newName] )
 			{
-				[sprite setName:newName];
+				[sprite setNodeName:newName];
 				[self ensureUniqueNameForSprite:sprite];
 			}
 		}
@@ -375,7 +375,7 @@
 
 - (void) ensureUniqueNameForSprite: (CSSprite *) aSprite
 {
-	NSString *originalName = [aSprite name];
+	NSString *originalName = [aSprite nodeName];
 	NSString *name = [NSString stringWithString: originalName];
 	NSUInteger i = 0;
 	while( ([modelObject_ spriteWithName: name] != nil) && ([modelObject_ spriteWithName: name] != aSprite) )
@@ -383,7 +383,7 @@
 		NSAssert(i <= NSUIntegerMax, @"CSObjectController#ensureUniqueNameForSprite: Added too many of the same sprite");
 		name = [originalName stringByAppendingFormat:@"_%u", i++];
 	}
-	aSprite.name = name;
+	aSprite.nodeName = name;
 }
 
 - (NSArray *) allowedFileTypes
@@ -442,7 +442,7 @@
 		NSString *name = [NSString stringWithString:originalName];
 		
 		CSSprite *sprite = [CSSprite spriteWithFile:filename];
-		[sprite setName:name];
+		[sprite setNodeName:name];
 		[sprite setFilename:filename];
 		
 		[self ensureUniqueNameForSprite: sprite];
