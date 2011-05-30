@@ -27,9 +27,11 @@
 @class CCSprite;
 @class CCLabelBMFont;
 
-@interface CSNode : CCNode
+@interface CSNode : CCNode <NSCoding, NSPasteboardReading, NSPasteboardWriting>
 {
 	CCNode *delegate_;
+	
+	BOOL firstOnEnter_;
 	
 	BOOL isLocked_;
 	BOOL isSelected_;
@@ -40,6 +42,8 @@
 	
 	NSString *nodeName_;
 	BOOL willUpdatePositionLabel_;
+	
+	CCNode *resizeControls_;
 }
 
 // changes position and text of positionLabel
@@ -49,6 +53,8 @@
 // marks that updatePositionLabel must be called once at next visit
 - (void)updatePositionLabelSafely;
 
+- (void)updateAnchor;
+
 @property(nonatomic, retain) CCNode *delegate;
 @property(nonatomic, assign) BOOL isSelected;
 @property(nonatomic, copy) NSString *nodeName;
@@ -56,5 +62,60 @@
 @property(nonatomic, retain) CCLayerColor *fill;
 @property(nonatomic, retain) CCSprite *anchor;
 @property(nonatomic, retain) CCLabelBMFont *positionLabel;
+
+/* 
+ Creates NSDictionary that contains info about node.
+ Currently it supports only CCSprite & saves its properties into dictionary root
+ But it should be better to have this format:
+ 
+ Dictionary Root
+ |
+ + "ClassName" => "CCSprite"
+ |
+ + "CCNode" => NSDictionary
+ |
+ + "position" => NSStringFromCGPoint
+ |
+ + "anchor point" => NSStringFromCGPoint
+ |
+ + "contentSize" => NSStringFromCGRect
+ |
+ ...
+ |
+ + "CCSprite" => NSDictionary
+ |
+ + "filename" => "foo.png"
+ |
+ + "color" => NSDictionary
+ |
+ + "r" = 255
+ |
+ + "g" = 255
+ |
+ ...
+ |
+ ...
+ 
+ That format should be easy to use with NSCoding, and Cocos2D-X
+ 
+ Subclassing any CCNode you will code like this:
+ 
+ - (NSDictionary *) dictionaryRepresentation
+ {
+ NSDictionary *dict = [super dictionaryRepresentation];
+ NSDictionary *selfPropDict = [self customPropertiesDictionaryRepresentation];
+ [dict setObject: selfPropDict forKey: @"MyCustomCCNodeSubclass" ];
+ return dict;
+ }
+ 
+ More info about this format should be discussed here: http://www.cocos2d-iphone.org/forum/topic/16980
+ 
+ */
+- (NSDictionary *)dictionaryRepresentation;
+
+/* Setups self from given NSDictionary 
+ * Uses [super setupFromDictionaryRepresentation: aDict] before setting self properties
+ */
+- (void)setupFromDictionaryRepresentation: (NSDictionary *) aDict;
 
 @end

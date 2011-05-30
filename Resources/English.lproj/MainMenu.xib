@@ -12,10 +12,10 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="371"/>
-			<integer value="29"/>
 			<integer value="1482"/>
+			<integer value="29"/>
 			<integer value="1485"/>
+			<integer value="371"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -4486,6 +4486,14 @@
 					</object>
 					<int key="connectionID">1986</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">spriteDeleteButtonClicked:</string>
+						<reference key="source" ref="994683652"/>
+						<reference key="destination" ref="531941315"/>
+					</object>
+					<int key="connectionID">1987</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -7512,9 +7520,9 @@
 					<string>{{825, 729}, {199, 73}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{475, 832}, {234, 43}}</string>
-					<string>{{50, 181}, {1026, 524}}</string>
+					<string>{{22, 181}, {1026, 524}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{50, 181}, {1026, 524}}</string>
+					<string>{{22, 181}, {1026, 524}}</string>
 					<integer value="1"/>
 					<string>{{33, 99}, {480, 360}}</string>
 					<boolean value="YES"/>
@@ -7588,7 +7596,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1986</int>
+			<int key="maxID">1987</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
