@@ -29,6 +29,7 @@
 #import "CSModel.h"
 #import "NSString+RelativePath.h"
 #import "CSNode.h"
+#import "DebugLog.h"
 
 @interface CCNode (Internal)
 
@@ -38,35 +39,69 @@
 
 @implementation CSSprite
 
-@synthesize node=node_;
+@synthesize sprite=sprite_;
 @synthesize filename=filename_;
-@dynamic isSelected;
-@dynamic nodeName;
-@dynamic isLocked;
-@dynamic fill;
-@dynamic anchor;
-@dynamic positionLabel;
+@dynamic dirty;
+@dynamic quad;
+@dynamic atlasIndex;
+@dynamic textureRect;
+@dynamic textureRectRotated;
+@dynamic flipX;
+@dynamic flipY;
+@dynamic opacity;
+@dynamic color;
+@dynamic usesBatchNode;
+@dynamic textureAtlas;
+@dynamic batchNode;
+@dynamic honorParentTransform;
+@dynamic offsetPositionInPixels;
+@dynamic blendFunc;
 
 #pragma mark Init / DeInit
 
-- (id)init
++ (id)spriteWithFile:(NSString *)file
+{
+	return [[[self alloc] initWithFile:file] autorelease];
+}
+
+- (id)initWithFile:(NSString *)file
+{
+	CCSprite *sprite = [CCSprite spriteWithFile:file];
+	return [self initWithSprite:sprite];
+}
+
+- (id)initWithSprite:(CCSprite *)aSprite
 {
 	if((self=[super init]))
 	{
-		self.node = [CSNode node];
-		[self addChild:node_];
-		
-		node_.delegate = self;
-		
 		self.filename = nil;
+		self.anchorPoint = ccp(0.5f, 0.5f);
+		
+		[self setupFromSprite:aSprite];
 	}
 	
 	return self;
 }
 
+- (void)setupFromSprite:(CCSprite *)aSprite
+{
+	if(aSprite != nil)
+	{
+		self.sprite = aSprite;	
+		aSprite.isRelativeAnchorPoint = NO;
+		[self addChild:aSprite z:NSIntegerMin];
+		self.contentSize = aSprite.contentSize;
+	}
+	else
+	{
+		DebugLog(@"Attempted to setup nil sprite");
+	}
+
+}
+
 - (void)dealloc
 {
-	self.node = nil;
+	self.sprite = nil;
 	self.filename = nil;
 	[super dealloc];
 }
@@ -75,68 +110,85 @@
 
 - (void)setOpacity:(GLubyte)anOpacity
 {
-	if(!node_.isLocked)
+	if(!isLocked_)
 	{
-		[super setOpacity:anOpacity];
+		sprite_.opacity = anOpacity;
+	}
+}
+
+- (void)setColor:(ccColor3B)col
+{
+	if(!isLocked_)
+	{
+		sprite_.color = col;
+	}
+}
+
+- (void)setFlipX:(BOOL)fx
+{
+	if(!isLocked_)
+	{
+		sprite_.flipX = fx;
+	}
+}
+
+- (void)setFlipY:(BOOL)fy
+{
+	if(!isLocked_)
+	{
+		sprite_.flipY = fy;
 	}
 }
 
 #pragma mark Message Forwarding
 
-- (void)setPosition:(CGPoint)pos
+// need to implement these to avoid warnings
+
+- (ccColor3B)color
 {
-	[node_ setPosition:pos];
-	[super setPosition:pos];
+	return sprite_.color;
 }
 
-- (void)setAnchorPoint:(CGPoint)a
+- (GLubyte)opacity
 {
-	[node_ setAnchorPoint:a];
-	[super setAnchorPoint:a];
+	return sprite_.opacity;
 }
 
-- (void)setScaleX:(float)sx
+- (CCTexture2D*)texture
 {
-	[node_ setScaleX:sx];
-	[super setScaleX:sx];
+	return sprite_.texture;
 }
 
-- (void)setScaleY:(float)sy
+- (void)setTexture:(CCTexture2D*)texture
 {
-	[node_ setScaleY:sy];
-	[super setScaleY:sy];
+	sprite_.texture = texture;
 }
 
-- (void)setContentSize:(CGSize)cs
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector
 {
-	[node_ setContentSize:cs];
-	[super setContentSize:cs];
-}
-
-- (void)setRotation:(float)rot
-{
-	[node_ setRotation:rot];
-	[super setRotation:rot];
-}
-
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector 
-{
-    NSMethodSignature *signature = [super methodSignatureForSelector:selector];
-    if(!signature)
+	NSMethodSignature *sig;
+	
+	if( [sprite_ respondsToSelector:selector] )
 	{
-		signature = [node_ methodSignatureForSelector:selector];
-    } 
-    return signature;
+		sig = [sprite_ methodSignatureForSelector:selector];
+//		DebugLog(@"Forwarding invocation (selector: %@) from %@ to %@", NSStringFromSelector(selector), self, sprite_);
+	}
+	else
+	{
+		sig = [super methodSignatureForSelector:selector];
+//		DebugLog(@"Could not forward selector %@ to %@", NSStringFromSelector(selector), sprite_);
+	}
+	
+	return sig;
 }
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation
 {
-	// try forwarding to CSNode
-    if([node_ respondsToSelector:[anInvocation selector]])
+	if( [sprite_ respondsToSelector:[anInvocation selector]] )
 	{
-        [anInvocation invokeWithTarget:node_];
+        [anInvocation invokeWithTarget:sprite_];
 	}
-    else
+	else
 	{
         [super forwardInvocation:anInvocation];
 	}
@@ -144,149 +196,51 @@
 
 - (BOOL)respondsToSelector:(SEL)aSelector
 {
-	return ([super respondsToSelector:aSelector] || [node_ respondsToSelector:aSelector]);
+	return ([super respondsToSelector:aSelector] || [sprite_ respondsToSelector:aSelector]);
 }
 
 #pragma mark -
 #pragma mark Archiving
 
-static NSString *dictRepresentation = @"dictionaryRepresentation";
-
-- (NSDictionary *) dictionaryRepresentation
+- (NSDictionary *)dictionaryRepresentation
 {
-	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:16];
+	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[super dictionaryRepresentation]];
 	
-	[dict setValue:[node_ nodeName] forKey:@"name"];			
-	[dict setValue:[self filename] forKey:@"filename"];
-	[dict setValue:[NSNumber numberWithFloat:[self position].x] forKey:@"posX"];
-	[dict setValue:[NSNumber numberWithFloat:[self position].y] forKey:@"posY"];
-	[dict setValue:[NSNumber numberWithInteger:[self zOrder]] forKey:@"posZ"];
-	[dict setValue:[NSNumber numberWithFloat:[self anchorPoint].x] forKey:@"anchorX"];
-	[dict setValue:[NSNumber numberWithFloat:[self anchorPoint].y] forKey:@"anchorY"];
-	[dict setValue:[NSNumber numberWithFloat:[self scaleX]] forKey:@"scaleX"];
-	[dict setValue:[NSNumber numberWithFloat:[self scaleY]] forKey:@"scaleY"];
-	[dict setValue:[NSNumber numberWithBool:[self flipX]] forKey:@"flipX"];
-	[dict setValue:[NSNumber numberWithBool:[self flipY]] forKey:@"flipY"];
-	[dict setValue:[NSNumber numberWithFloat:[self opacity]] forKey:@"opacity"];
-	[dict setValue:[NSNumber numberWithFloat:[self color].r] forKey:@"colorR"];
-	[dict setValue:[NSNumber numberWithFloat:[self color].g] forKey:@"colorG"];
-	[dict setValue:[NSNumber numberWithFloat:[self color].b] forKey:@"colorB"];
-	[dict setValue:[NSNumber numberWithFloat:[self rotation]] forKey:@"rotation"];
-	[dict setValue:[NSNumber numberWithBool:[self isRelativeAnchorPoint]] forKey:@"relativeAnchor"];
+	[dict setValue:filename_ forKey:@"filename"];
+	[dict setValue:[NSNumber numberWithBool:sprite_.flipX] forKey:@"flipX"];
+	[dict setValue:[NSNumber numberWithBool:sprite_.flipY] forKey:@"flipY"];
+	[dict setValue:[NSNumber numberWithFloat:sprite_.opacity] forKey:@"opacity"];
+	[dict setValue:[NSNumber numberWithFloat:sprite_.color.r] forKey:@"colorR"];
+	[dict setValue:[NSNumber numberWithFloat:sprite_.color.g] forKey:@"colorG"];
+	[dict setValue:[NSNumber numberWithFloat:sprite_.color.b] forKey:@"colorB"];
 	
 	return dict;
 }
 
-- (void) setupFromDictionaryRepresentation: (NSDictionary *) aDict
+- (void)setupFromDictionaryRepresentation:(NSDictionary *)aDict
 {
-	node_.nodeName = [aDict objectForKey:@"name"];
+	[super setupFromDictionaryRepresentation:aDict];
+	
 	self.filename = [aDict objectForKey:@"filename"];
 	
-	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: self.filename];
+	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:self.filename];
 	if (!texture)
 	{
 		//TODO: implement spriteSetupFailed notification listener in CSObjectController & show error message
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"spriteSetupFailed" object: aDict];
-		return;		
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"spriteSetupFailed" object:aDict];
+		DebugLog(@"Sprite setup failed");
+		return;
 	}
 	
-	// Set Texture & TextureRect
-	CGRect rect = CGRectZero;
-	rect.size = texture.contentSize;
-	[self setTexture:texture];
-	[self setTextureRect:rect];
+	self.sprite = [CCSprite spriteWithTexture:texture];
+	sprite_.flipX = [[aDict objectForKey:@"flipX"] boolValue];
+	sprite_.flipY = [[aDict objectForKey:@"flipY"] boolValue];
+	sprite_.opacity = [[aDict objectForKey:@"opacity"] floatValue];
+	sprite_.color = ccc3([[aDict objectForKey:@"colorR"] floatValue],
+						 [[aDict objectForKey:@"colorG"] floatValue],
+						 [[aDict objectForKey:@"colorB"] floatValue]);
 	
-	// Set Other Properties for CCSprite
-	CGPoint childPos = ccp([[aDict objectForKey:@"posX"] floatValue], [[aDict objectForKey:@"posY"] floatValue]);
-	[self setPosition:childPos];
-	
-	CGPoint childAnchor = ccp([[aDict objectForKey:@"anchorX"] floatValue], [[aDict objectForKey:@"anchorY"] floatValue]);
-	[self setAnchorPoint:childAnchor];
-	
-	CGFloat childScaleX = [[aDict objectForKey:@"scaleX"] floatValue];
-	CGFloat childScaleY = [[aDict objectForKey:@"scaleY"] floatValue];
-	[self setScaleX:childScaleX];
-	[self setScaleY:childScaleY];
-	
-	BOOL childFlipX = [[aDict objectForKey:@"flipX"] boolValue];
-	BOOL childFlipY = [[aDict objectForKey:@"flipX"] boolValue];
-	[self setFlipX:childFlipX];
-	[self setFlipY:childFlipY];
-	
-	CGFloat childOpacity = [[aDict objectForKey:@"opacity"] floatValue];
-	[self setOpacity:childOpacity];
-	
-	ccColor3B childColor = ccc3([[aDict objectForKey:@"colorR"] floatValue], [[aDict objectForKey:@"colorG"] floatValue], [[aDict objectForKey:@"colorB"] floatValue]);
-	[self setColor:childColor];
-	
-	CGFloat childRotation = [[aDict objectForKey:@"rotation"] floatValue];
-	[self setRotation:childRotation];
-	
-	BOOL childRelativeAnchor = [[aDict objectForKey:@"relativeAnchor"] boolValue];
-	[self setIsRelativeAnchorPoint:childRelativeAnchor];
-	
-	[self _setZOrder:  [[aDict objectForKey:@"posZ"] floatValue]];
-}
-
-- (id)initWithCoder:(NSCoder *)coder 
-{
-    if (self = [super init]) 
-	{
-        NSDictionary *dict = [coder decodeObjectForKey:dictRepresentation]; 
-		[self setupFromDictionaryRepresentation:dict];
-    }
-    return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)encoder 
-{
-    [encoder encodeObject:[self dictionaryRepresentation] forKey:dictRepresentation];
-}
-
-#pragma mark NSPasteboardWriting
-NSString *CSSpriteUTI = @"org.cocos2d-iphone.cocoshop.CSSprite";
-
-- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard 
-{
-    static NSArray *writableTypes = nil;
-    
-    if (!writableTypes) {
-        writableTypes = [[NSArray alloc] initWithObjects:CSSpriteUTI, nil];
-    }
-    return writableTypes;
-}
-
-- (id)pasteboardPropertyListForType:(NSString *)type 
-{
-    if ([type isEqualToString:CSSpriteUTI]) 
-	{
-        return [NSKeyedArchiver archivedDataWithRootObject:self];
-    }
-	
-    return nil;
-}
-
-#pragma mark NSPasteboardReading
-+ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard 
-{    
-    static NSArray *readableTypes = nil;
-    if (!readableTypes) 
-	{
-        readableTypes = [[NSArray alloc] initWithObjects:CSSpriteUTI, nil];
-    }
-    return readableTypes;
-}
-
-+ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pboard 
-{
-    if ([type isEqualToString:CSSpriteUTI]) 
-	{
-        /*
-         This means you don't need to implement code for this type in initWithPasteboardPropertyList:ofType: -- initWithCoder: is invoked instead.
-         */
-        return NSPasteboardReadingAsKeyedArchive;
-    }
-    return 0;
+	[self setupFromSprite:sprite_];
 }
 
 @end

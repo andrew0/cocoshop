@@ -26,6 +26,10 @@
 #import "cocos2d.h"
 #import "CSNode.h"
 
+@interface CCNode (Internal)
+- (void)_setZOrder:(int)z;
+@end
+
 @implementation CSNode
 
 @synthesize delegate=delegate_;
@@ -42,11 +46,10 @@
 {
 	if((self=[super init]))
 	{
+		firstOnEnter_ = YES;
 		self.delegate = nil;
 		self.nodeName = nil;
 		self.isLocked = NO;
-		
-		self.isRelativeAnchorPoint = NO;
 		
 		self.fill = [[CCLayerColor layerWithColor:ccc4(30,144,255,25.5f)] retain];
 		[self addChild:fill_];
@@ -58,6 +61,11 @@
 		NSString *posText = @"0, 0";
 		self.positionLabel = [[CCLabelBMFont labelWithString:posText fntFile:@"arial.fnt"] retain];
 		[anchor_ addChild:positionLabel_];
+		
+		
+		// resize controls
+		resizeControls_ = [[CCNode node] retain];
+		[self addChild:resizeControls_];
 	}
 	
 	return self;
@@ -65,11 +73,11 @@
 
 - (void)dealloc
 {
-	self.delegate = nil;
 	self.nodeName = nil;
 	self.fill = nil;
 	self.anchor = nil;
 	self.positionLabel = nil;
+	[resizeControls_ release];
 	[super dealloc];
 }
 
@@ -80,7 +88,7 @@
 - (void)updatePositionLabel
 {
 	CGSize s = anchor_.contentSize;
-	CGPoint p = delegate_.position;
+	CGPoint p = position_;
 	NSString *posText = [NSString stringWithFormat:@"%g, %g", floorf( p.x ), floorf( p.y )];
 	[positionLabel_ setString:posText];
 	[positionLabel_ setPosition:ccp(s.width/2, -10)];
@@ -91,6 +99,16 @@
 - (void)updatePositionLabelSafely
 {
 	willUpdatePositionLabel_ = YES;
+}
+
+- (void)updateAnchor
+{
+	CGSize size = contentSize_;
+	
+	if( !isRelativeAnchorPoint_ )
+		[anchor_ setPosition:CGPointZero];
+	else
+		[anchor_ setPosition:ccp(size.width*anchorPoint_.x, size.height*anchorPoint_.y)];	
 }
 
 #pragma mark Properties
@@ -112,6 +130,7 @@
 {
 	if(!isLocked_)
 	{
+		[super setPosition:pos];
 		[self updatePositionLabelSafely];
 	}
 }
@@ -120,29 +139,40 @@
 {
 	if(!isLocked_)
 	{
-		// update position of anchor point
-		CGSize size = delegate_.contentSize;
+		[super setAnchorPoint:anchor];
 		
-		if( !delegate_.isRelativeAnchorPoint )
-			[anchor_ setPosition:CGPointZero];
-		else
-			[anchor_ setPosition:ccp(size.width*anchor.x, size.height*anchor.y)];
+		// update position of anchor point
+		[self updateAnchor];
 	}
 }
 
-- (void)setScaleX:(float)s
+- (void)setScaleX:(float)sx
 {
 	if(!isLocked_)
 	{
-		[anchor_ setScaleX:(s != 0) ? 1.0f/s : 0];
+		[super setScaleX:sx];
+		
+		anchor_.scaleX = (sx != 0) ? 1.0f/sx : 0;
+		
+		for(CCNode *child in [resizeControls_ children])
+		{
+			child.scaleX = (sx != 0) ? 1.0f/sx : 0;
+		}
 	}
 }
 
-- (void)setScaleY:(float)s
+- (void)setScaleY:(float)sy
 {
 	if(!isLocked_)
 	{
-		[anchor_ setScaleY:(s != 0) ? 1.0f/s : 0];
+		[super setScaleX:sy];
+		
+		anchor_.scaleY = (sy != 0) ? 1.0f/sy : 0;
+		
+		for(CCNode *child in [resizeControls_ children])
+		{
+			child.scaleY = (sy != 0) ? 1.0f/sy : 0;
+		}
 	}
 }
 
@@ -150,6 +180,7 @@
 {
 	if(!isLocked_)
 	{
+		[super setRotation:rot];
 		[positionLabel_ setRotation:-rot];
 		//TODO: reposition somehow positionLabel_ to be always at the bottom of anchor_
 		// if this is necessary
@@ -160,14 +191,10 @@
 {
 	if(!isLocked_)
 	{
-		[delegate_ setIsRelativeAnchorPoint:relative];
+		[super setIsRelativeAnchorPoint:relative];
 		
 		// update position of anchor point
-		CGSize size = delegate_.contentSize;
-		if( ![self isRelativeAnchorPoint] )
-			[anchor_ setPosition:CGPointZero];
-		else
-			[anchor_ setPosition:ccp(size.width*anchorPoint_.x, size.height*anchorPoint_.y)];
+		[self updateAnchor];
 	}
 }
 
@@ -178,6 +205,8 @@
 		isSelected_ = selected;
 		[fill_ setVisible:selected];
 		[anchor_ setVisible:selected];
+		[resizeControls_ setVisible:selected];
+		[self updateAnchor];
 	}
 }
 
@@ -187,17 +216,47 @@
 {
 	[super onEnter];
 	
-	if( [delegate_ respondsToSelector:@selector(contentSize)] )
+	if(firstOnEnter_)
 	{
-		CGSize size = [delegate_ contentSize];
-		[fill_ changeWidth:size.width height:size.height];
-		[anchor_ setPosition:ccp(size.width*anchorPoint_.x, size.height*anchorPoint_.y)];
+		CGSize s = contentSize_;
 		
-		CGSize s = [anchor_ contentSize];
-		[positionLabel_ setPosition:ccp(s.width/2, -10)];
+		CCSprite *tl = [CCSprite spriteWithFile:@"resize.png"];
+		CCSprite *tr = [CCSprite spriteWithFile:@"resize.png"];
+		CCSprite *bl = [CCSprite spriteWithFile:@"resize.png"];
+		CCSprite *br = [CCSprite spriteWithFile:@"resize.png"];
+		CCSprite *t = [CCSprite spriteWithFile:@"resize.png"];
+		CCSprite *r = [CCSprite spriteWithFile:@"resize.png"];
+		CCSprite *b = [CCSprite spriteWithFile:@"resize.png"];
+		CCSprite *l = [CCSprite spriteWithFile:@"resize.png"];
+		
+		tl.position = ccp(0, s.height);
+		tr.position = ccp(s.width, s.height);
+		bl.position = ccp(0, 0);
+		br.position = ccp(s.width, 0);
+		t.position = ccp(s.width/2, s.height);
+		r.position = ccp(s.width, s.height/2);
+		b.position = ccp(s.width/2, 0);
+		l.position = ccp(0, s.height/2);
+		
+		[resizeControls_ addChild:tl];
+		[resizeControls_ addChild:tr];
+		[resizeControls_ addChild:bl];
+		[resizeControls_ addChild:br];
+		[resizeControls_ addChild:t];
+		[resizeControls_ addChild:r];
+		[resizeControls_ addChild:b];
+		[resizeControls_ addChild:l];
+		
+		
+		[fill_ changeWidth:s.width height:s.height];
+		[anchor_ setPosition:ccp(s.width*delegate_.anchorPoint.x, s.height*delegate_.anchorPoint.y)];
+		
+		CGSize anchorSize = [anchor_ contentSize];
+		[positionLabel_ setPosition:ccp(anchorSize.width/2, -10)];			
+		
+		firstOnEnter_ = NO;		
 	}
 }
-
 
 - (void)visit
 {
@@ -214,18 +273,116 @@
 	[super draw];
 	
 	// draw the outline when its selected
-	CGSize s = [delegate_ contentSize];	
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	glLineWidth(1.0f);
+	if( isSelected_ )
+	{
+		CGSize s = contentSize_;	
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		glLineWidth(1.0f);
+
+		CGPoint vertices[] = {
+			ccp(0, s.height),
+			ccp(s.width, s.height),
+			ccp(s.width, 0),
+			ccp(0, 0)
+		};
+
+		ccDrawPoly(vertices, 4, YES);
+	}
+}
+
+#pragma mark -
+#pragma mark Archiving
+
+static NSString *const dictRepresentation = @"dictionaryRepresentation";
+
+- (NSDictionary *)dictionaryRepresentation
+{
+	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:16];
 	
-	CGPoint vertices[] = {
-		ccp(0, s.height),
-		ccp(s.width, s.height),
-		ccp(s.width, 0),
-		ccp(0, 0)
-	};
+	[dict setValue:nodeName_ forKey:@"name"];
+	[dict setValue:NSStringFromPoint(NSPointFromCGPoint(position_)) forKey:@"position"];
+	[dict setValue:NSStringFromPoint(NSPointFromCGPoint(anchorPoint_)) forKey:@"anchorPoint"];
+	[dict setValue:[NSNumber numberWithInteger:zOrder_] forKey:@"zOrder"];
+	[dict setValue:[NSNumber numberWithFloat:scaleX_] forKey:@"scaleX"];
+	[dict setValue:[NSNumber numberWithFloat:scaleY_] forKey:@"scaleY"];
+	[dict setValue:[NSNumber numberWithFloat:rotation_] forKey:@"rotation"];
+	[dict setValue:[NSNumber numberWithBool:isRelativeAnchorPoint_] forKey:@"isRelativeAnchorPoint"];
 	
-	ccDrawPoly(vertices, 4, YES);
+	return dict;
+}
+
+- (void)setupFromDictionaryRepresentation:(NSDictionary *)aDict
+{
+	self.nodeName = [aDict objectForKey:@"name"];
+	self.position = NSPointToCGPoint( NSPointFromString( [aDict objectForKey:@"position"] ) );
+	self.anchorPoint = NSPointToCGPoint( NSPointFromString( [aDict objectForKey:@"anchorPoint"] ) );
+	self.scaleX = [[aDict objectForKey:@"scaleX"] floatValue];
+	self.scaleY = [[aDict objectForKey:@"scaleY"] floatValue];
+	self.rotation = [[aDict objectForKey:@"rotation"] floatValue];
+	self.isRelativeAnchorPoint = [[aDict objectForKey:@"isRelativeAnchorPoint"] boolValue];
+	[self _setZOrder:[[aDict objectForKey:@"zOrder"] floatValue]];
+}
+
+- (id)initWithCoder:(NSCoder *)coder 
+{
+    if(self = [self init]) 
+	{
+        NSDictionary *dict = [coder decodeObjectForKey:dictRepresentation]; 
+		[self setupFromDictionaryRepresentation:dict];
+    }
+	
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder 
+{
+    [encoder encodeObject:[self dictionaryRepresentation] forKey:dictRepresentation];
+}
+
+#pragma mark NSPasteboardWriting
+NSString *const CSNodeUTI = @"org.cocos2d-iphone.cocoshop.CSNode";
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard 
+{
+    static NSArray *writableTypes = nil;
+    
+    if(!writableTypes)
+	{
+        writableTypes = [[NSArray alloc] initWithObjects:CSNodeUTI, nil];
+    }
+	
+    return writableTypes;
+}
+
+- (id)pasteboardPropertyListForType:(NSString *)type 
+{
+    if([type isEqualToString:CSNodeUTI]) 
+	{
+        return [NSKeyedArchiver archivedDataWithRootObject:self];
+    }
+	
+    return nil;
+}
+
+#pragma mark NSPasteboardReading
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard 
+{    
+    static NSArray *readableTypes = nil;
+    if(!readableTypes) 
+	{
+        readableTypes = [[NSArray alloc] initWithObjects:CSNodeUTI, nil];
+    }
+    return readableTypes;
+}
+
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pboard 
+{
+    if([type isEqualToString:CSNodeUTI]) 
+	{
+		// This means you don't need to implement code for this type in initWithPasteboardPropertyList:ofType: -- initWithCoder: is invoked instead.
+        return NSPasteboardReadingAsKeyedArchive;
+    }
+    return 0;
 }
 
 @end
