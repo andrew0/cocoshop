@@ -134,26 +134,46 @@
 	// create and add elements
 	for (NSString *elementKey in elements_) 
 	{
-		CSDElement *element = [elements_ objectForKey: elementKey];
+		CCNode *newElementNode = [self nodeFromElementWithName: elementKey];
 		
-		// element with batchNode
-		if ([element canCreateNewNodeWithBatchNode: batchNode])
-		{
-			CCNode *newElementNode = [element newNodeWithBatchNode: batchNode ];
-			if (![newElementNode parent])
-				[batchNode addChild: newElementNode z: [newElementNode zOrder] tag: [element tag]];
-			continue;
-		}
-		
-		// normal element
-		CCNode *newElementNode = [element newNode];
-		[aNode addChild:newElementNode z:[newElementNode zOrder] tag: [element tag] ];
+		// Add newNode to aNode if it's not added already to batchNode.
+		if (! newElementNode.parent)
+			[aNode addChild:newElementNode z:[newElementNode zOrder] tag: [newElementNode tag] ];
 		
 	}
 }
 
 
 #pragma mark Elements Access
+
+-(NSDictionary *) elements
+{
+	return elements_;
+}
+
+- (CCNode *) nodeFromElementWithName: (NSString *) elementName
+{
+	return [self nodeFromElementWithName: elementName batchNode: nil];
+}
+
+- (CCNode *) nodeFromElementWithName: (NSString *) elementName batchNode: (CCSpriteBatchNode *) batchNode
+{
+	CSDElement *element = [elements_ objectForKey: elementName];
+
+	// element with batchNode
+	if ([element canCreateNewNodeWithBatchNode: batchNode])
+	{
+		CCNode *newElementNode = [element newNodeWithBatchNode: batchNode ];
+		if (![newElementNode parent])
+			[batchNode addChild: newElementNode z: [newElementNode zOrder] tag: [element tag]];
+		return newElementNode;
+	}
+
+	// normal element
+	CCNode *newElementNode = [element newNode];
+	
+	return newElementNode;
+}
 
 - (CSDBackgroundLayer *) backgroundElement
 {

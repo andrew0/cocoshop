@@ -100,6 +100,19 @@
 
 #pragma mark Elements Access
 
+// Returns dictionary of all elements in CSD.
+// Keys are names of the elements.
+- (NSDictionary *) elements;
+
+// Creates node from element with given name.
+// Returns nil if there's no such element.
+- (CCNode *) nodeFromElementWithName: (NSString *) elementName;
+
+// Designated method. Creates node from element with given name & batchNode if possible.
+// Returned node will be added to batchNode if it was created with it.
+// Returns nil if there's no such element.
+- (CCNode *) nodeFromElementWithName: (NSString *) elementName batchNode: (CCSpriteBatchNode *) batchNode;
+
 // Returns background element with size = CSD workspace size
 - (CSDBackgroundLayer *) backgroundElement;
 
