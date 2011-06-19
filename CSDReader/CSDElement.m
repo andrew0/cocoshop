@@ -175,21 +175,11 @@
 	if (dict)
 	{
 		NSString *imagename = [dict objectForKey:@"filename"];
-		if (imagename)
-		{
-			NSString *path = [CCFileUtils fullPathFromRelativePath:[imagename lastPathComponent]];
-			
-			if ( [[NSFileManager defaultManager] fileExistsAtPath:path ] )
-				return YES;
-			
-			if ([[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[imagename lastPathComponent]])
-				return YES;
-			
-			CCLOGERROR(@"CSDSprite#canInitWithDictionary: file %@ not found!", path);
-		}		
+		if (imagename)			
+			return YES;
 	}
 	
-	CCLOGERROR(@"CSDSprite#canInitWithDictionary: no filename given!", path);	
+	CCLOGERROR(NO ,@"CSDSprite#canInitWithDictionary: no filename given!");	
 	return NO;	
 	
 }
