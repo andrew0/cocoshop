@@ -294,11 +294,24 @@
 	{
 		CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:imageName_];
 		
-		// Independent Sprite Mode
-		CGRect rect = CGRectZero;
-		rect.size = texture.contentSize;
-		[aSprite setTexture:texture];
-		[aSprite setTextureRect:rect];
+		if (texture)
+		{
+			// Independent Sprite Mode from texture File.
+			CGRect rect = CGRectZero;
+			rect.size = texture.contentSize;
+			[aSprite setTexture:texture];
+			[aSprite setTextureRect:rect];
+			
+		}
+		else
+		{
+			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName: imageName_];
+			
+			NSAssert(frame, @"CSDSprite#setupSprite:withBatchNode: failed - can not load image (texture nor sprite frame).");
+	
+			[aSprite setDisplayFrame: frame];
+		}
+		
 		aSprite.tag = tag_;
 		[aSprite _setZOrder: zOrder_];
 		
