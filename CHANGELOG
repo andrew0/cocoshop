@@ -1,0 +1,7 @@
+
+0.1.1 - 19-June-2011
+   * [FIX]CSDReader: batchNode failures bugs in CSDSprite.
+   * [NEW]CSDReader#elements & CSDReader#nodeFromElementWithName:
+
+0.1 - 27-May-2011
+   * First official release.

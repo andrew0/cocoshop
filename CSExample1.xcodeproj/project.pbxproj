@@ -347,6 +347,7 @@
 		6D13B10113868B87004FA7F1 /* r2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = r2.png; sourceTree = "<group>"; };
 		6D13B1B913869B1A004FA7F1 /* CSDTest2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CSDTest2.plist; sourceTree = "<group>"; };
 		6D13B1BA13869B1A004FA7F1 /* CSDTest2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CSDTest2.png; sourceTree = "<group>"; };
+		6DC763F213AE47C3002BD9A1 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
 		6DECF780138887200070C774 /* coconade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coconade.png; sourceTree = "<group>"; };
 		6DECF781138887200070C774 /* forum.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forum.png; sourceTree = "<group>"; };
 		6DECF782138887200070C774 /* site.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = site.png; sourceTree = "<group>"; };
@@ -596,6 +597,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				6DC763F213AE47C3002BD9A1 /* CHANGELOG */,
 				504DFC6810AF1739006D82FE /* LICENSE.cocos2d */,
 				504DFC6910AF1739006D82FE /* LICENSE.cocosdenshion */,
 				506EDAA3102F461B00A389B3 /* cocos2d sources */,
