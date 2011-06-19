@@ -63,7 +63,7 @@
 	} //TODO: list supported CSDElements here in else-if's
 	else
 	{
-		CCLOGERROR(@"Cannot find supported CSDElement for given dictionary. Need to update CSDReader? ");
+		NSAssert(NO, @"Cannot find supported CSDElement for given dictionary. Need to update CSDReader? ");
 		return nil;
 	}
 }
