@@ -134,7 +134,7 @@
 	// create and add elements
 	for (NSString *elementKey in elements_) 
 	{
-		CCNode *newElementNode = [self nodeFromElementWithName: elementKey];
+		CCNode *newElementNode = [self nodeFromElementWithName: elementKey batchNode: batchNode];
 		
 		// Add newNode to aNode if it's not added already to batchNode.
 		if (! newElementNode.parent)

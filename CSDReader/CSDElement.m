@@ -182,10 +182,14 @@
 			if ( [[NSFileManager defaultManager] fileExistsAtPath:path ] )
 				return YES;
 			
+			if ([[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[imagename lastPathComponent]])
+				return YES;
+			
 			CCLOGERROR(@"CSDSprite#canInitWithDictionary: file %@ not found!", path);
 		}		
 	}
 	
+	CCLOGERROR(@"CSDSprite#canInitWithDictionary: no filename given!", path);	
 	return NO;	
 	
 }
