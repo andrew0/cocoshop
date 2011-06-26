@@ -631,6 +631,9 @@
 {
 	NSDictionary *dict = [self dictionaryFromLayerForBaseDirPath:[filename stringByDeletingLastPathComponent]];
 	[dict writeToFile:filename atomically:YES];
+	
+	// Rembember filename for fast save next time.
+	self.projectFilename = filename;
 }
 
 #pragma mark IBActions - Windows

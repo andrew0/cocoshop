@@ -1,4 +1,9 @@
 
+0.1.2 - 26-June-2011
+   * Fixed #56 (remember-filename-after-saving).
+   * Added new keyboard shortucts for changing z-order (by @unitedworx).
+   * Added AUTHORS.
+
 0.1.1 - 19-June-2011
    * [FIX]CSDReader: batchNode failures bugs in CSDSprite.
    * [NEW]CSDReader#elements & CSDReader#nodeFromElementWithName:

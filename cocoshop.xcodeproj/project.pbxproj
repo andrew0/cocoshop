@@ -268,6 +268,7 @@
 		6D3249811361CD6900165ABE /* checkerboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkerboard.png; sourceTree = "<group>"; };
 		6D4702CC135F52BC00FDEADD /* CSMacGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSMacGLView.h; sourceTree = "<group>"; };
 		6D4702CD135F52BC00FDEADD /* CSMacGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSMacGLView.m; sourceTree = "<group>"; };
+		6DB59F7413B7C1B90012FA60 /* AUTHORS.cocoshop */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS.cocoshop; sourceTree = "<group>"; };
 		6DC763F913AE48A3002BD9A1 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
 		6DECF9881389841E0070C774 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		6DFAD27113609A4B00006D0B /* CSTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTableViewDataSource.h; sourceTree = "<group>"; };
@@ -524,8 +525,9 @@
 		29B97314FDCFA39411CA2CEA /* cocos2d-mac */ = {
 			isa = PBXGroup;
 			children = (
-				6DC763F913AE48A3002BD9A1 /* CHANGELOG */,
 				6DECF9881389841E0070C774 /* README.md */,
+				6DC763F913AE48A3002BD9A1 /* CHANGELOG */,
+				6DB59F7413B7C1B90012FA60 /* AUTHORS.cocoshop */,
 				E076E61F1225EC1E00DE0DA2 /* LICENSE.cocos2d */,
 				E076E6201225EC1E00DE0DA2 /* LICENSE.cocosdenshion */,
 				E02A83D1129F000100341C97 /* Classes */,
