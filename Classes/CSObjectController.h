@@ -37,9 +37,12 @@
     CSModel *modelObject_;
 	CSMainLayer *mainLayer_;
 	CSTableViewDataSource *dataSource_;
+	NSString *projectFilename_;
 	
 	// Info Editing View
 	IBOutlet NSPanel *infoPanel_;
+	NSView *spriteInfoView_;
+	NSView *backgroundInfoView_;
 	IBOutlet NSTextField *nameField_;
 	IBOutlet NSTextField *posXField_;
 	IBOutlet NSStepper *posXStepper_;
@@ -78,6 +81,10 @@
 @property(copy) NSString *projectFilename;
 
 #pragma mark Sprites
+
+// Changes aSprite.name to unique if modelObject_ already contains sprite with
+// the same name.
+- (void) ensureUniqueNameForSprite: (CSSprite *) aSprite;
 
 /**
  * filters array of filenames, leaving only allowed
@@ -124,5 +131,9 @@
 
 #pragma mark IBAction - Menus
 - (IBAction) showBordersMenuItemPressed: (id) sender;
+- (IBAction) deleteMenuItemPressed: (id) sender;
+- (IBAction) cutMenuItemPressed: (id) sender;
+- (IBAction) copyMenuItemPressed: (id) sender;
+- (IBAction) pasteMenuItemPressed: (id) sender;
 
 @end

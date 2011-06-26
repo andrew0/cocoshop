@@ -1,7 +1,8 @@
 /*
- * cocoshop
+ * CCMenuItemSpriteIndependent.h
+ * cocos2d extensions
  *
- * Copyright (c) 2011 Andrew
+ * Copyright (c) 2010-2011 Stepan Generalov
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,28 +24,27 @@
  *
  */
 
+#import <Foundation/Foundation.h>
 #import "cocos2d.h"
-#import "CSMacGLView.h"
 
-@class CSObjectController;
-
-@interface cocoshopAppDelegate : NSObject <NSApplicationDelegate>
-{
-	NSWindow	*window_;
-	CSMacGLView	*glView_;
-	CSObjectController *controller_;
-	
-	BOOL appIsRunning_;
-	NSString *filenameToOpen_;
-}
-
-@property (assign) IBOutlet NSWindow	*window;
-@property (assign) IBOutlet CSMacGLView	*glView;
-@property (assign) IBOutlet CSObjectController *controller;
-@property (readwrite, copy) NSString *filenameToOpen;
-@property (readwrite) BOOL appIsRunning;
-
-- (IBAction)toggleFullScreen:(id)sender;
-- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename;
+/* CCMenuItemSprite is CCMenuItemSprite that doesn't add normal, selected
+ * and disabled images as children. Instead of that its just retain them.
+ * So you can place images anyhow you want.
+ *
+ * CCmenuItemSprite reimplements rect and convertToNodeSpace: methods
+ * delegating them to normalSprite.
+ * This allows you to position/scale/rotate only normal sprite and forget about
+ * positioning menuItem.
+ *
+ */
+@interface CCMenuItemSpriteIndependent : CCMenuItemSprite
+{}
 
 @end
+
+
+
+
+
+
+

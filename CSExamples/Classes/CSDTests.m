@@ -27,12 +27,15 @@
 
 #import "CSDTests.h"
 #import "CSDReader.h"
+#import "CCMenuItemSpriteIndependent.h"
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
 	@"CSDTest1",
 	@"CSDTest2",
+	@"CSDTest3",
+	@"CSDTest4",
 	
 };
 
@@ -195,6 +198,161 @@ Class restartAction()
 -(NSString *) subtitle
 {
 	return @"Note: isRelativeAnchorPoint not supported.";
+}
+
+@end
+
+@implementation CSDTest3
+-(id) init
+{
+	if( !( self=[super init]) )
+		return nil;
+	
+	// Load spriteSheet & create batchNode
+	[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"CSDTest2.plist" textureFile:@"CSDTest2.png"];
+	CCSpriteBatchNode *batchNode = [CCSpriteBatchNode batchNodeWithFile:@"CSDTest2.png"];
+	
+	// Create Node from CSD using batchNode
+	CSDReader *csd = [CSDReader readerWithFile:@"example1.csd"];
+	CCNode *aNode = [csd newNodeWithClass:[CCNode class] usingBatchNode: batchNode];
+	[self addChild: aNode];
+	
+	// fit node intro screen
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	aNode.scale = MIN( 1.0f, MIN (s.width / aNode.contentSize.width, s.height / aNode.contentSize.height));
+	
+	// Find the Kenny before the bastards.
+	CCSprite *kenny = (CCSprite *)[aNode getChildByTag: [csd tagForElementWithName:@"Kenny_png"] ];
+	if (!kenny)
+	{
+		// kenny is a child of batchNode
+		kenny = (CCSprite *)[batchNode getChildByTag: [csd tagForElementWithName:@"Kenny_png"] ];
+	}
+	
+	// Spin the Kenny!
+	[kenny runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:3.0f angle:360.0f]]];
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Node tag by element name.";
+}
+
+-(NSString *) subtitle
+{
+	return @"Kenny should dodge from bastards!";
+}
+
+@end
+
+
+@interface MenuFromCSD : CCNode
+{
+	ccColor4B savedBGColor_;
+}
+
+- (ccColor4B) savedBGColor;
+
+@end
+
+@implementation MenuFromCSD
+
+- (id) init
+{
+	if ( (self == [super init]) )
+	{
+		// Setup self from CSD
+		CSDReader *csd = [CSDReader readerWithFile:@"test4.csd"];
+		[csd setupNode: self];
+		
+		// save the color and remove the background from self
+		savedBGColor_ = [[csd backgroundElement] color];
+		[self removeChildByTag: [[csd backgroundElement] tag] cleanup:YES];
+		
+		// get sprites for buttons ( Note that pressed & normal sprites have different sizes! )
+		CCSprite *coconade = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"coconade"]];
+		CCSprite *coconadePressed = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"coconadePressed"]];
+		CCSprite *forum = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"forum"]];
+		CCSprite *forumPressed = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"forumPressed"]];
+		CCSprite *site = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"site"]];
+		CCSprite *sitePressed = (CCSprite *)[self getChildByTag:[csd tagForElementWithName:@"sitePressed"]];		
+		
+		// create menu items
+		CCMenuItemSpriteIndependent *coconadeMenuItem = 
+			[CCMenuItemSpriteIndependent itemFromNormalSprite: coconade
+											   selectedSprite: coconadePressed
+														block: ^(id sender) {
+															[[UIApplication sharedApplication] openURL: [NSURL URLWithString: @"https://github.com/andrew0/cocoshop/"]]; //<TODO: change to CocoNade URL after rename																									
+														}];
+		
+		CCMenuItemSpriteIndependent *forumMenuItem = 
+		[CCMenuItemSpriteIndependent itemFromNormalSprite: forum
+										   selectedSprite: forumPressed
+													block: ^(id sender) {
+														NSLog(@"forum");
+														[[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.cocos2d-iphone.org/forum"]];																									
+													}];
+		
+		CCMenuItemSpriteIndependent *siteMenuItem = 
+		[CCMenuItemSpriteIndependent itemFromNormalSprite: site
+										   selectedSprite: sitePressed
+													block: ^(id sender) {
+														NSLog(@"site");
+														[[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.cocos2d-iphone.org/"]];																									
+													}];
+		
+		//create and add menu
+		CCMenu *menu = [CCMenu menuWithItems:coconadeMenuItem, forumMenuItem, siteMenuItem, nil];
+		[self addChild: menu];
+	}
+	
+	return self;
+}
+
+- (ccColor4B) savedBGColor
+{
+	return savedBGColor_;
+}
+
+@end
+
+
+@implementation CSDTest4
+
+-(id) init
+{
+	if( !( self=[super init]) )
+		return nil;
+	
+	// Add Custom Node
+	MenuFromCSD *aNode = [MenuFromCSD node];
+	[self addChild: aNode];
+	
+	// fit node intro screen
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	aNode.scale = MIN( 1.0f, MIN (s.width / aNode.contentSize.width, s.height / aNode.contentSize.height));
+	
+	// place it on center
+	aNode.anchorPoint = ccp(0.5f,0.5f);
+	aNode.position = ccp(s.width / 2.0f,s.height / 2.0f);
+	
+	// Add fullscreen background with color from CSD
+	CCLayerColor *bgLayer = [CCLayerColor layerWithColor: [aNode savedBGColor]];
+	[self addChild: bgLayer z: -1];	
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"CSD Menus";
+}
+
+-(NSString *) subtitle
+{
+	return @"Press the button!";
 }
 
 @end

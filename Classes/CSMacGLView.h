@@ -30,6 +30,12 @@
 @interface CSMacGLView : MacGLView <CCProjectionProtocol>
 {
 	ccDirectorProjection projection_;
+	
+	CGSize workspaceSize_;
+	CGFloat zoomFactor_;	
+	CGFloat zoomSpeed_; 
+	CGFloat zoomFactorMax_;
+	CGFloat zoomFactorMin_;
 }
 
 #pragma mark Workspace
