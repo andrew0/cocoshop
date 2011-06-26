@@ -130,10 +130,4 @@ Feel free to fork, modify & send pull requests as usual ;)
 There's always some issues to solve here: https://github.com/andrew0/cocoshop/issues  
 You can also use them to see, what's on cocoshop's roadmap.  
 
-Contributors
-=====================
-
- * [Andrew](https://github.com/andrew0 "Core Developer") (Cocoshop Core)
- * [Stepan Generalov](https://github.com/psineur "Bla-bla") (Icon & Features)
- * [Sean Duffy](http://www.shogan.co.uk/ "Shogan") (Toolbar Icons)
  
