@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4905FEF61388815C006839AC /* CSTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4905FEF31388815C006839AC /* CSTabView.m */; };
-		4905FEF71388815C006839AC /* CSSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4905FEF51388815C006839AC /* CSSideViewController.m */; };
+		490E37A61390440000233799 /* CSNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 490E37A41390440000233799 /* CSNode.h */; };
+		490E37A71390440000233799 /* CSNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E37A51390440000233799 /* CSNode.m */; };
+		490E37BA139045B600233799 /* CSTabView.h in Headers */ = {isa = PBXBuildFile; fileRef = 490E37B6139045B600233799 /* CSTabView.h */; };
+		490E37BB139045B600233799 /* CSTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E37B7139045B600233799 /* CSTabView.m */; };
+		490E37BC139045B600233799 /* CSSideViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 490E37B8139045B600233799 /* CSSideViewController.h */; };
+		490E37BD139045B600233799 /* CSSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E37B9139045B600233799 /* CSSideViewController.m */; };
+		490E382813904D9600233799 /* CSTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E37B7139045B600233799 /* CSTabView.m */; };
+		490E382913904D9600233799 /* CSSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E37B9139045B600233799 /* CSSideViewController.m */; };
 		4930EBB1136363FF006E5DA5 /* CSGestureEventDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4930EBB0136363FF006E5DA5 /* CSGestureEventDelegate.h */; };
 		496706FA135B9DDE0074D05A /* CSObjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 496706F9135B9DDE0074D05A /* CSObjectController.m */; };
 		496706FD135B9E1B0074D05A /* CSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 496706FB135B9E1B0074D05A /* CSModel.m */; };
@@ -23,6 +29,16 @@
 		49A1427C135BE453000C3BD8 /* CCNode+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1427A135BE453000C3BD8 /* CCNode+Additions.m */; };
 		49A14394135BF374000C3BD8 /* CCNode+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1427A135BE453000C3BD8 /* CCNode+Additions.m */; };
 		6D13ADE81385A768004FA7F1 /* NSString+RelativePath.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D13ADE71385A768004FA7F1 /* NSString+RelativePath.m */; };
+		6D1EEA19138EE55B0091F76B /* icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D1EEA16138EE55B0091F76B /* icon1.png */; };
+		6D1EEA1A138EE55B0091F76B /* icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D1EEA17138EE55B0091F76B /* icon2.png */; };
+		6D1EEA1B138EE55B0091F76B /* icon3.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D1EEA18138EE55B0091F76B /* icon3.png */; };
+		6D1EEA2A138EE7880091F76B /* icon4.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D1EEA29138EE7880091F76B /* icon4.png */; };
+		6D1EEA2F138EEE650091F76B /* icon4-b.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D1EEA2E138EEE650091F76B /* icon4-b.png */; };
+		6D1EEA33138EEFA80091F76B /* icon5.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D1EEA32138EEFA80091F76B /* icon5.png */; };
+		6D1EEA37138EF1520091F76B /* icon6.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D1EEA36138EF1520091F76B /* icon6.png */; };
+		6D1EEA3D138EF4D70091F76B /* icon7-a.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D1EEA3B138EF4D70091F76B /* icon7-a.png */; };
+		6D1EEA3E138EF4D70091F76B /* icon7.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D1EEA3C138EF4D70091F76B /* icon7.png */; };
+		6D1EEA44138EFE280091F76B /* icon7-c.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D1EEA43138EFE280091F76B /* icon7-c.png */; };
 		6D1FEC0B138074630039076A /* DebugLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D1FEC0A138074630039076A /* DebugLog.m */; };
 		6D3249821361CD6900165ABE /* checkerboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D3249811361CD6900165ABE /* checkerboard.png */; };
 		6D4702CE135F52BC00FDEADD /* CSMacGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4702CD135F52BC00FDEADD /* CSMacGLView.m */; };
@@ -229,10 +245,12 @@
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		4905FEF21388815C006839AC /* CSTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTabView.h; sourceTree = "<group>"; };
-		4905FEF31388815C006839AC /* CSTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSTabView.m; sourceTree = "<group>"; };
-		4905FEF41388815C006839AC /* CSSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSideViewController.h; sourceTree = "<group>"; };
-		4905FEF51388815C006839AC /* CSSideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSideViewController.m; sourceTree = "<group>"; };
+		490E37A41390440000233799 /* CSNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSNode.h; sourceTree = "<group>"; };
+		490E37A51390440000233799 /* CSNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSNode.m; sourceTree = "<group>"; };
+		490E37B6139045B600233799 /* CSTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTabView.h; sourceTree = "<group>"; };
+		490E37B7139045B600233799 /* CSTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSTabView.m; sourceTree = "<group>"; };
+		490E37B8139045B600233799 /* CSSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSideViewController.h; sourceTree = "<group>"; };
+		490E37B9139045B600233799 /* CSSideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSideViewController.m; sourceTree = "<group>"; };
 		4930EBB0136363FF006E5DA5 /* CSGestureEventDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSGestureEventDelegate.h; sourceTree = "<group>"; };
 		496706F8135B9DDE0074D05A /* CSObjectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSObjectController.h; sourceTree = "<group>"; };
 		496706F9135B9DDE0074D05A /* CSObjectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSObjectController.m; sourceTree = "<group>"; };
@@ -249,11 +267,22 @@
 		49A1427A135BE453000C3BD8 /* CCNode+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+Additions.m"; sourceTree = "<group>"; };
 		6D13ADE61385A768004FA7F1 /* NSString+RelativePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RelativePath.h"; sourceTree = "<group>"; };
 		6D13ADE71385A768004FA7F1 /* NSString+RelativePath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RelativePath.m"; sourceTree = "<group>"; };
+		6D1EEA16138EE55B0091F76B /* icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1.png; sourceTree = "<group>"; };
+		6D1EEA17138EE55B0091F76B /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2.png; sourceTree = "<group>"; };
+		6D1EEA18138EE55B0091F76B /* icon3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon3.png; sourceTree = "<group>"; };
+		6D1EEA29138EE7880091F76B /* icon4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon4.png; sourceTree = "<group>"; };
+		6D1EEA2E138EEE650091F76B /* icon4-b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon4-b.png"; sourceTree = "<group>"; };
+		6D1EEA32138EEFA80091F76B /* icon5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon5.png; sourceTree = "<group>"; };
+		6D1EEA36138EF1520091F76B /* icon6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon6.png; sourceTree = "<group>"; };
+		6D1EEA3B138EF4D70091F76B /* icon7-a.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon7-a.png"; sourceTree = "<group>"; };
+		6D1EEA3C138EF4D70091F76B /* icon7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon7.png; sourceTree = "<group>"; };
+		6D1EEA43138EFE280091F76B /* icon7-c.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon7-c.png"; sourceTree = "<group>"; };
 		6D1FEC09138074630039076A /* DebugLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugLog.h; sourceTree = "<group>"; };
 		6D1FEC0A138074630039076A /* DebugLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugLog.m; sourceTree = "<group>"; };
 		6D3249811361CD6900165ABE /* checkerboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkerboard.png; sourceTree = "<group>"; };
 		6D4702CC135F52BC00FDEADD /* CSMacGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSMacGLView.h; sourceTree = "<group>"; };
 		6D4702CD135F52BC00FDEADD /* CSMacGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSMacGLView.m; sourceTree = "<group>"; };
+		6DECF9881389841E0070C774 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		6DFAD27113609A4B00006D0B /* CSTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTableViewDataSource.h; sourceTree = "<group>"; };
 		6DFAD27213609A4B00006D0B /* CSTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSTableViewDataSource.m; sourceTree = "<group>"; };
 		E01E663D121CA00A001A484F /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -508,6 +537,7 @@
 		29B97314FDCFA39411CA2CEA /* cocos2d-mac */ = {
 			isa = PBXGroup;
 			children = (
+				6DECF9881389841E0070C774 /* README.md */,
 				E076E61F1225EC1E00DE0DA2 /* LICENSE.cocos2d */,
 				E076E6201225EC1E00DE0DA2 /* LICENSE.cocosdenshion */,
 				E02A83D1129F000100341C97 /* Classes */,
@@ -524,6 +554,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6D1EEA15138EE55B0091F76B /* Icons by Shogan */,
 				E02A83F0129F01DF00341C97 /* MainMenu.xib */,
 				E02A83EE129F01DF00341C97 /* InfoPlist.strings */,
 				E02A83EB129F01DF00341C97 /* cocoshop_Prefix.pch */,
@@ -550,6 +581,28 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		490E37A81390440B00233799 /* CSNodes */ = {
+			isa = PBXGroup;
+			children = (
+				490E37A41390440000233799 /* CSNode.h */,
+				490E37A51390440000233799 /* CSNode.m */,
+				49A14062135BCA0A000C3BD8 /* CSSprite.h */,
+				49A14063135BCA0A000C3BD8 /* CSSprite.m */,
+			);
+			name = CSNodes;
+			sourceTree = "<group>";
+		};
+		490E37B5139045A400233799 /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				490E37B6139045B600233799 /* CSTabView.h */,
+				490E37B7139045B600233799 /* CSTabView.m */,
+				490E37B8139045B600233799 /* CSSideViewController.h */,
+				490E37B9139045B600233799 /* CSSideViewController.m */,
+			);
+			name = GUI;
+			sourceTree = "<group>";
+		};
 		6D13ADE01385A4CC004FA7F1 /* Support */ = {
 			isa = PBXGroup;
 			children = (
@@ -561,14 +614,32 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
+		6D1EEA15138EE55B0091F76B /* Icons by Shogan */ = {
+			isa = PBXGroup;
+			children = (
+				6D1EEA16138EE55B0091F76B /* icon1.png */,
+				6D1EEA17138EE55B0091F76B /* icon2.png */,
+				6D1EEA29138EE7880091F76B /* icon4.png */,
+				6D1EEA43138EFE280091F76B /* icon7-c.png */,
+				6D1EEA2E138EEE650091F76B /* icon4-b.png */,
+				6D1EEA3B138EF4D70091F76B /* icon7-a.png */,
+				6D1EEA3C138EF4D70091F76B /* icon7.png */,
+				6D1EEA32138EEFA80091F76B /* icon5.png */,
+				6D1EEA36138EF1520091F76B /* icon6.png */,
+				6D1EEA18138EE55B0091F76B /* icon3.png */,
+			);
+			name = "Icons by Shogan";
+			path = "Resources/Icons by Shogan";
+			sourceTree = "<group>";
+		};
 		E02A83D1129F000100341C97 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				490E37B5139045A400233799 /* GUI */,
+				490E37A81390440B00233799 /* CSNodes */,
 				6D13ADE01385A4CC004FA7F1 /* Support */,
 				49A14279135BE453000C3BD8 /* CCNode+Additions.h */,
 				49A1427A135BE453000C3BD8 /* CCNode+Additions.m */,
-				49A14062135BCA0A000C3BD8 /* CSSprite.h */,
-				49A14063135BCA0A000C3BD8 /* CSSprite.m */,
 				496706FC135B9E1B0074D05A /* CSModel.h */,
 				496706FB135B9E1B0074D05A /* CSModel.m */,
 				E0507116131760D700EAE33F /* CSMainLayer.h */,
@@ -583,10 +654,6 @@
 				E02A83FB129F023B00341C97 /* main.m */,
 				E02A83D2129F000100341C97 /* cocoshopAppDelegate.h */,
 				E02A83D3129F000100341C97 /* cocoshopAppDelegate.m */,
-				4905FEF21388815C006839AC /* CSTabView.h */,
-				4905FEF31388815C006839AC /* CSTabView.m */,
-				4905FEF41388815C006839AC /* CSSideViewController.h */,
-				4905FEF51388815C006839AC /* CSSideViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -922,6 +989,9 @@
 				49A14064135BCA0A000C3BD8 /* CSSprite.h in Headers */,
 				49A1427B135BE453000C3BD8 /* CCNode+Additions.h in Headers */,
 				4930EBB1136363FF006E5DA5 /* CSGestureEventDelegate.h in Headers */,
+				490E37A61390440000233799 /* CSNode.h in Headers */,
+				490E37BA139045B600233799 /* CSTabView.h in Headers */,
+				490E37BC139045B600233799 /* CSSideViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1004,6 +1074,16 @@
 				49A1406D135BCB37000C3BD8 /* arial.png in Resources */,
 				49A1425E135BE3CA000C3BD8 /* anchor.png in Resources */,
 				6D3249821361CD6900165ABE /* checkerboard.png in Resources */,
+				6D1EEA19138EE55B0091F76B /* icon1.png in Resources */,
+				6D1EEA1A138EE55B0091F76B /* icon2.png in Resources */,
+				6D1EEA1B138EE55B0091F76B /* icon3.png in Resources */,
+				6D1EEA2A138EE7880091F76B /* icon4.png in Resources */,
+				6D1EEA2F138EEE650091F76B /* icon4-b.png in Resources */,
+				6D1EEA33138EEFA80091F76B /* icon5.png in Resources */,
+				6D1EEA37138EF1520091F76B /* icon6.png in Resources */,
+				6D1EEA3D138EF4D70091F76B /* icon7-a.png in Resources */,
+				6D1EEA3E138EF4D70091F76B /* icon7.png in Resources */,
+				6D1EEA44138EFE280091F76B /* icon7-c.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1094,6 +1174,9 @@
 				E0B4521512C3AEBE0007F742 /* ZipUtils.m in Sources */,
 				49A14065135BCA0A000C3BD8 /* CSSprite.m in Sources */,
 				49A1427C135BE453000C3BD8 /* CCNode+Additions.m in Sources */,
+				490E37A71390440000233799 /* CSNode.m in Sources */,
+				490E37BB139045B600233799 /* CSTabView.m in Sources */,
+				490E37BD139045B600233799 /* CSSideViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1111,8 +1194,8 @@
 				6DFAD27313609A4B00006D0B /* CSTableViewDataSource.m in Sources */,
 				6D1FEC0B138074630039076A /* DebugLog.m in Sources */,
 				6D13ADE81385A768004FA7F1 /* NSString+RelativePath.m in Sources */,
-				4905FEF61388815C006839AC /* CSTabView.m in Sources */,
-				4905FEF71388815C006839AC /* CSSideViewController.m in Sources */,
+				490E382813904D9600233799 /* CSTabView.m in Sources */,
+				490E382913904D9600233799 /* CSSideViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1167,7 +1250,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx;
-				VALID_ARCHS = x86_64;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -1184,7 +1267,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PREBINDING = NO;
 				SDKROOT = macosx;
-				VALID_ARCHS = x86_64;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};

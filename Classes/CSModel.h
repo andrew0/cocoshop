@@ -37,57 +37,66 @@
 	
 	NSMutableArray *spriteArray_;
 	
-	// General
-	NSString *name_;
-	
 	// CCNode
-	float posX_;
-	float posY_;
-	float posZ_;
-	float anchorX_;
-	float anchorY_;
-	float scaleX_;
-	float scaleY_;
-	float contentSizeWidth_;
-	float contentSizeHeight_;
+	CGFloat posX_;
+	CGFloat posY_;
+	CGFloat posZ_;
+	CGFloat anchorX_;
+	CGFloat anchorY_;
+	CGFloat scaleX_;
+	CGFloat scaleY_;
+	CGFloat rotation_;
+	CGFloat contentSizeWidth_;
+	CGFloat contentSizeHeight_;
 	NSInteger relativeAnchor_;
-	float rotation_;
 	NSInteger tag_;
 	
 	// CCSprite
 	NSInteger flipX_;
 	NSInteger flipY_;
-	float opacity_;
-	NSColor *color_;
+	CGFloat opacity_;
+	NSColor *color_;	
+	
+	// General
+	NSString *name_;
+	CGFloat stageWidth_;
+	CGFloat stageHeight_;
 }
 
 @property(nonatomic, assign) CSSprite *selectedSprite;
 @property(nonatomic, retain) CCLayerColor *backgroundLayer;
 @property(nonatomic, retain) NSMutableArray *spriteArray;
 
-// Children Properties
-@property(nonatomic, assign) NSString *name;
-@property(nonatomic, assign) float posX;
-@property(nonatomic, assign) float posY;
-@property(nonatomic, assign) float posZ;
-@property(nonatomic, assign) float anchorX;
-@property(nonatomic, assign) float anchorY;
-@property(nonatomic, assign) float scaleX;
-@property(nonatomic, assign) float scaleY;
-@property(nonatomic, assign) float contentSizeWidth;
-@property(nonatomic, assign) float contentSizeHeight;
-@property(nonatomic, assign) NSInteger flipX;
-@property(nonatomic, assign) NSInteger flipY;
-@property(nonatomic, assign) float opacity;
-@property(nonatomic, copy) NSColor *color;
+// CCNode Properties
+@property(nonatomic, assign) CGFloat posX;
+@property(nonatomic, assign) CGFloat posY;
+@property(nonatomic, assign) CGFloat posZ;
+@property(nonatomic, assign) CGFloat anchorX;
+@property(nonatomic, assign) CGFloat anchorY;
+@property(nonatomic, assign) CGFloat scaleX;
+@property(nonatomic, assign) CGFloat scaleY;
+@property(nonatomic, assign) CGFloat rotation;
+@property(nonatomic, assign) CGFloat contentSizeWidth;
+@property(nonatomic, assign) CGFloat contentSizeHeight;
 @property(nonatomic, assign) NSInteger relativeAnchor;
-@property(nonatomic, assign) float rotation;
 @property(nonatomic, assign) NSInteger tag;
 
-// Background Properties
+// CCSprite Properties
+@property(nonatomic, assign) NSInteger flipX;
+@property(nonatomic, assign) NSInteger flipY;
+@property(nonatomic, assign) CGFloat opacity;
+@property(nonatomic, copy) NSColor *color;
+
+// General Properties
+@property(nonatomic, assign) NSString *name;
 @property(nonatomic, assign) CGFloat stageWidth;
 @property(nonatomic, assign) CGFloat stageHeight;
 
+// Sprites Access
 - (CSSprite *)selectedSprite;
+- (CSSprite *)spriteWithName: (NSString *) name;
+
+// Multiple Selection Sprite Access, returns nil if no sprite is selected
+- (NSArray *)selectedSprites;
 
 @end

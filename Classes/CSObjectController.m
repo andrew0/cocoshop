@@ -32,15 +32,14 @@
 #import "CSTableViewDataSource.h"
 #import "DebugLog.h"
 #import "NSString+RelativePath.h"
+#import "CSSideViewController.h"
 
 @implementation CSObjectController
 
 @synthesize modelObject=modelObject_;
 @synthesize mainLayer=mainLayer_;
 @synthesize spriteTableView=spriteTableView_;
-@synthesize spriteInfoView;
-@synthesize backgroundInfoView;
-@synthesize projectFilename;
+@synthesize projectFilename = projectFilename_;
 
 #pragma mark Init / DeInit
 
@@ -60,20 +59,17 @@
 	
 	// listen to notification when we deselect the sprite
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeSelectedSprite:) name:@"didChangeSelectedSprite" object:nil];
+	
+	// listen to rename in table view
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(spriteTableSelectionDidRename:) name:@"didRenameSelectedSprite" object:nil];
 
 	// Disable Sprite Info for no Sprites at the beginning
 	[self didChangeSelectedSprite:nil];
-	
-	// This will make panels less distracting
-	[infoPanel_ setBecomesKeyOnlyIfNeeded: YES];
-	[spritesPanel_ setBecomesKeyOnlyIfNeeded: YES];
 }
 
 - (void)dealloc
 {
 	self.projectFilename = nil;
-	self.spriteInfoView = nil;
-	self.backgroundInfoView = nil;
 	
 	[self setMainLayer:nil];
 	[dataSource_ release];
@@ -140,8 +136,7 @@
 			if( ![currentName isEqualToString:newName] )
 			{
 				[sprite setName:newName];
-				[nameField_ setStringValue:[sprite name]];
-				[spriteTableView_ reloadData];
+				[self ensureUniqueNameForSprite:sprite];
 			}
 		}
 	}
@@ -378,6 +373,19 @@
 
 #pragma mark Sprites
 
+- (void) ensureUniqueNameForSprite: (CSSprite *) aSprite
+{
+	NSString *originalName = [aSprite name];
+	NSString *name = [NSString stringWithString: originalName];
+	NSUInteger i = 0;
+	while( ([modelObject_ spriteWithName: name] != nil) && ([modelObject_ spriteWithName: name] != aSprite) )
+	{
+		NSAssert(i <= NSUIntegerMax, @"CSObjectController#ensureUniqueNameForSprite: Added too many of the same sprite");
+		name = [originalName stringByAppendingFormat:@"_%u", i++];
+	}
+	aSprite.name = name;
+}
+
 - (NSArray *) allowedFileTypes
 {
 	return [NSArray arrayWithObjects:@"png", @"gif", @"jpg", @"jpeg", @"tif", @"tiff", @"bmp", @"ccz", @"pvr", nil];
@@ -432,16 +440,13 @@
 		// create key for the sprite
 		NSString *originalName = [filename lastPathComponent];
 		NSString *name = [NSString stringWithString:originalName];
-		NSUInteger i = 0;
-		while( [modelObject_ selectedSprite] != nil )
-		{
-			NSAssert(i <= NSUIntegerMax, @"Added too many of the same sprite");
-			name = [originalName stringByAppendingFormat:@"_%u", i++];
-		}
 		
 		CSSprite *sprite = [CSSprite spriteWithFile:filename];
 		[sprite setName:name];
 		[sprite setFilename:filename];
+		
+		[self ensureUniqueNameForSprite: sprite];
+		
 		@synchronized( [modelObject_ spriteArray] )
 		{
 			[[modelObject_ spriteArray] addObject:sprite];
@@ -480,9 +485,10 @@
 	// delete sprite
 	if(sprite)
 	{
-		// deselect sprite if necessary
-		if( [sprite isEqualTo:sprite] )
-			[modelObject_ setSelectedSprite:nil];
+		// deselect sprite 
+		[modelObject_ setSelectedSprite:nil];
+		[spriteTableView_ deselectAll:nil];
+		[spriteTableView_ setDataSource: nil];
 		
 		// only remove child if we're the parent
 		if( [sprite parent] == mainLayer_ )
@@ -493,6 +499,8 @@
 		{
 			[[modelObject_ spriteArray] removeObject:sprite];
 		}
+		
+		[spriteTableView_ setDataSource: dataSource_];
 	}	
 }
 
@@ -513,12 +521,16 @@
 
 }
 
-- (void) setInfoPanelView: (NSView *) aView
+- (void) spriteTableSelectionDidRename: (NSNotification *) aNotification
 {
-	//CGRect frame = [infoPanel_ frame];
-	//frame.size = [aView frame].size;
-	[infoPanel_ setContentView:aView];
-	//[infoPanel_ setFrame: frame display: YES];
+	NSInteger index = [spriteTableView_ selectedRow];
+	if(index >= 0)
+	{
+		CSSprite *sprite = [[modelObject_ spriteArray] objectAtIndex:index];
+		[modelObject_ setSelectedSprite:sprite];
+		[modelObject_ setName:[[aNotification userInfo] objectForKey:@"name"]];
+		
+	}
 }
 
 - (void)didChangeSelectedSprite:(NSNotification *)aNotification
@@ -526,13 +538,21 @@
 	if( ![modelObject_ selectedSprite] )
 	{
 		// Editing Background
-		[self setInfoPanelView: self.backgroundInfoView];
+		[sideViewController_ alignItems:
+		 [NSArray arrayWithObjects:[sideViewController_ backgroundPropertiesTab], [sideViewController_ backgroundPropertiesView], nil],
+		 nil
+		 ];
 		[spriteTableView_ deselectAll:nil];
 	}
 	else
 	{
 		// Editing Selected Sprite 
-		[self setInfoPanelView: self.spriteInfoView];
+		[sideViewController_ alignItems:
+		 [NSArray arrayWithObjects:[sideViewController_ generalPropertiesTab], [sideViewController_ generalPropertiesView], nil],
+		 [NSArray arrayWithObjects:[sideViewController_ nodePropertiesTab], [sideViewController_ nodePropertiesView], nil],
+		 [NSArray arrayWithObjects:[sideViewController_ spritePropertiesTab], [sideViewController_ spritePropertiesView], nil],
+		 nil
+		 ];
 		
 		// get the index for the sprite
 		CSSprite *sprite = [modelObject_ selectedSprite];
@@ -575,31 +595,19 @@
 		if( [child isKindOfClass:[CSSprite class]] )
 		{
 			CSSprite *sprite = (CSSprite *)child;
+			[self ensureUniqueNameForSprite: sprite];
 			
-			// Use relative path if possible
-			NSString *relativePath = [[sprite filename] relativePathFromBaseDirPath: baseDirPath ];
-			if (relativePath)
-				sprite.filename = relativePath;			
+			// Use relative path if needed
+			if ([[sprite filename] isAbsolutePath])
+			{
+				// Use relative path if possible
+				NSString *relativePath = [[sprite filename] relativePathFromBaseDirPath: baseDirPath ];
+				if (relativePath)
+					sprite.filename = relativePath;		
+			}
 			
-			// Save Sprite to Dictionary
-			NSMutableDictionary *childValues = [NSMutableDictionary dictionaryWithCapacity:16];
-			[childValues setValue:[sprite name] forKey:@"name"];			
-			[childValues setValue:[sprite filename] forKey:@"filename"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite position].x] forKey:@"posX"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite position].y] forKey:@"posY"];
-			[childValues setValue:[NSNumber numberWithInteger:[sprite zOrder]] forKey:@"posZ"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite anchorPoint].x] forKey:@"anchorX"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite anchorPoint].y] forKey:@"anchorY"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite scaleX]] forKey:@"scaleX"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite scaleY]] forKey:@"scaleY"];
-			[childValues setValue:[NSNumber numberWithBool:[sprite flipX]] forKey:@"flipX"];
-			[childValues setValue:[NSNumber numberWithBool:[sprite flipY]] forKey:@"flipY"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite opacity]] forKey:@"opacity"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite color].r] forKey:@"colorR"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite color].g] forKey:@"colorG"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite color].b] forKey:@"colorB"];
-			[childValues setValue:[NSNumber numberWithFloat:[sprite rotation]] forKey:@"rotation"];
-			[childValues setValue:[NSNumber numberWithBool:[sprite isRelativeAnchorPoint]] forKey:@"relativeAnchor"];
+			// Get Sprite Dictionary Representation & Save it to children array
+			NSDictionary *childValues = [sprite dictionaryRepresentation];			
 			[children addObject:childValues];
 		}
 	}
@@ -617,34 +625,11 @@
 	[dict writeToFile:filename atomically:YES];
 }
 
-#pragma mark IBActions - Windows
-
-- (IBAction)openInfoPanel:(id)sender
-{
-	[infoPanel_ makeKeyAndOrderFront:nil];
-	[infoPanel_ setLevel:[[[[CCDirector sharedDirector] openGLView] window] level]+1];
-}
-
-- (IBAction) openSpritesPanel: (id) sender
-{
-	[spritesPanel_ makeKeyAndOrderFront: nil];
-	[spritesPanel_ setLevel:[[[[CCDirector sharedDirector] openGLView] window] level]+1];
-}
-
-- (IBAction)openMainWindow:(id)sender
-{
-	[[[[CCDirector sharedDirector] openGLView] window] makeKeyAndOrderFront:nil];
-	[infoPanel_ setLevel:NSNormalWindowLevel];
-	[spritesPanel_ setLevel:NSNormalWindowLevel];
-}
-
 #pragma mark IBActions - Save/Load
 
 // if we're opened a file - we can revert to saved and save without save as
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
-{
-	DebugLog(@"fuck");
-	
+{	
 	// "Save"
 	if ([menuItem action] == @selector(saveProject:))
 		return YES;
@@ -653,6 +638,38 @@
 	if ([menuItem action] == @selector(saveProject:))
 	{
 		if (self.projectFilename)
+			return YES;
+		return NO;
+	}
+	
+	// "Cut"
+	if ([menuItem action] == @selector(cutMenuItemPressed:))
+	{
+		if ([modelObject_ selectedSprite])
+			return YES;
+		return NO;
+	}
+	
+	// "Copy"
+	if ([menuItem action] == @selector(copyMenuItemPressed:))
+	{
+		if ([modelObject_ selectedSprite])
+			return YES;
+		return NO;
+	}
+	
+	// "Paste"
+	if ([menuItem action] == @selector(pasteMenuItemPressed:))
+	{
+		NSPasteboard *generalPasteboard = [NSPasteboard generalPasteboard];
+        NSDictionary *options = [NSDictionary dictionary];
+        return [generalPasteboard canReadObjectForClasses:[NSArray arrayWithObject:[CSSprite class]] options:options];
+	}
+	
+	// "Delete"
+	if ([menuItem action] == @selector(deleteMenuItemPressed:))
+	{
+		if ([modelObject_ selectedSprite])
 			return YES;
 		return NO;
 	}
@@ -782,7 +799,6 @@
 	{
 		CSSprite *sprite = [values objectAtIndex:index];
 		[self deleteSprite:sprite];
-		[spriteTableView_ reloadData];
 	}
 }
 
@@ -798,5 +814,63 @@
 {
 	mainLayer_.showBorders = ([sender state] == NSOffState);
 }
+
+- (IBAction) deleteMenuItemPressed: (id) sender
+{
+	[self deleteSprite:[modelObject_ selectedSprite]];
+}
+
+- (IBAction) cutMenuItemPressed: (id) sender
+{
+	[self copyMenuItemPressed: sender];
+	[self deleteSprite:[modelObject_ selectedSprite]];
+}
+
+- (IBAction) copyMenuItemPressed: (id) sender
+{
+	// write selected sprite to pasteboard
+	NSArray *objectsToCopy = [modelObject_ selectedSprites];
+	if (objectsToCopy)
+	{
+		NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+		[pasteboard clearContents];		
+		
+		if (![pasteboard writeObjects:objectsToCopy] )
+		{
+			DebugLog(@"Error writing to pasteboard, sprites = %@", objectsToCopy);
+		}
+	}
+}
+
+- (void)addSpritesWithArray:(NSArray *)sprites
+{
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
+	
+	for(CSSprite *sprite in sprites)
+	{
+		[self ensureUniqueNameForSprite: sprite];
+		@synchronized( [modelObject_ spriteArray] )
+		{			
+			[[modelObject_ spriteArray] addObject:sprite];
+		}
+		
+		// notify view that we added the sprite
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"addedSprite" object:nil];
+	}
+	
+	// reload the table
+	[spriteTableView_ reloadData];
+}
+
+- (IBAction) pasteMenuItemPressed: (id) sender
+{    
+    NSPasteboard *generalPasteboard = [NSPasteboard generalPasteboard];
+    NSDictionary *options = [NSDictionary dictionary];
+    
+    NSArray *newSprites = [generalPasteboard readObjectsForClasses:[NSArray arrayWithObject:[CSSprite class]] options:options];
+    
+	[self addSpritesWithArray: newSprites];
+}
+
 
 @end

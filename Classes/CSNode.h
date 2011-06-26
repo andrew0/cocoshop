@@ -23,34 +23,15 @@
  *
  */
 
-#import <Cocoa/Cocoa.h>
+#import "cocos2d.h"
 
-@interface CSSideViewController : NSObject
+@interface CSNode : CCNode
 {
-	IBOutlet NSView *rightSideView_;
+	BOOL isSelected_;
 	
-	IBOutlet NSView *generalPropertiesTab_;
-	IBOutlet NSView *generalPropertiesView_;
-	
-	IBOutlet NSView *nodePropertiesTab_;
-	IBOutlet NSView *nodePropertiesView_;
-	
-	IBOutlet NSView *spritePropertiesTab_;
-	IBOutlet NSView *spritePropertiesView_;
-	
-	IBOutlet NSView *backgroundPropertiesTab_;
-	IBOutlet NSView *backgroundPropertiesView_;
+	CCLayerColor *fill_;
+	CCSprite *anchor_;
+	CCLabelBMFont *positionLabel_;	
 }
-
-@property(nonatomic, readonly) NSView *generalPropertiesTab;
-@property(nonatomic, readonly) NSView *generalPropertiesView;
-@property(nonatomic, readonly) NSView *nodePropertiesTab;
-@property(nonatomic, readonly) NSView *nodePropertiesView;
-@property(nonatomic, readonly) NSView *spritePropertiesTab;
-@property(nonatomic, readonly) NSView *spritePropertiesView;
-@property(nonatomic, readonly) NSView *backgroundPropertiesTab;
-@property(nonatomic, readonly) NSView *backgroundPropertiesView;
-
-- (void)alignItems:(NSArray *)item, ... NS_REQUIRES_NIL_TERMINATION;
 
 @end
