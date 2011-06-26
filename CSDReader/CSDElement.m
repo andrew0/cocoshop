@@ -63,7 +63,7 @@
 	} //TODO: list supported CSDElements here in else-if's
 	else
 	{
-		CCLOGERROR(@"Cannot find supported CSDElement for given dictionary. Need to update CSDReader? ");
+		NSAssert(NO, @"Cannot find supported CSDElement for given dictionary. Need to update CSDReader? ");
 		return nil;
 	}
 }
@@ -175,17 +175,11 @@
 	if (dict)
 	{
 		NSString *imagename = [dict objectForKey:@"filename"];
-		if (imagename)
-		{
-			NSString *path = [CCFileUtils fullPathFromRelativePath:[imagename lastPathComponent]];
-			
-			if ( [[NSFileManager defaultManager] fileExistsAtPath:path ] )
-				return YES;
-			
-			CCLOGERROR(@"CSDSprite#canInitWithDictionary: file %@ not found!", path);
-		}		
+		if (imagename)			
+			return YES;
 	}
 	
+	CCLOGERROR(NO ,@"CSDSprite#canInitWithDictionary: no filename given!");	
 	return NO;	
 	
 }
@@ -290,11 +284,24 @@
 	{
 		CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:imageName_];
 		
-		// Independent Sprite Mode
-		CGRect rect = CGRectZero;
-		rect.size = texture.contentSize;
-		[aSprite setTexture:texture];
-		[aSprite setTextureRect:rect];
+		if (texture)
+		{
+			// Independent Sprite Mode from texture File.
+			CGRect rect = CGRectZero;
+			rect.size = texture.contentSize;
+			[aSprite setTexture:texture];
+			[aSprite setTextureRect:rect];
+			
+		}
+		else
+		{
+			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName: imageName_];
+			
+			NSAssert(frame, @"CSDSprite#setupSprite:withBatchNode: failed - can not load image (texture nor sprite frame).");
+	
+			[aSprite setDisplayFrame: frame];
+		}
+		
 		aSprite.tag = tag_;
 		[aSprite _setZOrder: zOrder_];
 		
