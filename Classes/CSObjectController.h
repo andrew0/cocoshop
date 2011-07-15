@@ -140,6 +140,11 @@
  * @param sender IB sender
  */
 - (IBAction)addSprite:(id)sender;
+/**
+ * Delte the currently selected sprite from the table
+ * @param sender IB sender
+ */
+- (IBAction)spriteDeleteButtonClicked:(id)sender;
 
 
 #pragma mark IBActions - Zoom
