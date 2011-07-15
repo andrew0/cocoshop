@@ -40,7 +40,8 @@
 
 #pragma mark Workspace
 
-/* Size of the viewport, this property sets CCDirector#winSize and
+/**
+ * Size of the viewport, this property sets CCDirector#winSize and
  * is used in Cocoshop for setting workspace size
  *
  * Due to NSGLView restrictions and zoom functionalty of the CSMacGLView
@@ -51,10 +52,14 @@
  */
 @property (readwrite) CGSize workspaceSize;
 
+/**
+ * Updates window size, to show scrollers of NSScrollView
+ */
 - (void) updateWindow;
 
 
-/* Since CSMacGLView uses custom projection
+/**
+ * Since CSMacGLView uses custom projection
  * we need a method, that will allow us to choose between 2D/3D projections
  * without cancelling custom projection.
  * Use this property to set kCCDirectorProjection3D || kCCDirectorProjection2D
@@ -66,17 +71,28 @@
 
 
 #pragma mark Zoom
-/* Zoom factor just like in Gimp or other Graphics Editors
- Zoomes the node with changing glViewport
- 1.0f is for 100% Scale
+/**
+ * Zoom factor just like in GIMP or other graphics editors
+ * Zooms the node with changing glViewport
+ * 1.0f is for 100% Scale
  */
 @property (readwrite) CGFloat zoomFactor;
+/**
+ * How fast to zoom (default is 0.1f)
+ */
+@property (readwrite) CGFloat zoomSpeed;
+/**
+ * Maximum zoom (default is 3.0f)
+ */
+@property (readwrite) CGFloat zoomFactorMax;
+/**
+ * Minimum zoom (default is 0.1f)
+ */
+@property (readwrite) CGFloat zoomFactorMin;
 
-@property (readwrite) CGFloat zoomSpeed; //< default is 0.1f
-@property (readwrite) CGFloat zoomFactorMax; //< default is 3.0f
-@property (readwrite) CGFloat zoomFactorMin; //< default is 0.1f
-
-- (void) resetZoom;
-
+/**
+ * Reset the zoom to default
+ */
+- (void)resetZoom;
 
 @end

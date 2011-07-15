@@ -63,40 +63,120 @@
 	CGFloat stageHeight_;
 }
 
+/**
+ * The selected sprite
+ */
 @property(nonatomic, assign) CSSprite *selectedSprite;
+/**
+ * The background layer
+ */
 @property(nonatomic, retain) CCLayerColor *backgroundLayer;
+/**
+ * Array of all the sprites
+ */
 @property(nonatomic, retain) NSMutableArray *spriteArray;
 
-// CCNode Properties
+
+#pragma mark CCNode Properties
+/**
+ * X position for selection
+ */
 @property(nonatomic, assign) CGFloat posX;
+/**
+ * Y position for selection
+ */
 @property(nonatomic, assign) CGFloat posY;
+/**
+ * Z order for selection
+ */
 @property(nonatomic, assign) CGFloat posZ;
+/**
+ * X anchor for selection
+ */
 @property(nonatomic, assign) CGFloat anchorX;
+/**
+ * Y anchor for selection
+ */
 @property(nonatomic, assign) CGFloat anchorY;
+/**
+ * X scale for selection
+ */
 @property(nonatomic, assign) CGFloat scaleX;
+/**
+ * Y scale for selection
+ */
 @property(nonatomic, assign) CGFloat scaleY;
+/**
+ * Rotation for selection
+ */
 @property(nonatomic, assign) CGFloat rotation;
+/**
+ * Content size width for selection
+ */
 @property(nonatomic, assign) CGFloat contentSizeWidth;
+/**
+ * Content size height for selection
+ */
 @property(nonatomic, assign) CGFloat contentSizeHeight;
+/**
+ * If the selection has a relative anchor or not
+ */
 @property(nonatomic, assign) NSInteger relativeAnchor;
+/**
+ * Tag of the selection
+ */
 @property(nonatomic, assign) NSInteger tag;
 
-// CCSprite Properties
+
+#pragma mark CCSprite Properties
+/**
+ * If the X axis should be flipped for the sprite or not
+ */
 @property(nonatomic, assign) NSInteger flipX;
+/**
+ * If the Y axis should be flipped for the sprite or not
+ */
 @property(nonatomic, assign) NSInteger flipY;
+/**
+ * The opacity for the sprite
+ */
 @property(nonatomic, assign) CGFloat opacity;
+/**
+ * The color of the sprite
+ */
 @property(nonatomic, copy) NSColor *color;
 
-// General Properties
+#pragma mark General Properties
+/**
+ * The name of the selection
+ */
 @property(nonatomic, assign) NSString *name;
+/**
+ * The width of the project
+ */
 @property(nonatomic, assign) CGFloat stageWidth;
+/**
+ * The height of the project
+ */
 @property(nonatomic, assign) CGFloat stageHeight;
 
-// Sprites Access
-- (CSSprite *)selectedSprite;
-- (CSSprite *)spriteWithName: (NSString *) name;
 
-// Multiple Selection Sprite Access, returns nil if no sprite is selected
+#pragma mark Sprites Access
+/**
+ * Returns sprite that is currently selected
+ * @returns The selected sprite
+ */
+- (CSSprite *)selectedSprite;
+/**
+ * Find sprite from name
+ * @param name Name of the sprite
+ * @returns The CSSprite with given name
+ */
+- (CSSprite *)spriteWithName:(NSString *)name;
+/**
+ * Multiple selection sprite access
+ * @returns Array of selected sprites, nil if no sprite is selected
+ */
 - (NSArray *)selectedSprites;
 
 @end

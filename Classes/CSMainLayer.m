@@ -182,6 +182,7 @@ enum
 
 - (CSSprite *)spriteForEvent:(NSEvent *)event
 {
+	// iterate backwards because we want to check for sprite at highest Z order
 	// we check to see if it's less than children_'s count as well
 	// because once it gets to zero, the i-- will make it NSUIntegerMax
 	for(NSUInteger i=[children_ count]-1; i>=0 && i<[children_ count]; i--)
@@ -401,13 +402,9 @@ enum
 		// if this isn't the selected sprite, select it
 		// otherwise, plan on deselecting it (unless it is moved)
 		if([model selectedSprite] != sprite)
-		{
 			[model setSelectedSprite:sprite];
-		}
 		else
-		{
 			shouldToggleVisibility_ = YES;
-		}
 		
 		shouldDragSprite_ = YES;
 	}
@@ -474,6 +471,7 @@ enum
 
 #pragma mark Keyboard Events
 
+// Keycodes available here: http://forums.macrumors.com/showpost.php?p=8428116&postcount=2
 - (BOOL)ccKeyDown:(NSEvent *)event
 {
 	NSUInteger modifiers = [event modifierFlags];

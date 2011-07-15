@@ -45,9 +45,16 @@
 	NSString *filename_;
 }
 
+/**
+ * The actual sprite
+ */
 @property(nonatomic, retain) CCSprite *sprite;
+/**
+ * The filename of the sprite
+ */
 @property(nonatomic, copy) NSString *filename;
 
+// CCSprite properties
 @property (nonatomic,readwrite) BOOL dirty;
 @property (nonatomic,readonly) ccV3F_C4B_T2F_Quad quad;
 @property (nonatomic,readwrite) NSUInteger atlasIndex;
@@ -64,8 +71,22 @@
 @property (nonatomic,readonly) CGPoint offsetPositionInPixels;
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
+/**
+ * Allocate and init a CSSprite from a file
+ * @param file File to import sprite from
+ * @returns Instance of CSSprite with the sprite from the given file
+ */
 + (id)spriteWithFile:(NSString *)file;
+/**
+ * Init CSSprite with sprite
+ * @param aSprite CCSprite to setup with
+ * @returns Instance of CSSprite from the given sprite
+ */
 - (id)initWithSprite:(CCSprite *)aSprite;
+/**
+ * Setup the class from a CCSprite
+ * @param aSprite CCSprite to setup with
+ */
 - (void)setupFromSprite:(CCSprite *)aSprite;
 
 @end

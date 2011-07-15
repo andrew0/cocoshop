@@ -47,26 +47,59 @@
 	BOOL showBorders_;
 }
 
+/**
+ * Controller to use for layer
+ */
 @property(nonatomic, retain) CSObjectController *controller;
-
-// Whenever should it render borderline around self or not
+/**
+ * Whether it should render borderline around self or not
+ */
 @property(readwrite) BOOL showBorders;
 
 #pragma mark Creation
+/**
+ * Allocate and init instance of layer from CSObjectController
+ * @param aController CSObjectController to use
+ * @returns Instance of layer
+ */
 + (id)nodeWithController:(CSObjectController *)aController;
+/**
+ * Init instance of layer from CSObjectController
+ * @param aController CSObjectController to use
+ * @returns Instance of layer
+ */
 - (id)initWithController:(CSObjectController *)aController;
 
 #pragma mark Loading CSD Files 
+/**
+ * Call loadProjectFromDictionary: on cocos2d thread
+ * @param dict Dictionary to load from
+ */
 - (void)loadProjectFromDictionarySafely:(NSDictionary *)dict;
+/**
+ * Load project to layer from dictionary
+ * @param dict Dictionary to load from
+ */
 - (void)loadProjectFromDictionary:(NSDictionary *)dict;
 
 #pragma mark Children Getters
+/**
+ * Get sprite based on NSEvent from click
+ * @param event Event to check for sprite
+ * @returns Sprite located in event
+ */
 - (CSSprite *)spriteForEvent:(NSEvent *)event;
 
 #pragma mark Notifications
+/**
+ * Handle adding a sprite
+ * @param aNotification Notification
+ */
 - (void)addedSprite:(NSNotification *)aNotification;
-// updates background checkerboard if winSize is changed
-// can be called on any thread
-- (void) updateForScreenReshapeSafely:(NSNotification *) aNotification;
+/**
+ * Updates background checkerboard if winSize is changed (can be called on any thread)
+ * @param aNotification Notification
+ */
+- (void)updateForScreenReshapeSafely:(NSNotification *)aNotification;
 
 @end

@@ -40,75 +40,98 @@
 	BOOL willUpdatePositionLabel_;
 }
 
-// changes position and text of positionLabel
-// must be called on Cocos2D thread
+/**
+ * Changes position and text of positionLabel. Must be called on Cocos2D thread
+ */
 - (void)updatePositionLabel;
-
-// marks that updatePositionLabel must be called once at next visit
+/**
+ * Marks that updatePositionLabel must be called once at next visit
+ */
 - (void)updatePositionLabelSafely;
-
+/**
+ * Update anchor position
+ */
 - (void)updateAnchor;
 
+/**
+ * Is the node selected or not
+ */
 @property(nonatomic, assign) BOOL isSelected;
+/**
+ * Name of the node
+ */
 @property(nonatomic, copy) NSString *nodeName;
+/**
+ * Is the node locked or not
+ */
 @property(nonatomic, assign) BOOL isLocked;
+/**
+ * Fill to tint the node when selected
+ */
 @property(nonatomic, retain) CCLayerColor *fill;
+/**
+ * Anchor to indicate where the anchor point of the node is
+ */
 @property(nonatomic, retain) CCSprite *anchor;
+/**
+ * Label that shows X and Y coordinates of the node
+ */
 @property(nonatomic, retain) CCLabelBMFont *positionLabel;
 
-/* 
- Creates NSDictionary that contains info about node.
- Currently it supports only CCSprite & saves its properties into dictionary root
- But it should be better to have this format:
- 
- Dictionary Root
- |
- + "ClassName" => "CCSprite"
- |
- + "CCNode" => NSDictionary
- |
- + "position" => NSStringFromCGPoint
- |
- + "anchor point" => NSStringFromCGPoint
- |
- + "contentSize" => NSStringFromCGRect
- |
- ...
- |
- + "CCSprite" => NSDictionary
- |
- + "filename" => "foo.png"
- |
- + "color" => NSDictionary
- |
- + "r" = 255
- |
- + "g" = 255
- |
- ...
- |
- ...
- 
- That format should be easy to use with NSCoding, and Cocos2D-X
- 
- Subclassing any CCNode you will code like this:
- 
- - (NSDictionary *) dictionaryRepresentation
- {
- NSDictionary *dict = [super dictionaryRepresentation];
- NSDictionary *selfPropDict = [self customPropertiesDictionaryRepresentation];
- [dict setObject: selfPropDict forKey: @"MyCustomCCNodeSubclass" ];
- return dict;
- }
- 
- More info about this format should be discussed here: http://www.cocos2d-iphone.org/forum/topic/16980
- 
+/**
+ * Creates NSDictionary that contains info about node.
+ * Currently it supports only CCSprite & saves its properties into dictionary root
+ * But it should be better to have this format:
+ * 
+ * Dictionary Root
+ * |
+ * + "ClassName" => "CCSprite"
+ * |
+ * + "CCNode" => NSDictionary
+ * |
+ * + "position" => NSStringFromCGPoint
+ * |
+ * + "anchor point" => NSStringFromCGPoint
+ * |
+ * + "contentSize" => NSStringFromCGRect
+ * |
+ * ...
+ * |
+ * + "CCSprite" => NSDictionary
+ * |
+ * + "filename" => "foo.png"
+ * |
+ * + "color" => NSDictionary
+ * |
+ * + "r" = 255
+ * |
+ * + "g" = 255
+ * |
+ * ...
+ * |
+ * ...
+ * 
+ * That format should be easy to use with NSCoding, and Cocos2D-X
+ * 
+ * Subclassing any CCNode you will code like this:
+ * 
+ * - (NSDictionary *) dictionaryRepresentation
+ * {
+ * NSDictionary *dict = [super dictionaryRepresentation];
+ * NSDictionary *selfPropDict = [self customPropertiesDictionaryRepresentation];
+ * [dict setObject: selfPropDict forKey: @"MyCustomCCNodeSubclass" ];
+ * return dict;
+ * }
+ * 
+ * More info about this format should be discussed here: http://www.cocos2d-iphone.org/forum/topic/16980
+ * @returns Dictionary representation containing information about the node
  */
 - (NSDictionary *)dictionaryRepresentation;
 
-/* Setups self from given NSDictionary 
- * Uses [super setupFromDictionaryRepresentation: aDict] before setting self properties
+/**
+ * Setups self from given NSDictionary. Uses [super setupFromDictionaryRepresentation: aDict] before setting self properties
+ * @param aDict Dictionary to setup with
  */
-- (void)setupFromDictionaryRepresentation: (NSDictionary *) aDict;
+- (void)setupFromDictionaryRepresentation:(NSDictionary *)aDict;
 
 @end

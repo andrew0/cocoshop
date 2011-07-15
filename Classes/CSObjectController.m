@@ -785,11 +785,6 @@
 	}];
 }
 
-- (IBAction)spriteAddButtonClicked:(id)sender
-{
-	[self addSprite:sender];
-}
-
 - (IBAction)spriteDeleteButtonClicked:(id)sender
 {
 	NSInteger index =  [spriteTableView_ selectedRow];
