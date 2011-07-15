@@ -29,10 +29,6 @@
 
 @interface CSNode : CCNode <NSCoding, NSPasteboardReading, NSPasteboardWriting>
 {
-	CCNode *delegate_;
-	
-	BOOL firstOnEnter_;
-	
 	BOOL isLocked_;
 	BOOL isSelected_;
 	
@@ -42,8 +38,6 @@
 	
 	NSString *nodeName_;
 	BOOL willUpdatePositionLabel_;
-	
-	CCNode *resizeControls_;
 }
 
 // changes position and text of positionLabel
@@ -55,7 +49,6 @@
 
 - (void)updateAnchor;
 
-@property(nonatomic, retain) CCNode *delegate;
 @property(nonatomic, assign) BOOL isSelected;
 @property(nonatomic, copy) NSString *nodeName;
 @property(nonatomic, assign) BOOL isLocked;

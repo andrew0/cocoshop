@@ -347,17 +347,18 @@ enum
 - (void)csMagnifyWithEvent:(NSEvent *)event
 {
 	CSSprite *sprite = [[controller_ modelObject] selectedSprite];
+	CSModel *model = [controller_ modelObject];
 	if (sprite)
 	{
-		float currentScaleX = [sprite scaleX];
-		float currentScaleY = [sprite scaleY];
+		float currentScaleX = [model scaleX];
+		float currentScaleY = [model scaleY];
 		float newScaleX = currentScaleX + [event magnification];
 		float newScaleY = currentScaleY + [event magnification];
 		
 		// round to nearest hundredth
 		newScaleX = roundf(newScaleX * 100)/100.0f;
 		newScaleY = roundf(newScaleY * 100)/100.0f;
-				
+		
 		[[controller_ modelObject] setScaleX:newScaleX];
 		[[controller_ modelObject] setScaleY:newScaleY];
 	}

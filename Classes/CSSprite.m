@@ -31,12 +31,6 @@
 #import "CSNode.h"
 #import "DebugLog.h"
 
-@interface CCNode (Internal)
-
--(void) _setZOrder:(int) z;
-
-@end
-
 @implementation CSSprite
 
 @synthesize sprite=sprite_;
