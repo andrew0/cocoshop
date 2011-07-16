@@ -182,6 +182,7 @@ enum
 
 - (CSSprite *)spriteForEvent:(NSEvent *)event
 {
+	// iterate backwards because we want to check for sprite at highest Z order
 	// we check to see if it's less than children_'s count as well
 	// because once it gets to zero, the i-- will make it NSUIntegerMax
 	for(NSUInteger i=[children_ count]-1; i>=0 && i<[children_ count]; i--)
@@ -347,17 +348,18 @@ enum
 - (void)csMagnifyWithEvent:(NSEvent *)event
 {
 	CSSprite *sprite = [[controller_ modelObject] selectedSprite];
+	CSModel *model = [controller_ modelObject];
 	if (sprite)
 	{
-		float currentScaleX = [sprite scaleX];
-		float currentScaleY = [sprite scaleY];
+		float currentScaleX = [model scaleX];
+		float currentScaleY = [model scaleY];
 		float newScaleX = currentScaleX + [event magnification];
 		float newScaleY = currentScaleY + [event magnification];
 		
 		// round to nearest hundredth
 		newScaleX = roundf(newScaleX * 100)/100.0f;
 		newScaleY = roundf(newScaleY * 100)/100.0f;
-				
+		
 		[[controller_ modelObject] setScaleX:newScaleX];
 		[[controller_ modelObject] setScaleY:newScaleY];
 	}
@@ -400,13 +402,9 @@ enum
 		// if this isn't the selected sprite, select it
 		// otherwise, plan on deselecting it (unless it is moved)
 		if([model selectedSprite] != sprite)
-		{
 			[model setSelectedSprite:sprite];
-		}
 		else
-		{
 			shouldToggleVisibility_ = YES;
-		}
 		
 		shouldDragSprite_ = YES;
 	}
@@ -473,6 +471,7 @@ enum
 
 #pragma mark Keyboard Events
 
+// Keycodes available here: http://forums.macrumors.com/showpost.php?p=8428116&postcount=2
 - (BOOL)ccKeyDown:(NSEvent *)event
 {
 	NSUInteger modifiers = [event modifierFlags];
@@ -551,11 +550,9 @@ enum
 				[model setPosY:[model posY]+increment];
 				return YES;
 			case 0x74: // page up
-			case 0x1e: // cmd-]
 				[model setPosZ:[model posZ]+increment];
 				return YES;
 			case 0x79: // page down
-			case 0x21: // cmd-[
 				[model setPosZ:[model posZ]-increment];
 				return YES;
 			default:

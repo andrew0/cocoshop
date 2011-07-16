@@ -208,7 +208,7 @@
 	CGLUnlockContext([[self openGLContext] CGLContextObj]);
 }
 
-// Updates Window Size, to Show Scrollers of NSScrollView
+// Updates window size, to show scrollers of NSScrollView
 - (void) updateWindow
 {
 	if ([(CCDirectorMac *)[CCDirector sharedDirector] isFullScreen])

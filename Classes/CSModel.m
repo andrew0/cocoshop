@@ -32,7 +32,7 @@
 @synthesize selectedSprite=selectedSprite_;
 @synthesize backgroundLayer=backgroundLayer_;
 @synthesize spriteArray=spriteArray_;
-@synthesize name=name_;
+
 @synthesize posX=posX_;
 @synthesize posY=posY_;
 @synthesize posZ=posZ_;
@@ -40,14 +40,20 @@
 @synthesize anchorY=anchorY_;
 @synthesize scaleX=scaleX_;
 @synthesize scaleY=scaleY_;
+@synthesize rotation=rotation_;
+@synthesize contentSizeWidth=contentSizeWidth_;
+@synthesize contentSizeHeight=contentSizeHeight_;
+@synthesize relativeAnchor=relativeAnchor_;
+@synthesize tag=tag_;
+
 @synthesize flipX=flipX_;
 @synthesize flipY=flipY_;
 @synthesize opacity=opacity_;
 @synthesize color=color_;
-@synthesize relativeAnchor=relativeAnchor_;
-@synthesize rotation=rotation_;
-@synthesize stageWidth = stageWidth_;
-@synthesize stageHeight = stageHeight_;
+
+@synthesize name=name_;
+@synthesize stageWidth=stageWidth_;
+@synthesize stageHeight=stageHeight_;
 
 #pragma mark Init / DeInit
 
