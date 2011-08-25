@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4915E50F13E1DEC500051956 /* CSObjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4915E50E13E1DEC500051956 /* CSObjectController.m */; };
 		4932E5F213E1C3D50046ABA8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4932E5F113E1C3D50046ABA8 /* QuartzCore.framework */; };
 		4932E5F413E1C3D50046ABA8 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4932E5F313E1C3D50046ABA8 /* OpenGL.framework */; };
 		4932E5F613E1C3D50046ABA8 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4932E5F513E1C3D50046ABA8 /* OpenAL.framework */; };
@@ -101,15 +100,25 @@
 		4932E71413E1C3D80046ABA8 /* CDXMacOSXSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932E71313E1C3D80046ABA8 /* CDXMacOSXSupport.m */; };
 		4932E71713E1C3D80046ABA8 /* CDXPropertyModifierAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932E71613E1C3D80046ABA8 /* CDXPropertyModifierAction.m */; };
 		4932E71B13E1C3D80046ABA8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932E71A13E1C3D80046ABA8 /* main.m */; };
-		4932E71E13E1C3D80046ABA8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932E71D13E1C3D80046ABA8 /* AppDelegate.m */; };
+		4932E71E13E1C3D80046ABA8 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4932E71D13E1C3D80046ABA8 /* AppDelegate.mm */; };
 		4932E72913E1C7CF0046ABA8 /* PSMTabBarControl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4932E72813E1C7CF0046ABA8 /* PSMTabBarControl.framework */; };
 		4932E72A13E1C7DA0046ABA8 /* PSMTabBarControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4932E72813E1C7CF0046ABA8 /* PSMTabBarControl.framework */; };
 		4932E73213E1C8500046ABA8 /* CSLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932E73113E1C8500046ABA8 /* CSLayerView.m */; };
-		4932E73513E1C8990046ABA8 /* CSWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932E73413E1C8990046ABA8 /* CSWindowController.m */; };
+		4932E73513E1C8990046ABA8 /* CSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932E73413E1C8990046ABA8 /* CSViewController.m */; };
 		4932E74113E1CB410046ABA8 /* CSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932E74013E1CB410046ABA8 /* CSModel.m */; };
 		49365B5C13E8E985000A9EE2 /* Add.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 49365B5B13E8E985000A9EE2 /* Add.tiff */; };
 		49365B6413E99E39000A9EE2 /* CSOutlineViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 49365B6313E99E38000A9EE2 /* CSOutlineViewDataSource.m */; };
 		4941028813E23C0E002F4B9C /* checkerboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 4941028713E23C0E002F4B9C /* checkerboard.png */; };
+		494182E3140564A400E2013A /* CSColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 494182E2140564A400E2013A /* CSColorView.m */; };
+		494182E614056B4300E2013A /* Toolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 494182E414056B4300E2013A /* Toolbar.xib */; };
+		494182E914056E2600E2013A /* CSToolbarController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 494182E814056E2600E2013A /* CSToolbarController.mm */; };
+		494182FD1405821B00E2013A /* CSTabContents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 494182FC1405821600E2013A /* CSTabContents.mm */; };
+		49517C671406C2020024A8C8 /* LICENSE_chromium_tabs.txt in Resources */ = {isa = PBXBuildFile; fileRef = 49517C661406C2020024A8C8 /* LICENSE_chromium_tabs.txt */; };
+		498404C21404DEB6003190E3 /* CSBrowserWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 498404C11404DEB6003190E3 /* CSBrowserWindowController.mm */; };
+		498404C41404DEE4003190E3 /* ChromiumTabs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 498404C31404DEE4003190E3 /* ChromiumTabs.framework */; };
+		498404C51404DEED003190E3 /* ChromiumTabs.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 498404C31404DEE4003190E3 /* ChromiumTabs.framework */; };
+		498404C81404DF54003190E3 /* CSBrowser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 498404C71404DF54003190E3 /* CSBrowser.mm */; };
+		498404CB1404DFB3003190E3 /* Window.xib in Resources */ = {isa = PBXBuildFile; fileRef = 498404C91404DFB3003190E3 /* Window.xib */; };
 		499DB97C13FB20E900ED7BFC /* CSSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 499DB97B13FB20E900ED7BFC /* CSSprite.m */; };
 		499DB98013FB264700ED7BFC /* anchor.png in Resources */ = {isa = PBXBuildFile; fileRef = 499DB97D13FB264700ED7BFC /* anchor.png */; };
 		499DB98113FB264700ED7BFC /* arial.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 499DB97E13FB264700ED7BFC /* arial.fnt */; };
@@ -118,6 +127,7 @@
 		49B1328213E1D1F000D594CD /* CSMacGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B1328113E1D1F000D594CD /* CSMacGLView.m */; };
 		49B1328513E1D44600D594CD /* background_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 49B1328413E1D44600D594CD /* background_texture.png */; };
 		49B1328813E1D64A00D594CD /* CSSceneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B1328713E1D64A00D594CD /* CSSceneView.m */; };
+		49DAAFCC1404D7D900444D92 /* CSObjectController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 49DAAFCB1404D7D900444D92 /* CSObjectController.mm */; };
 		49E1F7D313E74E4400D24767 /* TLAnimatingOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E1F7C913E74E4400D24767 /* TLAnimatingOutlineView.m */; };
 		49E1F7D413E74E4400D24767 /* TLCollapsibleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E1F7CB13E74E4400D24767 /* TLCollapsibleView.m */; };
 		49E1F7D513E74E4400D24767 /* TLDisclosureBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E1F7CD13E74E4400D24767 /* TLDisclosureBar.m */; };
@@ -134,6 +144,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				4932E72913E1C7CF0046ABA8 /* PSMTabBarControl.framework in CopyFiles */,
+				498404C51404DEED003190E3 /* ChromiumTabs.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,7 +152,6 @@
 
 /* Begin PBXFileReference section */
 		4915E50D13E1DEC500051956 /* CSObjectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSObjectController.h; sourceTree = "<group>"; };
-		4915E50E13E1DEC500051956 /* CSObjectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CSObjectController.m; path = /Users/andrew/Documents/cocoshop/cocoshop/CSObjectController.m; sourceTree = "<absolute>"; };
 		4932E5ED13E1C3D50046ABA8 /* cocoshop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocoshop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4932E5F113E1C3D50046ABA8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4932E5F313E1C3D50046ABA8 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -336,18 +346,32 @@
 		4932E71913E1C3D80046ABA8 /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		4932E71A13E1C3D80046ABA8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4932E71C13E1C3D80046ABA8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		4932E71D13E1C3D80046ABA8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4932E71D13E1C3D80046ABA8 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		4932E72813E1C7CF0046ABA8 /* PSMTabBarControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PSMTabBarControl.framework; path = cocoshop/Frameworks/PSMTabBarControl.framework; sourceTree = "<group>"; };
 		4932E73013E1C8500046ABA8 /* CSLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSLayerView.h; sourceTree = "<group>"; };
 		4932E73113E1C8500046ABA8 /* CSLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSLayerView.m; sourceTree = "<group>"; };
-		4932E73313E1C8990046ABA8 /* CSWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSWindowController.h; sourceTree = "<group>"; };
-		4932E73413E1C8990046ABA8 /* CSWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSWindowController.m; sourceTree = "<group>"; };
+		4932E73313E1C8990046ABA8 /* CSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSViewController.h; sourceTree = "<group>"; };
+		4932E73413E1C8990046ABA8 /* CSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSViewController.m; sourceTree = "<group>"; };
 		4932E73F13E1CB410046ABA8 /* CSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSModel.h; sourceTree = "<group>"; };
 		4932E74013E1CB410046ABA8 /* CSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSModel.m; sourceTree = "<group>"; };
 		49365B5B13E8E985000A9EE2 /* Add.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Add.tiff; path = Resources/Add.tiff; sourceTree = "<group>"; };
 		49365B6213E99E38000A9EE2 /* CSOutlineViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSOutlineViewDataSource.h; sourceTree = "<group>"; };
 		49365B6313E99E38000A9EE2 /* CSOutlineViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSOutlineViewDataSource.m; sourceTree = "<group>"; };
 		4941028713E23C0E002F4B9C /* checkerboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkerboard.png; path = Resources/checkerboard.png; sourceTree = "<group>"; };
+		494182E1140564A400E2013A /* CSColorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSColorView.h; sourceTree = "<group>"; };
+		494182E2140564A400E2013A /* CSColorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSColorView.m; sourceTree = "<group>"; };
+		494182E514056B4300E2013A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/Toolbar.xib; sourceTree = "<group>"; };
+		494182E714056E2500E2013A /* CSToolbarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSToolbarController.h; sourceTree = "<group>"; };
+		494182E814056E2600E2013A /* CSToolbarController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CSToolbarController.mm; sourceTree = "<group>"; };
+		494182FB1405821500E2013A /* CSTabContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTabContents.h; sourceTree = "<group>"; };
+		494182FC1405821600E2013A /* CSTabContents.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CSTabContents.mm; sourceTree = "<group>"; };
+		49517C661406C2020024A8C8 /* LICENSE_chromium_tabs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE_chromium_tabs.txt; path = cocoshop/LICENSE_chromium_tabs.txt; sourceTree = "<group>"; };
+		498404C01404DEB6003190E3 /* CSBrowserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSBrowserWindowController.h; sourceTree = "<group>"; };
+		498404C11404DEB6003190E3 /* CSBrowserWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CSBrowserWindowController.mm; sourceTree = "<group>"; };
+		498404C31404DEE4003190E3 /* ChromiumTabs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ChromiumTabs.framework; path = cocoshop/Frameworks/ChromiumTabs.framework; sourceTree = "<group>"; };
+		498404C61404DF54003190E3 /* CSBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSBrowser.h; sourceTree = "<group>"; };
+		498404C71404DF54003190E3 /* CSBrowser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CSBrowser.mm; sourceTree = "<group>"; };
+		498404CA1404DFB3003190E3 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/Window.xib; sourceTree = "<group>"; };
 		499DB97313FB141000ED7BFC /* CSNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSNode.h; sourceTree = "<group>"; };
 		499DB97A13FB20E900ED7BFC /* CSSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSprite.h; sourceTree = "<group>"; };
 		499DB97B13FB20E900ED7BFC /* CSSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSprite.m; sourceTree = "<group>"; };
@@ -361,6 +385,7 @@
 		49B1328413E1D44600D594CD /* background_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background_texture.png; path = Resources/background_texture.png; sourceTree = "<group>"; };
 		49B1328613E1D64A00D594CD /* CSSceneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSceneView.h; sourceTree = "<group>"; };
 		49B1328713E1D64A00D594CD /* CSSceneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSceneView.m; sourceTree = "<group>"; };
+		49DAAFCB1404D7D900444D92 /* CSObjectController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CSObjectController.mm; sourceTree = "<group>"; };
 		49E1F7C813E74E4400D24767 /* TLAnimatingOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLAnimatingOutlineView.h; sourceTree = "<group>"; };
 		49E1F7C913E74E4400D24767 /* TLAnimatingOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLAnimatingOutlineView.m; sourceTree = "<group>"; };
 		49E1F7CA13E74E4400D24767 /* TLCollapsibleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLCollapsibleView.h; sourceTree = "<group>"; };
@@ -380,6 +405,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				498404C41404DEE4003190E3 /* ChromiumTabs.framework in Frameworks */,
 				4932E72A13E1C7DA0046ABA8 /* PSMTabBarControl.framework in Frameworks */,
 				4932E5F213E1C3D50046ABA8 /* QuartzCore.framework in Frameworks */,
 				4932E5F413E1C3D50046ABA8 /* OpenGL.framework in Frameworks */,
@@ -413,6 +439,8 @@
 		4932E5F013E1C3D50046ABA8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				49517C661406C2020024A8C8 /* LICENSE_chromium_tabs.txt */,
+				498404C31404DEE4003190E3 /* ChromiumTabs.framework */,
 				4932E72813E1C7CF0046ABA8 /* PSMTabBarControl.framework */,
 				4932E5F113E1C3D50046ABA8 /* QuartzCore.framework */,
 				4932E5F313E1C3D50046ABA8 /* OpenGL.framework */,
@@ -427,14 +455,15 @@
 		4932E5FD13E1C3D50046ABA8 /* cocoshop */ = {
 			isa = PBXGroup;
 			children = (
+				498404BF1404DE9A003190E3 /* Chromium Tabs */,
 				499DB97113FB13DF00ED7BFC /* CSNode */,
 				4941441213FF3F60006A3743 /* Support */,
-				4932E73313E1C8990046ABA8 /* CSWindowController.h */,
-				4932E73413E1C8990046ABA8 /* CSWindowController.m */,
+				4932E73313E1C8990046ABA8 /* CSViewController.h */,
+				4932E73413E1C8990046ABA8 /* CSViewController.m */,
 				4932E73F13E1CB410046ABA8 /* CSModel.h */,
 				4932E74013E1CB410046ABA8 /* CSModel.m */,
 				4915E50D13E1DEC500051956 /* CSObjectController.h */,
-				4915E50E13E1DEC500051956 /* CSObjectController.m */,
+				49DAAFCB1404D7D900444D92 /* CSObjectController.mm */,
 				4932E73013E1C8500046ABA8 /* CSLayerView.h */,
 				4932E73113E1C8500046ABA8 /* CSLayerView.m */,
 				49B1328613E1D64A00D594CD /* CSSceneView.h */,
@@ -444,7 +473,7 @@
 				49365B6213E99E38000A9EE2 /* CSOutlineViewDataSource.h */,
 				49365B6313E99E38000A9EE2 /* CSOutlineViewDataSource.m */,
 				4932E71C13E1C3D80046ABA8 /* AppDelegate.h */,
-				4932E71D13E1C3D80046ABA8 /* AppDelegate.m */,
+				4932E71D13E1C3D80046ABA8 /* AppDelegate.mm */,
 				49E1F7C713E74E4400D24767 /* TLAnimatingOutlineView */,
 				4932E5FE13E1C3D50046ABA8 /* Resources */,
 				4932E60B13E1C3D50046ABA8 /* libs */,
@@ -475,6 +504,8 @@
 			children = (
 				4932E60013E1C3D50046ABA8 /* InfoPlist.strings */,
 				4932E60313E1C3D50046ABA8 /* cocoshop.xib */,
+				498404C91404DFB3003190E3 /* Window.xib */,
+				494182E414056B4300E2013A /* Toolbar.xib */,
 			);
 			name = English.lproj;
 			sourceTree = "<group>";
@@ -739,6 +770,23 @@
 			name = Support;
 			sourceTree = "<group>";
 		};
+		498404BF1404DE9A003190E3 /* Chromium Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				498404C01404DEB6003190E3 /* CSBrowserWindowController.h */,
+				498404C11404DEB6003190E3 /* CSBrowserWindowController.mm */,
+				498404C61404DF54003190E3 /* CSBrowser.h */,
+				498404C71404DF54003190E3 /* CSBrowser.mm */,
+				494182E1140564A400E2013A /* CSColorView.h */,
+				494182E2140564A400E2013A /* CSColorView.m */,
+				494182E714056E2500E2013A /* CSToolbarController.h */,
+				494182E814056E2600E2013A /* CSToolbarController.mm */,
+				494182FB1405821500E2013A /* CSTabContents.h */,
+				494182FC1405821600E2013A /* CSTabContents.mm */,
+			);
+			name = "Chromium Tabs";
+			sourceTree = "<group>";
+		};
 		499DB97113FB13DF00ED7BFC /* CSNode */ = {
 			isa = PBXGroup;
 			children = (
@@ -827,6 +875,9 @@
 				499DB98013FB264700ED7BFC /* anchor.png in Resources */,
 				499DB98113FB264700ED7BFC /* arial.fnt in Resources */,
 				499DB98213FB264700ED7BFC /* arial.png in Resources */,
+				498404CB1404DFB3003190E3 /* Window.xib in Resources */,
+				494182E614056B4300E2013A /* Toolbar.xib in Resources */,
+				49517C671406C2020024A8C8 /* LICENSE_chromium_tabs.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -920,13 +971,12 @@
 				4932E71413E1C3D80046ABA8 /* CDXMacOSXSupport.m in Sources */,
 				4932E71713E1C3D80046ABA8 /* CDXPropertyModifierAction.m in Sources */,
 				4932E71B13E1C3D80046ABA8 /* main.m in Sources */,
-				4932E71E13E1C3D80046ABA8 /* AppDelegate.m in Sources */,
+				4932E71E13E1C3D80046ABA8 /* AppDelegate.mm in Sources */,
 				4932E73213E1C8500046ABA8 /* CSLayerView.m in Sources */,
-				4932E73513E1C8990046ABA8 /* CSWindowController.m in Sources */,
+				4932E73513E1C8990046ABA8 /* CSViewController.m in Sources */,
 				4932E74113E1CB410046ABA8 /* CSModel.m in Sources */,
 				49B1328213E1D1F000D594CD /* CSMacGLView.m in Sources */,
 				49B1328813E1D64A00D594CD /* CSSceneView.m in Sources */,
-				4915E50F13E1DEC500051956 /* CSObjectController.m in Sources */,
 				49E1F7D313E74E4400D24767 /* TLAnimatingOutlineView.m in Sources */,
 				49E1F7D413E74E4400D24767 /* TLCollapsibleView.m in Sources */,
 				49E1F7D513E74E4400D24767 /* TLDisclosureBar.m in Sources */,
@@ -936,6 +986,12 @@
 				499DB97C13FB20E900ED7BFC /* CSSprite.m in Sources */,
 				499DB98513FB497800ED7BFC /* CCNode+Additions.m in Sources */,
 				49E8533B13FC320100651BA6 /* CSNode.m in Sources */,
+				49DAAFCC1404D7D900444D92 /* CSObjectController.mm in Sources */,
+				498404C21404DEB6003190E3 /* CSBrowserWindowController.mm in Sources */,
+				498404C81404DF54003190E3 /* CSBrowser.mm in Sources */,
+				494182E3140564A400E2013A /* CSColorView.m in Sources */,
+				494182E914056E2600E2013A /* CSToolbarController.mm in Sources */,
+				494182FD1405821B00E2013A /* CSTabContents.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -956,6 +1012,22 @@
 				4932E60413E1C3D50046ABA8 /* English */,
 			);
 			name = cocoshop.xib;
+			sourceTree = "<group>";
+		};
+		494182E414056B4300E2013A /* Toolbar.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				494182E514056B4300E2013A /* English */,
+			);
+			name = Toolbar.xib;
+			sourceTree = "<group>";
+		};
+		498404C91404DFB3003190E3 /* Window.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				498404CA1404DFB3003190E3 /* English */,
+			);
+			name = Window.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

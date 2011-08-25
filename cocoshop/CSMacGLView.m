@@ -31,7 +31,7 @@
 @implementation CSMacGLView
 
 - (void)awakeFromNib
-{    
+{
     // OpenGL view flickers with elastic scrolling
     [[self enclosingScrollView] setHorizontalScrollElasticity:NSScrollElasticityNone];
     [[self enclosingScrollView] setVerticalScrollElasticity:NSScrollElasticityNone];

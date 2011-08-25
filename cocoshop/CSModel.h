@@ -29,8 +29,16 @@
 @class CSLayerView;
 @protocol CSNodeProtocol;
 
+/**
+ * CSModel is a model for a CSNode/views. Some of the properties, such
+ * as workspaceWidth and workspaceHeight, are general properties for
+ * the entire project. Others, such as opacity, color, posX, posY, etc
+ * are for the currently selected node (if there is one).
+ */
 @interface CSModel : NSObject
 {
+    NSString *_projectName;
+    
     BOOL _firstTime;
     NSDictionary *_nodeProperties;
     
@@ -49,6 +57,7 @@
     NSInteger _zOrder;
 }
 
+@property (nonatomic, copy) NSString *projectName;
 @property (nonatomic, assign) BOOL firstTime;
 @property (nonatomic, retain) NSDictionary *nodeProperties;
 @property (nonatomic, assign) CGFloat workspaceWidth;

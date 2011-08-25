@@ -2,7 +2,6 @@
  * cocoshop
  *
  * Copyright (c) 2011 Andrew
- * Copyright (c) 2011 Stepan Generalov
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,25 +24,30 @@
  */
 
 #import "cocos2d.h"
+#import <ChromiumTabs/ChromiumTabs.h>
 
-@class CSMacGLView;
-@class CSPreferencesController;
+@class CSColorView;
 @class CSViewController;
-@class CSBrowserWindowController;
 
-@interface cocoshopAppDelegate : NSObject <NSApplicationDelegate>
+/**
+ * CSBrowserWindowController controls the actual window for cocoshop.
+ * Generally, this would be to control multiple windows, but we only
+ * use one in our case (hence tab tearing being disabled). We only use
+ * one window because we can't have 2 instances of cocos2d running at
+ * one time without making it a separate process, which would get
+ * complicated.
+ */
+@interface CSBrowserWindowController : CTBrowserWindowController
 {
     NSView *_view;
-	CSMacGLView	*_glView;
+    CSColorView *_backgroundView;
     CSViewController *_viewController;
-    CSBrowserWindowController *_windowController;
-    BOOL _firstActive;
 }
 
 @property (assign) IBOutlet NSView *view;
-@property (assign) IBOutlet CSMacGLView	*glView;
-@property (assign) IBOutlet CSViewController *viewController;
+@property (assign) IBOutlet CSColorView *backgroundView;
+@property (nonatomic, retain) CSViewController *viewController;
 
-- (IBAction)toggleFullScreen:(id)sender;
+- (void)addSprite:(id)sender;
 
 @end

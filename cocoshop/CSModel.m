@@ -31,6 +31,7 @@
 
 @implementation CSModel
 
+@synthesize projectName = _projectName;
 @synthesize firstTime = _firstTime;
 @synthesize nodeProperties = _nodeProperties;
 @synthesize workspaceWidth = _workspaceWidth;
@@ -61,6 +62,7 @@
 
 - (void)dealloc
 {
+    self.projectName = nil;
     self.color = nil;
     [super dealloc];
 }

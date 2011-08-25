@@ -2,7 +2,6 @@
  * cocoshop
  *
  * Copyright (c) 2011 Andrew
- * Copyright (c) 2011 Stepan Generalov
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,26 +23,35 @@
  *
  */
 
-#import "cocos2d.h"
+#import "CSColorView.h"
 
-@class CSMacGLView;
-@class CSPreferencesController;
-@class CSViewController;
-@class CSBrowserWindowController;
+@implementation CSColorView
 
-@interface cocoshopAppDelegate : NSObject <NSApplicationDelegate>
+@synthesize backgroundColor = _backgroundColor;
+
+- (void)dealloc
 {
-    NSView *_view;
-	CSMacGLView	*_glView;
-    CSViewController *_viewController;
-    CSBrowserWindowController *_windowController;
-    BOOL _firstActive;
+    self.backgroundColor = nil;
+    [super dealloc];
 }
 
-@property (assign) IBOutlet NSView *view;
-@property (assign) IBOutlet CSMacGLView	*glView;
-@property (assign) IBOutlet CSViewController *viewController;
+- (void)setBackgroundColor:(NSColor *)backgroundColor
+{
+    if (_backgroundColor != backgroundColor)
+    {
+        [_backgroundColor release];
+        _backgroundColor = [backgroundColor copy];
+        [self setNeedsDisplay:YES];
+    }
+}
 
-- (IBAction)toggleFullScreen:(id)sender;
+- (void)drawRect:(NSRect)dirtyRect
+{
+    if (_backgroundColor)
+    {
+        [_backgroundColor setFill];
+        [[NSBezierPath bezierPathWithRect:dirtyRect] fill];
+    }
+}
 
 @end

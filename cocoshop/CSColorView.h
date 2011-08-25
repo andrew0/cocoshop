@@ -2,7 +2,6 @@
  * cocoshop
  *
  * Copyright (c) 2011 Andrew
- * Copyright (c) 2011 Stepan Generalov
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,26 +23,21 @@
  *
  */
 
-#import "cocos2d.h"
+#import <Cocoa/Cocoa.h>
 
-@class CSMacGLView;
-@class CSPreferencesController;
-@class CSViewController;
-@class CSBrowserWindowController;
-
-@interface cocoshopAppDelegate : NSObject <NSApplicationDelegate>
+/**
+ * To use Chrome tabs, we have to fake a toolbar. We do this by
+ * making the window textured. That means that the whole window
+ * has the gradient you see at a normal toolbar. The CSColorView
+ * makes an NSView behind our content so that it looks like a
+ * normal Cocoa window (Cocoa background color is #ededed, or
+ * R 0.93, G 0.93, B 0.93, A 1.0)
+ */
+@interface CSColorView : NSView
 {
-    NSView *_view;
-	CSMacGLView	*_glView;
-    CSViewController *_viewController;
-    CSBrowserWindowController *_windowController;
-    BOOL _firstActive;
+    NSColor *_backgroundColor;
 }
 
-@property (assign) IBOutlet NSView *view;
-@property (assign) IBOutlet CSMacGLView	*glView;
-@property (assign) IBOutlet CSViewController *viewController;
-
-- (IBAction)toggleFullScreen:(id)sender;
+@property (nonatomic, copy) NSColor *backgroundColor;
 
 @end

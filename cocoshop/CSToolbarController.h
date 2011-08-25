@@ -2,7 +2,6 @@
  * cocoshop
  *
  * Copyright (c) 2011 Andrew
- * Copyright (c) 2011 Stepan Generalov
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,26 +23,22 @@
  *
  */
 
-#import "cocos2d.h"
+#import <ChromiumTabs/ChromiumTabs.h>
 
-@class CSMacGLView;
-@class CSPreferencesController;
-@class CSViewController;
-@class CSBrowserWindowController;
-
-@interface cocoshopAppDelegate : NSObject <NSApplicationDelegate>
+/**
+ * CSToolbarController, a subclass of CTToolbarController, controls
+ * the custom toolbar made by Chromium Tabs. This is really just
+ * a special NSView that is positioned to look as if it's an
+ * NSToolbar, so it doesn't have benefits like customization of the
+ * icon locations. The toolbar controller handles input from toolbar
+ * icons, such as adding new nodes.
+ */
+@interface CSToolbarController : CTToolbarController
 {
-    NSView *_view;
-	CSMacGLView	*_glView;
-    CSViewController *_viewController;
-    CSBrowserWindowController *_windowController;
-    BOOL _firstActive;
+    IBOutlet NSMenu *_menu;
+    IBOutlet NSSegmentedControl *_addSegment;
 }
 
-@property (assign) IBOutlet NSView *view;
-@property (assign) IBOutlet CSMacGLView	*glView;
-@property (assign) IBOutlet CSViewController *viewController;
-
-- (IBAction)toggleFullScreen:(id)sender;
+- (IBAction)addSprite:(id)sender;
 
 @end

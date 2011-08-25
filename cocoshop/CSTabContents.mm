@@ -2,7 +2,6 @@
  * cocoshop
  *
  * Copyright (c) 2011 Andrew
- * Copyright (c) 2011 Stepan Generalov
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,26 +23,30 @@
  *
  */
 
-#import "cocos2d.h"
+#import "CSTabContents.h"
 
-@class CSMacGLView;
-@class CSPreferencesController;
-@class CSViewController;
-@class CSBrowserWindowController;
+@implementation CSTabContents
 
-@interface cocoshopAppDelegate : NSObject <NSApplicationDelegate>
+@synthesize dictionary = _dictionary;
+
+- (id)initWithBaseTabContents:(CTTabContents *)baseContents dictionary:(NSDictionary *)dict
 {
-    NSView *_view;
-	CSMacGLView	*_glView;
-    CSViewController *_viewController;
-    CSBrowserWindowController *_windowController;
-    BOOL _firstActive;
+    self = [super initWithBaseTabContents:baseContents];
+    if (self)
+        self.dictionary = dict;
+    
+    return self;
 }
 
-@property (assign) IBOutlet NSView *view;
-@property (assign) IBOutlet CSMacGLView	*glView;
-@property (assign) IBOutlet CSViewController *viewController;
+- (void)dealloc
+{
+    self.dictionary = nil;
+    [super dealloc];
+}
 
-- (IBAction)toggleFullScreen:(id)sender;
+- (BOOL)hasIcon
+{
+    return NO;
+}
 
 @end

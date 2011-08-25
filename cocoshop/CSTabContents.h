@@ -2,7 +2,6 @@
  * cocoshop
  *
  * Copyright (c) 2011 Andrew
- * Copyright (c) 2011 Stepan Generalov
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,26 +23,25 @@
  *
  */
 
-#import "cocos2d.h"
+#import <ChromiumTabs/ChromiumTabs.h>
 
-@class CSMacGLView;
-@class CSPreferencesController;
-@class CSViewController;
-@class CSBrowserWindowController;
-
-@interface cocoshopAppDelegate : NSObject <NSApplicationDelegate>
+/**
+ * Cocoshop is a bit different from a normal application with tabs.
+ * Generally, you would have a separate NSView for each tab, which
+ * is what CTTabContents is supposed to contain. However, we don't
+ * actually draw the contents of the tabs. Instead, whenever we make
+ * a tab, we add a value called "dictionary" (or _dictionary), which
+ * contains a model and a view. When a different tab is selected,
+ * CSBrowserWindowController observes the change and tells the
+ * view controller to change the current scene view to the new one.
+ */
+@interface CSTabContents : CTTabContents
 {
-    NSView *_view;
-	CSMacGLView	*_glView;
-    CSViewController *_viewController;
-    CSBrowserWindowController *_windowController;
-    BOOL _firstActive;
+    NSDictionary *_dictionary;
 }
 
-@property (assign) IBOutlet NSView *view;
-@property (assign) IBOutlet CSMacGLView	*glView;
-@property (assign) IBOutlet CSViewController *viewController;
+@property (nonatomic, retain) NSDictionary *dictionary;
 
-- (IBAction)toggleFullScreen:(id)sender;
+- (id)initWithBaseTabContents:(CTTabContents *)baseContents dictionary:(NSDictionary *)dict;
 
 @end

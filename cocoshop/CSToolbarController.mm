@@ -2,7 +2,6 @@
  * cocoshop
  *
  * Copyright (c) 2011 Andrew
- * Copyright (c) 2011 Stepan Generalov
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,26 +23,24 @@
  *
  */
 
-#import "cocos2d.h"
+#import "CSToolbarController.h"
+#import "CSBrowser.h"
+#import "CSBrowserWindowController.h"
 
-@class CSMacGLView;
-@class CSPreferencesController;
-@class CSViewController;
-@class CSBrowserWindowController;
+@implementation CSToolbarController
 
-@interface cocoshopAppDelegate : NSObject <NSApplicationDelegate>
+- (void)awakeFromNib
 {
-    NSView *_view;
-	CSMacGLView	*_glView;
-    CSViewController *_viewController;
-    CSBrowserWindowController *_windowController;
-    BOOL _firstActive;
+    [_addSegment setMenu:_menu forSegment:0];
 }
 
-@property (assign) IBOutlet NSView *view;
-@property (assign) IBOutlet CSMacGLView	*glView;
-@property (assign) IBOutlet CSViewController *viewController;
-
-- (IBAction)toggleFullScreen:(id)sender;
+- (IBAction)addSprite:(id)sender
+{    
+    if ( [browser_.windowController isKindOfClass:[CSBrowserWindowController class]] )
+    {
+        CSBrowserWindowController *controller = (CSBrowserWindowController *)browser_.windowController;
+        [controller addSprite:sender];
+    }
+}
 
 @end
