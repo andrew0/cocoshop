@@ -30,14 +30,16 @@
 @class CSObjectController;
 @class PSMTabBarControl;
 
-@interface CSWindowController : NSWindowController <TLAnimatingOutlineViewDelegate, NSOutlineViewDelegate>
+/**
+ * CSViewController controls an NSView, which contains the OpenGL
+ * view and the editing controls (sidebars).
+ */
+@interface CSViewController : NSViewController <TLAnimatingOutlineViewDelegate, NSOutlineViewDelegate>
 {
     CSObjectController *_controller;
-    IBOutlet PSMTabBarControl<NSTabViewDelegate> *_tabBar;
-    NSTabView *_tabView;
     TLAnimatingOutlineView *_animatingOutlineView;
     
-    IBOutlet NSOutlineView *_outlineView;
+    NSOutlineView *_outlineView;
     IBOutlet NSScrollView *_rightScrollView;
     IBOutlet NSView *_nodeInfo;
     IBOutlet NSView *_spriteInfo;
@@ -46,14 +48,16 @@
 }
 
 @property (assign) IBOutlet CSObjectController *controller;
+@property (assign) IBOutlet NSOutlineView *outlineView;
 
 /**
  * Updates the TLOutlineView (i.e. it will add the appropriate views to it)
  */
 - (void)updateOutlineView;
+- (NSDictionary *)addNewTab:(id)sender;
 - (void)addSpritesWithFiles:(NSArray *)files safely:(BOOL)safely;
 - (NSArray *)allowedFileTypes;
-- (IBAction)closeProject:(id)sender;
+//- (IBAction)closeProject:(id)sender;
 - (IBAction)newProject:(id)sender;
 - (IBAction)addNode:(id)sender;
 - (IBAction)addLayer:(id)sender;

@@ -30,7 +30,10 @@
 #import "CSNode.h"
 #import "CSNode.h"
 #import "CCNode+Additions.h"
-#import "CSWindowController.h"
+#import "CSViewController.h"
+#import <ChromiumTabs/ChromiumTabs.h>
+#import "CSBrowserWindowController.h"
+#import "CSTabContents.h"
 
 @implementation CSObjectController
 
@@ -124,7 +127,17 @@
 {
     // I'm not entirely sure, but I'm guessing that we dont need to register for observing these values
     // since we bound the model to contentObject
-    if ( [keyPath isEqualToString:@"workspaceWidth"] || [keyPath isEqualToString:@"workspaceHeight"] )
+    if ( [keyPath isEqualToString:@"projectName"] )
+    {
+        NSWindow *window = [[[CCDirector sharedDirector] openGLView] window];
+        if ( [[window windowController] isKindOfClass:[CSBrowserWindowController class]] )
+        {
+            CSBrowserWindowController *wc = (CSBrowserWindowController *)window.windowController;
+            CTTabContents *contents = [wc selectedTabContents];
+            contents.title = _currentModel.projectName;
+        }
+    }
+    else if ( [keyPath isEqualToString:@"workspaceWidth"] || [keyPath isEqualToString:@"workspaceHeight"] )
     {
         _currentView.workspaceSize = CGSizeMake(_currentModel.workspaceWidth, _currentModel.workspaceHeight);
     }

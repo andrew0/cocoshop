@@ -23,7 +23,7 @@
  *
  */
 
-#import "CSWindowController.h"
+#import "CSViewController.h"
 #import <PSMTabBarControl/PSMTabBarControl.h>
 #import "CSObjectController.h"
 #import "CSModel.h"
@@ -67,60 +67,26 @@
 #pragma mark -
 #pragma mark Window Controller
 
-@interface CSWindowController ()
-- (void)addNewTab:(id)sender;
+@interface CSViewController ()
 - (void)reloadData:(NSNotification *)notification;
 - (void)didSelectSprite:(NSNotification *)notification;
 @end
 
-@implementation CSWindowController
+@implementation CSViewController
 
 @synthesize controller = _controller;
-
-- (id)initWithWindow:(NSWindow *)window
-{
-    self = [super initWithWindow:window];
-    if (self)
-    {
-        // initialize tab view
-        // note: this is never added to view
-        _tabView = [[NSTabView alloc] initWithFrame:NSZeroRect];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData:) name:@"addedChild" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectSprite:) name:@"didSelectSprite" object:nil];
-    }
-    
-    return self;
-}
+@synthesize outlineView = _outlineView;
 
 - (void)dealloc
 {
     [_animatingOutlineView release];
-    [_tabView release];
     [super dealloc];
 }
 
 - (void)awakeFromNib
 {
-    // add tab view to tab bar
-    [_tabView setDelegate:_tabBar];
-    [_tabBar setTabView:_tabView];
-    
-    // set tab bar info
-    [_tabBar setStyleNamed:@"Unified"];
-    [_tabBar setCanCloseOnlyTab:NO];
-    [_tabBar setDisableTabClose:NO];
-    [_tabBar setHideForSingleTab:NO];
-    [_tabBar setShowAddTabButton:YES];
-    [_tabBar setUseOverflowMenu:YES];
-    [_tabBar setAutomaticallyAnimates:NO];
-    [_tabBar setAllowsScrubbing:NO];
-    [_tabBar setCellMinWidth:100];
-    [_tabBar setCellMaxWidth:280];
-    [_tabBar setCellOptimumWidth:130];
-    
-    // set action for adding a new tab
-    [[_tabBar addTabButton] setTarget:self];
-    [[_tabBar addTabButton] setAction:@selector(addNewTab:)];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData:) name:@"addedChild" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectSprite:) name:@"didSelectSprite" object:nil];
     
     // add TLAnimatingOutlineView
     NSSize contentSize = [_rightScrollView contentSize];
@@ -159,9 +125,14 @@
         CONFIGURE_VIEW(background);
         background.disclosureBar.borderSidesMask = TLMinYEdge;
     }
+    
+    // enable all of the text fields in case they were disabled and never reenabled
+    for (TLCollapsibleView *view in [_animatingOutlineView subviews])
+        for (NSTextField *text in [[view detailView] subviews])
+            [text setEnabled:YES];
 }
 
-- (void)addNewTab:(id)sender
+- (NSDictionary *)addNewTab:(id)sender
 {
     // create a dictionary of the model and view as an identifier
     CSModel *model = [[CSModel alloc] init];
@@ -170,17 +141,11 @@
                           model, @"model",
                           view, @"view",
                           nil];
+    
     [model release];
     [view release];
     
-    // create a new tab
-    NSTabViewItem *newItem = [[[NSTabViewItem alloc] init] autorelease];
-    [newItem setIdentifier:dict];
-    [newItem setLabel:@"Untitled"];
-    
-    // add to tab view and select
-    [_tabView addTabViewItem:newItem];
-    [_tabView selectTabViewItem:newItem];
+    return dict;
 }
 
 #pragma mark -
@@ -220,36 +185,6 @@
         _controller.selectedNode = (CCNode<CSNodeProtocol> *)item;
     
     return YES;
-}
-
-#pragma mark -
-#pragma mark Tab Bar Delegation
-
-- (BOOL)tabView:(NSTabView*)aTabView shouldDragTabViewItem:(NSTabViewItem *)tabViewItem fromTabBar:(PSMTabBarControl *)tabBarControl
-{
-    // allow drag/dropping tabs if there are >1 tabs
-	return ([aTabView numberOfTabViewItems] > 1);
-}
-
-- (BOOL)tabView:(NSTabView*)aTabView shouldDropTabViewItem:(NSTabViewItem *)tabViewItem inTabBar:(PSMTabBarControl *)tabBarControl
-{
-    // allow drag/dropping tabs if there are >1 tabs
-	return ([aTabView numberOfTabViewItems] > 1);
-}
-
-- (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
-{
-    if ( [[tabViewItem identifier] isKindOfClass:[NSDictionary class]] )
-        [_controller selectDictionary:(NSDictionary *)[tabViewItem identifier]];
-    
-    // update OpenGL frame
-    [(CSMacGLView *)[CCDirector sharedDirector].openGLView updateForScreenReshape];
-    
-    // change title
-    [[self window] setTitle:[NSString stringWithFormat:@"cocoshop - %@", [tabViewItem label]]];
-    
-    // reload data
-    [_outlineView reloadData];
 }
 
 #pragma mark -
@@ -296,32 +231,33 @@
 #pragma mark -
 #pragma mark IBActions
 
-- (IBAction)closeProject:(id)sender
-{
-    // remove selected item
-    NSTabViewItem *item = [_tabView selectedTabViewItem];
-    if (item)
-        [_tabView removeTabViewItem:item];
-    
-    // remove layer if there are no windows left and set controller selection
-    if ( [_tabView numberOfTabViewItems] < 1 )
-    {
-        if ( [[CCDirector sharedDirector].runningScene isKindOfClass:[CSSceneView class]] )
-        {
-            CSSceneView *scene = (CSSceneView *)[CCDirector sharedDirector].runningScene;
-            scene.layer = nil;
-        }
-        
-        [_controller selectDictionary:nil];
-        
-        // change title
-        [[self window] setTitle:@"cocoshop"];
-    }
-    
-    // update OpenGL frame
-    [(CSMacGLView *)[CCDirector sharedDirector].openGLView updateForScreenReshape];
-}
-
+//- (IBAction)closeProject:(id)sender
+//{
+//    // remove selected item
+//    NSTabViewItem *item = [_tabView selectedTabViewItem];
+//    if (item)
+//        [_tabView removeTabViewItem:item];
+//    
+//    // remove layer if there are no windows left and set controller selection
+//    if ( [_tabView numberOfTabViewItems] < 1 )
+//    {
+//        if ( [[CCDirector sharedDirector].runningScene isKindOfClass:[CSSceneView class]] )
+//        {
+//            CSSceneView *scene = (CSSceneView *)[CCDirector sharedDirector].runningScene;
+//            scene.layer = nil;
+//        }
+//        
+//        [_controller selectDictionary:nil];
+//        
+//        // change title
+//        NSWindow *window = [[[CCDirector sharedDirector] openGLView] window];
+//        [window setTitle:@"cocoshop"];
+//    }
+//    
+//    // update OpenGL frame
+//    [(CSMacGLView *)[CCDirector sharedDirector].openGLView updateForScreenReshape];
+//}
+//
 - (IBAction)newProject:(id)sender
 {
     [self addNewTab:nil];
@@ -368,7 +304,8 @@
     [openPanel setAllowsOtherFileTypes:NO];
     
     // handle the open panel
-    [openPanel beginSheetModalForWindow:[self window] completionHandler:^(NSInteger result) {
+    NSWindow *window = [[[CCDirector sharedDirector] openGLView] window];
+    [openPanel beginSheetModalForWindow:window completionHandler:^(NSInteger result) {
         if(result == NSOKButton)
         {
             NSArray *files = [openPanel URLs];

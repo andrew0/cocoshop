@@ -27,30 +27,49 @@
 #import "AppDelegate.h"
 #import "CSMacGLView.h"
 #import "CSSceneView.h"
+#import <ChromiumTabs/ChromiumTabs.h>
+#import "CSBrowserWindowController.h"
+#import "CSBrowser.h"
+#import "CSLayerView.h"
+#import "CSViewController.h"
 
 @implementation cocoshopAppDelegate
-@synthesize window=window_, glView=glView_;
+@synthesize view=_view, glView=_glView, viewController=_viewController;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	
+    [[_glView openGLContext] makeCurrentContext];    
+    CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
 	[director setDisplayFPS:YES];
-	
-	[director setOpenGLView:glView_];
-
-	// EXPERIMENTAL stuff.
-	// 'Effects' don't work correctly when autoscale is turned on.
-	// Use kCCDirectorResize_NoScale if you don't want auto-scaling.
+	[director setOpenGLView:_glView];
+    
+    // EXPERIMENTAL stuff.
+    // 'Effects' don't work correctly when autoscale is turned on.
+    // Use kCCDirectorResize_NoScale if you don't want auto-scaling.
 	[director setResizeMode:kCCDirectorResize_NoScale];
-	
-	// Enable "moving" mouse event. Default no.
-	[window_ setAcceptsMouseMovedEvents:NO];
-	
 	[director runWithScene:[CSSceneView node]];
+    
+    NSString *windowNibPath = [CTUtil pathForResource:@"Window" ofType:@"nib"];
+    _windowController = [[CSBrowserWindowController alloc] initWithWindowNibPath:windowNibPath browser:[CSBrowser browser]];
+    [_view setFrame:[_windowController.view frame]];
+    [[_windowController.view superview] replaceSubview:_windowController.view with:_view];
+    _windowController.viewController = _viewController;
+    
+    // Enable "moving" mouse event. Default no.
+	[_windowController.window setAcceptsMouseMovedEvents:NO];
+    
+    _firstActive = YES;
 }
 
-- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
+- (void)applicationDidBecomeActive:(NSNotification *)notification
+{
+    // the first time we become active we should add a new blank tab
+    if (_firstActive)
+        [_windowController.browser addBlankTabInForeground:YES];
+    _firstActive = NO;
+}
+
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
 {
 	return YES;
 }
@@ -58,7 +77,7 @@
 - (void)dealloc
 {
 	[[CCDirector sharedDirector] end];
-	[window_ release];
+    [_windowController release];
 	[super dealloc];
 }
 
