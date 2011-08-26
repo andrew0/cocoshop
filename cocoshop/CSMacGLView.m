@@ -33,8 +33,10 @@
 - (void)awakeFromNib
 {
     // OpenGL view flickers with elastic scrolling
+#if defined(__MAC_10_7) && __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_7
     [[self enclosingScrollView] setHorizontalScrollElasticity:NSScrollElasticityNone];
     [[self enclosingScrollView] setVerticalScrollElasticity:NSScrollElasticityNone];
+#endif
 }
 
 - (NSSize)viewportSize

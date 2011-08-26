@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		49155B951407F8D2003D6A99 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49155B941407F8D2003D6A99 /* AVFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		49155B9D1407FA80003D6A99 /* RedoTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 49155B9B1407FA80003D6A99 /* RedoTemplate.pdf */; };
 		49155B9E1407FA80003D6A99 /* UndoTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 49155B9C1407FA80003D6A99 /* UndoTemplate.pdf */; };
 		4932E5F213E1C3D50046ABA8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4932E5F113E1C3D50046ABA8 /* QuartzCore.framework */; };
@@ -414,7 +413,6 @@
 				4932E5F813E1C3D50046ABA8 /* AudioToolbox.framework in Frameworks */,
 				4932E5FA13E1C3D50046ABA8 /* AppKit.framework in Frameworks */,
 				4932E5FC13E1C3D50046ABA8 /* Foundation.framework in Frameworks */,
-				49155B951407F8D2003D6A99 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1093,6 +1091,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1114,6 +1113,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
