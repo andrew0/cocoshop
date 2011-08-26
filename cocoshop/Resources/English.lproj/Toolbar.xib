@@ -46,25 +46,69 @@
 				<int key="NSvFlags">266</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="NSSegmentedControl" id="21935836">
+					<object class="NSSegmentedControl" id="916934342">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{52, 4}, {67, 25}}</string>
+						<string key="NSFrame">{{127, 4}, {67, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:1766</string>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSSegmentedCell" key="NSCell" id="497132107">
+						<object class="NSSegmentedCell" key="NSCell" id="742839520">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">0</int>
-							<object class="NSFont" key="NSSupport" id="366428066">
+							<object class="NSFont" key="NSSupport" id="421065158">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">13</double>
 								<int key="NSfFlags">16</int>
 							</object>
 							<string key="NSCellIdentifier">_NS:1766</string>
-							<reference key="NSControlView" ref="21935836"/>
+							<reference key="NSControlView" ref="916934342"/>
+							<object class="NSMutableArray" key="NSSegmentImages">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSSegmentItem">
+									<double key="NSSegmentItemWidth">32</double>
+									<object class="NSCustomResource" key="NSSegmentItemImage">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">ZoomInTemplate</string>
+									</object>
+									<string key="NSSegmentItemLabel"/>
+									<string key="NSSegmentItemTooltip">Zoom In</string>
+									<int key="NSSegmentItemImageScaling">0</int>
+								</object>
+								<object class="NSSegmentItem">
+									<double key="NSSegmentItemWidth">32</double>
+									<object class="NSCustomResource" key="NSSegmentItemImage">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">ZoomOutTemplate</string>
+									</object>
+									<string key="NSSegmentItemLabel"/>
+									<string key="NSSegmentItemTooltip">ZoomOut</string>
+									<int key="NSSegmentItemTag">1</int>
+									<int key="NSSegmentItemImageScaling">0</int>
+								</object>
+							</object>
+							<int key="NSSelectedSegment">1</int>
+							<int key="NSTrackingMode">2</int>
+							<int key="NSSegmentStyle">4</int>
+						</object>
+					</object>
+					<object class="NSSegmentedControl" id="429739977">
+						<reference key="NSNextResponder" ref="1005"/>
+						<int key="NSvFlags">268</int>
+						<string key="NSFrame">{{52, 4}, {67, 25}}</string>
+						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="916934342"/>
+						<string key="NSReuseIdentifierKey">_NS:1766</string>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSSegmentedCell" key="NSCell" id="172206238">
+							<int key="NSCellFlags">67239424</int>
+							<int key="NSCellFlags2">0</int>
+							<reference key="NSSupport" ref="421065158"/>
+							<string key="NSCellIdentifier">_NS:1766</string>
+							<reference key="NSControlView" ref="429739977"/>
 							<object class="NSMutableArray" key="NSSegmentImages">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSSegmentItem">
@@ -100,13 +144,13 @@
 						<string key="NSFrame">{{10, 4}, {34, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="21935836"/>
+						<reference key="NSNextKeyView" ref="429739977"/>
 						<string key="NSReuseIdentifierKey">_NS:1766</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSSegmentedCell" key="NSCell" id="734049550">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">0</int>
-							<reference key="NSSupport" ref="366428066"/>
+							<reference key="NSSupport" ref="421065158"/>
 							<string key="NSCellIdentifier">_NS:1766</string>
 							<reference key="NSControlView" ref="702852772"/>
 							<object class="NSMutableArray" key="NSSegmentImages">
@@ -237,7 +281,8 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="702852772"/>
-							<reference ref="21935836"/>
+							<reference ref="429739977"/>
+							<reference ref="916934342"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -283,17 +328,31 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">48</int>
-						<reference key="object" ref="21935836"/>
+						<reference key="object" ref="429739977"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="497132107"/>
+							<reference ref="172206238"/>
 						</object>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">49</int>
-						<reference key="object" ref="497132107"/>
-						<reference key="parent" ref="21935836"/>
+						<reference key="object" ref="172206238"/>
+						<reference key="parent" ref="429739977"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">50</int>
+						<reference key="object" ref="916934342"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="742839520"/>
+						</object>
+						<reference key="parent" ref="1005"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">51</int>
+						<reference key="object" ref="742839520"/>
+						<reference key="parent" ref="916934342"/>
 					</object>
 				</object>
 			</object>
@@ -315,6 +374,9 @@
 					<string>48.IBPluginDependency</string>
 					<string>49.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey</string>
 					<string>49.IBPluginDependency</string>
+					<string>50.IBPluginDependency</string>
+					<string>51.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey</string>
+					<string>51.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -328,6 +390,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="0"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
@@ -346,7 +411,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">49</int>
+			<int key="maxID">51</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -445,6 +510,8 @@
 				<string>NSMenuMixedState</string>
 				<string>RedoTemplate</string>
 				<string>UndoTemplate</string>
+				<string>ZoomInTemplate</string>
+				<string>ZoomOutTemplate</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
@@ -453,6 +520,8 @@
 				<string>{7, 2}</string>
 				<string>{15, 12}</string>
 				<string>{15, 12}</string>
+				<string>{18, 18}</string>
+				<string>{18, 18}</string>
 			</object>
 		</object>
 	</data>
