@@ -34,6 +34,9 @@
  */
 
 #import <Availability.h>
+#if defined(__MAC_10_7) && __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_7
+#import <AVFoundation/AVFoundation.h>
+#endif // __MAC_10_7
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
@@ -47,6 +50,8 @@ enum AudioSessionProperties {
 
 extern OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *outData);    
 
+#if !defined(__MAC_10_7) || __MAC_OS_X_VERSION_MAX_ALLOWED < __MAC_10_7
+
 /**
  Based on AVAudioPlayer.h header in AVFoundation headers
  */
@@ -55,7 +60,7 @@ extern OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *o
 
 /* This class is available with iPhone 2.2 or later */
 @interface AVAudioPlayer : NSObject <NSSoundDelegate> {
-	
+    
 	// properties
 	id<AVAudioPlayerDelegate> delegate;
 	NSUInteger numberOfChannels;
@@ -69,8 +74,8 @@ extern OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *o
 	NSTimeInterval deviceCurrentTime; 
 	NSInteger numberOfLoops;
 	BOOL meteringEnabled;
-	
-
+    
+    
 @private
     NSSound* _player;
 }
@@ -150,6 +155,7 @@ extern OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *o
 - (void)audioPlayerEndInterruption:(AVAudioPlayer *)player;
 @end
 
+#endif // __MAC_10_7
 
 /**
  Taken from AVAudioSession.h header in AVFoundation headers
@@ -176,18 +182,18 @@ enum {
 };
 
 @interface AVAudioSession : NSObject {
-	
+    
 	// properties
 	NSString* category;
 	double preferredHardwareSampleRate;
 	NSTimeInterval preferredIOBufferDuration;
-	
+    
 	BOOL inputIsAvailable;
 	double currentHardwareSampleRate;
 	NSInteger currentHardwareInputNumberOfChannels;
 	NSInteger currentHardwareOutputNumberOfChannels;
 	id<AVAudioSessionDelegate> delegate;
-
+    
 @private
     __strong void *_impl;
 }

@@ -24,7 +24,6 @@
  */
 
 #import "CSViewController.h"
-#import <PSMTabBarControl/PSMTabBarControl.h>
 #import "CSObjectController.h"
 #import "CSModel.h"
 #import "CSLayerView.h"

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49155B951407F8D2003D6A99 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49155B941407F8D2003D6A99 /* AVFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4932E5F213E1C3D50046ABA8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4932E5F113E1C3D50046ABA8 /* QuartzCore.framework */; };
 		4932E5F413E1C3D50046ABA8 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4932E5F313E1C3D50046ABA8 /* OpenGL.framework */; };
 		4932E5F613E1C3D50046ABA8 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4932E5F513E1C3D50046ABA8 /* OpenAL.framework */; };
@@ -101,8 +102,6 @@
 		4932E71713E1C3D80046ABA8 /* CDXPropertyModifierAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932E71613E1C3D80046ABA8 /* CDXPropertyModifierAction.m */; };
 		4932E71B13E1C3D80046ABA8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932E71A13E1C3D80046ABA8 /* main.m */; };
 		4932E71E13E1C3D80046ABA8 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4932E71D13E1C3D80046ABA8 /* AppDelegate.mm */; };
-		4932E72913E1C7CF0046ABA8 /* PSMTabBarControl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4932E72813E1C7CF0046ABA8 /* PSMTabBarControl.framework */; };
-		4932E72A13E1C7DA0046ABA8 /* PSMTabBarControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4932E72813E1C7CF0046ABA8 /* PSMTabBarControl.framework */; };
 		4932E73213E1C8500046ABA8 /* CSLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932E73113E1C8500046ABA8 /* CSLayerView.m */; };
 		4932E73513E1C8990046ABA8 /* CSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932E73413E1C8990046ABA8 /* CSViewController.m */; };
 		4932E74113E1CB410046ABA8 /* CSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932E74013E1CB410046ABA8 /* CSModel.m */; };
@@ -143,7 +142,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4932E72913E1C7CF0046ABA8 /* PSMTabBarControl.framework in CopyFiles */,
 				498404C51404DEED003190E3 /* ChromiumTabs.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,6 +149,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		49155B941407F8D2003D6A99 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = ../../../../System/Library/Frameworks/AVFoundation.framework; sourceTree = "<group>"; };
 		4915E50D13E1DEC500051956 /* CSObjectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSObjectController.h; sourceTree = "<group>"; };
 		4932E5ED13E1C3D50046ABA8 /* cocoshop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocoshop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4932E5F113E1C3D50046ABA8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -347,7 +346,6 @@
 		4932E71A13E1C3D80046ABA8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4932E71C13E1C3D80046ABA8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4932E71D13E1C3D80046ABA8 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		4932E72813E1C7CF0046ABA8 /* PSMTabBarControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PSMTabBarControl.framework; path = cocoshop/Frameworks/PSMTabBarControl.framework; sourceTree = "<group>"; };
 		4932E73013E1C8500046ABA8 /* CSLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSLayerView.h; sourceTree = "<group>"; };
 		4932E73113E1C8500046ABA8 /* CSLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSLayerView.m; sourceTree = "<group>"; };
 		4932E73313E1C8990046ABA8 /* CSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSViewController.h; sourceTree = "<group>"; };
@@ -406,13 +404,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				498404C41404DEE4003190E3 /* ChromiumTabs.framework in Frameworks */,
-				4932E72A13E1C7DA0046ABA8 /* PSMTabBarControl.framework in Frameworks */,
 				4932E5F213E1C3D50046ABA8 /* QuartzCore.framework in Frameworks */,
 				4932E5F413E1C3D50046ABA8 /* OpenGL.framework in Frameworks */,
 				4932E5F613E1C3D50046ABA8 /* OpenAL.framework in Frameworks */,
 				4932E5F813E1C3D50046ABA8 /* AudioToolbox.framework in Frameworks */,
 				4932E5FA13E1C3D50046ABA8 /* AppKit.framework in Frameworks */,
 				4932E5FC13E1C3D50046ABA8 /* Foundation.framework in Frameworks */,
+				49155B951407F8D2003D6A99 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,8 +438,8 @@
 			isa = PBXGroup;
 			children = (
 				49517C661406C2020024A8C8 /* LICENSE_chromium_tabs.txt */,
+				49155B941407F8D2003D6A99 /* AVFoundation.framework */,
 				498404C31404DEE4003190E3 /* ChromiumTabs.framework */,
-				4932E72813E1C7CF0046ABA8 /* PSMTabBarControl.framework */,
 				4932E5F113E1C3D50046ABA8 /* QuartzCore.framework */,
 				4932E5F313E1C3D50046ABA8 /* OpenGL.framework */,
 				4932E5F513E1C3D50046ABA8 /* OpenAL.framework */,
@@ -1084,6 +1082,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = cocoshop/Prefix.pch;
 				INFOPLIST_FILE = cocoshop/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -1104,6 +1103,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = cocoshop/Prefix.pch;
 				INFOPLIST_FILE = cocoshop/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
