@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		49155B951407F8D2003D6A99 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49155B941407F8D2003D6A99 /* AVFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		49155B9D1407FA80003D6A99 /* RedoTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 49155B9B1407FA80003D6A99 /* RedoTemplate.pdf */; };
+		49155B9E1407FA80003D6A99 /* UndoTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 49155B9C1407FA80003D6A99 /* UndoTemplate.pdf */; };
 		4932E5F213E1C3D50046ABA8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4932E5F113E1C3D50046ABA8 /* QuartzCore.framework */; };
 		4932E5F413E1C3D50046ABA8 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4932E5F313E1C3D50046ABA8 /* OpenGL.framework */; };
 		4932E5F613E1C3D50046ABA8 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4932E5F513E1C3D50046ABA8 /* OpenAL.framework */; };
@@ -150,6 +152,8 @@
 
 /* Begin PBXFileReference section */
 		49155B941407F8D2003D6A99 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = ../../../../System/Library/Frameworks/AVFoundation.framework; sourceTree = "<group>"; };
+		49155B9B1407FA80003D6A99 /* RedoTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = RedoTemplate.pdf; path = Resources/RedoTemplate.pdf; sourceTree = "<group>"; };
+		49155B9C1407FA80003D6A99 /* UndoTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = UndoTemplate.pdf; path = Resources/UndoTemplate.pdf; sourceTree = "<group>"; };
 		4915E50D13E1DEC500051956 /* CSObjectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSObjectController.h; sourceTree = "<group>"; };
 		4932E5ED13E1C3D50046ABA8 /* cocoshop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocoshop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4932E5F113E1C3D50046ABA8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -483,6 +487,8 @@
 		4932E5FE13E1C3D50046ABA8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				49155B9B1407FA80003D6A99 /* RedoTemplate.pdf */,
+				49155B9C1407FA80003D6A99 /* UndoTemplate.pdf */,
 				499DB97D13FB264700ED7BFC /* anchor.png */,
 				499DB97E13FB264700ED7BFC /* arial.fnt */,
 				499DB97F13FB264700ED7BFC /* arial.png */,
@@ -876,6 +882,8 @@
 				498404CB1404DFB3003190E3 /* Window.xib in Resources */,
 				494182E614056B4300E2013A /* Toolbar.xib in Resources */,
 				49517C671406C2020024A8C8 /* LICENSE_chromium_tabs.txt in Resources */,
+				49155B9D1407FA80003D6A99 /* RedoTemplate.pdf in Resources */,
+				49155B9E1407FA80003D6A99 /* UndoTemplate.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
