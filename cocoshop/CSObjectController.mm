@@ -39,7 +39,6 @@
 
 @synthesize currentModel = _currentModel;
 @synthesize currentView = _currentView;
-@synthesize selectedNode = _selectedNode;
 
 - (void)awakeFromNib
 {
@@ -50,23 +49,20 @@
 {
     self.currentModel = nil;
     self.currentView = nil;
-    self.selectedNode = nil;
     [super dealloc];
 }
 
-- (void)selectDictionary:(NSDictionary *)dict
+- (void)selectLayerView:(CSLayerView *)view
 {
     // unbind old contentObject
     [self unbind:@"contentObject"];
-        
-    CSModel *model = [dict objectForKey:@"model"];
-    CSLayerView *view = [dict objectForKey:@"view"];
     
+    CSModel *model = [view model];
     if (model && view)
     {        
         // bind contentObject to model
         [self bind:@"contentObject" toObject:model withKeyPath:@"self" options:nil];
-                
+        
         // set new model and view
         self.currentModel = model;
         self.currentView = view;
@@ -162,40 +158,40 @@
     else if ( [keyPath isEqualToString:@"name"] )
     {
         NSString *uniqueName = [self uniqueNameFromString:_currentModel.name];
-        [_selectedNode setName:uniqueName];
+        [_currentView.selectedNode setName:uniqueName];
         [_outlineView reloadData];
     }
     else if ( [keyPath isEqualToString:@"posX"]  )
     {
-        _selectedNode.position = ccp(_currentModel.posX, _selectedNode.position.y);
+        _currentView.selectedNode.position = ccp(_currentModel.posX, _currentView.selectedNode.position.y);
     }
     else if ( [keyPath isEqualToString:@"posY"] )
     {
-        _selectedNode.position = ccp(_selectedNode.position.x, _currentModel.posY);
+        _currentView.selectedNode.position = ccp(_currentView.selectedNode.position.x, _currentModel.posY);
     }
     else if ( [keyPath isEqualToString:@"anchorX"] )
     {
-        _selectedNode.anchorPoint = ccp(_currentModel.anchorX, _selectedNode.anchorPoint.y);
+        _currentView.selectedNode.anchorPoint = ccp(_currentModel.anchorX, _currentView.selectedNode.anchorPoint.y);
     }
     else if ( [keyPath isEqualToString:@"anchorY"] )
     {
-        _selectedNode.anchorPoint = ccp(_selectedNode.anchorPoint.x, _currentModel.anchorY);
+        _currentView.selectedNode.anchorPoint = ccp(_currentView.selectedNode.anchorPoint.x, _currentModel.anchorY);
     }
     else if ( [keyPath isEqualToString:@"scaleX"] )
     {
-        _selectedNode.scaleX = _currentModel.scaleX;
+        _currentView.selectedNode.scaleX = _currentModel.scaleX;
     }
     else if ( [keyPath isEqualToString:@"scaleY"] )
     {
-        _selectedNode.scaleY = _currentModel.scaleY;
+        _currentView.selectedNode.scaleY = _currentModel.scaleY;
     }
     else if ( [keyPath isEqualToString:@"rotation"] )
     {
-        _selectedNode.rotation = _currentModel.rotation;
+        _currentView.selectedNode.rotation = _currentModel.rotation;
     }
     else if ( [keyPath isEqualToString:@"zOrder"] )
     {
-        [[_selectedNode parent] reorderChild:_selectedNode z:_currentModel.zOrder];
+        [[_currentView.selectedNode parent] reorderChild:_currentView.selectedNode z:_currentModel.zOrder];
         [_outlineView reloadData];
     }
 }
@@ -215,29 +211,6 @@
     return nil;
 }
 
-- (void)setSelectedNode:(CCNode<CSNodeProtocol> *)selectedNode
-{
-    if (selectedNode != _selectedNode)
-    {
-        [_selectedNode setIsSelected:NO];
-        [_selectedNode release];
-        _selectedNode = [selectedNode retain];
-        [_selectedNode setIsSelected:YES];
-        
-        // update model
-        _currentModel.posX = _selectedNode.position.x;
-        _currentModel.posY = _selectedNode.position.y;
-        _currentModel.anchorX = _selectedNode.anchorPoint.x;
-        _currentModel.anchorY = _selectedNode.anchorPoint.y;
-        _currentModel.scaleX = _selectedNode.scaleX;
-        _currentModel.scaleY = _selectedNode.scaleY;
-        _currentModel.rotation = _selectedNode.rotation;
-        _currentModel.zOrder = _selectedNode.zOrder;
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectSprite" object:selectedNode];
-    }
-}
-
 #pragma mark -
 #pragma mark Mouse Events
 
@@ -252,15 +225,15 @@
         // if this isn't the selected sprite, select it
         // otherwise, plan on deselecting it (unless it is moved)
         if ( ![node isSelected] )
-            self.selectedNode = node;
+            _currentView.selectedNode = node;
         else
             _willDeselectNode = YES;
         
         _willDragNode = YES;
     }
     
-    if (_selectedNode && ![_selectedNode isEventInRect:event])
-        self.selectedNode = nil;
+    if (_currentView.selectedNode && ![_currentView.selectedNode isEventInRect:event])
+        _currentView.selectedNode = nil;
     
     _prevLocation = [[CCDirector sharedDirector] convertEventToGL:event];
     
@@ -275,10 +248,10 @@
     CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
     if (_willDragNode)
     {
-        if (_selectedNode)
+        if (_currentView.selectedNode)
         {
             CGPoint delta = ccpSub(location, _prevLocation);
-            CGPoint newPos = ccpAdd(_selectedNode.position, delta);
+            CGPoint newPos = ccpAdd(_currentView.selectedNode.position, delta);
             _currentModel.posX = newPos.x;
             _currentModel.posY = newPos.y;
         }
@@ -291,7 +264,7 @@
 - (BOOL)ccMouseUp:(NSEvent *)event
 {
     if (_willDeselectNode)
-        self.selectedNode = nil;
+        _currentView.selectedNode = nil;
     
     _prevLocation = [[CCDirector sharedDirector] convertEventToGL:event];
     

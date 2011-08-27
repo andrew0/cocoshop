@@ -58,7 +58,7 @@
 {
     if ( [newContents isKindOfClass:[CSTabContents class]] )
     {
-        [_viewController.controller selectDictionary:[(CSTabContents *)newContents dictionary]];
+        [_viewController.controller selectLayerView:[(CSTabContents *)newContents layerView]];
         
         // update OpenGL frame
         [(CSMacGLView *)[CCDirector sharedDirector].openGLView updateForScreenReshape];

@@ -37,22 +37,15 @@
 - (CTTabContents *)createBlankTabBasedOn:(CTTabContents *)baseContents
 {    
     // create our tab
-    NSDictionary *dict = nil;
-    if ( [windowController_ isKindOfClass:[CSBrowserWindowController class]] )
-    {
-        // create a dictionary of the model and view as an identifier
-        CSModel *model = [[CSModel alloc] init];
-        CSLayerView *view = [[CSLayerView alloc] initWithController:[(CSBrowserWindowController *)windowController_ viewController].controller];
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                model, @"model",
-                view, @"view",
-                nil];
-        [model release];
-        [view release];
-    }
+    CSModel *model = [[CSModel alloc] init];
+    CSLayerView *view = [[CSLayerView alloc] initWithModel:model];
     
-    CTTabContents *contents = [[[CSTabContents alloc] initWithBaseTabContents:baseContents dictionary:dict] autorelease];
+    CTTabContents *contents = [[[CSTabContents alloc] initWithBaseTabContents:baseContents view:view] autorelease];
     contents.title = @"Untitled";
+    
+    [model release];
+    [view release];
+    
     return contents;
 }
 

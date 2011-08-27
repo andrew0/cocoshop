@@ -24,23 +24,24 @@
  */
 
 #import "CSTabContents.h"
+#import "CSLayerView.h"
 
 @implementation CSTabContents
 
-@synthesize dictionary = _dictionary;
+@synthesize layerView = _layerView;
 
-- (id)initWithBaseTabContents:(CTTabContents *)baseContents dictionary:(NSDictionary *)dict
+- (id)initWithBaseTabContents:(CTTabContents *)baseContents view:(CSLayerView *)view
 {
     self = [super initWithBaseTabContents:baseContents];
     if (self)
-        self.dictionary = dict;
+        self.layerView = view;
     
     return self;
 }
 
 - (void)dealloc
 {
-    self.dictionary = nil;
+    self.layerView = nil;
     [super dealloc];
 }
 

@@ -18,7 +18,7 @@
 		4932E5FA13E1C3D50046ABA8 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4932E5F913E1C3D50046ABA8 /* AppKit.framework */; };
 		4932E5FC13E1C3D50046ABA8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4932E5FB13E1C3D50046ABA8 /* Foundation.framework */; };
 		4932E60213E1C3D50046ABA8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4932E60013E1C3D50046ABA8 /* InfoPlist.strings */; };
-		4932E60513E1C3D50046ABA8 /* cocoshop.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4932E60313E1C3D50046ABA8 /* cocoshop.xib */; };
+		4932E60513E1C3D50046ABA8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4932E60313E1C3D50046ABA8 /* MainMenu.xib */; };
 		4932E60713E1C3D50046ABA8 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 4932E60613E1C3D50046ABA8 /* fps_images.png */; };
 		4932E60913E1C3D50046ABA8 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4932E60813E1C3D50046ABA8 /* icon.icns */; };
 		4932E60F13E1C3D50046ABA8 /* CCAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932E60E13E1C3D50046ABA8 /* CCAction.m */; };
@@ -166,7 +166,7 @@
 		4932E5F913E1C3D50046ABA8 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		4932E5FB13E1C3D50046ABA8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4932E60113E1C3D50046ABA8 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		4932E60413E1C3D50046ABA8 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/cocoshop.xib; sourceTree = "<group>"; };
+		4932E60413E1C3D50046ABA8 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4932E60613E1C3D50046ABA8 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = Resources/fps_images.png; sourceTree = "<group>"; };
 		4932E60813E1C3D50046ABA8 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = Resources/icon.icns; sourceTree = "<group>"; };
 		4932E60A13E1C3D50046ABA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
@@ -511,7 +511,7 @@
 			isa = PBXGroup;
 			children = (
 				4932E60013E1C3D50046ABA8 /* InfoPlist.strings */,
-				4932E60313E1C3D50046ABA8 /* cocoshop.xib */,
+				4932E60313E1C3D50046ABA8 /* MainMenu.xib */,
 				498404C91404DFB3003190E3 /* Window.xib */,
 				494182E414056B4300E2013A /* Toolbar.xib */,
 			);
@@ -874,7 +874,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4932E60213E1C3D50046ABA8 /* InfoPlist.strings in Resources */,
-				4932E60513E1C3D50046ABA8 /* cocoshop.xib in Resources */,
+				4932E60513E1C3D50046ABA8 /* MainMenu.xib in Resources */,
 				4932E60713E1C3D50046ABA8 /* fps_images.png in Resources */,
 				4932E60913E1C3D50046ABA8 /* icon.icns in Resources */,
 				49B1328513E1D44600D594CD /* background_texture.png in Resources */,
@@ -1018,12 +1018,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		4932E60313E1C3D50046ABA8 /* cocoshop.xib */ = {
+		4932E60313E1C3D50046ABA8 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				4932E60413E1C3D50046ABA8 /* English */,
 			);
-			name = cocoshop.xib;
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 		494182E414056B4300E2013A /* Toolbar.xib */ = {

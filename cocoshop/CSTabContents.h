@@ -25,6 +25,8 @@
 
 #import <ChromiumTabs/ChromiumTabs.h>
 
+@class CSLayerView;
+
 /**
  * Cocoshop is a bit different from a normal application with tabs.
  * Generally, you would have a separate NSView for each tab, which
@@ -38,10 +40,11 @@
 @interface CSTabContents : CTTabContents
 {
     NSDictionary *_dictionary;
+    CSLayerView *_layerView;
 }
 
-@property (nonatomic, retain) NSDictionary *dictionary;
+@property (nonatomic, retain) CSLayerView *layerView;
 
-- (id)initWithBaseTabContents:(CTTabContents *)baseContents dictionary:(NSDictionary *)dict;
+- (id)initWithBaseTabContents:(CTTabContents *)baseContents view:(CSLayerView *)view;
 
 @end

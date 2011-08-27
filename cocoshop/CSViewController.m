@@ -102,9 +102,9 @@
 {
     [_animatingOutlineView setSubviews:[NSArray array]];
     
-    if (_controller.selectedNode)
+    if (_controller.currentView.selectedNode)
     {
-        if ( [_controller.selectedNode conformsToProtocol:@protocol(CSNodeProtocol)] )
+        if ( [_controller.currentView.selectedNode conformsToProtocol:@protocol(CSNodeProtocol)] )
         {
             TLCollapsibleView *general = [_animatingOutlineView addView:_generalInfo withImage:nil label:@"General Info" expanded:YES];
             CONFIGURE_VIEW(general);
@@ -113,7 +113,7 @@
             CONFIGURE_VIEW(node);
         }
         
-        if ( [_controller.selectedNode isKindOfClass:[CSSprite class]] )
+        if ( [_controller.currentView.selectedNode isKindOfClass:[CSSprite class]] )
         {
             TLCollapsibleView *sprite = [_animatingOutlineView addView:_spriteInfo withImage:nil label:@"CCSprite Info" expanded:YES];
             CONFIGURE_VIEW(sprite);
@@ -134,18 +134,19 @@
 
 - (NSDictionary *)addNewTab:(id)sender
 {
-    // create a dictionary of the model and view as an identifier
-    CSModel *model = [[CSModel alloc] init];
-    CSLayerView *view = [[CSLayerView alloc] initWithController:_controller];
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                          model, @"model",
-                          view, @"view",
-                          nil];
-    
-    [model release];
-    [view release];
-    
-    return dict;
+//    // create a dictionary of the model and view as an identifier
+//    CSModel *model = [[CSModel alloc] init];
+//    CSLayerView *view = [[CSLayerView alloc] initWithController:_controller];
+//    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+//                          model, @"model",
+//                          view, @"view",
+//                          nil];
+//    
+//    [model release];
+//    [view release];
+//    
+//    return dict;
+    return nil;
 }
 
 #pragma mark -
@@ -182,7 +183,7 @@
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
 {
     if (item && [item isKindOfClass:[CCNode class]] && [item conformsToProtocol:@protocol(CSNodeProtocol)])
-        _controller.selectedNode = (CCNode<CSNodeProtocol> *)item;
+        _controller.currentView.selectedNode = (CCNode<CSNodeProtocol> *)item;
     
     return YES;
 }

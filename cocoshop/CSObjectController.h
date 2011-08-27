@@ -36,8 +36,6 @@
     CSModel *_currentModel;
     CSLayerView *_currentView;
     
-    CCNode<CSNodeProtocol> *_selectedNode;
-    
     BOOL _willDragNode;
     BOOL _willDeselectNode;
     CGPoint _prevLocation;
@@ -47,14 +45,13 @@
 
 @property (nonatomic, retain) CSModel *currentModel;
 @property (nonatomic, retain) CSLayerView *currentView;
-@property (nonatomic, retain) CCNode<CSNodeProtocol> *selectedNode;
 
 - (NSString *)uniqueNameFromString:(NSString *)string;
 /**
- * This should be called from CSWindowController when the tab is changed
- * @param dict Dictionary that contains info for new selection
+ * This should be called from CSBrowserWindowController when the tab is changed
+ * @param view View that contains info for new selection
  */
-- (void)selectDictionary:(NSDictionary *)dict;
+- (void)selectLayerView:(CSLayerView *)view;
 - (CCNode<CSNodeProtocol> *)nodeForEvent:(NSEvent *)event;
 
 @end

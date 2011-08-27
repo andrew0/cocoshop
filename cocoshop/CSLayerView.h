@@ -25,7 +25,8 @@
 
 #import "cocos2d.h"
 
-@class CSObjectController;
+@class CSModel;
+@protocol CSNodeProtocol;
 
 /**
  * This is the view that will represent a project
@@ -33,9 +34,14 @@
 @interface CSLayerView : CCLayer
 {
     /**
-     * Object controller
+     * Model
      */
-    CSObjectController *_controller;
+    CSModel *_model;
+    
+    /**
+     * The currently selected node
+     */
+    CCNode<CSNodeProtocol> *_selectedNode;
     
     /**
      * The background checkerboard to signify transparency
@@ -73,15 +79,17 @@
     BOOL _shouldAddChildren;
 }
 
+@property (nonatomic, retain) CSModel *model;
+@property (nonatomic, retain) CCNode<CSNodeProtocol> *selectedNode;
 @property (nonatomic, assign) CGPoint offest;
 @property (nonatomic, assign) CGSize workspaceSize;
 @property (nonatomic, readonly) CGSize adjustedWorkspaceSize;
 @property (nonatomic, retain) CCLayerColor *backgroundLayer;
 
+- (id)initWithModel:(CSModel *)model;
 - (void)addChildSafely:(CCNode *)node z:(NSInteger)z tag:(NSInteger)tag;
 - (void)addChildSafely:(CCNode *)node z:(NSInteger)z;
 - (void)addChildSafely:(CCNode *)node;
-- (id)initWithController:(CSObjectController *)controller;
 - (void)updateForScreenReshapeSafely:(NSNotification *)notification;
 - (void)updateForScreenReshape;
 
