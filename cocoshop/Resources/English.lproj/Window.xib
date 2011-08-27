@@ -44,8 +44,8 @@
 			<object class="NSWindowTemplate" id="1005">
 				<int key="NSWindowStyleMask">271</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{196, 240}, {708, 453}}</string>
-				<int key="NSWTFlags">544735232</int>
+				<string key="NSWindowRect">{{196, 240}, {1027, 545}}</string>
+				<int key="NSWTFlags">1618477056</int>
 				<string key="NSWindowTitle"/>
 				<string key="NSWindowClass">CTBrowserWindow</string>
 				<nil key="NSViewClass"/>
@@ -64,7 +64,7 @@
 								<object class="NSCustomView" id="1021216653">
 									<reference key="NSNextResponder" ref="864369897"/>
 									<int key="NSvFlags">274</int>
-									<string key="NSFrameSize">{708, 407}</string>
+									<string key="NSFrameSize">{1027, 499}</string>
 									<reference key="NSSuperview" ref="864369897"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView"/>
@@ -72,7 +72,7 @@
 									<string key="NSClassName">NSView</string>
 								</object>
 							</object>
-							<string key="NSFrameSize">{708, 407}</string>
+							<string key="NSFrameSize">{1027, 499}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="1021216653"/>
@@ -80,7 +80,7 @@
 							<string key="NSClassName">CSColorView</string>
 						</object>
 					</object>
-					<string key="NSFrameSize">{708, 453}</string>
+					<string key="NSFrameSize">{1027, 545}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="864369897"/>
@@ -91,7 +91,7 @@
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
 			<object class="NSCustomView" id="705634524">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">266</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -100,8 +100,6 @@
 						<int key="NSvFlags">-2147483356</int>
 						<string key="NSFrame">{{295, 0}, {40, 27}}</string>
 						<reference key="NSSuperview" ref="705634524"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="269283482">
 							<int key="NSCellFlags">-2080244224</int>
@@ -123,18 +121,13 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{483, 36}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="739585748"/>
 				<string key="NSClassName">CTTabStripView</string>
 			</object>
 			<object class="NSCustomView" id="858407382">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<string key="NSFrameSize">{64, 57}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
 				<string key="NSClassName">FastResizeView</string>
 			</object>
 		</object>

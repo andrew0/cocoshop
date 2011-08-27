@@ -114,6 +114,9 @@
     return [NSArray arrayWithObjects:@"png", @"gif", @"jpg", @"jpeg", @"tif", @"tiff", @"bmp", @"ccz", @"pvr", nil];
 }
 
+#pragma mark -
+#pragma mark Actions
+
 - (void)addSprite:(id)sender
 {
     // return if there is no layer
@@ -147,6 +150,16 @@
             [self addSpritesWithFiles:files safely:YES];
         }
     }];
+}
+
+- (void)newProject:(id)sender
+{
+    [[self window] makeKeyAndOrderFront:nil];
+}
+
+- (void)windowWillClose:(NSNotification *)notification
+{
+    self.window = nil;
 }
 
 @end

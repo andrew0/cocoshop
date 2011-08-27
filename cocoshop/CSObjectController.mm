@@ -125,6 +125,8 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    
     // I'm not entirely sure, but I'm guessing that we dont need to register for observing these values
     // since we bound the model to contentObject
     if ( [keyPath isEqualToString:@"projectName"] )
@@ -196,8 +198,6 @@
         [[_selectedNode parent] reorderChild:_selectedNode z:_currentModel.zOrder];
         [_outlineView reloadData];
     }
-    
-    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
 
 #pragma mark -

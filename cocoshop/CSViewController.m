@@ -75,10 +75,11 @@
 
 @synthesize controller = _controller;
 @synthesize outlineView = _outlineView;
+@synthesize animatingOutlineView = _animatingOutlineView;
 
 - (void)dealloc
 {
-    [_animatingOutlineView release];
+    self.animatingOutlineView = nil;
     [super dealloc];
 }
 
@@ -89,7 +90,7 @@
     
     // add TLAnimatingOutlineView
     NSSize contentSize = [_rightScrollView contentSize];
-    _animatingOutlineView = [[TLAnimatingOutlineView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height)];
+    self.animatingOutlineView = [[[TLAnimatingOutlineView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height)] autorelease];
     [_animatingOutlineView setDelegate:self];
     [_animatingOutlineView setAutoresizingMask:NSViewWidthSizable];
     [_rightScrollView setDocumentView:_animatingOutlineView];

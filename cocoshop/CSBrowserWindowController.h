@@ -49,5 +49,6 @@
 @property (nonatomic, retain) CSViewController *viewController;
 
 - (void)addSprite:(id)sender;
+- (void)newProject:(id)sender;
 
 @end

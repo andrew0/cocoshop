@@ -37,13 +37,15 @@
 	CSMacGLView	*_glView;
     CSViewController *_viewController;
     CSBrowserWindowController *_windowController;
-    BOOL _firstActive;
 }
 
 @property (assign) IBOutlet NSView *view;
 @property (assign) IBOutlet CSMacGLView	*glView;
 @property (assign) IBOutlet CSViewController *viewController;
 
+- (void)createNewWindow;
 - (IBAction)toggleFullScreen:(id)sender;
+- (IBAction)newProject:(id)sender;
+- (IBAction)closeProject:(id)sender;
 
 @end

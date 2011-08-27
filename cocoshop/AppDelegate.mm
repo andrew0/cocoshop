@@ -32,6 +32,7 @@
 #import "CSBrowser.h"
 #import "CSLayerView.h"
 #import "CSViewController.h"
+#import "TLAnimatingOutlineView.h"
 
 @implementation cocoshopAppDelegate
 @synthesize view=_view, glView=_glView, viewController=_viewController;
@@ -40,7 +41,7 @@
 {
     [[_glView openGLContext] makeCurrentContext];    
     CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
-	[director setDisplayFPS:YES];
+	[director setDisplayFPS:NO];
 	[director setOpenGLView:_glView];
     
     // EXPERIMENTAL stuff.
@@ -49,29 +50,12 @@
 	[director setResizeMode:kCCDirectorResize_NoScale];
 	[director runWithScene:[CSSceneView node]];
     
-    NSString *windowNibPath = [CTUtil pathForResource:@"Window" ofType:@"nib"];
-    _windowController = [[CSBrowserWindowController alloc] initWithWindowNibPath:windowNibPath browser:[CSBrowser browser]];
-    [_view setFrame:[_windowController.view frame]];
-    [[_windowController.view superview] replaceSubview:_windowController.view with:_view];
-    _windowController.viewController = _viewController;
-    
-    // Enable "moving" mouse event. Default no.
-	[_windowController.window setAcceptsMouseMovedEvents:NO];
-    
-    _firstActive = YES;
-}
-
-- (void)applicationDidBecomeActive:(NSNotification *)notification
-{
-    // the first time we become active we should add a new blank tab
-    if (_firstActive)
-        [_windowController.browser addBlankTabInForeground:YES];
-    _firstActive = NO;
+    [self createNewWindow];
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
 {
-	return YES;
+	return NO;
 }
 
 - (void)dealloc
@@ -81,12 +65,57 @@
 	[super dealloc];
 }
 
+- (void)createNewWindow
+{
+    if (_windowController)
+    {
+        // we have to close old window since we only have 1 window maximum
+        [[_windowController window] close];
+        [_windowController release];
+    }
+    
+    // add the window
+    NSString *windowNibPath = [CTUtil pathForResource:@"Window" ofType:@"nib"];
+    _windowController = [[CSBrowserWindowController alloc] initWithWindowNibPath:windowNibPath browser:[CSBrowser browser]];
+    [_view setFrame:[_windowController.view frame]];
+    [[_windowController.view superview] replaceSubview:_windowController.view with:_view];
+    _windowController.viewController = _viewController;
+	[_windowController.window setAcceptsMouseMovedEvents:NO];
+    [_windowController.browser addBlankTabInForeground:YES];
+    
+    // redraw window
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSWindowDidResizeNotification object:[_windowController window]];
+    [[_windowController window] setViewsNeedDisplay:YES];
+    [[_windowController window] display];
+    [[[CCDirector sharedDirector] openGLView] reshape];
+    
+    // make window active
+    [[_windowController window] makeKeyAndOrderFront:nil];
+    
+    // update the animating outline view
+    [_viewController updateOutlineView];
+}
+
 #pragma mark AppDelegate - IBActions
 
 - (IBAction)toggleFullScreen: (id)sender
 {
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	[director setFullScreen: ! [director isFullScreen] ];
+}
+
+- (IBAction)newProject:(id)sender
+{
+    if ( ![_windowController window] )
+        [self createNewWindow];
+    else
+        [_windowController.browser addBlankTabInForeground:YES];
+}
+
+- (IBAction)closeProject:(id)sender
+{
+    if ( [_windowController window] )
+        [_windowController.browser closeTab];
 }
 
 @end

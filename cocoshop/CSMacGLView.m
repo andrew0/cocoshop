@@ -84,12 +84,14 @@
 }
 
 - (void)reshape
-{    
+{
     // update cocos2d size
     CGLLockContext([[self openGLContext] CGLContextObj]);
     [[CCDirector sharedDirector] reshapeProjection:[self visibleRect].size];
     [[CCDirector sharedDirector] drawScene];
     CGLUnlockContext([[self openGLContext] CGLContextObj]);
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSViewFrameDidChangeNotification object:self];
     
     [self updateForScreenReshape];
 }

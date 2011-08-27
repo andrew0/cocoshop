@@ -49,6 +49,7 @@
 
 @property (assign) IBOutlet CSObjectController *controller;
 @property (assign) IBOutlet NSOutlineView *outlineView;
+@property (nonatomic, retain) TLAnimatingOutlineView *animatingOutlineView;
 
 /**
  * Updates the TLOutlineView (i.e. it will add the appropriate views to it)
