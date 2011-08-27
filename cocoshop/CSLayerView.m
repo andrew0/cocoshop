@@ -32,6 +32,7 @@
 @synthesize offest = _offset;
 @synthesize workspaceSize = _workspaceSize;
 @synthesize backgroundLayer = _backgroundLayer;
+@dynamic adjustedWorkspaceSize;
 
 #pragma mark Initialization
 
@@ -109,6 +110,32 @@
     }
 }
 
+- (void)setScale:(float)scale
+{
+    [super setScale:scale];
+    [[[CCDirector sharedDirector] openGLView] reshape];
+}
+
+- (void)setScaleX:(float)sx
+{
+    [super setScaleX:sx];
+    [[[CCDirector sharedDirector] openGLView] reshape];
+}
+
+- (void)setScaleY:(float)sy
+{
+    [super setScaleY:sy];
+    [[[CCDirector sharedDirector] openGLView] reshape];
+}
+
+- (CGSize)adjustedWorkspaceSize
+{
+    CGSize adjustedWorkspaceSize = _workspaceSize;
+    adjustedWorkspaceSize.width *= scaleX_;
+    adjustedWorkspaceSize.height *= scaleY_;
+    return adjustedWorkspaceSize;
+}
+
 #pragma mark -
 #pragma mark Screen Resize
 
@@ -120,14 +147,15 @@
 - (void)updateForScreenReshape
 {    
     CGSize winSize = [CCDirector sharedDirector].winSize;
+    CGSize adjustedWorkspaceSize = [self adjustedWorkspaceSize];
     
     // calculate centered position
     self.isRelativeAnchorPoint = YES;
     CGPoint centerPos = ccp(winSize.width/2, winSize.height/2);
     
     // clamp new position
-    centerPos.x = MAX(_workspaceSize.width/2, centerPos.x);
-    centerPos.y = MAX(_workspaceSize.height/2, centerPos.y);
+    centerPos.x = MAX(adjustedWorkspaceSize.width/2, centerPos.x);
+    centerPos.y = MAX(adjustedWorkspaceSize.height/2, centerPos.y);
     
     // apply offset
     self.position = ccpAdd(centerPos, _offset);
@@ -137,6 +165,8 @@
     
     // resize background layer
     [_backgroundLayer changeWidth:_workspaceSize.width height:_workspaceSize.height];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSWindowDidResizeNotification object:[[[CCDirector sharedDirector] openGLView] window]];
 }
 
 - (void)visit

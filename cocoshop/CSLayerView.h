@@ -75,6 +75,7 @@
 
 @property (nonatomic, assign) CGPoint offest;
 @property (nonatomic, assign) CGSize workspaceSize;
+@property (nonatomic, readonly) CGSize adjustedWorkspaceSize;
 @property (nonatomic, retain) CCLayerColor *backgroundLayer;
 
 - (void)addChildSafely:(CCNode *)node z:(NSInteger)z tag:(NSInteger)tag;

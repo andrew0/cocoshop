@@ -40,5 +40,6 @@
 }
 
 - (IBAction)addSprite:(id)sender;
+- (IBAction)zoom:(id)sender;
 
 @end

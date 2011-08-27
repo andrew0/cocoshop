@@ -26,6 +26,8 @@
 #import "CSToolbarController.h"
 #import "CSBrowser.h"
 #import "CSBrowserWindowController.h"
+#import "CSSceneView.h"
+#import "CSLayerView.h"
 
 @implementation CSToolbarController
 
@@ -40,6 +42,22 @@
     {
         CSBrowserWindowController *controller = (CSBrowserWindowController *)browser_.windowController;
         [controller addSprite:sender];
+    }
+}
+
+- (IBAction)zoom:(id)sender
+{
+    CGFloat toAdd;
+    if ( [sender isKindOfClass:[NSSegmentedControl class]] )
+        toAdd = ( [(NSSegmentedControl *)sender selectedSegment] == 0 ) ? -0.25f : 0.25f;
+    else
+        return;
+    
+    if ( [[CCDirector sharedDirector].runningScene isKindOfClass:[CSSceneView class]] )
+    {
+        CSSceneView *scene = (CSSceneView *)[CCDirector sharedDirector].runningScene;
+        if (scene.layer)
+            scene.layer.scale = MIN(MAX(scene.layer.scale + toAdd, 0.1f), 3.0f);
     }
 }
 

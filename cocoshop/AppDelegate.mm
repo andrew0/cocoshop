@@ -87,7 +87,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NSWindowDidResizeNotification object:[_windowController window]];
     [[_windowController window] setViewsNeedDisplay:YES];
     [[_windowController window] display];
-    [[[CCDirector sharedDirector] openGLView] reshape];
     
     // make window active
     [[_windowController window] makeKeyAndOrderFront:nil];

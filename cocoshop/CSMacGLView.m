@@ -56,7 +56,7 @@
         CSSceneView *scene = (CSSceneView *)[CCDirector sharedDirector].runningScene;
         if (scene.layer)
         {
-            CGSize workspaceSize = scene.layer.workspaceSize;
+            CGSize workspaceSize = scene.layer.adjustedWorkspaceSize;
             frameSize.width = MAX(workspaceSize.width, frameSize.width);
             frameSize.height = MAX(workspaceSize.height, frameSize.height);
         }
