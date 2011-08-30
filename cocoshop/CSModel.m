@@ -32,6 +32,7 @@
 @implementation CSModel
 
 @synthesize projectName = _projectName;
+@synthesize selectedNode = _selectedNode;
 @synthesize firstTime = _firstTime;
 @synthesize nodeProperties = _nodeProperties;
 @synthesize workspaceWidth = _workspaceWidth;
@@ -64,6 +65,7 @@
 {
     self.projectName = nil;
     self.color = nil;
+    self.selectedNode = nil;
     [super dealloc];
 }
 
@@ -88,6 +90,29 @@
     }
         
     return nil;
+}
+
+- (void)setSelectedNode:(CCNode<CSNodeProtocol> *)selectedNode
+{
+    if (selectedNode != _selectedNode)
+    {
+        [_selectedNode setIsSelected:NO];
+        [_selectedNode release];
+        _selectedNode = [selectedNode retain];
+        [_selectedNode setIsSelected:YES];
+        
+        // update model
+        _posX = _selectedNode.position.x;
+        _posY = _selectedNode.position.y;
+        _anchorX = _selectedNode.anchorPoint.x;
+        _anchorY = _selectedNode.anchorPoint.y;
+        _scaleX = _selectedNode.scaleX;
+        _scaleY = _selectedNode.scaleY;
+        _rotation = _selectedNode.rotation;
+        _zOrder = _selectedNode.zOrder;
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectNode" object:selectedNode];
+    }
 }
 
 @end

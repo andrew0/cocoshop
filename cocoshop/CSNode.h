@@ -76,7 +76,10 @@ _anchor = [[CCSprite spriteWithFile:@"anchor.png"] retain];\
 _anchor.opacity = 200;\
 [self addChild:_anchor z:NSIntegerMax];\
 _positionLabel = [[CCLabelBMFont labelWithString:@"0, 0" fntFile:@"arial.fnt"] retain];\
-[_anchor addChild:_positionLabel];
+[_anchor addChild:_positionLabel];\
+_isSelected = NO;\
+_fill.visible = NO;\
+_anchor.visible = NO;
 
 // deallocate CSNode variables
 #define CSNODE_MEM_VARS_DEALLOC \
@@ -107,7 +110,7 @@ _positionLabel = [[CCLabelBMFont labelWithString:@"0, 0" fntFile:@"arial.fnt"] r
 }\
 - (void)updatePositionLabel\
 {\
-    NSAssert([[NSThread currentThread] isEqualTo:[[CCDirector sharedDirector] runningThread]], @"updatePositionLabel##must be called from cocos2d thread");\
+/*    NSAssert([[NSThread currentThread] isEqualTo:[[CCDirector sharedDirector] runningThread]], @"updatePositionLabel##must be called from cocos2d thread");*/\
 \
     CGSize s = _anchor.contentSize;\
     CGPoint p = position_;\
@@ -225,7 +228,7 @@ return _isSelected;\
     }\
 }\
 
-/*!
+/**
  * This is the basic CSNode without any additional modifications
  */
 @interface CSNode : CCNode <CSNodeProtocol>

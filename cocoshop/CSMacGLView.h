@@ -27,6 +27,9 @@
 #import "cocos2d.h"
 
 @interface CSMacGLView : MacGLView
+{
+    NSSize _lastSize;
+}
 
 - (NSSize)viewportSize;
 - (void)updateForScreenReshape;

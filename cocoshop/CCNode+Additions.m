@@ -33,7 +33,7 @@
 {
     return CGRectMake(self.position.x - contentSize_.width*anchorPoint_.x, self.position.y-
                       contentSize_.height*anchorPoint_.y,
-                      contentSize_.width, contentSize_.height);
+                      contentSize_.width*scaleX_, contentSize_.height*scaleY_);
 }
 
 - (BOOL)isEventInRect:(NSEvent *)event

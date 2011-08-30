@@ -26,12 +26,12 @@
 #import "CSLayerView.h"
 #import "CSModel.h"
 #import "CSNode.h"
+#import "CSMacGLView.h"
 
 @implementation CSLayerView
 
 @synthesize model = _model;
-@synthesize selectedNode = _selectedNode;
-@synthesize offest = _offset;
+@synthesize offset = _offset;
 @synthesize workspaceSize = _workspaceSize;
 @synthesize backgroundLayer = _backgroundLayer;
 @dynamic adjustedWorkspaceSize;
@@ -118,6 +118,12 @@
     [[[CCDirector sharedDirector] openGLView] reshape];
 }
 
+- (float)scale
+{
+    // generally this makes sure scaleX == scaleY, but it's not important for us
+    return scaleX_;
+}
+
 - (void)setScaleX:(float)sx
 {
     [super setScaleX:sx];
@@ -136,29 +142,6 @@
     adjustedWorkspaceSize.width *= scaleX_;
     adjustedWorkspaceSize.height *= scaleY_;
     return adjustedWorkspaceSize;
-}
-
-- (void)setSelectedNode:(CCNode<CSNodeProtocol> *)selectedNode
-{
-    if (selectedNode != _selectedNode)
-    {
-        [_selectedNode setIsSelected:NO];
-        [_selectedNode release];
-        _selectedNode = [selectedNode retain];
-        [_selectedNode setIsSelected:YES];
-        
-        // update model
-        _model.posX = _selectedNode.position.x;
-        _model.posY = _selectedNode.position.y;
-        _model.anchorX = _selectedNode.anchorPoint.x;
-        _model.anchorY = _selectedNode.anchorPoint.y;
-        _model.scaleX = _selectedNode.scaleX;
-        _model.scaleY = _selectedNode.scaleY;
-        _model.rotation = _selectedNode.rotation;
-        _model.zOrder = _selectedNode.zOrder;
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectSprite" object:selectedNode];
-    }
 }
 
 #pragma mark -

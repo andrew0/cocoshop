@@ -37,19 +37,25 @@
 
 @implementation CSObjectController
 
-@synthesize currentModel = _currentModel;
-@synthesize currentView = _currentView;
+@dynamic currentModel;
+@dynamic currentView;
 
 - (void)awakeFromNib
 {
     [[CCEventDispatcher sharedDispatcher] addMouseDelegate:self priority:NSIntegerMax];
 }
 
-- (void)dealloc
+- (CSLayerView *)currentView
 {
-    self.currentModel = nil;
-    self.currentView = nil;
-    [super dealloc];
+    if ( ![[[CCDirector sharedDirector] runningScene] isKindOfClass:[CSSceneView class]] )
+        return nil;
+    
+    return [(CSSceneView *)[[CCDirector sharedDirector] runningScene] layer];
+}
+
+- (CSModel *)currentModel
+{
+    return self.currentView.model;
 }
 
 - (void)selectLayerView:(CSLayerView *)view
@@ -62,19 +68,6 @@
     {        
         // bind contentObject to model
         [self bind:@"contentObject" toObject:model withKeyPath:@"self" options:nil];
-        
-        // set new model and view
-        self.currentModel = model;
-        self.currentView = view;
-        
-        // check if it's the first time we're handling model
-        if (model.firstTime)
-        {
-            // we do this so that we'll ge the notifications for the KVO changes
-            // to set the default values
-            [model reset];
-            model.firstTime = NO;
-        }
         
         // if necessary, create scene view
         CSSceneView *scene;
@@ -93,6 +86,15 @@
         
         // set layer to the current view
         scene.layer = view;
+        
+        // check if it's the first time we're handling model
+        if (model.firstTime)
+        {
+            // we do this so that we'll ge the notifications for the KVO changes
+            // to set the default values
+            [model reset];
+            model.firstTime = NO;
+        }
     }
 }
 
@@ -104,12 +106,12 @@
     
     NSUInteger i = 0;
     NSString *newName = [NSString stringWithString:name];
-    while ( [_currentModel nodeWithName:newName] )
+    while ( [self.currentModel nodeWithName:newName] )
     {
         newName = [name stringByAppendingFormat:@"_%lu", (unsigned long)i++];
         
         // if it's maximum number, return nil
-        if (i == NSUIntegerMax && [_currentModel nodeWithName:newName])
+        if (i == NSUIntegerMax && [self.currentModel nodeWithName:newName])
             return nil;
     }
     
@@ -132,66 +134,66 @@
         {
             CSBrowserWindowController *wc = (CSBrowserWindowController *)window.windowController;
             CTTabContents *contents = [wc selectedTabContents];
-            contents.title = _currentModel.projectName;
+            contents.title = self.currentModel.projectName;
         }
     }
     else if ( [keyPath isEqualToString:@"workspaceWidth"] || [keyPath isEqualToString:@"workspaceHeight"] )
     {
-        _currentView.workspaceSize = CGSizeMake(_currentModel.workspaceWidth, _currentModel.workspaceHeight);
+        self.currentView.workspaceSize = CGSizeMake(self.currentModel.workspaceWidth, self.currentModel.workspaceHeight);
     }
     else if ( [keyPath isEqualToString:@"opacity"] )
     {
-        [_currentView.backgroundLayer setOpacity:_currentModel.opacity];
+        [self.currentView.backgroundLayer setOpacity:self.currentModel.opacity];
     }
     else if ( [keyPath isEqualToString:@"color"] )
     {
         // grab rgba values
-        NSColor *color = [_currentModel.color colorUsingColorSpaceName:NSDeviceRGBColorSpace];
+        NSColor *color = [self.currentModel.color colorUsingColorSpaceName:NSDeviceRGBColorSpace];
         
         CGFloat r, g, b;
         r = [color redComponent] * 255;
         g = [color greenComponent] * 255;
         b = [color blueComponent] * 255;
         
-        [_currentView.backgroundLayer setColor:ccc3(r, g, b)];
+        [self.currentView.backgroundLayer setColor:ccc3(r, g, b)];
     }
     else if ( [keyPath isEqualToString:@"name"] )
     {
-        NSString *uniqueName = [self uniqueNameFromString:_currentModel.name];
-        [_currentView.selectedNode setName:uniqueName];
+        NSString *uniqueName = [self uniqueNameFromString:self.currentModel.name];
+        [self.currentModel.selectedNode setName:uniqueName];
         [_outlineView reloadData];
     }
     else if ( [keyPath isEqualToString:@"posX"]  )
     {
-        _currentView.selectedNode.position = ccp(_currentModel.posX, _currentView.selectedNode.position.y);
+        self.currentModel.selectedNode.position = ccp(self.currentModel.posX, self.currentModel.selectedNode.position.y);
     }
     else if ( [keyPath isEqualToString:@"posY"] )
     {
-        _currentView.selectedNode.position = ccp(_currentView.selectedNode.position.x, _currentModel.posY);
+        self.currentModel.selectedNode.position = ccp(self.currentModel.selectedNode.position.x, self.currentModel.posY);
     }
     else if ( [keyPath isEqualToString:@"anchorX"] )
     {
-        _currentView.selectedNode.anchorPoint = ccp(_currentModel.anchorX, _currentView.selectedNode.anchorPoint.y);
+        self.currentModel.selectedNode.anchorPoint = ccp(self.currentModel.anchorX, self.currentModel.selectedNode.anchorPoint.y);
     }
     else if ( [keyPath isEqualToString:@"anchorY"] )
     {
-        _currentView.selectedNode.anchorPoint = ccp(_currentView.selectedNode.anchorPoint.x, _currentModel.anchorY);
+        self.currentModel.selectedNode.anchorPoint = ccp(self.currentModel.selectedNode.anchorPoint.x, self.currentModel.anchorY);
     }
     else if ( [keyPath isEqualToString:@"scaleX"] )
     {
-        _currentView.selectedNode.scaleX = _currentModel.scaleX;
+        self.currentModel.selectedNode.scaleX = self.currentModel.scaleX;
     }
     else if ( [keyPath isEqualToString:@"scaleY"] )
     {
-        _currentView.selectedNode.scaleY = _currentModel.scaleY;
+        self.currentModel.selectedNode.scaleY = self.currentModel.scaleY;
     }
     else if ( [keyPath isEqualToString:@"rotation"] )
     {
-        _currentView.selectedNode.rotation = _currentModel.rotation;
+        self.currentModel.selectedNode.rotation = self.currentModel.rotation;
     }
     else if ( [keyPath isEqualToString:@"zOrder"] )
     {
-        [[_currentView.selectedNode parent] reorderChild:_currentView.selectedNode z:_currentModel.zOrder];
+        [[self.currentModel.selectedNode parent] reorderChild:self.currentModel.selectedNode z:self.currentModel.zOrder];
         [_outlineView reloadData];
     }
 }
@@ -203,8 +205,8 @@
 {
     // loop through the the children in reverse since we want to find the
     // nodes with the highest z order first
-    if (_currentView)
-        for (CCNode *child in [[[_currentView children] getNSArray] reverseObjectEnumerator])
+    if (self.currentView)
+        for (CCNode *child in [[[self.currentView children] getNSArray] reverseObjectEnumerator])
             if ( [child conformsToProtocol:@protocol(CSNodeProtocol)] && [child isEventInRect:event] )
                 return (CCNode<CSNodeProtocol> *)child;
     
@@ -225,15 +227,15 @@
         // if this isn't the selected sprite, select it
         // otherwise, plan on deselecting it (unless it is moved)
         if ( ![node isSelected] )
-            _currentView.selectedNode = node;
+            self.currentModel.selectedNode = node;
         else
             _willDeselectNode = YES;
         
         _willDragNode = YES;
     }
     
-    if (_currentView.selectedNode && ![_currentView.selectedNode isEventInRect:event])
-        _currentView.selectedNode = nil;
+    if (self.currentModel.selectedNode && ![self.currentModel.selectedNode isEventInRect:event])
+        self.currentModel.selectedNode = nil;
     
     _prevLocation = [[CCDirector sharedDirector] convertEventToGL:event];
     
@@ -248,12 +250,12 @@
     CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
     if (_willDragNode)
     {
-        if (_currentView.selectedNode)
+        if (self.currentModel.selectedNode)
         {
             CGPoint delta = ccpSub(location, _prevLocation);
-            CGPoint newPos = ccpAdd(_currentView.selectedNode.position, delta);
-            _currentModel.posX = newPos.x;
-            _currentModel.posY = newPos.y;
+            CGPoint newPos = ccpAdd(self.currentModel.selectedNode.position, delta);
+            self.currentModel.posX = newPos.x;
+            self.currentModel.posY = newPos.y;
         }
     }
     _prevLocation = location;
@@ -264,7 +266,7 @@
 - (BOOL)ccMouseUp:(NSEvent *)event
 {
     if (_willDeselectNode)
-        _currentView.selectedNode = nil;
+        self.currentModel.selectedNode = nil;
     
     _prevLocation = [[CCDirector sharedDirector] convertEventToGL:event];
     

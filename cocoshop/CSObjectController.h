@@ -33,9 +33,6 @@
 
 @interface CSObjectController : NSObjectController <CCMouseEventDelegate>
 {
-    CSModel *_currentModel;
-    CSLayerView *_currentView;
-    
     BOOL _willDragNode;
     BOOL _willDeselectNode;
     CGPoint _prevLocation;
@@ -43,8 +40,8 @@
     IBOutlet NSOutlineView *_outlineView;
 }
 
-@property (nonatomic, retain) CSModel *currentModel;
-@property (nonatomic, retain) CSLayerView *currentView;
+@property (nonatomic, readonly) CSModel *currentModel;
+@property (nonatomic, readonly) CSLayerView *currentView;
 
 - (NSString *)uniqueNameFromString:(NSString *)string;
 /**

@@ -34,41 +34,10 @@
 #import "TLDisclosureBar.h"
 #import "CSSprite.h"
 
-// colors/gradients defined up here - makes code look cleaner
-#define ACTIVE_GRADIENT [[[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.86f alpha:255] endingColor:[NSColor colorWithCalibratedWhite:0.72f alpha:255]] autorelease]
-#define INACTIVE_GRADIENT [[[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.95f alpha:255] endingColor:[NSColor colorWithCalibratedWhite:0.85f alpha:255]] autorelease]
-#define CLICKED_GRADIENT [[[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.78f alpha:255] endingColor:[NSColor colorWithCalibratedWhite:0.64f alpha:255]] autorelease]
-#define BORDER_COLOR [NSColor colorWithCalibratedWhite:0.66f alpha:255.0f]
-#define CONFIGURE_VIEW(__X__) do {\
-    [__X__ setAutoresizingMask:NSViewNotSizable];\
-    [__X__.disclosureBar.labelField setFrameOrigin:NSMakePoint(20.0f, [__X__.disclosureBar.labelField frame].origin.y)];\
-    __X__.disclosureBar.drawsHighlight = NO;\
-    __X__.disclosureBar.activeFillGradient = ACTIVE_GRADIENT;\
-    __X__.disclosureBar.inactiveFillGradient = INACTIVE_GRADIENT;\
-    __X__.disclosureBar.clickedFillGradient = CLICKED_GRADIENT;\
-    __X__.disclosureBar.borderColor = BORDER_COLOR;\
-} while (0)
-
-
-#pragma mark NSClipView
-
-/**
- * This is so that the clip view has a flipped coordinate system
- * i.e. the origin is top left
- */
-@implementation NSClipView (Flipped)
-- (BOOL)isFlipped
-{
-    return YES;
-}
-@end
-
-#pragma mark -
-#pragma mark Window Controller
-
 @interface CSViewController ()
 - (void)reloadData:(NSNotification *)notification;
-- (void)didSelectSprite:(NSNotification *)notification;
+- (void)didSelectNode:(NSNotification *)notification;
+- (void)configureView:(TLCollapsibleView *)view;
 @end
 
 @implementation CSViewController
@@ -86,7 +55,7 @@
 - (void)awakeFromNib
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData:) name:@"addedChild" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectSprite:) name:@"didSelectSprite" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectNode:) name:@"didSelectNode" object:nil];
     
     // add TLAnimatingOutlineView
     NSSize contentSize = [_rightScrollView contentSize];
@@ -94,59 +63,66 @@
     [_animatingOutlineView setDelegate:self];
     [_animatingOutlineView setAutoresizingMask:NSViewWidthSizable];
     [_rightScrollView setDocumentView:_animatingOutlineView];
-    
     [self updateOutlineView];
+}
+
+- (void)configureView:(TLCollapsibleView *)view
+{
+    [view setAutoresizingMask:NSViewNotSizable];
+    [view.disclosureBar.labelField setFrameOrigin:NSMakePoint(20.0f, [view.disclosureBar.labelField frame].origin.y)];
+    view.disclosureBar.drawsHighlight = NO;
+    view.disclosureBar.activeFillGradient = [[[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.86f alpha:255] endingColor:[NSColor colorWithCalibratedWhite:0.72f alpha:255]] autorelease];
+    view.disclosureBar.inactiveFillGradient = [[[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.95f alpha:255] endingColor:[NSColor colorWithCalibratedWhite:0.85f alpha:255]] autorelease];
+    view.disclosureBar.clickedFillGradient = [[[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.78f alpha:255] endingColor:[NSColor colorWithCalibratedWhite:0.64f alpha:255]] autorelease];
+    view.disclosureBar.borderColor = [NSColor colorWithCalibratedWhite:0.66f alpha:255.0f];
 }
 
 - (void)updateOutlineView
 {
-    [_animatingOutlineView setSubviews:[NSArray array]];
-    
-    if (_controller.currentView.selectedNode)
+    // NSViews have to be removed/modified/created on main thread
+    if ( ![[NSThread currentThread] isEqualTo:[NSThread mainThread]] )
     {
-        if ( [_controller.currentView.selectedNode conformsToProtocol:@protocol(CSNodeProtocol)] )
+        [self performSelectorOnMainThread:@selector(updateOutlineView) withObject:nil waitUntilDone:YES];
+        return;
+    }
+    
+    NSMutableArray *subviews = [_animatingOutlineView mutableArrayValueForKey:@"subviews"];
+    
+    @synchronized (subviews)
+    {
+        // remove old views
+        for (TLCollapsibleView *view in subviews)
+            [_animatingOutlineView removeItem:view];
+        
+        if (_controller.currentModel.selectedNode)
         {
-            TLCollapsibleView *general = [_animatingOutlineView addView:_generalInfo withImage:nil label:@"General Info" expanded:YES];
-            CONFIGURE_VIEW(general);
+            if ( [_controller.currentModel.selectedNode conformsToProtocol:@protocol(CSNodeProtocol)] )
+            {
+                TLCollapsibleView *general = [_animatingOutlineView addView:_generalInfo withImage:nil label:@"General Info" expanded:YES];
+                [self configureView:general];
+                
+                TLCollapsibleView *node = [_animatingOutlineView addView:_nodeInfo withImage:nil label:@"CCNode Info" expanded:YES];
+                [self configureView:node];
+            }
             
-            TLCollapsibleView *node = [_animatingOutlineView addView:_nodeInfo withImage:nil label:@"CCNode Info" expanded:YES];
-            CONFIGURE_VIEW(node);
+            if ( [_controller.currentModel.selectedNode isKindOfClass:[CSSprite class]] )
+            {
+                TLCollapsibleView *sprite = [_animatingOutlineView addView:_spriteInfo withImage:nil label:@"CCSprite Info" expanded:YES];
+                [self configureView:sprite];
+            }
+        }
+        else
+        {
+            TLCollapsibleView *background = [_animatingOutlineView addView:_backgroundInfo withImage:nil label:@"Background Info" expanded:YES];
+            [self configureView:background];
+            background.disclosureBar.borderSidesMask = TLMinYEdge;
         }
         
-        if ( [_controller.currentView.selectedNode isKindOfClass:[CSSprite class]] )
-        {
-            TLCollapsibleView *sprite = [_animatingOutlineView addView:_spriteInfo withImage:nil label:@"CCSprite Info" expanded:YES];
-            CONFIGURE_VIEW(sprite);
-        }
+        // enable all of the text fields in case they were disabled and never reenabled
+        for (TLCollapsibleView *view in [_animatingOutlineView subviews])
+            for (NSTextField *text in [[view detailView] subviews])
+                [text setEnabled:YES];
     }
-    else
-    {
-        TLCollapsibleView *background = [_animatingOutlineView addView:_backgroundInfo withImage:nil label:@"Background Info" expanded:YES];
-        CONFIGURE_VIEW(background);
-        background.disclosureBar.borderSidesMask = TLMinYEdge;
-    }
-    
-    // enable all of the text fields in case they were disabled and never reenabled
-    for (TLCollapsibleView *view in [_animatingOutlineView subviews])
-        for (NSTextField *text in [[view detailView] subviews])
-            [text setEnabled:YES];
-}
-
-- (NSDictionary *)addNewTab:(id)sender
-{
-//    // create a dictionary of the model and view as an identifier
-//    CSModel *model = [[CSModel alloc] init];
-//    CSLayerView *view = [[CSLayerView alloc] initWithController:_controller];
-//    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-//                          model, @"model",
-//                          view, @"view",
-//                          nil];
-//    
-//    [model release];
-//    [view release];
-//    
-//    return dict;
-    return nil;
 }
 
 #pragma mark -
@@ -183,7 +159,7 @@
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
 {
     if (item && [item isKindOfClass:[CCNode class]] && [item conformsToProtocol:@protocol(CSNodeProtocol)])
-        _controller.currentView.selectedNode = (CCNode<CSNodeProtocol> *)item;
+        _controller.currentModel.selectedNode = (CCNode<CSNodeProtocol> *)item;
     
     return YES;
 }
@@ -193,12 +169,33 @@
 
 - (void)reloadData:(NSNotification *)notification
 {
+    if ( ![[NSThread currentThread] isEqualTo:[NSThread mainThread]] )
+    {
+        [self performSelectorOnMainThread:@selector(reloadData:) withObject:notification waitUntilDone:YES];
+        return;
+    }
+    
     [_outlineView reloadData];
 }
 
-- (void)didSelectSprite:(NSNotification *)notification
+- (void)didSelectNode:(NSNotification *)notification
 {
+    // NSViews have to be removed/modified/created on main thread
+    // this gets called same thread that notification is made in,
+    // which is in the cocos2d thread. we want to run this on main
+    // thread
+    if ( ![[NSThread currentThread] isEqualTo:[NSThread mainThread]] )
+    {
+        [self performSelectorOnMainThread:@selector(didSelectNode:) withObject:notification waitUntilDone:YES];
+        return;
+    }
+    
     [self updateOutlineView];
+    CCNode<CSNodeProtocol> *item = [_controller.currentModel selectedNode];
+    if (item)
+        [_outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:[_outlineView rowForItem:item]] byExtendingSelection:NO];
+    else
+        [_outlineView deselectAll:nil];
 }
 
 #pragma mark -
@@ -227,107 +224,6 @@
 - (NSArray *)allowedFileTypes
 {
     return [NSArray arrayWithObjects:@"png", @"gif", @"jpg", @"jpeg", @"tif", @"tiff", @"bmp", @"ccz", @"pvr", nil];
-}
-
-#pragma mark -
-#pragma mark IBActions
-
-//- (IBAction)closeProject:(id)sender
-//{
-//    // remove selected item
-//    NSTabViewItem *item = [_tabView selectedTabViewItem];
-//    if (item)
-//        [_tabView removeTabViewItem:item];
-//    
-//    // remove layer if there are no windows left and set controller selection
-//    if ( [_tabView numberOfTabViewItems] < 1 )
-//    {
-//        if ( [[CCDirector sharedDirector].runningScene isKindOfClass:[CSSceneView class]] )
-//        {
-//            CSSceneView *scene = (CSSceneView *)[CCDirector sharedDirector].runningScene;
-//            scene.layer = nil;
-//        }
-//        
-//        [_controller selectDictionary:nil];
-//        
-//        // change title
-//        NSWindow *window = [[[CCDirector sharedDirector] openGLView] window];
-//        [window setTitle:@"cocoshop"];
-//    }
-//    
-//    // update OpenGL frame
-//    [(CSMacGLView *)[CCDirector sharedDirector].openGLView updateForScreenReshape];
-//}
-//
-- (IBAction)newProject:(id)sender
-{
-    [self addNewTab:nil];
-}
-
-- (IBAction)addNode:(id)sender
-{
-//    [_outlineView ];
-    NSBeep();
-}
-
-- (IBAction)addLayer:(id)sender
-{
-    NSBeep();
-}
-
-- (IBAction)addScene:(id)sender
-{
-    NSBeep();
-}
-
-- (IBAction)addSprite:(id)sender
-{
-    // return if there is no layer
-    if ( [[CCDirector sharedDirector].runningScene isKindOfClass:[CSSceneView class]] )
-    {
-        CSSceneView *scene = (CSSceneView *)[CCDirector sharedDirector].runningScene;
-        if (!scene.layer)
-        {
-            NSBeep();
-            return;
-        }
-    }
-    
-    // allowed file types
-    NSArray *allowedTypes = [self allowedFileTypes];
-    
-    // initialize panel + set flags
-    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-    [openPanel setCanChooseFiles:YES];
-    [openPanel setAllowsMultipleSelection:YES];
-    [openPanel setCanChooseDirectories:NO];
-    [openPanel setAllowedFileTypes:allowedTypes];
-    [openPanel setAllowsOtherFileTypes:NO];
-    
-    // handle the open panel
-    NSWindow *window = [[[CCDirector sharedDirector] openGLView] window];
-    [openPanel beginSheetModalForWindow:window completionHandler:^(NSInteger result) {
-        if(result == NSOKButton)
-        {
-            NSArray *files = [openPanel URLs];
-            [self addSpritesWithFiles:files safely:YES];
-        }
-    }];
-}
-
-- (IBAction)addMenu:(id)sender
-{
-    NSBeep();
-}
-
-- (IBAction)addMenuItem:(id)sender
-{
-    NSBeep();
-}
-
-- (IBAction)addLabelBMFont:(id)sender
-{
-    NSBeep();
 }
 
 @end

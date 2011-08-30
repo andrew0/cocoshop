@@ -37,12 +37,7 @@
      * Model
      */
     CSModel *_model;
-    
-    /**
-     * The currently selected node
-     */
-    CCNode<CSNodeProtocol> *_selectedNode;
-    
+        
     /**
      * The background checkerboard to signify transparency
      */
@@ -80,8 +75,7 @@
 }
 
 @property (nonatomic, retain) CSModel *model;
-@property (nonatomic, retain) CCNode<CSNodeProtocol> *selectedNode;
-@property (nonatomic, assign) CGPoint offest;
+@property (nonatomic, assign) CGPoint offset;
 @property (nonatomic, assign) CGSize workspaceSize;
 @property (nonatomic, readonly) CGSize adjustedWorkspaceSize;
 @property (nonatomic, retain) CCLayerColor *backgroundLayer;

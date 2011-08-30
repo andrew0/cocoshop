@@ -25,12 +25,9 @@
 
 #import "CSBrowser.h"
 #import "CSToolbarController.h"
-#import "CSBrowserWindowController.h"
-#import "CSViewController.h"
 #import "CSTabContents.h"
 #import "CSModel.h"
 #import "CSLayerView.h"
-#import "CSObjectController.h"
 
 @implementation CSBrowser
 

@@ -39,6 +39,8 @@
 {
     NSString *_projectName;
     
+    CCNode<CSNodeProtocol> *_selectedNode;
+    
     BOOL _firstTime;
     NSDictionary *_nodeProperties;
     
@@ -58,6 +60,7 @@
 }
 
 @property (nonatomic, copy) NSString *projectName;
+@property (nonatomic, retain) CCNode<CSNodeProtocol> *selectedNode;
 @property (nonatomic, assign) BOOL firstTime;
 @property (nonatomic, retain) NSDictionary *nodeProperties;
 @property (nonatomic, assign) CGFloat workspaceWidth;

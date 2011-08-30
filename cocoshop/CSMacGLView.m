@@ -77,7 +77,7 @@
         scene = (CSSceneView *)[CCDirector sharedDirector].runningScene;
         if (scene.layer)
         {
-            scene.layer.offest = ccp(-[self visibleRect].origin.x, -[self visibleRect].origin.y);
+            scene.layer.offset = ccp(-[self visibleRect].origin.x, -[self visibleRect].origin.y);
             [scene.layer updateForScreenReshapeSafely:nil];
         }
     }
@@ -85,15 +85,30 @@
 
 - (void)reshape
 {
-    // update cocos2d size
-    CGLLockContext([[self openGLContext] CGLContextObj]);
-    [[CCDirector sharedDirector] reshapeProjection:[self visibleRect].size];
-    [[CCDirector sharedDirector] drawScene];
-    CGLUnlockContext([[self openGLContext] CGLContextObj]);
+    // for some reason if we resize while an action is running OpenGL crashes,
+    // so only resize if
+    // 1. the window was resized (which would also cause the scroll view frame to resize), or
+    // 2. there is no running action for the layer
+    if ( !CGSizeEqualToSize(_lastSize, [[self enclosingScrollView] frame].size) &&
+        [[[CCDirector sharedDirector] runningScene] isKindOfClass:[CSSceneView class]] &&
+        [[(CSSceneView *)[[CCDirector sharedDirector] runningScene] layer] numberOfRunningActions] < 1)
+        [[CCDirector sharedDirector] drawScene];
+    
+    if ( !CGSizeEqualToSize([[CCDirector sharedDirector] winSize], [self visibleRect].size) )
+    {
+        // update cocos2d size
+        CGLLockContext([[self openGLContext] CGLContextObj]);
+        [[CCDirector sharedDirector] reshapeProjection:[self visibleRect].size];
+        CGLUnlockContext([[self openGLContext] CGLContextObj]);
+    }
+    
+    if ( [[[CCDirector sharedDirector] runningScene] isKindOfClass:[CSSceneView class]] && [[(CSSceneView *)[[CCDirector sharedDirector] runningScene] layer] numberOfRunningActions] < 1)
+        [[CCDirector sharedDirector] drawScene];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:NSViewFrameDidChangeNotification object:self];
-    
     [self updateForScreenReshape];
+    
+    _lastSize = [[self enclosingScrollView] frame].size;
 }
 
 #pragma mark User Input

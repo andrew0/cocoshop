@@ -25,6 +25,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+
 /**
  * To use Chrome tabs, we have to fake a toolbar. We do this by
  * making the window textured. That means that the whole window

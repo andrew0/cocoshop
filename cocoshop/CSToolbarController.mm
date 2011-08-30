@@ -47,17 +47,32 @@
 
 - (IBAction)zoom:(id)sender
 {
-    CGFloat toAdd;
-    if ( [sender isKindOfClass:[NSSegmentedControl class]] )
-        toAdd = ( [(NSSegmentedControl *)sender selectedSegment] == 0 ) ? -0.25f : 0.25f;
-    else
+    if ( ![sender isKindOfClass:[NSSegmentedControl class]] )
         return;
     
     if ( [[CCDirector sharedDirector].runningScene isKindOfClass:[CSSceneView class]] )
     {
         CSSceneView *scene = (CSSceneView *)[CCDirector sharedDirector].runningScene;
+        
+        float scaleTo;
+        switch ([(NSSegmentedControl *)sender selectedSegment])
+        {
+            case 0:
+                scaleTo = MIN(MAX(scene.layer.scale - 0.25f, 0.1f), 3.0f);
+                break;
+            case 1:
+                scaleTo = 1;
+                break;
+            case 2:
+                scaleTo = MIN(MAX(scene.layer.scale + 0.25f, 0.1f), 3.0f);
+                break;
+            default:
+                scaleTo = scene.layer.scale;
+                break;
+        }
+        
         if (scene.layer)
-            scene.layer.scale = MIN(MAX(scene.layer.scale + toAdd, 0.1f), 3.0f);
+            [scene.layer runAction:[CCScaleTo actionWithDuration:0.075f scale:scaleTo]];
     }
 }
 

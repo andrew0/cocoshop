@@ -37,8 +37,48 @@
 @interface CSViewController : NSViewController <TLAnimatingOutlineViewDelegate, NSOutlineViewDelegate>
 {
     CSObjectController *_controller;
-    TLAnimatingOutlineView *_animatingOutlineView;
     
+    /*
+     TLAnimatingOutlineView is the view cocoshop uses for its collapsible
+     views. Unfortunately, after changing the subviews, it sometimes gets
+     this error, but doesn't crash:
+         -[NSArray(Swizzle) objectAtIndexAlt:] self = (
+         "<TLCollapsibleView: 0x10aa9f0a0>"
+         ), pointer = 0x10220fdc0, index = 1
+         *** -[__NSArrayM objectAtIndex:]: index 1 beyond bounds [0 .. 0]
+         (
+         <snip>
+         4   CoreFoundation                      0x00007fff8dde22ca CFArrayGetValueAtIndex + 122
+         5   CoreFoundation                      0x00007fff8de01a3b CFArrayApplyFunction + 59
+         6   AppKit                              0x00007fff895454a9 -[NSView(NSInternal) _updateTrackingAreas] + 1324
+         <snip>
+         )
+     The part about the NSArray(Swizzle) I added by method swizzling
+     objectAtIndex: since I wasn't sure where the error was coming
+     from. If you want to try to fix this, you can swizzle the
+     method this way in main.m:
+         #import <objc/runtime.h>
+         
+         @interface NSArray (Swizzle)
+         - (void)objectAtIndexAlt:(NSUInteger)index;
+         @end
+         @implementation NSArray (Swizzle)
+         - (void)objectAtIndexAlt:(NSUInteger)index
+         {
+         if ([self count] <= index)
+         NSLog(@"%s self = %@, pointer = %p, index = %lu", __FUNCTION__, self, self, (unsigned long)index);
+         return [self objectAtIndexAlt:index];
+         }
+         @end
+     add to main function:
+         Class arrayClass = NSClassFromString(@"__NSArrayM");
+         Method originalMethod = class_getInstanceMethod(arrayClass, @selector(objectAtIndex:));
+         Method categoryMethod = class_getInstanceMethod([NSArray class], @selector(objectAtIndexAlt:));
+         method_exchangeImplementations(originalMethod, categoryMethod);
+     Maybe this could help debug it
+    */
+    TLAnimatingOutlineView *_animatingOutlineView;
+        
     NSOutlineView *_outlineView;
     IBOutlet NSScrollView *_rightScrollView;
     IBOutlet NSView *_nodeInfo;
@@ -55,17 +95,7 @@
  * Updates the TLOutlineView (i.e. it will add the appropriate views to it)
  */
 - (void)updateOutlineView;
-- (NSDictionary *)addNewTab:(id)sender;
 - (void)addSpritesWithFiles:(NSArray *)files safely:(BOOL)safely;
 - (NSArray *)allowedFileTypes;
-//- (IBAction)closeProject:(id)sender;
-- (IBAction)newProject:(id)sender;
-- (IBAction)addNode:(id)sender;
-- (IBAction)addLayer:(id)sender;
-- (IBAction)addScene:(id)sender;
-- (IBAction)addSprite:(id)sender;
-- (IBAction)addMenu:(id)sender;
-- (IBAction)addMenuItem:(id)sender;
-- (IBAction)addLabelBMFont:(id)sender;
 
 @end
