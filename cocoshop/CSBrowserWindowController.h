@@ -42,6 +42,7 @@
     NSView *_view;
     CSColorView *_backgroundView;
     CSViewController *_viewController;
+    NSPoint _initialLocation;
 }
 
 @property (assign) IBOutlet NSView *view;

@@ -80,7 +80,7 @@
 - (void)updateOutlineView
 {
     // NSViews have to be removed/modified/created on main thread
-    if ( ![[NSThread currentThread] isEqualTo:[NSThread mainThread]] )
+    if ( ![NSThread isMainThread] )
     {
         [self performSelectorOnMainThread:@selector(updateOutlineView) withObject:nil waitUntilDone:YES];
         return;
@@ -169,7 +169,7 @@
 
 - (void)reloadData:(NSNotification *)notification
 {
-    if ( ![[NSThread currentThread] isEqualTo:[NSThread mainThread]] )
+    if ( ![NSThread isMainThread] )
     {
         [self performSelectorOnMainThread:@selector(reloadData:) withObject:notification waitUntilDone:YES];
         return;
@@ -184,7 +184,7 @@
     // this gets called same thread that notification is made in,
     // which is in the cocos2d thread. we want to run this on main
     // thread
-    if ( ![[NSThread currentThread] isEqualTo:[NSThread mainThread]] )
+    if ( ![NSThread isMainThread] )
     {
         [self performSelectorOnMainThread:@selector(didSelectNode:) withObject:notification waitUntilDone:YES];
         return;

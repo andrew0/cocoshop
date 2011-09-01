@@ -42,8 +42,24 @@
 
 - (void)awakeFromNib
 {
+    NSWindow *window = [self window];
+    
     // set self as delegate for window
-    [[self window] setDelegate:self];
+    [window setDelegate:self];
+    
+    [window setMovableByWindowBackground:NO];
+    
+    // center traffic lights
+    for (NSButton *button in [[[window contentView] superview] subviews])
+    {
+        if ([button isKindOfClass:[NSButton class]])
+        {
+            NSRect frameViewBounds = [[button superview] bounds];
+            NSRect frame = [button frame];
+            frame.origin.y = NSHeight(frameViewBounds) - NSHeight(frame)/2 - NSHeight([[self tabStripView] frame])/2;
+            [button setFrame:frame];
+        }
+    }
     
     _backgroundView.backgroundColor = [NSColor colorWithCalibratedRed:237.0f/255.0f green:237.0f/255.0f blue:237.0f/255.0f alpha:1.0f];
     [_backgroundView setNeedsDisplay:YES];
@@ -160,6 +176,35 @@
 - (void)windowWillClose:(NSNotification *)notification
 {
     self.window = nil;
+}
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+    _initialLocation = [theEvent locationInWindow];
+}
+
+- (void)mouseDragged:(NSEvent *)theEvent
+{
+    if ( [[self tabStripView] hitTest:_initialLocation] )
+    {
+        NSRect screenVisibleFrame = [[NSScreen mainScreen] visibleFrame];
+        NSRect windowFrame = [[self window] frame];
+        NSPoint newOrigin = windowFrame.origin;
+        
+        // Get the mouse location in window coordinates.
+        NSPoint currentLocation = [theEvent locationInWindow];
+        
+        // Update the origin with the difference between the new mouse location and the old mouse location.
+        newOrigin.x += (currentLocation.x - _initialLocation.x);
+        newOrigin.y += (currentLocation.y - _initialLocation.y);
+        
+        // Don't let window get dragged up under the menu bar
+        if ((newOrigin.y + windowFrame.size.height) > (screenVisibleFrame.origin.y + screenVisibleFrame.size.height))
+            newOrigin.y = screenVisibleFrame.origin.y + (screenVisibleFrame.size.height - windowFrame.size.height);
+        
+        // Move the window to the new location
+        [[self window] setFrameOrigin:newOrigin];
+    }
 }
 
 @end
