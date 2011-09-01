@@ -213,19 +213,33 @@
         }
     }
     
+    // clips everything off of workspace
+    CGPoint p = [self convertToWorldSpace:CGPointZero];
+    glEnable(GL_SCISSOR_TEST);
+    glScissor(p.x, p.y, _workspaceSize.width*scaleX_, _workspaceSize.height*scaleY_);
     [super visit];
-}
-
-- (void)draw
-{
-    // draw outline of the workspace
+    glDisable(GL_SCISSOR_TEST);
+    
+    // draw outline of the workspace after glScissor
     CGPoint verts[] = {
-        ccp(0,0),
-        ccp(_workspaceSize.width,0),
-        ccp(_workspaceSize.width,_workspaceSize.height),
-        ccp(0,_workspaceSize.height)
+        CGPointApplyAffineTransform(ccp(0,0), [self nodeToParentTransform]),
+        CGPointApplyAffineTransform(ccp(_workspaceSize.width,0), [self nodeToParentTransform]),
+        CGPointApplyAffineTransform(ccp(_workspaceSize.width,_workspaceSize.height), [self nodeToParentTransform]),
+        CGPointApplyAffineTransform(ccp(0,_workspaceSize.height), [self nodeToParentTransform])
     };
     ccDrawPoly(verts, 4, YES);
 }
+
+//- (void)draw
+//{
+//    // draw outline of the workspace
+//    CGPoint verts[] = {
+//        ccp(0,0),
+//        ccp(_workspaceSize.width,0),
+//        ccp(_workspaceSize.width,_workspaceSize.height),
+//        ccp(0,_workspaceSize.height)
+//    };
+//    ccDrawPoly(verts, 4, YES);
+//}
 
 @end
