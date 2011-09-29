@@ -47,7 +47,7 @@
     // set self as delegate for window
     [window setDelegate:self];
     
-    [window setMovableByWindowBackground:NO];
+    [window setMovableByWindowBackground:YES];
     
     // center traffic lights
     for (NSButton *button in [[[window contentView] superview] subviews])
@@ -176,35 +176,6 @@
 - (void)windowWillClose:(NSNotification *)notification
 {
     self.window = nil;
-}
-
-- (void)mouseDown:(NSEvent *)theEvent
-{
-    _initialLocation = [theEvent locationInWindow];
-}
-
-- (void)mouseDragged:(NSEvent *)theEvent
-{
-    if ( [[self tabStripView] hitTest:_initialLocation] )
-    {
-        NSRect screenVisibleFrame = [[NSScreen mainScreen] visibleFrame];
-        NSRect windowFrame = [[self window] frame];
-        NSPoint newOrigin = windowFrame.origin;
-        
-        // Get the mouse location in window coordinates.
-        NSPoint currentLocation = [theEvent locationInWindow];
-        
-        // Update the origin with the difference between the new mouse location and the old mouse location.
-        newOrigin.x += (currentLocation.x - _initialLocation.x);
-        newOrigin.y += (currentLocation.y - _initialLocation.y);
-        
-        // Don't let window get dragged up under the menu bar
-        if ((newOrigin.y + windowFrame.size.height) > (screenVisibleFrame.origin.y + screenVisibleFrame.size.height))
-            newOrigin.y = screenVisibleFrame.origin.y + (screenVisibleFrame.size.height - windowFrame.size.height);
-        
-        // Move the window to the new location
-        [[self window] setFrameOrigin:newOrigin];
-    }
 }
 
 @end

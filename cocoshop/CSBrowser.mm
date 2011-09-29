@@ -38,7 +38,10 @@
     CSLayerView *view = [[CSLayerView alloc] initWithModel:model];
     
     CTTabContents *contents = [[[CSTabContents alloc] initWithBaseTabContents:baseContents view:view] autorelease];
-    contents.title = @"Untitled";
+    
+    static NSUInteger untitledNumber = 0;
+    contents.title = untitledNumber != 0 ? [NSString stringWithFormat:@"untitled %lu", (unsigned long)untitledNumber] : @"untitled";
+    untitledNumber++;
     
     [model release];
     [view release];

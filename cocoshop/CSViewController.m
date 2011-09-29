@@ -82,7 +82,7 @@
     // NSViews have to be removed/modified/created on main thread
     if ( ![NSThread isMainThread] )
     {
-        [self performSelectorOnMainThread:@selector(updateOutlineView) withObject:nil waitUntilDone:YES];
+        [self performSelectorOnMainThread:@selector(updateOutlineView) withObject:nil waitUntilDone:NO];
         return;
     }
     
@@ -186,7 +186,7 @@
     // thread
     if ( ![NSThread isMainThread] )
     {
-        [self performSelectorOnMainThread:@selector(didSelectNode:) withObject:notification waitUntilDone:YES];
+        [self performSelectorOnMainThread:@selector(didSelectNode:) withObject:notification waitUntilDone:NO];
         return;
     }
     

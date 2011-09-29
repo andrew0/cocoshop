@@ -35,6 +35,11 @@
     [super dealloc];
 }
 
+- (BOOL)mouseDownCanMoveWindow
+{
+    return NO;
+}
+
 - (void)setBackgroundColor:(NSColor *)backgroundColor
 {
     if (_backgroundColor != backgroundColor)
