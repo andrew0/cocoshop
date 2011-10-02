@@ -197,7 +197,7 @@
 		flipX_ = [[dict valueForKey:@"flipX"] boolValue];
 		flipY_ = [[dict valueForKey:@"flipY"] boolValue];
 		position_ = CGPointMake([[dict valueForKey:@"posX"] floatValue], [[dict valueForKey:@"posY"]floatValue]);
-		zOrder_ = [[dict valueForKey:@"posX"] intValue];
+		zOrder_ = [[dict valueForKey:@"posZ"] intValue];
 		relativeAnchor_ = [[dict valueForKey:@"relativeAnchor"] boolValue];
 		scale_ = CGPointMake([[dict valueForKey:@"scaleX"] floatValue], [[dict valueForKey:@"scaleY"]floatValue]);;
 		rotation_ = [[dict valueForKey:@"rotation"] floatValue];
