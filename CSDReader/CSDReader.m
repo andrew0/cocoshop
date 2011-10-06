@@ -116,7 +116,7 @@
 	// Add layerColor if it's not fully transparent
 	if ([backgroundElement_ opacity]) 
 	{
-		[aNode addChild: [backgroundElement_ newNode] z: NSIntegerMin];
+		[aNode addChild: [backgroundElement_ newNode] z: (int)NSIntegerMin];
 	}
 	
 	// add batchNode to aNode if needed
