@@ -1,4 +1,8 @@
 
+0.1.4 - 16-October-2011
+   * Fixed crashes/Kernel Panics on Lion, when deleting sprites ( Issue #62 )
+   * CSDReader fixes (ZOrder, Pull Request #63)
+
 0.1.2 - 26-June-2011
    * Fixed #56 (remember-filename-after-saving).
    * Added new keyboard shortucts for changing z-order (by @unitedworx).

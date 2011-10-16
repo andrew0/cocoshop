@@ -18,6 +18,7 @@ People/companies who were/are contributing code to cocos2d-iphone-extensions (al
 		
 	Paris Paraskeva (twitter: @unitedworx) (http://www.unitedworx.com/)
 		* Alternative keyboard shortcuts for Z-Ordering.
+        * CSDReader fixes (ZOrder, Pull Request #63)
 	
 
 Do you have a homepage, twitter account, etc? Please, send me the URL. I'll add it next to your name. Thanks.

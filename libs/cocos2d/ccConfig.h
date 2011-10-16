@@ -134,7 +134,7 @@
  
  @since v0.99.5
  */
-#define CC_USES_VBO 1
+#define CC_USES_VBO 0
 #else
 #define CC_USES_VBO 0
 #endif
