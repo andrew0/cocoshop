@@ -55,6 +55,7 @@
 - (void)awakeFromNib
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData:) name:@"addedChild" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData:) name:@"updatedChild" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectNode:) name:@"didSelectNode" object:nil];
     
     // add TLAnimatingOutlineView
@@ -156,12 +157,11 @@
 #pragma mark -
 #pragma mark NSOutlineView Delegation
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
+    id item = [_outlineView itemAtRow:[_outlineView selectedRow]];
     if (item && [item isKindOfClass:[CCNode class]] && [item conformsToProtocol:@protocol(CSNodeProtocol)])
         _controller.currentModel.selectedNode = (CCNode<CSNodeProtocol> *)item;
-    
-    return YES;
 }
 
 #pragma mark -
@@ -171,11 +171,12 @@
 {
     if ( ![NSThread isMainThread] )
     {
-        [self performSelectorOnMainThread:@selector(reloadData:) withObject:notification waitUntilDone:YES];
+        [self performSelectorOnMainThread:@selector(reloadData:) withObject:notification waitUntilDone:NO];
         return;
     }
     
     [_outlineView reloadData];
+    [self didSelectNode:nil];
 }
 
 - (void)didSelectNode:(NSNotification *)notification

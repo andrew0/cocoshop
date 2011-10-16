@@ -48,6 +48,15 @@
 @synthesize scaleY = _scaleY;
 @synthesize rotation = _rotation;
 @synthesize zOrder = _zOrder;
+@synthesize visible = _visible;
+@synthesize relativeAnchor = _relativeAnchor;
+@synthesize textureRectX = _textureRectX;
+@synthesize textureRectY = _textureRectY;
+@synthesize textureRectWidth = _textureRectWidth;
+@synthesize textureRectHeight = _textureRectHeight;
+@synthesize flipX = _flipX;
+@synthesize flipY = _flipY;
+
 
 - (id)init
 {
@@ -102,14 +111,35 @@
         [_selectedNode setIsSelected:YES];
         
         // update model
-        _posX = _selectedNode.position.x;
-        _posY = _selectedNode.position.y;
-        _anchorX = _selectedNode.anchorPoint.x;
-        _anchorY = _selectedNode.anchorPoint.y;
-        _scaleX = _selectedNode.scaleX;
-        _scaleY = _selectedNode.scaleY;
-        _rotation = _selectedNode.rotation;
-        _zOrder = _selectedNode.zOrder;
+        self.posX = _selectedNode.position.x;
+        self.posY = _selectedNode.position.y;
+        self.anchorX = _selectedNode.anchorPoint.x;
+        self.anchorY = _selectedNode.anchorPoint.y;
+        self.scaleX = _selectedNode.scaleX;
+        self.scaleY = _selectedNode.scaleY;
+        self.rotation = _selectedNode.rotation;
+        self.zOrder = _selectedNode.zOrder;
+        self.visible = _selectedNode.visible;
+        self.relativeAnchor = _selectedNode.isRelativeAnchorPoint;
+        
+        if ( [_selectedNode conformsToProtocol:@protocol(CCRGBAProtocol)] )
+        {
+            ccColor3B c = [(CCNode<CCRGBAProtocol> *)_selectedNode color];
+            self.color = [NSColor colorWithDeviceRed:c.r/255.0f green:c.g/255.0f blue:c.b/255.0f alpha:1];
+            self.opacity = [(CCNode<CCRGBAProtocol> *)_selectedNode opacity];
+        }
+        
+        if ( [_selectedNode isKindOfClass:[CCSprite class]] )
+        {
+            self.flipX = [(CCSprite *)_selectedNode flipX];
+            self.flipX = [(CCSprite *)_selectedNode flipY];
+            
+            CGRect r = [(CCSprite *)_selectedNode textureRect];
+            self.textureRectX = r.origin.x;
+            self.textureRectY = r.origin.y;
+            self.textureRectWidth = r.size.width;
+            self.textureRectHeight = r.size.height;
+        }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectNode" object:selectedNode];
     }

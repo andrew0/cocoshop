@@ -57,6 +57,14 @@
     float _scaleY;
     float _rotation;
     NSInteger _zOrder;
+    BOOL _visible;
+    BOOL _relativeAnchor;
+    CGFloat _textureRectX;
+    CGFloat _textureRectY;
+    CGFloat _textureRectWidth;
+    CGFloat _textureRectHeight;
+    BOOL _flipX;
+    BOOL _flipY;
 }
 
 @property (nonatomic, copy) NSString *projectName;
@@ -76,6 +84,14 @@
 @property (nonatomic, assign) float scaleY;
 @property (nonatomic, assign) float rotation;
 @property (nonatomic, assign) NSInteger zOrder;
+@property (nonatomic, assign) BOOL visible;
+@property (nonatomic, assign) BOOL relativeAnchor;
+@property (nonatomic, assign) CGFloat textureRectX;
+@property (nonatomic, assign) CGFloat textureRectY;
+@property (nonatomic, assign) CGFloat textureRectWidth;
+@property (nonatomic, assign) CGFloat textureRectHeight;
+@property (nonatomic, assign) BOOL flipX;
+@property (nonatomic, assign) BOOL flipY;
 
 /**
  * Reset all the properties to their default values

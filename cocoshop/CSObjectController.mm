@@ -143,7 +143,15 @@
     }
     else if ( [keyPath isEqualToString:@"opacity"] )
     {
-        [self.currentView.backgroundLayer setOpacity:self.currentModel.opacity];
+        if (self.currentModel.selectedNode != nil)
+        {
+            if ( [self.currentModel.selectedNode conformsToProtocol:@protocol(CCRGBAProtocol)] )
+                [(CCNode<CCRGBAProtocol> *)self.currentModel.selectedNode setOpacity:self.currentModel.opacity];
+        }
+        else
+        {
+            [self.currentView.backgroundLayer setOpacity:self.currentModel.opacity];
+        }
     }
     else if ( [keyPath isEqualToString:@"color"] )
     {
@@ -155,13 +163,21 @@
         g = [color greenComponent] * 255;
         b = [color blueComponent] * 255;
         
-        [self.currentView.backgroundLayer setColor:ccc3(r, g, b)];
+        if (self.currentModel.selectedNode != nil)
+        {
+            if ( [self.currentModel.selectedNode conformsToProtocol:@protocol(CCRGBAProtocol)] )
+                [(CCNode<CCRGBAProtocol> *)self.currentModel.selectedNode setColor:ccc3(r, g, b)];
+        }
+        else
+        {
+            [self.currentView.backgroundLayer setColor:ccc3(r, g, b)];
+        }
     }
     else if ( [keyPath isEqualToString:@"name"] )
     {
         NSString *uniqueName = [self uniqueNameFromString:self.currentModel.name];
         [self.currentModel.selectedNode setName:uniqueName];
-        [_outlineView reloadData];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updatedChild" object:nil];
     }
     else if ( [keyPath isEqualToString:@"posX"]  )
     {
@@ -194,8 +210,48 @@
     else if ( [keyPath isEqualToString:@"zOrder"] )
     {
         [[self.currentModel.selectedNode parent] reorderChild:self.currentModel.selectedNode z:self.currentModel.zOrder];
-        [_outlineView reloadData];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updatedChild" object:nil];
     }
+    else if ( [keyPath isEqualToString:@"visible"] )
+    {
+        self.currentModel.selectedNode.visible = self.currentModel.visible;
+    }
+    else if ( [keyPath isEqualToString:@"relativeAnchor"] )
+    {
+        self.currentModel.selectedNode.isRelativeAnchorPoint = self.currentModel.relativeAnchor;
+    }
+    else if ( [keyPath isEqualToString:@"flipX"] && [self.currentModel.selectedNode isKindOfClass:[CCSprite class]] )
+    {
+        [(CCSprite *)self.currentModel.selectedNode setFlipX:self.currentModel.flipX];
+    }
+    else if ( [keyPath isEqualToString:@"flipY"] && [self.currentModel.selectedNode isKindOfClass:[CCSprite class]] )
+    {
+        [(CCSprite *)self.currentModel.selectedNode setFlipX:self.currentModel.flipY];
+    }
+//    else if ( [keyPath isEqualToString:@"textureRectX"] && [self.currentModel.selectedNode isKindOfClass:[CCSprite class]] )
+//    {
+//        CGRect r = [(CCSprite *)self.currentModel.selectedNode textureRect];
+//        r.origin.x = self.currentModel.textureRectX;
+//        [(CCSprite *)self.currentModel.selectedNode setTextureRect:r];
+//    }
+//    else if ( [keyPath isEqualToString:@"textureRectY"] && [self.currentModel.selectedNode isKindOfClass:[CCSprite class]] )
+//    {
+//        CGRect r = [(CCSprite *)self.currentModel.selectedNode textureRect];
+//        r.origin.y = self.currentModel.textureRectY;
+//        [(CCSprite *)self.currentModel.selectedNode setTextureRect:r];
+//    }
+//    else if ( [keyPath isEqualToString:@"textureRectWidth"] && [self.currentModel.selectedNode isKindOfClass:[CCSprite class]] )
+//    {
+//        CGRect r = [(CCSprite *)self.currentModel.selectedNode textureRect];
+//        r.size.width = self.currentModel.textureRectWidth;
+//        [(CCSprite *)self.currentModel.selectedNode setTextureRect:r];
+//    }
+//    else if ( [keyPath isEqualToString:@"textureRectHeight"] && [self.currentModel.selectedNode isKindOfClass:[CCSprite class]] )
+//    {
+//        CGRect r = [(CCSprite *)self.currentModel.selectedNode textureRect];
+//        r.size.height = self.currentModel.textureRectHeight;
+//        [(CCSprite *)self.currentModel.selectedNode setTextureRect:r];
+//    }
 }
 
 #pragma mark -

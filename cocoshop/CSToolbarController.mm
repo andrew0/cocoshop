@@ -72,7 +72,7 @@
         }
         
         if (scene.layer)
-            [scene.layer runAction:[CCScaleTo actionWithDuration:0.075f scale:scaleTo]];
+            [scene.layer runAction:[CCScaleTo actionWithDuration:0.15f scale:scaleTo]];
     }
 }
 

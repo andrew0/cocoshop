@@ -39,6 +39,11 @@
 - (BOOL)isEventInRect:(NSEvent *)event
 {
     CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+    
+    NSRect visibleRect = [[[CCDirector sharedDirector] openGLView] visibleRect];
+    location.x -= visibleRect.origin.x;
+    location.y -= visibleRect.origin.y;
+    
     CGPoint local = [self convertToNodeSpace:location];
     CGRect r = self.rect;
     r.origin = CGPointZero;

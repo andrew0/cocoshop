@@ -39,9 +39,9 @@
     
     CTTabContents *contents = [[[CSTabContents alloc] initWithBaseTabContents:baseContents view:view] autorelease];
     
-    static NSUInteger untitledNumber = 0;
-    contents.title = untitledNumber != 0 ? [NSString stringWithFormat:@"untitled %lu", (unsigned long)untitledNumber] : @"untitled";
-    untitledNumber++;
+    static NSUInteger num = 1;
+    contents.title = num != 1 ? [NSString stringWithFormat:@"untitled %lu", (unsigned long)num] : @"untitled";
+    num++;
     
     [model release];
     [view release];

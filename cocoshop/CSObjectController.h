@@ -36,8 +36,6 @@
     BOOL _willDragNode;
     BOOL _willDeselectNode;
     CGPoint _prevLocation;
-    
-    IBOutlet NSOutlineView *_outlineView;
 }
 
 @property (nonatomic, readonly) CSModel *currentModel;

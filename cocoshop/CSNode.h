@@ -25,6 +25,10 @@
 
 #import "cocos2d.h"
 
+#ifndef FLT_EPSILON
+#define FLT_EPSILON 0.0000000001f
+#endif
+
 @protocol CSNodeProtocol <NSObject>
 @required
 - (void)updateAnchor;
@@ -66,7 +70,9 @@ BOOL _willUpdatePositionLabel;\
 BOOL _isSelected;\
 CCLayerColor *_fill;\
 CCSprite *_anchor;\
-CCLabelBMFont *_positionLabel;
+CCLabelBMFont *_positionLabel;\
+BOOL _isScaleXZero;\
+BOOL _isScaleYZero;
 
 // initialize the CSNode variables
 #define CSNODE_MEM_VARS_INIT \
@@ -100,9 +106,12 @@ _anchor.visible = NO;
     if (!isRelativeAnchorPoint_)\
         [_anchor setPosition:CGPointZero];\
     else\
-        [_anchor setPosition:ccp(s.width*anchorPoint_.x, s.height*anchorPoint_.y)];\
+        _anchor.position = self.isRelativeAnchorPoint ? ccp(s.width*anchorPoint_.x, s.height*anchorPoint_.y) : CGPointZero;\
 \
     _node.position = (_node.isRelativeAnchorPoint) ? ccp(s.width*_node.anchorPoint.x, s.height*_node.anchorPoint.y) : CGPointZero;\
+\
+    _anchor.scaleX = 1.0f / self.scaleX;\
+    _anchor.scaleY = 1.0f / self.scaleY;\
 }\
 - (void)updatePositionLabelSafely\
 {\
@@ -165,22 +174,49 @@ _anchor.visible = NO;
 }\
 - (void)setScaleX:(float)sx\
 {\
-    _node.scaleX = sx;\
+    _isScaleXZero = (sx == 0);\
+\
+    if (sx == 0)\
+        sx = FLT_EPSILON;\
+\
+    [super setScaleX:sx];\
     [self updateAnchor];\
 }\
 - (void)setScaleY:(float)sy\
 {\
-    _node.scaleY = sy;\
+    _isScaleYZero = (sy == 0);\
+\
+    if (sy == 0)\
+        sy = FLT_EPSILON;\
+\
+    [super setScaleY:sy];\
     [self updateAnchor];\
+}\
+- (float)scaleX\
+{\
+    return _isScaleXZero ? 0.0f : [super scaleX];\
+}\
+- (float)scaleY\
+{\
+    return _isScaleYZero ? 0 : [super scaleY];\
 }\
 - (void)setRotation:(float)rot\
 {\
     [super setRotation:rot];\
     [_anchor setRotation:-rot];\
 }\
+- (void)setVisible:(BOOL)visible\
+{\
+    _node.visible = visible;\
+}\
+- (BOOL)visible\
+{\
+    return _node.visible;\
+}\
 - (void)setIsRelativeAnchorPoint:(BOOL)relative\
 {\
     [super setIsRelativeAnchorPoint:relative];\
+    [self updateAnchor];\
 }\
 - (NSDictionary *)dictionaryRepresentation\
 {\
@@ -203,7 +239,7 @@ _anchor.visible = NO;
 }\
 - (BOOL)isSelected\
 {\
-return _isSelected;\
+    return _isSelected;\
 }\
 - (void)setIsSelected:(BOOL)selected\
 {\
