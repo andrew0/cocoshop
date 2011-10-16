@@ -474,21 +474,22 @@
 	[modelObject_ setSelectedSprite:nil];
 		
 	// Remove all sprites from main layer.
+    NSArray *spriteArray = [NSArray arrayWithArray:[modelObject_ spriteArray]];
     void (^removeAllSpritesBlock)() =
     ^{
-        for (CCNode * sprite in [modelObject_ spriteArray])
+        for (CCNode * sprite in spriteArray )
         {
             // Only remove child if we're the parent.
             if( [sprite parent] == mainLayer_ )
                 [mainLayer_ removeChild:sprite cleanup:YES];
         }
-        
-        // Remove all sprites from the dictionary.
-        @synchronized([modelObject_ spriteArray])
-        {
-            [[modelObject_ spriteArray] removeAllObjects];
-        }
     };
+    
+    // Remove all sprites from the dictionary.
+    @synchronized([modelObject_ spriteArray])
+    {
+        [[modelObject_ spriteArray] removeAllObjects];
+    }
     
     [mainLayer_ runAction: [CCCallBlock actionWithBlock: removeAllSpritesBlock] ];
 }
@@ -501,7 +502,7 @@
         [modelObject_ setSelectedSprite:nil];
         [spriteTableView_ deselectAll:nil];
         [spriteTableView_ setDataSource: nil];
-        [spriteTableView_ setDataSource: dataSource_];
+        
         
         // Run removeSprite block in Cocos2D Thread.
         void(^removeSprite)() =
@@ -514,7 +515,9 @@
             @synchronized([modelObject_ spriteArray])
             {
                 [[modelObject_ spriteArray] removeObject:sprite];
-            }            
+            }   
+            
+            [spriteTableView_ setDataSource: dataSource_];
         };
         [mainLayer_ runAction: [CCCallBlock actionWithBlock: removeSprite]];		
 	}	
