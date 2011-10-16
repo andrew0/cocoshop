@@ -470,45 +470,53 @@
 
 - (void)deleteAllSprites
 {
-	// deselect everything
+	// Deselect everything.
 	[modelObject_ setSelectedSprite:nil];
 		
-	// remove all sprites from main layer
-	for (CCNode * sprite in [modelObject_ spriteArray])
-	{
-		// only remove child if we're the parent
-		if( [sprite parent] == mainLayer_ )
-			[mainLayer_ removeChild:sprite cleanup:YES];
-	}
-		
-	// remove all sprites from the dictionary
-	@synchronized([modelObject_ spriteArray])
-	{
-		[[modelObject_ spriteArray] removeAllObjects];
-	}	
+	// Remove all sprites from main layer.
+    void (^removeAllSpritesBlock)() =
+    ^{
+        for (CCNode * sprite in [modelObject_ spriteArray])
+        {
+            // Only remove child if we're the parent.
+            if( [sprite parent] == mainLayer_ )
+                [mainLayer_ removeChild:sprite cleanup:YES];
+        }
+        
+        // Remove all sprites from the dictionary.
+        @synchronized([modelObject_ spriteArray])
+        {
+            [[modelObject_ spriteArray] removeAllObjects];
+        }
+    };
+    
+    [mainLayer_ runAction: [CCCallBlock actionWithBlock: removeAllSpritesBlock] ];
 }
 
 - (void)deleteSprite:(CSSprite *)sprite
 {
-	// delete sprite
 	if(sprite)
 	{
-		// deselect sprite 
-		[modelObject_ setSelectedSprite:nil];
-		[spriteTableView_ deselectAll:nil];
-		[spriteTableView_ setDataSource: nil];
-		
-		// only remove child if we're the parent
-		if( [sprite parent] == mainLayer_ )
-			[mainLayer_ removeChild:sprite cleanup:YES];
-		
-		// remove the sprite from the dictionary
-		@synchronized([modelObject_ spriteArray])
-		{
-			[[modelObject_ spriteArray] removeObject:sprite];
-		}
-		
-		[spriteTableView_ setDataSource: dataSource_];
+        // Deselect sprite. 
+        [modelObject_ setSelectedSprite:nil];
+        [spriteTableView_ deselectAll:nil];
+        [spriteTableView_ setDataSource: nil];
+        [spriteTableView_ setDataSource: dataSource_];
+        
+        // Run removeSprite block in Cocos2D Thread.
+        void(^removeSprite)() =
+        ^{
+            // Only remove child if we're the parent.
+            if( [sprite parent] == mainLayer_ )
+                [mainLayer_ removeChild:sprite cleanup:YES];
+            
+            // Remove the sprite from the dictionary.
+            @synchronized([modelObject_ spriteArray])
+            {
+                [[modelObject_ spriteArray] removeObject:sprite];
+            }            
+        };
+        [mainLayer_ runAction: [CCCallBlock actionWithBlock: removeSprite]];		
 	}	
 }
 
