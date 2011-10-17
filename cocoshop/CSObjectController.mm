@@ -309,6 +309,10 @@
         if (self.currentModel.selectedNode)
         {
             CGPoint delta = ccpSub(location, _prevLocation);
+            
+            if (self.currentView && self.currentView.scaleX != 0)
+                delta = ccpMult(delta, 1.0f/self.currentView.scaleX);
+            
             CGPoint newPos = ccpAdd(self.currentModel.selectedNode.position, delta);
             self.currentModel.posX = newPos.x;
             self.currentModel.posY = newPos.y;
