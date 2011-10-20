@@ -47,5 +47,7 @@
 - (IBAction)toggleFullScreen:(id)sender;
 - (IBAction)newProject:(id)sender;
 - (IBAction)closeProject:(id)sender;
+- (IBAction)openProject:(id)sender;
+- (IBAction)saveProject:(id)sender;
 
 @end

@@ -55,7 +55,5 @@
  * Updates the TLOutlineView (i.e. it will add the appropriate views to it)
  */
 - (void)updateOutlineView;
-- (void)addSpritesWithFiles:(NSArray *)files safely:(BOOL)safely;
-- (NSArray *)allowedFileTypes;
 
 @end

@@ -33,6 +33,7 @@
 #import "CSObjectController.h"
 #import "CSTabContents.h"
 #import "CSMacGLView.h"
+#import "AppDelegate.h"
 
 @implementation CSBrowserWindowController
 
@@ -112,7 +113,8 @@
     {
         NSString *filename = [url path];
         CSSprite *sprite = [CSSprite spriteWithFile:filename];
-        [sprite setName:[_viewController.controller uniqueNameFromString:[filename lastPathComponent]]];
+        sprite.path = filename;
+        sprite.name = [_viewController.controller uniqueNameFromString:[filename lastPathComponent]];
         
         // add the node to the layer view
         if (safely)
@@ -176,6 +178,67 @@
 - (void)windowWillClose:(NSNotification *)notification
 {
     self.window = nil;
+}
+
+- (void)saveProjectToURL:(NSURL *)url
+{
+    NSMutableArray *children = [NSMutableArray arrayWithCapacity:[_viewController.controller.currentView.children count]];
+    for (CCNode<CSNodeProtocol> *child in _viewController.controller.currentView.children)
+        if ( [child conformsToProtocol:@protocol(CSNodeProtocol)] )
+            [children addObject:[child dictionaryRepresentation]];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:1];
+    [dict setValue:children forKey:@"children"];
+    [dict writeToURL:url atomically:YES];
+}
+
+- (void)openProject:(id)sender
+{
+    // allowed file types
+    NSArray *allowedTypes = [NSArray arrayWithObject:@"csd"];
+    
+    // initialize panel + set flags
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    [openPanel setCanChooseFiles:YES];
+    [openPanel setAllowsMultipleSelection:YES];
+    [openPanel setCanChooseDirectories:NO];
+    [openPanel setAllowedFileTypes:allowedTypes];
+    [openPanel setAllowsOtherFileTypes:NO];
+        
+    // handle the open panel
+    void (^openProjectBlock)(NSInteger result) = ^(NSInteger result) {
+        if(result == NSOKButton)
+        {
+            NSArray *files = [openPanel URLs];
+            for (NSURL *url in files)
+            {
+                // TODO: once undo/redo support is added, check if there is anything that can be undone
+                // to the current project. If there isn't, that means that nothing has been done to the
+                // project and we don't have to open a new tab
+                if (![self window])
+                    [(cocoshopAppDelegate *)[NSApp delegate] createNewWindow];
+                else
+                    [self.browser addBlankTabInForeground:YES];
+                
+                NSString *path = [url path];
+                NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
+                
+                NSArray *children = [dict valueForKey:@"children"];
+                for (NSDictionary *child in children)
+                {
+                    CSSprite *sprite = [CSSprite node];
+                    [sprite setupFromDictionaryRepresentation:child];
+                    [_viewController.controller.currentView addChildSafely:sprite];
+                }
+            }
+        }
+    };
+    
+    NSWindow *window = [self window];
+    if (window)
+        [openPanel beginSheetModalForWindow:window completionHandler:openProjectBlock];
+    else
+        [openPanel beginWithCompletionHandler:openProjectBlock];
 }
 
 @end

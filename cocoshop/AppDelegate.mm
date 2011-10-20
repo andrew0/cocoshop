@@ -117,4 +117,23 @@
         [_windowController.browser closeTab];
 }
 
+- (IBAction)openProject:(id)sender
+{
+    [_windowController openProject:sender];
+}
+
+- (IBAction)saveProject:(id)sender
+{
+    if (!_windowController.window)
+        return;
+    
+    NSSavePanel *savePanel = [NSSavePanel savePanel];
+    [savePanel setCanCreateDirectories:YES];
+    [savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"csd"]];
+    [savePanel beginSheetModalForWindow:_windowController.window completionHandler:^(NSInteger result) {
+        if (result == NSOKButton)
+            [_windowController saveProjectToURL:[savePanel URL]];
+    }];
+}
+
 @end

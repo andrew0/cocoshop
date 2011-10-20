@@ -31,7 +31,10 @@
  */
 @interface CSSprite : CCSprite <CSNodeProtocol>
 {
+    NSString *_path;
     CSNODE_MEM_VARS
 }
+
+@property (nonatomic, copy) NSString *path;
 
 @end

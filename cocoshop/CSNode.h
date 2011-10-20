@@ -34,11 +34,23 @@
 - (void)updateAnchor;
 - (void)updatePositionLabelSafely;
 - (void)updatePositionLabel;
-- (NSDictionary *)dictionaryRepresentation;
 - (BOOL)isSelected;
 - (void)setIsSelected:(BOOL)selected;
 - (NSString *)name;
 - (void)setName:(NSString *)name;
+- (NSDictionary *)dictionaryRepresentation;
+- (void)setupFromDictionaryRepresentation:(NSDictionary *)dict;
+@optional
+// subclasses that utilize CSNode can define their own variables to be part
+// of dictionary representation by using this method
+- (NSDictionary *)_dictionaryRepresentation;
+// subclasses can provide their own implementation of setupFromDictionaryRepresentation
+// using this method
+- (void)_setupFromDictionaryRepresentation:(NSDictionary *)dict;
+@end
+
+@interface CCNode (Internal)
+- (void)_setZOrder:(NSInteger)z;
 @end
 
 /*
@@ -218,25 +230,6 @@ _anchor.visible = NO;
     [super setIsRelativeAnchorPoint:relative];\
     [self updateAnchor];\
 }\
-- (NSDictionary *)dictionaryRepresentation\
-{\
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];\
-    [dict setValue:self forKey:[self name]];\
-\
-    /* only add children if there is at least 1 child */\
-    if ([children_ count] > 0)\
-    {\
-        /* get dictionary representation for all children */\
-        NSMutableDictionary *children = [NSMutableDictionary dictionary];\
-        for (CCNode<CSNodeProtocol> *child in children_)\
-            [children setObject:[child dictionaryRepresentation] forKey:[child name]];\
-\
-        /* add children to dictionary */\
-        [dict setValue:children forKey:@"children"];\
-    }\
-\
-    return dict;\
-}\
 - (BOOL)isSelected\
 {\
     return _isSelected;\
@@ -263,6 +256,48 @@ _anchor.visible = NO;
         _name = [name copy];\
     }\
 }\
+- (NSDictionary *)dictionaryRepresentation\
+{\
+    NSMutableDictionary *dict;\
+\
+    if ([self respondsToSelector:@selector(_dictionaryRepresentation)])\
+        dict = [NSMutableDictionary dictionaryWithDictionary:[self _dictionaryRepresentation]];\
+    else\
+        [NSMutableDictionary dictionaryWithCapacity:11];\
+\
+    [dict setValue:self.name forKey:@"name"];\
+    [dict setValue:NSStringFromPoint(NSPointFromCGPoint(self.position)) forKey:@"position"];\
+    [dict setValue:NSStringFromPoint(NSPointFromCGPoint(self.anchorPoint)) forKey:@"anchorPoint"];\
+    [dict setValue:[NSNumber numberWithFloat:self.scaleX] forKey:@"scaleX"];\
+    [dict setValue:[NSNumber numberWithFloat:self.scaleY] forKey:@"scaleY"];\
+    [dict setValue:NSStringFromSize(NSSizeFromCGSize(self.contentSize)) forKey:@"contentSize"];\
+    [dict setValue:[NSNumber numberWithInteger:self.zOrder] forKey:@"zOrder"];\
+    [dict setValue:[NSNumber numberWithFloat:self.rotation] forKey:@"rotation"];\
+    [dict setValue:[NSNumber numberWithInteger:self.tag] forKey:@"tag"];\
+    [dict setValue:[NSNumber numberWithBool:self.visible] forKey:@"visible"];\
+    [dict setValue:[NSNumber numberWithBool:self.isRelativeAnchorPoint] forKey:@"isRelativeAnchorPoint"];\
+\
+    return dict;\
+}\
+- (void)setupFromDictionaryRepresentation:(NSDictionary *)dict\
+{\
+    if ([self respondsToSelector:@selector(_setupFromDictionaryRepresentation:)])\
+        [self _setupFromDictionaryRepresentation:dict];\
+\
+    self.name = [dict valueForKey:@"name"];\
+    self.position = NSPointToCGPoint(NSPointFromString([dict valueForKey:@"position"]));\
+    self.anchorPoint = NSPointToCGPoint(NSPointFromString([dict valueForKey:@"anchorPoint"]));\
+    self.scaleX = [[dict valueForKey:@"scaleX"] floatValue];\
+    self.scaleY = [[dict valueForKey:@"scaleY"] floatValue];\
+    self.contentSize = NSSizeToCGSize(NSSizeFromString([dict valueForKey:@"contentSize"]));\
+    self.rotation = [[dict valueForKey:@"rotation"] floatValue];\
+    self.tag = [[dict valueForKey:@"tag"] integerValue];\
+    self.visible = [[dict valueForKey:@"visible"] boolValue];\
+    self.isRelativeAnchorPoint = [[dict valueForKey:@"isRelativeAnchorPoint"] boolValue];\
+\
+    if ([self respondsToSelector:@selector(_setZOrder:)])\
+        [self _setZOrder:[[dict valueForKey:@"zOrder"] integerValue]];\
+}
 
 /**
  * This is the basic CSNode without any additional modifications

@@ -25,7 +25,21 @@
 
 #import "CSSprite.h"
 
+static inline NSString *NSStringFromColor(ccColor3B color)
+{
+    return [NSString stringWithFormat:@"{%u, %u, %u}", color.r, color.g, color.b];
+}
+
+static inline ccColor3B ColorFromNSString(NSString *string)
+{
+    ccColor3B color;
+    sscanf([string cStringUsingEncoding:NSUTF8StringEncoding], "{%u, %u, %u}", &color.r, &color.g, &color.b);
+    return color;
+}
+
 @implementation CSSprite
+
+@synthesize path = _path;
 
 - (id)initWithTexture:(CCTexture2D *)texture rect:(CGRect)rect
 {
@@ -53,6 +67,7 @@
 
 - (void)dealloc
 {
+    self.path = nil;
     if (_node)
         [_node release];
     CSNODE_MEM_VARS_DEALLOC
@@ -65,10 +80,26 @@
         [(CCSprite *)_node setOpacity:opacity];
 }
 
+- (GLubyte)opacity
+{
+    if (_node && [_node isKindOfClass:[CCSprite class]])
+        return [(CCSprite *)_node opacity];
+    
+    return [super opacity];
+}
+
 - (void)setColor:(ccColor3B)color
 {
     if (_node && [_node isKindOfClass:[CCSprite class]])
         [(CCSprite *)_node setColor:color];
+}
+
+- (ccColor3B)color
+{
+    if (_node && [_node isKindOfClass:[CCSprite class]])
+        return [(CCSprite *)_node color];
+    
+    return [super color];
 }
 
 - (void)setFlipX:(BOOL)flipX
@@ -77,10 +108,68 @@
         [(CCSprite *)_node setFlipX:flipX];
 }
 
+- (BOOL)flipX
+{
+    if (_node && [_node isKindOfClass:[CCSprite class]])
+        return [(CCSprite *)_node flipX];
+    
+    return [super flipX];
+}
+
 - (void)setFlipY:(BOOL)flipY
 {
     if (_node && [_node isKindOfClass:[CCSprite class]])
         [(CCSprite *)_node setFlipY:flipY];
+}
+
+- (BOOL)flipY
+{
+    if (_node && [_node isKindOfClass:[CCSprite class]])
+        return [(CCSprite *)_node flipY];
+    
+    return [super flipY];
+}
+
+- (void)setTextureRect:(CGRect)rect
+{
+    if (_node && [_node isKindOfClass:[CCSprite class]])
+        [(CCSprite *)_node setTextureRect:rect];
+}
+
+- (CGRect)textureRect
+{
+    if (_node && [_node isKindOfClass:[CCSprite class]])
+        return [(CCSprite *)_node textureRect];
+    
+    return [super textureRect];
+}
+
+- (NSDictionary *)_dictionaryRepresentation
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:11];
+    
+    [dict setValue:self.path forKey:@"path"];
+    [dict setValue:NSStringFromRect(NSRectFromCGRect(self.textureRect)) forKey:@"textureRect"];
+    [dict setValue:[NSNumber numberWithUnsignedChar:self.opacity] forKey:@"opacity"];
+    [dict setValue:NSStringFromColor(self.color) forKey:@"color"];
+    [dict setValue:[NSNumber numberWithBool:self.flipX] forKey:@"flipX"];
+    [dict setValue:[NSNumber numberWithBool:self.flipY] forKey:@"flipY"];
+    
+    return dict;
+}
+
+- (void)_setupFromDictionaryRepresentation:(NSDictionary *)dict
+{
+    self.path = [dict valueForKey:@"path"];
+    _node = [[CCSprite alloc] initWithFile:self.path];
+    [self addChild:_node z:NSIntegerMin];
+    
+    CGRect textureRect = NSRectToCGRect(NSRectFromString([dict valueForKey:@"textureRect"]));
+    self.textureRect = textureRect;
+    self.opacity = [[dict valueForKey:@"opacity"] unsignedCharValue];
+    self.color = ColorFromNSString([dict valueForKey:@"color"]);
+    self.flipX = [[dict valueForKey:@"flipX"] boolValue];
+    self.flipY = [[dict valueForKey:@"flipY"] boolValue];
 }
 
 CSNODE_FUNC_SRC

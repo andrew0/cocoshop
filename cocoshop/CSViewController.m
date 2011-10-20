@@ -202,29 +202,29 @@
 #pragma mark -
 #pragma mark Sprites
 
-- (void)addSpritesWithFiles:(NSArray *)files safely:(BOOL)safely
-{
-    [[CCTextureCache sharedTextureCache] removeUnusedTextures];
-    for (NSURL *url in files)
-    {
-        NSString *filename = [url path];
-        CSSprite *sprite = [CSSprite spriteWithFile:filename];
-        [sprite setName:[_controller uniqueNameFromString:[filename lastPathComponent]]];
-        
-        // add the node to the layer view
-        if (safely)
-            [_controller.currentView addChildSafely:sprite];
-        else
-        {
-            [_controller.currentView addChild:sprite];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"addedChild" object:sprite];
-        }
-    }
-}
-
-- (NSArray *)allowedFileTypes
-{
-    return [NSArray arrayWithObjects:@"png", @"gif", @"jpg", @"jpeg", @"tif", @"tiff", @"bmp", @"ccz", @"pvr", nil];
-}
+//- (void)addSpritesWithFiles:(NSArray *)files safely:(BOOL)safely
+//{
+//    [[CCTextureCache sharedTextureCache] removeUnusedTextures];
+//    for (NSURL *url in files)
+//    {
+//        NSString *filename = [url path];
+//        CSSprite *sprite = [CSSprite spriteWithFile:filename];
+//        [sprite setName:[_controller uniqueNameFromString:[filename lastPathComponent]]];
+//        
+//        // add the node to the layer view
+//        if (safely)
+//            [_controller.currentView addChildSafely:sprite];
+//        else
+//        {
+//            [_controller.currentView addChild:sprite];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"addedChild" object:sprite];
+//        }
+//    }
+//}
+//
+//- (NSArray *)allowedFileTypes
+//{
+//    return [NSArray arrayWithObjects:@"png", @"gif", @"jpg", @"jpeg", @"tif", @"tiff", @"bmp", @"ccz", @"pvr", nil];
+//}
 
 @end

@@ -51,5 +51,8 @@
 
 - (void)addSprite:(id)sender;
 - (void)newProject:(id)sender;
+- (void)addSpritesWithFiles:(NSArray *)files safely:(BOOL)safely;
+- (void)saveProjectToURL:(NSURL *)url;
+- (void)openProject:(id)sender;
 
 @end
