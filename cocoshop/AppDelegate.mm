@@ -33,9 +33,18 @@
 #import "CSLayerView.h"
 #import "CSViewController.h"
 #import "TLAnimatingOutlineView.h"
+#import "CSModel.h"
+#import "CSNode.h"
+
+@interface cocoshopAppDelegate ()
+@property (nonatomic, readonly) CCNode<CSNodeProtocol> *selectedNode;
+@property (nonatomic, readonly) NSUndoManager *undoManager;
+@end
 
 @implementation cocoshopAppDelegate
 @synthesize view=_view, glView=_glView, viewController=_viewController;
+@dynamic selectedNode;
+@dynamic undoManager;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -134,6 +143,44 @@
         if (result == NSOKButton)
             [_windowController saveProjectToURL:[savePanel URL]];
     }];
+}
+
+- (NSUndoManager *)undoManager
+{
+    if ( ![[[CCDirector sharedDirector] runningScene] isKindOfClass:[CSSceneView class]] )
+        return nil;
+    
+    return [[[(CSSceneView *)[[CCDirector sharedDirector] runningScene] layer] model] undoManager];
+}
+
+- (IBAction)undo:(id)sender
+{
+    NSThread *cocosThread = [[CCDirector sharedDirector] runningThread];
+    if (!cocosThread)
+        return;
+    
+    if ( ![[NSThread currentThread] isEqualTo:cocosThread] )
+    {
+        [self performSelector:@selector(undo:) onThread:cocosThread withObject:sender waitUntilDone:NO];
+        return;
+    }
+    
+    [[self undoManager] undo];
+}
+
+- (IBAction)redo:(id)sender
+{
+    NSThread *cocosThread = [[CCDirector sharedDirector] runningThread];
+    if (!cocosThread)
+        return;
+    
+    if ( ![[NSThread currentThread] isEqualTo:cocosThread] )
+    {
+        [self performSelector:@selector(redo:) onThread:cocosThread withObject:sender waitUntilDone:NO];
+        return;
+    }
+    
+    [[self undoManager] redo];
 }
 
 @end

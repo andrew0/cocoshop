@@ -28,6 +28,7 @@
 #import "CSBrowserWindowController.h"
 #import "CSSceneView.h"
 #import "CSLayerView.h"
+#import "AppDelegate.h"
 
 @implementation CSToolbarController
 
@@ -73,6 +74,22 @@
         
         if (scene.layer)
             [scene.layer runAction:[CCScaleTo actionWithDuration:0.15f scale:scaleTo]];
+    }
+}
+
+- (IBAction)undoRedo:(id)sender
+{
+    cocoshopAppDelegate *delegate = (cocoshopAppDelegate *)[NSApp delegate];
+    switch ([(NSSegmentedControl *)sender selectedSegment])
+    {
+        case 0:
+            [delegate undo:nil];
+            break;
+        case 1:
+            [delegate redo:nil];
+            break;
+        default:
+            break;
     }
 }
 

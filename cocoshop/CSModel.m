@@ -31,6 +31,7 @@
 
 @implementation CSModel
 
+@synthesize undoManager = _undoManager;
 @synthesize projectName = _projectName;
 @synthesize selectedNode = _selectedNode;
 @synthesize firstTime = _firstTime;
@@ -48,6 +49,7 @@
 @synthesize scaleY = _scaleY;
 @synthesize rotation = _rotation;
 @synthesize zOrder = _zOrder;
+@synthesize tag = _tag;
 @synthesize visible = _visible;
 @synthesize relativeAnchor = _relativeAnchor;
 @synthesize textureRectX = _textureRectX;
@@ -63,6 +65,7 @@
     self = [super init];
     if (self)
     {
+        self.undoManager = [[NSUndoManager alloc] init];
         self.firstTime = YES;
         [self reset];
     }
@@ -72,6 +75,7 @@
 
 - (void)dealloc
 {
+    self.undoManager = nil;
     self.projectName = nil;
     self.color = nil;
     self.selectedNode = nil;
@@ -119,6 +123,7 @@
         self.scaleY = _selectedNode.scaleY;
         self.rotation = _selectedNode.rotation;
         self.zOrder = _selectedNode.zOrder;
+        self.tag = _selectedNode.tag;
         self.visible = _selectedNode.visible;
         self.relativeAnchor = _selectedNode.isRelativeAnchorPoint;
         

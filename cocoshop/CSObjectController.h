@@ -35,6 +35,7 @@
 {
     BOOL _willDragNode;
     BOOL _willDeselectNode;
+    CGPoint _initialPosition;
     CGPoint _prevLocation;
 }
 

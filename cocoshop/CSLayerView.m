@@ -28,6 +28,12 @@
 #import "CSNode.h"
 #import "CSMacGLView.h"
 
+@interface CSLayerView ()
+- (void)removeChildUndoable:(CCNode *)node cleanup:(BOOL)cleanup;
+- (void)addChildUndoable:(CCNode *)node;
+- (void)addedChild:(NSNotification *)notification;
+@end
+
 @implementation CSLayerView
 
 @synthesize model = _model;
@@ -47,6 +53,7 @@
         
         // register for screen resize notifications
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateForScreenReshapeSafely:) name:NSViewFrameDidChangeNotification object:[CCDirector sharedDirector].openGLView];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addedChild:) name:@"addedChild" object:nil];
         
         // add a checkerboard repeating background to represent transparency
         _checkerboard = [CCSprite spriteWithFile:@"checkerboard.png"];
@@ -230,16 +237,25 @@
     ccDrawPoly(verts, 4, YES);
 }
 
-//- (void)draw
-//{
-//    // draw outline of the workspace
-//    CGPoint verts[] = {
-//        ccp(0,0),
-//        ccp(_workspaceSize.width,0),
-//        ccp(_workspaceSize.width,_workspaceSize.height),
-//        ccp(0,_workspaceSize.height)
-//    };
-//    ccDrawPoly(verts, 4, YES);
-//}
+#pragma mark -
+#pragma mark Undo/Redo
+
+- (void)removeChildUndoable:(CCNode *)node cleanup:(BOOL)cleanup
+{
+    [[self.model.undoManager prepareWithInvocationTarget:self] addChildUndoable:node];
+    [self removeChild:node cleanup:cleanup];
+}
+
+- (void)addChildUndoable:(CCNode *)node
+{
+    [[self.model.undoManager prepareWithInvocationTarget:self] removeChildUndoable:node cleanup:YES];
+    [self addChild:node];
+}
+
+- (void)addedChild:(NSNotification *)notification
+{
+    CCNode *child = [notification object];
+    [[self.model.undoManager prepareWithInvocationTarget:self] removeChildUndoable:child cleanup:YES];
+}
 
 @end

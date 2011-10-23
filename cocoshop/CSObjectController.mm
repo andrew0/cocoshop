@@ -212,6 +212,10 @@
         [[self.currentModel.selectedNode parent] reorderChild:self.currentModel.selectedNode z:self.currentModel.zOrder];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"updatedChild" object:nil];
     }
+    else if ( [keyPath isEqualToString:@"tag"] )
+    {
+        self.currentModel.selectedNode.tag = self.currentModel.tag;
+    }
     else if ( [keyPath isEqualToString:@"visible"] )
     {
         self.currentModel.selectedNode.visible = self.currentModel.visible;
@@ -226,32 +230,32 @@
     }
     else if ( [keyPath isEqualToString:@"flipY"] && [self.currentModel.selectedNode isKindOfClass:[CCSprite class]] )
     {
-        [(CCSprite *)self.currentModel.selectedNode setFlipX:self.currentModel.flipY];
+        [(CCSprite *)self.currentModel.selectedNode setFlipY:self.currentModel.flipY];
     }
-//    else if ( [keyPath isEqualToString:@"textureRectX"] && [self.currentModel.selectedNode isKindOfClass:[CCSprite class]] )
-//    {
-//        CGRect r = [(CCSprite *)self.currentModel.selectedNode textureRect];
-//        r.origin.x = self.currentModel.textureRectX;
-//        [(CCSprite *)self.currentModel.selectedNode setTextureRect:r];
-//    }
-//    else if ( [keyPath isEqualToString:@"textureRectY"] && [self.currentModel.selectedNode isKindOfClass:[CCSprite class]] )
-//    {
-//        CGRect r = [(CCSprite *)self.currentModel.selectedNode textureRect];
-//        r.origin.y = self.currentModel.textureRectY;
-//        [(CCSprite *)self.currentModel.selectedNode setTextureRect:r];
-//    }
-//    else if ( [keyPath isEqualToString:@"textureRectWidth"] && [self.currentModel.selectedNode isKindOfClass:[CCSprite class]] )
-//    {
-//        CGRect r = [(CCSprite *)self.currentModel.selectedNode textureRect];
-//        r.size.width = self.currentModel.textureRectWidth;
-//        [(CCSprite *)self.currentModel.selectedNode setTextureRect:r];
-//    }
-//    else if ( [keyPath isEqualToString:@"textureRectHeight"] && [self.currentModel.selectedNode isKindOfClass:[CCSprite class]] )
-//    {
-//        CGRect r = [(CCSprite *)self.currentModel.selectedNode textureRect];
-//        r.size.height = self.currentModel.textureRectHeight;
-//        [(CCSprite *)self.currentModel.selectedNode setTextureRect:r];
-//    }
+    else if ( [keyPath isEqualToString:@"textureRectX"] && [self.currentModel.selectedNode isKindOfClass:[CCSprite class]] )
+    {
+        CGRect r = [(CCSprite *)self.currentModel.selectedNode textureRect];
+        r.origin.x = self.currentModel.textureRectX;
+        [(CCSprite *)self.currentModel.selectedNode setTextureRect:r];
+    }
+    else if ( [keyPath isEqualToString:@"textureRectY"] && [self.currentModel.selectedNode isKindOfClass:[CCSprite class]] )
+    {
+        CGRect r = [(CCSprite *)self.currentModel.selectedNode textureRect];
+        r.origin.y = self.currentModel.textureRectY;
+        [(CCSprite *)self.currentModel.selectedNode setTextureRect:r];
+    }
+    else if ( [keyPath isEqualToString:@"textureRectWidth"] && [self.currentModel.selectedNode isKindOfClass:[CCSprite class]] )
+    {
+        CGRect r = [(CCSprite *)self.currentModel.selectedNode textureRect];
+        r.size.width = self.currentModel.textureRectWidth;
+        [(CCSprite *)self.currentModel.selectedNode setTextureRect:r];
+    }
+    else if ( [keyPath isEqualToString:@"textureRectHeight"] && [self.currentModel.selectedNode isKindOfClass:[CCSprite class]] )
+    {
+        CGRect r = [(CCSprite *)self.currentModel.selectedNode textureRect];
+        r.size.height = self.currentModel.textureRectHeight;
+        [(CCSprite *)self.currentModel.selectedNode setTextureRect:r];
+    }
 }
 
 #pragma mark -
@@ -274,6 +278,8 @@
 
 - (BOOL)ccMouseDown:(NSEvent *)event
 {
+    [self.currentModel.undoManager disableUndoRegistration];
+    
     _willDragNode = NO;
     _willDeselectNode = NO;
     
@@ -293,6 +299,7 @@
     if (self.currentModel.selectedNode && ![self.currentModel.selectedNode isEventInRect:event])
         self.currentModel.selectedNode = nil;
     
+    _initialPosition = self.currentModel.selectedNode.position;
     _prevLocation = [[CCDirector sharedDirector] convertEventToGL:event];
     
     return YES;
@@ -325,8 +332,19 @@
 
 - (BOOL)ccMouseUp:(NSEvent *)event
 {
+    [self.currentModel.undoManager enableUndoRegistration];
+    
     if (_willDeselectNode)
         self.currentModel.selectedNode = nil;
+    else if (_willDragNode)
+    {
+        // register undo
+        [self.currentModel.undoManager beginUndoGrouping];
+        [[self.currentModel.undoManager prepareWithInvocationTarget:self.currentModel] setPosX:_initialPosition.x];
+        [[self.currentModel.undoManager prepareWithInvocationTarget:self.currentModel] setPosY:_initialPosition.y];
+        [self.currentModel.undoManager setActionName:@"Reposition node"];
+        [self.currentModel.undoManager endUndoGrouping];
+    }
     
     _prevLocation = [[CCDirector sharedDirector] convertEventToGL:event];
     

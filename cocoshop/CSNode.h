@@ -24,6 +24,9 @@
  */
 
 #import "cocos2d.h"
+#import "CSLayerView.h"
+#import "CSSceneView.h"
+#import "CSModel.h"
 
 #ifndef FLT_EPSILON
 #define FLT_EPSILON 0.0000000001f
@@ -38,6 +41,8 @@
 - (void)setIsSelected:(BOOL)selected;
 - (NSString *)name;
 - (void)setName:(NSString *)name;
+- (CSModel *)currentModel;
+- (NSUndoManager *)undoManager;
 - (NSDictionary *)dictionaryRepresentation;
 - (void)setupFromDictionaryRepresentation:(NSDictionary *)dict;
 @optional
@@ -176,11 +181,28 @@ _anchor.visible = NO;
 }\
 - (void)setPosition:(CGPoint)pos\
 {\
+    if (!CGPointEqualToPoint(pos, self.position))\
+    {\
+        [[self undoManager] beginUndoGrouping];\
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setPosX:self.position.x];\
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setPosY:self.position.y];\
+        [[self undoManager] setActionName:@"Reposition node"];\
+        [[self undoManager] endUndoGrouping];\
+    }\
+\
     [super setPosition:pos];\
     [self updatePositionLabelSafely];\
 }\
 - (void)setAnchorPoint:(CGPoint)anchor\
 {\
+    if (!CGPointEqualToPoint(anchor, self.anchorPoint))\
+    {\
+        [[self undoManager] beginUndoGrouping];\
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setAnchorX:self.anchorPoint.x];\
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setAnchorX:self.anchorPoint.y];\
+        [[self undoManager] setActionName:@"Reposition node"];\
+        [[self undoManager] endUndoGrouping];\
+    }\
     [super setAnchorPoint:anchor];\
     [self updateAnchor];\
 }\
@@ -191,6 +213,12 @@ _anchor.visible = NO;
     if (sx == 0)\
         sx = FLT_EPSILON;\
 \
+    if (sx != self.scaleX)\
+    {\
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setScaleX:self.scaleX];\
+        [[self undoManager] setActionName:@"Change scale"];\
+    }\
+\
     [super setScaleX:sx];\
     [self updateAnchor];\
 }\
@@ -200,6 +228,12 @@ _anchor.visible = NO;
 \
     if (sy == 0)\
         sy = FLT_EPSILON;\
+\
+    if (sy != self.scaleY)\
+    {\
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setScaleY:self.scaleY];\
+        [[self undoManager] setActionName:@"Change scale"];\
+    }\
 \
     [super setScaleY:sy];\
     [self updateAnchor];\
@@ -214,11 +248,32 @@ _anchor.visible = NO;
 }\
 - (void)setRotation:(float)rot\
 {\
+    if (rot != self.rotation)\
+    {\
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setRotation:self.rotation];\
+        [[self undoManager] setActionName:@"Change rotation"];\
+    }\
     [super setRotation:rot];\
     [_anchor setRotation:-rot];\
 }\
+- (void)setTag:(NSInteger)tag\
+{\
+    if (tag != self.tag)\
+    {\
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setTag:self.tag];\
+        [[self undoManager] setActionName:@"Change tag"];\
+    }\
+\
+    [super setTag:tag];\
+}\
 - (void)setVisible:(BOOL)visible\
 {\
+    if (visible != self.visible)\
+    {\
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setVisible:self.visible];\
+        [[self undoManager] setActionName:@"Change visibility"];\
+    }\
+\
     _node.visible = visible;\
 }\
 - (BOOL)visible\
@@ -227,8 +282,27 @@ _anchor.visible = NO;
 }\
 - (void)setIsRelativeAnchorPoint:(BOOL)relative\
 {\
+    if (relative != self.isRelativeAnchorPoint)\
+    {\
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setRelativeAnchor:self.isRelativeAnchorPoint];\
+        [[self undoManager] setActionName:@"Change relative anchor point"];\
+    }\
+\
     [super setIsRelativeAnchorPoint:relative];\
     [self updateAnchor];\
+}\
+- (void)_setZOrder:(NSInteger)z\
+{\
+    if ( [[self superclass] instancesRespondToSelector:@selector(_setZOrder:)] )\
+    {\
+        if (z != self.zOrder)\
+        {\
+            [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setZOrder:self.zOrder];\
+            [[self undoManager] setActionName:@"Change Z order"];\
+        }\
+\
+        [super _setZOrder:z];\
+    }\
 }\
 - (BOOL)isSelected\
 {\
@@ -255,6 +329,17 @@ _anchor.visible = NO;
         [_name release];\
         _name = [name copy];\
     }\
+}\
+- (CSModel *)currentModel\
+{\
+    if ( ![[[CCDirector sharedDirector] runningScene] isKindOfClass:[CSSceneView class]] )\
+        return nil;\
+    \
+    return [[(CSSceneView *)[[CCDirector sharedDirector] runningScene] layer] model];\
+}\
+- (NSUndoManager *)undoManager\
+{\
+    return [[self currentModel] undoManager];\
 }\
 - (NSDictionary *)dictionaryRepresentation\
 {\

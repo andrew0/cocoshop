@@ -76,6 +76,12 @@ static inline ccColor3B ColorFromNSString(NSString *string)
 
 - (void)setOpacity:(GLubyte)opacity
 {
+    if (opacity != self.opacity)
+    {
+        [(CSModel *)[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setOpacity:self.opacity];
+        [[self undoManager] setActionName:@"Change opacity"];
+    }
+    
     if (_node && [_node isKindOfClass:[CCSprite class]])
         [(CCSprite *)_node setOpacity:opacity];
 }
@@ -90,6 +96,13 @@ static inline ccColor3B ColorFromNSString(NSString *string)
 
 - (void)setColor:(ccColor3B)color
 {
+    if (color.r != self.color.r || color.g != self.color.g || color.b != self.color.b)
+    {
+        NSColor *c = [NSColor colorWithDeviceRed:self.color.r/255.0f green:self.color.g/255.0f blue:self.color.b/255.0f alpha:1];
+        [(CSModel *)[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setColor:c];
+        [[self undoManager] setActionName:@"Change color"];
+    }
+    
     if (_node && [_node isKindOfClass:[CCSprite class]])
         [(CCSprite *)_node setColor:color];
 }
@@ -104,6 +117,12 @@ static inline ccColor3B ColorFromNSString(NSString *string)
 
 - (void)setFlipX:(BOOL)flipX
 {
+    if (flipX != self.flipX)
+    {
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setFlipX:self.flipX];
+        [[self undoManager] setActionName:@"Change flip Y"];
+    }
+    
     if (_node && [_node isKindOfClass:[CCSprite class]])
         [(CCSprite *)_node setFlipX:flipX];
 }
@@ -118,6 +137,12 @@ static inline ccColor3B ColorFromNSString(NSString *string)
 
 - (void)setFlipY:(BOOL)flipY
 {
+    if (flipY != self.flipY)
+    {
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setFlipY:self.flipY];
+        [[self undoManager] setActionName:@"Change flip Y"];
+    }
+    
     if (_node && [_node isKindOfClass:[CCSprite class]])
         [(CCSprite *)_node setFlipY:flipY];
 }
@@ -132,6 +157,17 @@ static inline ccColor3B ColorFromNSString(NSString *string)
 
 - (void)setTextureRect:(CGRect)rect
 {
+    if (!CGRectEqualToRect(rect, self.textureRect))
+    {
+        [[self undoManager] beginUndoGrouping];
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setTextureRectX:self.textureRect.origin.x];
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setTextureRectY:self.textureRect.origin.y];
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setTextureRectWidth:self.textureRect.size.width];
+        [[[self undoManager] prepareWithInvocationTarget:[self currentModel]] setTextureRectHeight:self.textureRect.size.height];
+        [[self undoManager] setActionName:@"Change texture rect"];
+        [[self undoManager] endUndoGrouping];
+    }
+    
     if (_node && [_node isKindOfClass:[CCSprite class]])
         [(CCSprite *)_node setTextureRect:rect];
 }

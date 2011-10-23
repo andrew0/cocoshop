@@ -49,5 +49,7 @@
 - (IBAction)closeProject:(id)sender;
 - (IBAction)openProject:(id)sender;
 - (IBAction)saveProject:(id)sender;
+- (IBAction)undo:(id)sender;
+- (IBAction)redo:(id)sender;
 
 @end

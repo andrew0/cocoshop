@@ -41,5 +41,6 @@
 
 - (IBAction)addSprite:(id)sender;
 - (IBAction)zoom:(id)sender;
+- (IBAction)undoRedo:(id)sender;
 
 @end

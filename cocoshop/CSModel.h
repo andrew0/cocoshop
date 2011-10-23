@@ -37,6 +37,8 @@
  */
 @interface CSModel : NSObject
 {
+    NSUndoManager *_undoManager;
+    
     NSString *_projectName;
     
     CCNode<CSNodeProtocol> *_selectedNode;
@@ -46,7 +48,7 @@
     
     CGFloat _workspaceWidth;
     CGFloat _workspaceHeight;
-    float _opacity;
+    GLubyte _opacity;
     NSColor *_color;
     NSString *_name;
     CGFloat _posX;
@@ -57,6 +59,7 @@
     float _scaleY;
     float _rotation;
     NSInteger _zOrder;
+    NSInteger _tag;
     BOOL _visible;
     BOOL _relativeAnchor;
     CGFloat _textureRectX;
@@ -67,13 +70,14 @@
     BOOL _flipY;
 }
 
+@property (nonatomic, retain) NSUndoManager *undoManager;
 @property (nonatomic, copy) NSString *projectName;
 @property (nonatomic, retain) CCNode<CSNodeProtocol> *selectedNode;
 @property (nonatomic, assign) BOOL firstTime;
 @property (nonatomic, retain) NSDictionary *nodeProperties;
 @property (nonatomic, assign) CGFloat workspaceWidth;
 @property (nonatomic, assign) CGFloat workspaceHeight;
-@property (nonatomic, assign) float opacity;
+@property (nonatomic, assign) GLubyte opacity;
 @property (nonatomic, copy) NSColor *color;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) CGFloat posX;
@@ -84,6 +88,7 @@
 @property (nonatomic, assign) float scaleY;
 @property (nonatomic, assign) float rotation;
 @property (nonatomic, assign) NSInteger zOrder;
+@property (nonatomic, assign) NSInteger tag;
 @property (nonatomic, assign) BOOL visible;
 @property (nonatomic, assign) BOOL relativeAnchor;
 @property (nonatomic, assign) CGFloat textureRectX;
