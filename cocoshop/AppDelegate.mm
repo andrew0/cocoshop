@@ -35,15 +35,16 @@
 #import "TLAnimatingOutlineView.h"
 #import "CSModel.h"
 #import "CSNode.h"
+#import "CSPreferencesWindowController.h"
 
 @interface cocoshopAppDelegate ()
-@property (nonatomic, readonly) CCNode<CSNodeProtocol> *selectedNode;
+@property (nonatomic, readonly) CSModel *currentModel;
 @property (nonatomic, readonly) NSUndoManager *undoManager;
 @end
 
 @implementation cocoshopAppDelegate
 @synthesize view=_view, glView=_glView, viewController=_viewController;
-@dynamic selectedNode;
+@dynamic currentModel;
 @dynamic undoManager;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -145,12 +146,17 @@
     }];
 }
 
-- (NSUndoManager *)undoManager
+- (CSModel *)currentModel
 {
     if ( ![[[CCDirector sharedDirector] runningScene] isKindOfClass:[CSSceneView class]] )
         return nil;
     
-    return [[[(CSSceneView *)[[CCDirector sharedDirector] runningScene] layer] model] undoManager];
+    return [[(CSSceneView *)[[CCDirector sharedDirector] runningScene] layer] model];
+}
+
+- (NSUndoManager *)undoManager
+{
+    return self.currentModel.undoManager;
 }
 
 - (IBAction)undo:(id)sender
@@ -181,6 +187,11 @@
     }
     
     [[self undoManager] redo];
+}
+
+- (IBAction)showPreferences:(id)sender
+{
+    [[CSPreferencesWindowController sharedPrefsWindowController] showWindow:nil];
 }
 
 @end

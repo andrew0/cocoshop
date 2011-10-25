@@ -1459,7 +1459,6 @@
 						<string key="NSFrame">{{7, 8}, {150, 18}}</string>
 						<reference key="NSSuperview" ref="417229356"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="782292781">
 							<int key="NSCellFlags">-2080244224</int>
@@ -2226,7 +2225,7 @@
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="702426164">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2618,13 +2617,12 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{218, 106}</string>
-				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="992760658"/>
 				<string key="NSReuseIdentifierKey">_NS:499</string>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="624374257">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -3266,7 +3264,6 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{218, 171}</string>
-				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="393221983"/>
 				<string key="NSReuseIdentifierKey">_NS:499</string>
 				<string key="NSClassName">NSView</string>
@@ -4845,6 +4842,14 @@
 						</object>
 					</object>
 					<int key="connectionID">1400</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showPreferences:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="609285721"/>
+					</object>
+					<int key="connectionID">1401</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -7785,7 +7790,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1400</int>
+			<int key="maxID">1401</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -7976,11 +7981,13 @@
 							<string>openProject:</string>
 							<string>redo:</string>
 							<string>saveProject:</string>
+							<string>showPreferences:</string>
 							<string>toggleFullScreen:</string>
 							<string>undo:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -7999,6 +8006,7 @@
 							<string>openProject:</string>
 							<string>redo:</string>
 							<string>saveProject:</string>
+							<string>showPreferences:</string>
 							<string>toggleFullScreen:</string>
 							<string>undo:</string>
 						</object>
@@ -8022,6 +8030,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">saveProject:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showPreferences:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

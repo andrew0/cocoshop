@@ -51,5 +51,6 @@
 - (IBAction)saveProject:(id)sender;
 - (IBAction)undo:(id)sender;
 - (IBAction)redo:(id)sender;
+- (IBAction)showPreferences:(id)sender;
 
 @end

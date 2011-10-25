@@ -130,6 +130,9 @@
 		49B1328213E1D1F000D594CD /* CSMacGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B1328113E1D1F000D594CD /* CSMacGLView.m */; };
 		49B1328513E1D44600D594CD /* background_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 49B1328413E1D44600D594CD /* background_texture.png */; };
 		49B1328813E1D64A00D594CD /* CSSceneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B1328713E1D64A00D594CD /* CSSceneView.m */; };
+		49BD893314560E4200B29544 /* CSPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BD893214560E2900B29544 /* CSPreferencesWindowController.m */; };
+		49BD893B145615D300B29544 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49BD8939145615D300B29544 /* Preferences.xib */; };
+		49BD893F1456199600B29544 /* DBPrefsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BD893E1456199600B29544 /* DBPrefsWindowController.m */; };
 		49DAAFCC1404D7D900444D92 /* CSObjectController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 49DAAFCB1404D7D900444D92 /* CSObjectController.mm */; };
 		49E1F7D313E74E4400D24767 /* TLAnimatingOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E1F7C913E74E4400D24767 /* TLAnimatingOutlineView.m */; };
 		49E1F7D413E74E4400D24767 /* TLCollapsibleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E1F7CB13E74E4400D24767 /* TLCollapsibleView.m */; };
@@ -391,6 +394,11 @@
 		49B1328413E1D44600D594CD /* background_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background_texture.png; path = Resources/background_texture.png; sourceTree = "<group>"; };
 		49B1328613E1D64A00D594CD /* CSSceneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSceneView.h; sourceTree = "<group>"; };
 		49B1328713E1D64A00D594CD /* CSSceneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSceneView.m; sourceTree = "<group>"; };
+		49BD893114560E2700B29544 /* CSPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSPreferencesWindowController.h; sourceTree = "<group>"; };
+		49BD893214560E2900B29544 /* CSPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSPreferencesWindowController.m; sourceTree = "<group>"; };
+		49BD893A145615D300B29544 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/Preferences.xib; sourceTree = "<group>"; };
+		49BD893D1456199500B29544 /* DBPrefsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPrefsWindowController.h; sourceTree = "<group>"; };
+		49BD893E1456199600B29544 /* DBPrefsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPrefsWindowController.m; sourceTree = "<group>"; };
 		49DAAFCB1404D7D900444D92 /* CSObjectController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CSObjectController.mm; sourceTree = "<group>"; };
 		49E1F7C813E74E4400D24767 /* TLAnimatingOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLAnimatingOutlineView.h; sourceTree = "<group>"; };
 		49E1F7C913E74E4400D24767 /* TLAnimatingOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLAnimatingOutlineView.m; sourceTree = "<group>"; };
@@ -478,6 +486,10 @@
 				49365B6313E99E38000A9EE2 /* CSOutlineViewDataSource.m */,
 				4932E71C13E1C3D80046ABA8 /* AppDelegate.h */,
 				4932E71D13E1C3D80046ABA8 /* AppDelegate.mm */,
+				49BD893D1456199500B29544 /* DBPrefsWindowController.h */,
+				49BD893E1456199600B29544 /* DBPrefsWindowController.m */,
+				49BD893114560E2700B29544 /* CSPreferencesWindowController.h */,
+				49BD893214560E2900B29544 /* CSPreferencesWindowController.m */,
 				49E1F7C713E74E4400D24767 /* TLAnimatingOutlineView */,
 				4932E5FE13E1C3D50046ABA8 /* Resources */,
 				4932E60B13E1C3D50046ABA8 /* libs */,
@@ -515,6 +527,7 @@
 				4932E60313E1C3D50046ABA8 /* MainMenu.xib */,
 				498404C91404DFB3003190E3 /* Window.xib */,
 				494182E414056B4300E2013A /* Toolbar.xib */,
+				49BD8939145615D300B29544 /* Preferences.xib */,
 			);
 			name = English.lproj;
 			sourceTree = "<group>";
@@ -892,6 +905,7 @@
 				49155BA11408413D003D6A99 /* ZoomInTemplate.png in Resources */,
 				49155BA21408413D003D6A99 /* ZoomOutTemplate.png in Resources */,
 				49155D511409ED2A003D6A99 /* ZoomBackTemplate.png in Resources */,
+				49BD893B145615D300B29544 /* Preferences.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1006,6 +1020,8 @@
 				494182E3140564A400E2013A /* CSColorView.m in Sources */,
 				494182E914056E2600E2013A /* CSToolbarController.mm in Sources */,
 				494182FD1405821B00E2013A /* CSTabContents.mm in Sources */,
+				49BD893314560E4200B29544 /* CSPreferencesWindowController.m in Sources */,
+				49BD893F1456199600B29544 /* DBPrefsWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1042,6 +1058,14 @@
 				498404CA1404DFB3003190E3 /* English */,
 			);
 			name = Window.xib;
+			sourceTree = "<group>";
+		};
+		49BD8939145615D300B29544 /* Preferences.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				49BD893A145615D300B29544 /* English */,
+			);
+			name = Preferences.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

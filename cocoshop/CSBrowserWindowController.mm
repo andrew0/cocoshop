@@ -34,6 +34,11 @@
 #import "CSTabContents.h"
 #import "CSMacGLView.h"
 #import "AppDelegate.h"
+#import "CSTabContents.h"
+
+@interface CSBrowserWindowController ()
+- (void)updateEditedState:(NSNotification *)notification;
+@end
 
 @implementation CSBrowserWindowController
 
@@ -64,6 +69,8 @@
     
     _backgroundView.backgroundColor = [NSColor colorWithCalibratedRed:237.0f/255.0f green:237.0f/255.0f blue:237.0f/255.0f alpha:1.0f];
     [_backgroundView setNeedsDisplay:YES];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateEditedState:) name:NSUndoManagerCheckpointNotification object:nil];
 }
 
 - (BOOL)tabTearingAllowed
@@ -85,6 +92,8 @@
         
         // change outline view
         [_viewController updateOutlineView];
+        
+        [self updateEditedState:nil];
     }
 }
 
@@ -239,6 +248,22 @@
         [openPanel beginSheetModalForWindow:window completionHandler:openProjectBlock];
     else
         [openPanel beginWithCompletionHandler:openProjectBlock];
+}
+
+- (void)updateEditedState:(NSNotification *)notification;
+{
+    BOOL edited = NO;
+    for (CSTabContents *contents in [self.browser allTabContents])
+    {
+        CSModel *model = contents.layerView.model;
+        if ([model.undoManager canUndo])
+        {
+            edited = YES;
+            break;
+        }
+    }
+    
+    [self.window setDocumentEdited:edited];
 }
 
 @end

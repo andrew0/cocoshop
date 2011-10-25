@@ -218,6 +218,7 @@
 							<reference ref="1006"/>
 						</object>
 						<reference key="parent" ref="0"/>
+						<string key="objectName">Browser Window</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2</int>
