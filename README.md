@@ -1,3 +1,6 @@
+__NOTE: Cocoshop is no longer being maintained, as it has been superseded by SceneDesigner ( https://github.com/andrew0/SceneDesigner ).__
+-
+
 Cocoshop - Open Source Visual Editor for Cocos2D
 ================================================
 
